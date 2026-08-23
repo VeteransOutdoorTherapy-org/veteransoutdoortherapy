@@ -453,6 +453,8 @@ export type Testimonial = {
 	service: string;
 	image?: string;
 	imageAlt?: string;
+	imagePosition?: "top" | "bottom" | "left" | "right" | "top-left" | "top-right" | "bottom-left" | "bottom-right" | "center";
+	category?: string;
 	published: boolean;
 	sortOrder: number;
 	createdAt: string;
@@ -466,10 +468,68 @@ export const testimonials: Testimonial[] = [
 		service: "Army (PH)",
 		image: undefined,
 		imageAlt: undefined,
+		imagePosition: "center",
+		category: "General",
 		published: true,
 		sortOrder: 1,
 		createdAt: "2026-08-22",
 		updatedAt: "2026-08-22",
+	},
+	{
+		slug: "nancy-neal-air-force",
+		quote: "I am so grateful for this experience! I genuinely enjoyed being around so many strong and inspiring veterans. The hosts, Kelly, Forest, Dina, and Maru were so gracious and welcoming. I loved the home-cooked and family-style meals as well as the stimulating conversations. I really had such a great time.",
+		author: "Nancy Neal",
+		service: "Air Force",
+		image: undefined,
+		imageAlt: undefined,
+		imagePosition: "center",
+		category: "Horseback",
+		published: true,
+		sortOrder: 2,
+		createdAt: "2026-07-12",
+		updatedAt: "2026-07-12",
+	},
+	{
+		slug: "female-veterans-healing",
+		quote: "This event has meant everything to me. It was so amazing to connect with fellow female veterans who get it. It has helped heal parts of me I didn't know needed it. Talking with Connie about same shared feelings has helped me realize I'm not alone and that seeking help can only help. Thank you for organizing this incredible trip.",
+		author: "Anonymous",
+		service: "Female Veteran",
+		image: undefined,
+		imageAlt: undefined,
+		imagePosition: "center",
+		category: "Horseback",
+		published: true,
+		sortOrder: 3,
+		createdAt: "2026-07-12",
+		updatedAt: "2026-07-12",
+	},
+	{
+		slug: "ranch-hospitality",
+		quote: "Thank you for welcoming us into your beautiful space. You have been so welcoming and accommodating to our group. I felt like a family member instead of a guest. Your ranch is truly stunning, and I would recommend it to anyone!",
+		author: "Anonymous",
+		service: "Female Veteran",
+		image: undefined,
+		imageAlt: undefined,
+		imagePosition: "center",
+		category: "Horseback",
+		published: true,
+		sortOrder: 4,
+		createdAt: "2026-07-12",
+		updatedAt: "2026-07-12",
+	},
+	{
+		slug: "guided-rides-hospitality",
+		quote: "Your hospitality is something to be admired. The food was amazing and the portions extremely generous! I walked away from each meal full and incredibly happy. Your guided rides were so informative and fun and your patience with us was admirable. I so enjoyed our conversations around the dinner table. Thank you both for everything.",
+		author: "Anonymous",
+		service: "Female Veteran",
+		image: undefined,
+		imageAlt: undefined,
+		imagePosition: "center",
+		category: "Horseback",
+		published: true,
+		sortOrder: 5,
+		createdAt: "2026-07-12",
+		updatedAt: "2026-07-12",
 	},
 ];
 

@@ -26,7 +26,7 @@ async function ensureProducts() {
 async function ensureTestimonials() {
 	const db = sql();
 	if (!db) return null;
-	await db`CREATE TABLE IF NOT EXISTS testimonials (slug text PRIMARY KEY, quote text NOT NULL, author text NOT NULL, service text NOT NULL, image text, image_alt text, published boolean NOT NULL DEFAULT true, sort_order integer NOT NULL DEFAULT 0, created_at timestamptz NOT NULL DEFAULT now(), updated_at timestamptz NOT NULL DEFAULT now())`;
+	await db`CREATE TABLE IF NOT EXISTS testimonials (slug text PRIMARY KEY, quote text NOT NULL, author text NOT NULL, service text NOT NULL, image text, image_alt text, image_position text, category text, published boolean NOT NULL DEFAULT true, sort_order integer NOT NULL DEFAULT 0, created_at timestamptz NOT NULL DEFAULT now(), updated_at timestamptz NOT NULL DEFAULT now())`;
 	await db`CREATE TABLE IF NOT EXISTS migrations (id text PRIMARY KEY, applied_at timestamptz NOT NULL DEFAULT now())`;
 	return db;
 }
@@ -150,6 +150,19 @@ function rowToTestimonial(row: Record<string, unknown>): Testimonial {
 		service: String(row.service),
 		image: row.image ? String(row.image) : undefined,
 		imageAlt: row.image_alt ? String(row.image_alt) : undefined,
+		imagePosition: row.image_position
+			? (String(row.image_position) as
+					| "top"
+					| "bottom"
+					| "left"
+					| "right"
+					| "top-left"
+					| "top-right"
+					| "bottom-left"
+					| "bottom-right"
+					| "center")
+			: undefined,
+		category: row.category ? String(row.category) : undefined,
 		published: Boolean(row.published),
 		sortOrder: Number(row.sort_order),
 		createdAt: String(row.created_at),
@@ -181,7 +194,7 @@ export async function saveTestimonial(testimonial: Testimonial, previousSlug = t
 	const db = await ensureTestimonials();
 	if (!db) throw new Error("DATABASE_URL is required to save testimonials.");
 	if (previousSlug && previousSlug !== testimonial.slug) await db`DELETE FROM testimonials WHERE slug = ${previousSlug}`;
-	await db`INSERT INTO testimonials (slug, quote, author, service, image, image_alt, published, sort_order) VALUES (${testimonial.slug}, ${testimonial.quote}, ${testimonial.author}, ${testimonial.service}, ${testimonial.image ?? null}, ${testimonial.imageAlt ?? null}, ${testimonial.published}, ${testimonial.sortOrder}) ON CONFLICT (slug) DO UPDATE SET quote = EXCLUDED.quote, author = EXCLUDED.author, service = EXCLUDED.service, image = EXCLUDED.image, image_alt = EXCLUDED.image_alt, published = EXCLUDED.published, sort_order = EXCLUDED.sort_order, updated_at = now()`;
+	await db`INSERT INTO testimonials (slug, quote, author, service, image, image_alt, image_position, category, published, sort_order) VALUES (${testimonial.slug}, ${testimonial.quote}, ${testimonial.author}, ${testimonial.service}, ${testimonial.image ?? null}, ${testimonial.imageAlt ?? null}, ${testimonial.imagePosition ?? null}, ${testimonial.category ?? null}, ${testimonial.published}, ${testimonial.sortOrder}) ON CONFLICT (slug) DO UPDATE SET quote = EXCLUDED.quote, author = EXCLUDED.author, service = EXCLUDED.service, image = EXCLUDED.image, image_alt = EXCLUDED.image_alt, image_position = EXCLUDED.image_position, category = EXCLUDED.category, published = EXCLUDED.published, sort_order = EXCLUDED.sort_order, updated_at = now()`;
 }
 
 export async function deleteTestimonial(slug: string) {

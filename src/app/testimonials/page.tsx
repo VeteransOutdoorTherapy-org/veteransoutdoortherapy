@@ -75,7 +75,7 @@ export default async function TestimonialsPage() {
 							</p>
 						</div>
 					) : (
-						<div className="testimonials-grid">
+						<div className="testimonials-masonry">
 							{testimonials.map((testimonial) => (
 								<article key={testimonial.slug} className="testimonial-card">
 									<div className="testimonial-quote">
@@ -85,7 +85,14 @@ export default async function TestimonialsPage() {
 										</blockquote>
 									</div>
 									{testimonial.image && (
-										<div className="testimonial-image">
+										<div
+											className="testimonial-image"
+											style={{
+												objectPosition: testimonial.imagePosition
+													? testimonial.imagePosition.replace("-", " ")
+													: "center",
+											}}
+										>
 											<Image
 												src={testimonial.image}
 												alt={
@@ -102,6 +109,9 @@ export default async function TestimonialsPage() {
 										<div className="author-info">
 											<cite className="author-name">{testimonial.author}</cite>
 											<span className="author-service">{testimonial.service}</span>
+											{testimonial.category && (
+												<span className="author-category">{testimonial.category}</span>
+											)}
 										</div>
 										<div className="testimonial-rating" aria-label="5 out of 5 stars">
 											{[1, 2, 3, 4, 5].map((star) => (

@@ -1,4 +1,4 @@
-import { Copy, LockKeyhole, LogOut, PackagePlus, Pencil, MessageSquare, Plus, Trash2 } from "lucide-react";
+import { Copy, LockKeyhole, LogOut, PackagePlus, Pencil, MessageSquare, Plus, Trash2, Image as ImageIcon, Grid } from "lucide-react";
 import { isAdmin } from "@/lib/auth";
 import { getEvents, getProducts, getTestimonials, type Testimonial } from "@/lib/db";
 import { pageMetadata } from "@/lib/site";
@@ -8,6 +8,8 @@ import { EventAdmin } from "./event-admin";
 export const metadata = pageMetadata({ title: "Content Admin", description: "Authorized content administration.", path: "/admin", noIndex: true });
 
 function TestimonialAdmin({ testimonials, selected }: { testimonials: Testimonial[]; selected?: Testimonial }) {
+	const categories = Array.from(new Set(testimonials.map((t) => t.category).filter(Boolean))).sort();
+	const imagePositions = ["top", "bottom", "left", "right", "top-left", "top-right", "bottom-left", "bottom-right", "center"] as const;
 	return (
 		<div className="admin-grid">
 			<form className="product-form" action={saveTestimonialAction}>
@@ -34,6 +36,22 @@ function TestimonialAdmin({ testimonials, selected }: { testimonials: Testimonia
 					<textarea className="field" name="quote" rows={4} defaultValue={selected?.quote} required />
 				</label>
 				<label>
+					Category
+					<select className="field" name="category">
+						<option value="">— Select category —</option>
+						{categories.map((cat) => (
+							<option key={cat} value={cat} selected={selected?.category === cat}>
+								{cat}
+							</option>
+						))}
+						<option value="Horseback">Horseback</option>
+						<option value="General">General</option>
+						<option value="Hunting">Hunting</option>
+						<option value="Fishing">Fishing</option>
+						<option value="Camping">Camping</option>
+					</select>
+				</label>
+				<label>
 					Existing image URL
 					<input className="field" name="image" defaultValue={selected?.image} />
 				</label>
@@ -45,6 +63,16 @@ function TestimonialAdmin({ testimonials, selected }: { testimonials: Testimonia
 				<label>
 					Image alt text
 					<input className="field" name="imageAlt" defaultValue={selected?.imageAlt} />
+				</label>
+				<label>
+					Image position (for masonry layout)
+					<select className="field" name="imagePosition">
+						{imagePositions.map((pos) => (
+							<option key={pos} value={pos} selected={selected?.imagePosition === pos}>
+								{pos.charAt(0).toUpperCase() + pos.slice(1).replace("-", " ")}
+							</option>
+						))}
+					</select>
 				</label>
 				<div className="form-row">
 					<label>
@@ -65,7 +93,7 @@ function TestimonialAdmin({ testimonials, selected }: { testimonials: Testimonia
 					<article key={testimonial.slug}>
 						<div>
 							<strong>{testimonial.author}</strong>
-							<span>{testimonial.service} · {testimonial.published ? "Published" : "Draft"}</span>
+							<span>{testimonial.service} · {testimonial.category || "Uncategorized"} · {testimonial.published ? "Published" : "Draft"}</span>
 							<p style={{ marginTop: 8, color: "var(--moss)", fontSize: "0.9rem" }}>{testimonial.quote.slice(0, 100)}…</p>
 						</div>
 						<a className="icon-button" href={`/admin?view=testimonials&edit=${testimonial.slug}`} aria-label={`Edit ${testimonial.author}`}>

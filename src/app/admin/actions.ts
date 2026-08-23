@@ -301,6 +301,18 @@ export async function saveTestimonialAction(form: FormData) {
 				service: String(form.get("service") || "").trim(),
 				image: image || undefined,
 				imageAlt: String(form.get("imageAlt") || "").trim() || undefined,
+				imagePosition: (String(form.get("imagePosition") || "") as
+				| "top"
+				| "bottom"
+				| "left"
+				| "right"
+				| "top-left"
+				| "top-right"
+				| "bottom-left"
+				| "bottom-right"
+				| "center"
+				| undefined) || undefined,
+				category: String(form.get("category") || "").trim() || undefined,
 				published: form.get("published") === "on",
 				sortOrder: Number(form.get("sortOrder") || 0),
 				createdAt: new Date().toISOString(),
