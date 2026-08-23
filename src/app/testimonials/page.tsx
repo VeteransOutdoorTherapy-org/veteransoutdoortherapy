@@ -126,9 +126,7 @@ export default async function TestimonialsPage() {
 
 					<div className="testimonial-cta">
 						<p>
-							Have a story to share? We'd love to hear about your experience with
-							Veteran's Outdoor Therapy.
-						</p>
+							Have a story to share? We&apos;d love to hear about your experience with\n							Veteran&apos;s Outdoor Therapy.\n						</p>
 						<Link className="button orange" href="/contact">
 							Share Your Story
 							<ArrowRight size={17} />

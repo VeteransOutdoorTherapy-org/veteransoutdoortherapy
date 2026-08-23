@@ -1,4 +1,4 @@
-import { Copy, LockKeyhole, LogOut, PackagePlus, Pencil, MessageSquare, Plus, Trash2, Image as ImageIcon, Grid } from "lucide-react";
+import { Copy, LockKeyhole, LogOut, PackagePlus, Pencil, MessageSquare, Plus, Trash2 } from "lucide-react";
 import { isAdmin } from "@/lib/auth";
 import { getEvents, getProducts, getTestimonials, type Testimonial } from "@/lib/db";
 import { pageMetadata } from "@/lib/site";
