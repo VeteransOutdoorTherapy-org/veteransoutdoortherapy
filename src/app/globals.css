@@ -2111,9 +2111,9 @@ width: fit-content;
 }
 
 .testimonial-rating {
-display: flex;
-gap: 2px;
-color: var(--orange);
+	display: flex;
+	gap: 2px;
+	color: #d4a853; /* golden color */
 }
 
 .testimonial-cta {
