@@ -1,6 +1,8 @@
 import { neon } from "@neondatabase/serverless";
-import { events as seedEvents, products as seedProducts, type Event, type EventTemplate, type Product } from "./data";
+import { events as seedEvents, products as seedProducts, type Event, type EventTemplate, type Product, testimonials as seedTestimonials, type Testimonial } from "./data";
 import { SITE_NAME } from "./site";
+
+export type { Testimonial };
 
 function sql() {
 	return process.env.DATABASE_URL ? neon(process.env.DATABASE_URL) : null;
@@ -18,6 +20,14 @@ async function ensureProducts() {
 		await db`INSERT INTO migrations (id) VALUES ('official-name-veterans-to-veteran') ON CONFLICT (id) DO NOTHING RETURNING id`;
 	if (officialNameMigration.length)
 		await db`UPDATE products SET name = replace(name, 'Veterans Outdoor Therapy', ${SITE_NAME}), short_name = replace(short_name, 'Veterans Outdoor Therapy', ${SITE_NAME}), description = replace(description, 'Veterans Outdoor Therapy', ${SITE_NAME}), updated_at = now()`;
+	return db;
+}
+
+async function ensureTestimonials() {
+	const db = sql();
+	if (!db) return null;
+	await db`CREATE TABLE IF NOT EXISTS testimonials (slug text PRIMARY KEY, quote text NOT NULL, author text NOT NULL, service text NOT NULL, image text, image_alt text, published boolean NOT NULL DEFAULT true, sort_order integer NOT NULL DEFAULT 0, created_at timestamptz NOT NULL DEFAULT now(), updated_at timestamptz NOT NULL DEFAULT now())`;
+	await db`CREATE TABLE IF NOT EXISTS migrations (id text PRIMARY KEY, applied_at timestamptz NOT NULL DEFAULT now())`;
 	return db;
 }
 
@@ -130,6 +140,54 @@ export async function deleteEvent(slug: string) {
 	const db = await ensureEvents();
 	if (!db) throw new Error("DATABASE_URL is required to delete events.");
 	await db`DELETE FROM events WHERE slug = ${slug}`;
+}
+
+function rowToTestimonial(row: Record<string, unknown>): Testimonial {
+	return {
+		slug: String(row.slug),
+		quote: String(row.quote),
+		author: String(row.author),
+		service: String(row.service),
+		image: row.image ? String(row.image) : undefined,
+		imageAlt: row.image_alt ? String(row.image_alt) : undefined,
+		published: Boolean(row.published),
+		sortOrder: Number(row.sort_order),
+		createdAt: String(row.created_at),
+		updatedAt: String(row.updated_at),
+	};
+}
+
+export async function getTestimonials(): Promise<Testimonial[]> {
+	const db = await ensureTestimonials();
+	if (!db) return seedTestimonials;
+	const rows = await db`SELECT * FROM testimonials ORDER BY sort_order, created_at`;
+	if (!rows.length) {
+		for (const testimonial of seedTestimonials) await saveTestimonial(testimonial);
+		return seedTestimonials;
+	}
+	return rows.map(rowToTestimonial);
+}
+
+export async function getPublishedTestimonials(): Promise<Testimonial[]> {
+	const all = await getTestimonials();
+	return all.filter((t) => t.published);
+}
+
+export async function getTestimonial(slug: string): Promise<Testimonial | undefined> {
+	return (await getTestimonials()).find((testimonial) => testimonial.slug === slug);
+}
+
+export async function saveTestimonial(testimonial: Testimonial, previousSlug = testimonial.slug) {
+	const db = await ensureTestimonials();
+	if (!db) throw new Error("DATABASE_URL is required to save testimonials.");
+	if (previousSlug && previousSlug !== testimonial.slug) await db`DELETE FROM testimonials WHERE slug = ${previousSlug}`;
+	await db`INSERT INTO testimonials (slug, quote, author, service, image, image_alt, published, sort_order) VALUES (${testimonial.slug}, ${testimonial.quote}, ${testimonial.author}, ${testimonial.service}, ${testimonial.image ?? null}, ${testimonial.imageAlt ?? null}, ${testimonial.published}, ${testimonial.sortOrder}) ON CONFLICT (slug) DO UPDATE SET quote = EXCLUDED.quote, author = EXCLUDED.author, service = EXCLUDED.service, image = EXCLUDED.image, image_alt = EXCLUDED.image_alt, published = EXCLUDED.published, sort_order = EXCLUDED.sort_order, updated_at = now()`;
+}
+
+export async function deleteTestimonial(slug: string) {
+	const db = await ensureTestimonials();
+	if (!db) throw new Error("DATABASE_URL is required to delete testimonials.");
+	await db`DELETE FROM testimonials WHERE slug = ${slug}`;
 }
 
 export async function saveSubmission(kind: string, data: Record<string, string>) {

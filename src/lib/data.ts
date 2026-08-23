@@ -446,5 +446,32 @@ const galleryFiles = `
 
 export const galleryImages = galleryFiles.map((file) => `${uploads}/${file}`);
 
+export type Testimonial = {
+	slug: string;
+	quote: string;
+	author: string;
+	service: string;
+	image?: string;
+	imageAlt?: string;
+	published: boolean;
+	sortOrder: number;
+	createdAt: string;
+	updatedAt: string;
+};
+export const testimonials: Testimonial[] = [
+	{
+		slug: "connie-stone-army",
+		quote: "This event allowed me to gain confidence in myself as a Veteran's Advocate. Moving from Veteran in Need, to Veteran being Served, to Veterans serving Veterans has been a journey in healing and in life. To pass on a passion of mine to others that can bring hope and healing truly encompasses the mission of Veteran's Outdoor Therapy.",
+		author: "Connie Stone",
+		service: "Army (PH)",
+		image: undefined,
+		imageAlt: undefined,
+		published: true,
+		sortOrder: 1,
+		createdAt: "2026-08-22",
+		updatedAt: "2026-08-22",
+	},
+];
+
 export const mission =
 	"At Veteran's Outdoor Therapy, our mission is to provide fully funded outdoor adventures for America's heroes as a way to honor the service of Soldiers who have been deployed, and in some instances, sustained the wounds of war. We also extend our support to Gold Star families and children. These outdoor experiences offer a unique blend of physical activity, camaraderie, and emotional healing, enabling participants to reconnect with themselves and nature.";

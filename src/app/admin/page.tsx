@@ -1,11 +1,94 @@
-import { Copy, LockKeyhole, LogOut, PackagePlus, Pencil } from "lucide-react";
+import { Copy, LockKeyhole, LogOut, PackagePlus, Pencil, MessageSquare, Plus, Trash2 } from "lucide-react";
 import { isAdmin } from "@/lib/auth";
-import { getEvents, getProducts } from "@/lib/db";
+import { getEvents, getProducts, getTestimonials, type Testimonial } from "@/lib/db";
 import { pageMetadata } from "@/lib/site";
-import { deleteProductAction, duplicateProductAction, loginAction, logoutAction, saveProductAction } from "./actions";
+import { deleteProductAction, duplicateProductAction, loginAction, logoutAction, saveProductAction, saveTestimonialAction, duplicateTestimonialAction, deleteTestimonialAction } from "./actions";
 import { EventAdmin } from "./event-admin";
 
 export const metadata = pageMetadata({ title: "Content Admin", description: "Authorized content administration.", path: "/admin", noIndex: true });
+
+function TestimonialAdmin({ testimonials, selected }: { testimonials: Testimonial[]; selected?: Testimonial }) {
+	return (
+		<div className="admin-grid">
+			<form className="product-form" action={saveTestimonialAction}>
+				<h2>
+					<Plus size={20} /> {selected ? "Edit testimonial" : "Add testimonial"}
+				</h2>
+				<input type="hidden" name="previousSlug" value={selected?.slug || ""} />
+				<label>
+					Author name
+					<input className="field" name="author" defaultValue={selected?.author} required />
+				</label>
+				<div className="form-row">
+					<label>
+						Slug
+						<input className="field" name="slug" defaultValue={selected?.slug} />
+					</label>
+					<label>
+						Service / Branch
+						<input className="field" name="service" defaultValue={selected?.service} required />
+					</label>
+				</div>
+				<label>
+					Quote
+					<textarea className="field" name="quote" rows={4} defaultValue={selected?.quote} required />
+				</label>
+				<label>
+					Existing image URL
+					<input className="field" name="image" defaultValue={selected?.image} />
+				</label>
+				<input type="hidden" name="existingImage" value={selected?.image || ""} />
+				<label>
+					Or upload a new image
+					<input className="field" name="imageFile" type="file" accept="image/png,image/jpeg,image/webp" />
+				</label>
+				<label>
+					Image alt text
+					<input className="field" name="imageAlt" defaultValue={selected?.imageAlt} />
+				</label>
+				<div className="form-row">
+					<label>
+						Display order
+						<input className="field" name="sortOrder" type="number" min="0" defaultValue={selected?.sortOrder ?? 0} />
+					</label>
+				</div>
+				<label className="consent">
+					<input name="published" type="checkbox" defaultChecked={selected?.published ?? true} /> Published
+				</label>
+				<button className="button orange" type="submit">
+					Save testimonial
+				</button>
+			</form>
+			<div className="admin-list">
+				<h2>Testimonials · {testimonials.length}</h2>
+				{testimonials.map((testimonial) => (
+					<article key={testimonial.slug}>
+						<div>
+							<strong>{testimonial.author}</strong>
+							<span>{testimonial.service} · {testimonial.published ? "Published" : "Draft"}</span>
+							<p style={{ marginTop: 8, color: "var(--moss)", fontSize: "0.9rem" }}>{testimonial.quote.slice(0, 100)}…</p>
+						</div>
+						<a className="icon-button" href={`/admin?view=testimonials&edit=${testimonial.slug}`} aria-label={`Edit ${testimonial.author}`}>
+							<Pencil size={17} />
+						</a>
+						<form action={duplicateTestimonialAction}>
+							<input type="hidden" name="slug" value={testimonial.slug} />
+							<button className="icon-button" aria-label={`Duplicate ${testimonial.author}`} type="submit">
+								<Copy size={16} />
+							</button>
+						</form>
+						<form action={deleteTestimonialAction}>
+							<input type="hidden" name="slug" value={testimonial.slug} />
+							<button className="icon-button danger" aria-label={`Delete ${testimonial.author}`} type="submit">
+								<Trash2 size={16} />
+							</button>
+						</form>
+					</article>
+				))}
+			</div>
+		</div>
+	);
+}
 
 export default async function AdminPage({
 	searchParams,
@@ -36,13 +119,14 @@ export default async function AdminPage({
 				</form>
 			</section>
 		);
-	const view = query.view === "events" ? "events" : "products";
-	const [products, events] = await Promise.all([getProducts(), getEvents()]);
+	const view = query.view === "events" ? "events" : query.view === "testimonials" ? "testimonials" : "products";
+	const [products, events, testimonials] = await Promise.all([getProducts(), getEvents(), getTestimonials()]);
 	const categories = Array.from(
 		new Set(products.map((product) => product.category.trim()).filter((category) => category.length > 0)),
 	).sort((a, b) => a.localeCompare(b));
 	const selectedProduct = products.find((product) => product.slug === query.edit);
 	const selectedEvent = events.find((event) => event.slug === query.edit);
+	const selectedTestimonial = testimonials.find((testimonial) => testimonial.slug === query.edit);
 	return (
 		<section className="admin-page">
 			<div className="container">
@@ -64,9 +148,12 @@ export default async function AdminPage({
 					<a className={view === "events" ? "active" : ""} href="/admin?view=events">
 						Events
 					</a>
+					<a className={view === "testimonials" ? "active" : ""} href="/admin?view=testimonials">
+						<MessageSquare size={17} /> Testimonials
+					</a>
 				</nav>
-				{query.saved && <p className="success-note">{view === "events" ? "Event" : "Product"} saved.</p>}
-				{query.deleted && <p className="success-note">Event deleted.</p>}
+				{query.saved && <p className="success-note">Testimonial saved.</p>}
+				{query.deleted && <p className="success-note">Testimonial deleted.</p>}
 				{query.saveError === "upload-config" && (
 					<p className="form-error">Image upload is not configured. Add BLOB_READ_WRITE_TOKEN to your environment.</p>
 				)}
@@ -78,114 +165,114 @@ export default async function AdminPage({
 				)}
 				{view === "events" ? (
 					<EventAdmin events={events} selected={selectedEvent} />
+				) : view === "testimonials" ? (
+					<TestimonialAdmin testimonials={testimonials} selected={selectedTestimonial} />
 				) : (
-				<div className="admin-grid">
-					<form className="product-form" action={saveProductAction}>
-						<h2>
-							<PackagePlus size={20} /> {selectedProduct ? "Edit product" : "Add product"}
-						</h2>
-						<label>
-							Product name
-							<input className="field" name="name" defaultValue={selectedProduct?.name} required />
-						</label>
-						<div className="form-row">
+					<div className="admin-grid">
+						<form className="product-form" action={saveProductAction}>
+							<h2>
+								<PackagePlus size={20} /> {selectedProduct ? "Edit product" : "Add product"}
+							</h2>
 							<label>
-								Short display name
-								<input className="field" name="shortName" defaultValue={selectedProduct?.shortName} required />
+								Product name
+								<input className="field" name="name" defaultValue={selectedProduct?.name} required />
+							</label>
+							<div className="form-row">
+								<label>
+									Short display name
+									<input className="field" name="shortName" defaultValue={selectedProduct?.shortName} required />
+								</label>
+								<label>
+									Slug
+									<input className="field" name="slug" defaultValue={selectedProduct?.slug} />
+								</label>
+							</div>
+							<div className="form-row">
+								<label>
+									Price
+									<input
+										className="field"
+										name="price"
+										type="number"
+										min="0"
+										step="0.01"
+										defaultValue={selectedProduct?.price}
+										required
+									/>
+								</label>
+								<label>
+									Category
+									<input
+										className="field"
+										name="category"
+										list="product-categories"
+										defaultValue={selectedProduct?.category || "Merchandise"}
+										required
+									/>
+								</label>
+							</div>
+							<datalist id="product-categories">
+								{categories.map((category) => (
+									<option key={category} value={category} />
+								))}
+							</datalist>
+							<label>
+								Description
+								<textarea className="field" name="description" rows={5} defaultValue={selectedProduct?.description} required />
 							</label>
 							<label>
-								Slug
-								<input className="field" name="slug" defaultValue={selectedProduct?.slug} />
+								Existing image URL
+								<input className="field" name="image" defaultValue={selectedProduct?.image} />
 							</label>
-						</div>
-						<div className="form-row">
+							<input type="hidden" name="existingImage" value={selectedProduct?.image || ""} />
 							<label>
-								Price
-								<input
-									className="field"
-									name="price"
-									type="number"
-									min="0"
-									step="0.01"
-									defaultValue={selectedProduct?.price}
-									required
-								/>
+								Or upload a new image
+								<input className="field" name="imageFile" type="file" accept="image/png,image/jpeg,image/webp" />
 							</label>
-							<label>
-								Category
-								<input
-									className="field"
-									name="category"
-									list="product-categories"
-									defaultValue={selectedProduct?.category || "Merchandise"}
-									required
-								/>
+							<div className="form-row">
+								<label>
+									Sizes, comma separated
+									<input className="field" name="sizes" defaultValue={selectedProduct?.sizes?.join(", ")} />
+								</label>
+								<label>
+									Stock
+									<input className="field" name="stock" type="number" min="0" defaultValue={selectedProduct?.stock} />
+								</label>
+							</div>
+							<label className="consent">
+								<input name="featured" type="checkbox" defaultChecked={selectedProduct?.featured} /> Feature on home page
 							</label>
-						</div>
-						<datalist id="product-categories">
-							{categories.map((category) => (
-								<option key={category} value={category} />
+							<button className="button orange" type="submit">
+								Save product
+							</button>
+						</form>
+						<div className="admin-list">
+							<h2>Catalog · {products.length}</h2>
+							{products.map((product) => (
+								<article key={product.slug}>
+									<div>
+										<strong>{product.shortName}</strong>
+										<span>{product.category} · ${product.price.toLocaleString()}</span>
+									</div>
+									<a className="icon-button" href={`/admin?edit=${product.slug}`} aria-label={`Edit ${product.name}`}>
+										<Pencil size={17} />
+									</a>
+									<form action={duplicateProductAction}>
+										<input type="hidden" name="slug" value={product.slug} />
+										<button className="icon-button" aria-label={`Duplicate ${product.name}`} type="submit">
+											<Copy size={16} />
+										</button>
+									</form>
+									<form action={deleteProductAction}>
+										<input type="hidden" name="slug" value={product.slug} />
+										<button className="icon-button danger" aria-label={`Delete ${product.name}`} type="submit">
+											×
+										</button>
+									</form>
+								</article>
 							))}
-						</datalist>
-						<label>
-							Description
-							<textarea className="field" name="description" rows={5} defaultValue={selectedProduct?.description} required />
-						</label>
-						<label>
-							Existing image URL
-							<input className="field" name="image" defaultValue={selectedProduct?.image} />
-						</label>
-						<input type="hidden" name="existingImage" value={selectedProduct?.image || ""} />
-						<label>
-							Or upload a new image
-							<input className="field" name="imageFile" type="file" accept="image/png,image/jpeg,image/webp" />
-						</label>
-						<div className="form-row">
-							<label>
-								Sizes, comma separated
-								<input className="field" name="sizes" defaultValue={selectedProduct?.sizes?.join(", ")} />
-							</label>
-							<label>
-								Stock
-								<input className="field" name="stock" type="number" min="0" defaultValue={selectedProduct?.stock} />
-							</label>
 						</div>
-						<label className="consent">
-							<input name="featured" type="checkbox" defaultChecked={selectedProduct?.featured} /> Feature on home page
-						</label>
-						<button className="button orange" type="submit">
-							Save product
-						</button>
-					</form>
-					<div className="admin-list">
-						<h2>Catalog · {products.length}</h2>
-						{products.map((product) => (
-							<article key={product.slug}>
-								<div>
-									<strong>{product.shortName}</strong>
-									<span>
-										{product.category} · ${product.price.toLocaleString()}
-									</span>
-								</div>
-								<a className="icon-button" href={`/admin?edit=${product.slug}`} aria-label={`Edit ${product.name}`}>
-									<Pencil size={17} />
-								</a>
-								<form action={duplicateProductAction}>
-									<input type="hidden" name="slug" value={product.slug} />
-									<button className="icon-button" aria-label={`Duplicate ${product.name}`} type="submit">
-										<Copy size={16} />
-									</button>
-								</form>
-								<form action={deleteProductAction}>
-									<input type="hidden" name="slug" value={product.slug} />
-									<button className="icon-button danger" aria-label={`Delete ${product.name}`} type="submit">
-										×
-									</button>
-								</form>
-							</article>
-						))}
 					</div>
-				</div>
 				)}
 			</div>
 		</section>

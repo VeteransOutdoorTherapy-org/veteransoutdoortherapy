@@ -3,7 +3,7 @@ import { put } from "@vercel/blob";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { isAdmin, login, logout } from "@/lib/auth";
-import { deleteEvent, deleteProduct, getEvents, getProducts, saveEvent, saveProduct } from "@/lib/db";
+import { deleteEvent, deleteProduct, getEvents, getProducts, saveEvent, saveProduct, getTestimonials, saveTestimonial, deleteTestimonial } from "@/lib/db";
 
 function revalidateCatalogPages(slug: string) {
 	revalidatePath("/");
@@ -253,4 +253,108 @@ export async function deleteEventAction(form: FormData) {
 	await deleteEvent(slug);
 	revalidateEventPages(slug);
 	redirect("/admin?view=events&deleted=1");
+}
+
+function revalidateTestimonialPages(slug: string) {
+	revalidatePath("/testimonials");
+	revalidatePath("/admin");
+	revalidatePath(`/admin?view=testimonials&edit=${slug}`);
+}
+
+function safeTestimonialUploadPath(slug: string, fileName: string) {
+	const safeSlug = slugify(slug).slice(0, 60) || "testimonial";
+	const safeName =
+		fileName
+			.toLowerCase()
+			.replace(/[^a-z0-9._-]+/g, "-")
+			.replace(/-+/g, "-")
+			.slice(-80) || "image";
+	return `testimonials/${safeSlug}/${Date.now()}-${safeName}`;
+}
+
+export async function saveTestimonialAction(form: FormData) {
+	if (!(await isAdmin())) redirect("/admin");
+	const author = String(form.get("author") || "").trim();
+	const slug = slugify(String(form.get("slug") || author));
+	const previousSlug = String(form.get("previousSlug") || slug).trim();
+	const file = form.get("imageFile");
+	const existingImage = String(form.get("existingImage") || "").trim();
+	let image = String(form.get("image") || "").trim() || existingImage;
+
+	if (file instanceof File && file.size > 0) {
+		if (!process.env.BLOB_READ_WRITE_TOKEN) redirect("/admin?view=testimonials&saveError=upload-config");
+		try {
+			image = (await put(safeTestimonialUploadPath(slug, file.name), file, { access: "public", addRandomSuffix: true })).url;
+		} catch (error) {
+			console.error("Testimonial image upload failed", { slug, fileName: file.name, error });
+			redirect("/admin?view=testimonials&saveError=upload-failed");
+		}
+	}
+
+	try {
+		if (!author || !slug) throw new Error("Missing required testimonial fields.");
+		await saveTestimonial(
+			{
+				slug,
+				quote: String(form.get("quote") || "").trim(),
+				author,
+				service: String(form.get("service") || "").trim(),
+				image: image || undefined,
+				imageAlt: String(form.get("imageAlt") || "").trim() || undefined,
+				published: form.get("published") === "on",
+				sortOrder: Number(form.get("sortOrder") || 0),
+				createdAt: new Date().toISOString(),
+				updatedAt: new Date().toISOString(),
+			},
+			previousSlug,
+		);
+	} catch (error) {
+		console.error("Testimonial save failed", { slug, error });
+		redirect("/admin?view=testimonials&saveError=save-failed");
+	}
+
+	revalidateTestimonialPages(previousSlug);
+	revalidateTestimonialPages(slug);
+	redirect(`/admin?view=testimonials&edit=${slug}&saved=1`);
+}
+
+export async function duplicateTestimonialAction(form: FormData) {
+	if (!(await isAdmin())) redirect("/admin");
+	const sourceSlug = String(form.get("slug") || "").trim();
+	const testimonialList = await getTestimonials();
+	const source = testimonialList.find((testimonial) => testimonial.slug === sourceSlug);
+	if (!source) redirect("/admin?view=testimonials&saveError=save-failed");
+
+	function getDuplicateSlug(existingSlugs: Set<string>, sourceSlug: string) {
+		const base = `${slugify(sourceSlug).slice(0, 48) || "testimonial"}-copy`;
+		if (!existingSlugs.has(base)) return base;
+		let index = 2;
+		while (existingSlugs.has(`${base}-${index}`)) index += 1;
+		return `${base}-${index}`;
+	}
+
+	const existingSlugs = new Set(testimonialList.map((t) => t.slug));
+	const duplicateSlug = getDuplicateSlug(existingSlugs, source.slug);
+	try {
+		await saveTestimonial({
+			...source,
+			slug: duplicateSlug,
+			author: `${source.author} (Copy)`,
+			published: false,
+			sortOrder: testimonialList.length + 1,
+		});
+	} catch {
+		redirect("/admin?view=testimonials&saveError=save-failed");
+	}
+
+	revalidateTestimonialPages(duplicateSlug);
+	redirect(`/admin?view=testimonials&edit=${duplicateSlug}&saved=1`);
+}
+
+export async function deleteTestimonialAction(form: FormData) {
+	if (!(await isAdmin())) redirect("/admin");
+	const slug = String(form.get("slug") || "").trim();
+	await deleteTestimonial(slug);
+	revalidateTestimonialPages(slug);
+	redirect("/admin?view=testimonials&deleted=1");
 }

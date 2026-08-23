@@ -21,6 +21,7 @@ const groups = [
 		links: [
 			["Our mission", "/about"],
 			["Gallery", "/gallery"],
+			["Testimonials", "/testimonials"],
 			["Contact", "/contact"],
 		],
 	},
