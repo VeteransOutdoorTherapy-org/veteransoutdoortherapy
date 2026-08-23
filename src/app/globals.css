@@ -1971,38 +1971,45 @@ img {
 }
 
 .testimonials-masonry {
-	columns: 1;
-	column-gap: 30px;
-	margin-top: 40px;
+columns: 1;
+column-gap: 40px;
+margin-top: 48px;
 }
 
 @media (min-width: 560px) {
-	.testimonials-masonry {
-		columns: 2;
-	}
+.testimonials-masonry {
+columns: 2;
+column-gap: 48px;
+}
 }
 
 @media (min-width: 900px) {
-	.testimonials-masonry {
-		columns: 3;
-	}
+.testimonials-masonry {
+columns: 3;
+column-gap: 64px;
+}
 }
 
 .testimonial-card {
-	background: var(--white);
-	border: 1px solid var(--line);
-	border-radius: 12px;
-	padding: 32px;
-	display: flex;
-	flex-direction: column;
-	transition: transform 0.2s ease, box-shadow 0.2s ease;
-	break-inside: avoid;
-	page-break-inside: avoid;
+background: var(--white);
+border: 1px solid var(--line);
+border-radius: 16px;
+padding: 32px;
+display: flex;
+flex-direction: column;
+transition: transform 0.2s ease, box-shadow 0.2s ease;
+break-inside: avoid;
+page-break-inside: avoid;
+margin-bottom: 32px;
+}
+
+.testimonial-card:last-child {
+margin-bottom: 0;
 }
 
 .testimonial-card:hover {
-	transform: translateY(-4px);
-	box-shadow: 0 12px 32px rgba(10, 16, 12, 0.12);
+transform: translateY(-4px);
+box-shadow: 0 20px 56px rgba(10, 16, 12, 0.16);
 }
 
 .testimonial-quote {
