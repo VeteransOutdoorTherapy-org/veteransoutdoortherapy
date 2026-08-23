@@ -3,8 +3,8 @@ import Link from "next/link";
 import { Quote, Star, ArrowRight } from "lucide-react";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { JsonLd } from "@/components/json-ld";
-import { pageMetadata, breadcrumbSchema, faqSchema } from "@/lib/site";
-import { getPublishedTestimonials, type Testimonial } from "@/lib/db";
+import { pageMetadata, breadcrumbSchema } from "@/lib/site";
+import { getPublishedTestimonials } from "@/lib/db";
 
 export const metadata = pageMetadata({
 	title: "Veteran Testimonials — Stories of Healing & Hope",
@@ -106,19 +106,19 @@ export default async function TestimonialsPage() {
 										</div>
 									)}
 									<footer className="testimonial-author">
-												<div className="author-info">
-													<cite className="author-name">{testimonial.author}</cite>
-													<span className="author-service">{testimonial.service}</span>
-													{testimonial.category && (
-														<span className="author-category">{testimonial.category}</span>
-													)}
-												</div>
-												<div className="testimonial-rating" aria-label="5 out of 5 stars" data-horizontal=true>
-													{[1, 2, 3, 4, 5].map((star) => (
-														<Star key={star} size={18} fill="currentColor" />
-													))}
-												</div>
-											</footer>
+										<div className="author-info">
+											<cite className="author-name">{testimonial.author}</cite>
+											<span className="author-service">{testimonial.service}</span>
+											{testimonial.category && (
+												<span className="author-category">{testimonial.category}</span>
+											)}
+										</div>
+										<div className="testimonial-rating" aria-label="5 out of 5 stars" data-horizontal={true}>
+											{[1, 2, 3, 4, 5].map((star) => (
+												<Star key={star} size={18} fill="currentColor" />
+											))}
+										</div>
+									</footer>
 								</article>
 							))}
 						</div>
