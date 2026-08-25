@@ -16,7 +16,7 @@ Copy `.env.example` to `.env.local` and fill in the service credentials. The com
 1. Create a Neon Postgres database and add `DATABASE_URL` in Vercel.
 2. Enable Vercel Blob and add `BLOB_READ_WRITE_TOKEN`.
 3. Create a PayPal developer app. Use sandbox credentials until test orders pass, then switch `PAYPAL_API_BASE` to `https://api-m.paypal.com` with live credentials.
-4. Set `ADMIN_USERNAME`, a strong `ADMIN_PASSWORD`, and a random 32+ character `AUTH_SECRET` in Vercel.
+4. Set `ADMIN_USERNAME` and a strong `ADMIN_PASSWORD` in Vercel.
 5. Set `NEXT_PUBLIC_SITE_URL=https://veteransoutdoortherapy.org`.
 
 The catalog works from seed data without Neon. Product writes and form submissions intentionally require the database. Image uploads intentionally require Blob. Checkout is hidden until a public PayPal client ID is present.
