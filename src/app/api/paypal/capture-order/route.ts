@@ -1,26 +1,34 @@
 import { NextResponse } from "next/server";
-async function accessToken() {
-	const credentials = Buffer.from(`${process.env.PAYPAL_CLIENT_ID}:${process.env.PAYPAL_CLIENT_SECRET}`).toString(
-		"base64",
-	);
-	const response = await fetch(`${process.env.PAYPAL_API_BASE || "https://api-m.sandbox.paypal.com"}/v1/oauth2/token`, {
-		method: "POST",
-		headers: { Authorization: `Basic ${credentials}`, "Content-Type": "application/x-www-form-urlencoded" },
-		body: "grant_type=client_credentials",
-	});
-	return ((await response.json()) as { access_token: string }).access_token;
-}
+import { getOrderByPayPalId } from "@/lib/db";
+import { captureDetails, capturePayPalOrder } from "@/lib/shop/paypal";
+import { finalizePaidOrder } from "@/lib/shop/order-finalization";
+
+export const runtime = "nodejs";
+
 export async function POST(request: Request) {
 	try {
-		const { orderID } = (await request.json()) as { orderID: string };
-		if (!/^[A-Z0-9]+$/i.test(orderID)) return NextResponse.json({ error: "Invalid order" }, { status: 400 });
-		const token = await accessToken();
-		const response = await fetch(
-			`${process.env.PAYPAL_API_BASE || "https://api-m.sandbox.paypal.com"}/v2/checkout/orders/${orderID}/capture`,
-			{ method: "POST", headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" } },
-		);
-		return NextResponse.json(await response.json(), { status: response.status });
-	} catch {
-		return NextResponse.json({ error: "Unable to capture PayPal order" }, { status: 500 });
+		const { orderID, orderNumber } = (await request.json()) as { orderID?: string; orderNumber?: string };
+		if (!orderID || !/^[A-Z0-9]+$/i.test(orderID)) return NextResponse.json({ error: "Invalid order." }, { status: 400 });
+		const existing = await getOrderByPayPalId(orderID);
+		if (!existing || (orderNumber && existing.orderNumber !== orderNumber)) {
+			return NextResponse.json({ error: "Order was not found." }, { status: 404 });
+		}
+		const captured = captureDetails(await capturePayPalOrder(orderID));
+		if (Number(captured.amount).toFixed(2) !== existing.total.toFixed(2)) {
+			return NextResponse.json({ error: "The captured amount did not match the order." }, { status: 409 });
+		}
+		const result = await finalizePaidOrder(orderID, captured.id, `capture:${captured.id}`, "paypal-capture", {
+			orderID,
+			captureID: captured.id,
+			amount: captured.amount,
+		});
+		return NextResponse.json({
+			ok: true,
+			orderNumber: result.order.orderNumber,
+			notificationSent: result.internalNotificationSent && result.customerNotificationSent,
+		});
+	} catch (error) {
+		console.error("PayPal capture failed", error);
+		return NextResponse.json({ error: "We could not confirm the payment." }, { status: 502 });
 	}
 }

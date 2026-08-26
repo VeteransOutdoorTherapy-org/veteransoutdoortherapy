@@ -1,47 +1,55 @@
 import { NextResponse } from "next/server";
-import { getProducts } from "@/lib/db";
-type RequestedItem = { slug: string; quantity: number };
-async function accessToken() {
-	const credentials = Buffer.from(`${process.env.PAYPAL_CLIENT_ID}:${process.env.PAYPAL_CLIENT_SECRET}`).toString(
-		"base64",
-	);
-	const response = await fetch(`${process.env.PAYPAL_API_BASE || "https://api-m.sandbox.paypal.com"}/v1/oauth2/token`, {
-		method: "POST",
-		headers: { Authorization: `Basic ${credentials}`, "Content-Type": "application/x-www-form-urlencoded" },
-		body: "grant_type=client_credentials",
-	});
-	if (!response.ok) throw new Error("PayPal authentication failed");
-	return ((await response.json()) as { access_token: string }).access_token;
-}
+import { z } from "zod";
+import { attachPayPalOrder, createPendingOrder, markOrderPaymentFailed } from "@/lib/db";
+import { createPayPalOrder } from "@/lib/shop/paypal";
+
+export const runtime = "nodejs";
+
+const checkoutSchema = z.object({
+	items: z.array(z.object({ slug: z.string().trim().min(1).max(200), quantity: z.number().int().min(1).max(20), size: z.string().trim().max(30).optional() })),
+	customer: z.object({
+		name: z.string().trim().min(1).max(120),
+		email: z.email().max(254),
+		phone: z.string().trim().max(40),
+		shippingAddress: z.object({
+			addressLine1: z.string().trim().min(1).max(150),
+			addressLine2: z.string().trim().max(150),
+			city: z.string().trim().min(1).max(80),
+			state: z.string().trim().min(1).max(80),
+			postalCode: z.string().trim().min(1).max(20),
+			country: z.literal("US"),
+		}),
+		notes: z.string().trim().max(1000),
+	}),
+});
+
 export async function POST(request: Request) {
+	let body: unknown;
 	try {
-		const { items } = (await request.json()) as { items: RequestedItem[] };
-		const products = await getProducts();
-		const total = items.reduce((sum, item) => {
-			const product = products.find((entry) => entry.slug === item.slug);
-			return sum + (product?.price || 0) * Math.max(1, Math.min(20, item.quantity));
-		}, 0);
-		if (total <= 0) return NextResponse.json({ error: "Cart is empty" }, { status: 400 });
-		const token = await accessToken();
-		const response = await fetch(
-			`${process.env.PAYPAL_API_BASE || "https://api-m.sandbox.paypal.com"}/v2/checkout/orders`,
-			{
-				method: "POST",
-				headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
-				body: JSON.stringify({
-					intent: "CAPTURE",
-					purchase_units: [
-						{
-							amount: { currency_code: "USD", value: total.toFixed(2) },
-							description: "Veteran's Outdoor Therapy purchase",
-						},
-					],
-				}),
-			},
-		);
-		const order = await response.json();
-		return NextResponse.json(order, { status: response.status });
+		body = await request.json();
 	} catch {
-		return NextResponse.json({ error: "Unable to create PayPal order" }, { status: 500 });
+		return NextResponse.json({ error: "Invalid checkout request." }, { status: 400 });
+	}
+	const parsed = checkoutSchema.safeParse(body);
+	if (!parsed.success) return NextResponse.json({ error: "Please complete the checkout details." }, { status: 400 });
+
+	let orderNumber = "";
+	try {
+		const pending = await createPendingOrder(parsed.data.customer, parsed.data.items);
+		orderNumber = pending.orderNumber;
+		const paypalOrder = await createPayPalOrder({
+			...pending,
+			paypalOrderId: "",
+			status: "pending",
+			customer: parsed.data.customer,
+			internalNotificationSent: false,
+			customerNotificationSent: false,
+		});
+		await attachPayPalOrder(orderNumber, paypalOrder.id as string);
+		return NextResponse.json({ id: paypalOrder.id, orderNumber });
+	} catch (error) {
+		if (orderNumber) await markOrderPaymentFailed(orderNumber).catch(() => undefined);
+		console.error("PayPal order creation failed", error);
+		return NextResponse.json({ error: "We could not start checkout. Please try again." }, { status: 502 });
 	}
 }

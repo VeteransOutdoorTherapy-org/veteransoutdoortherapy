@@ -1,11 +1,27 @@
 import { neon } from "@neondatabase/serverless";
+import { randomUUID } from "crypto";
 import { events as seedEvents, products as seedProducts, type Event, type EventTemplate, type Product, testimonials as seedTestimonials, type Testimonial } from "./data";
 import { SITE_NAME } from "./site";
+import type { CheckoutCustomer, CheckoutItem, OrderRecord, PricedOrderItem } from "./shop/types";
 
 export type { Testimonial };
 
 function sql() {
 	return process.env.DATABASE_URL ? neon(process.env.DATABASE_URL) : null;
+}
+
+async function ensureOrders() {
+	const db = sql();
+	if (!db) return null;
+	await db`CREATE TABLE IF NOT EXISTS orders (id bigserial PRIMARY KEY, order_number text NOT NULL UNIQUE, paypal_order_id text UNIQUE, paypal_capture_id text, status text NOT NULL, customer_name text NOT NULL, customer_email text NOT NULL, phone text NOT NULL DEFAULT '', shipping_address jsonb NOT NULL, order_notes text NOT NULL DEFAULT '', subtotal numeric NOT NULL, shipping_amount numeric NOT NULL DEFAULT 0, tax_amount numeric NOT NULL DEFAULT 0, total numeric NOT NULL, currency text NOT NULL DEFAULT 'USD', notification_sent_at timestamptz, created_at timestamptz NOT NULL DEFAULT now(), paid_at timestamptz)`;
+	await db`ALTER TABLE orders ADD COLUMN IF NOT EXISTS internal_notification_sent_at timestamptz`;
+	await db`ALTER TABLE orders ADD COLUMN IF NOT EXISTS customer_notification_sent_at timestamptz`;
+	await db`ALTER TABLE orders ADD COLUMN IF NOT EXISTS fulfilled_at timestamptz`;
+	await db`ALTER TABLE orders ADD COLUMN IF NOT EXISTS cancelled_at timestamptz`;
+	await db`ALTER TABLE orders ADD COLUMN IF NOT EXISTS refunded_at timestamptz`;
+	await db`CREATE TABLE IF NOT EXISTS order_items (id bigserial PRIMARY KEY, order_id bigint NOT NULL REFERENCES orders(id) ON DELETE CASCADE, product_slug text NOT NULL, product_name text NOT NULL, size text, quantity integer NOT NULL, unit_price numeric NOT NULL, line_total numeric NOT NULL)`;
+	await db`CREATE TABLE IF NOT EXISTS order_events (id bigserial PRIMARY KEY, order_id bigint NOT NULL REFERENCES orders(id) ON DELETE CASCADE, event_key text NOT NULL, event_type text NOT NULL, source text NOT NULL, payload jsonb NOT NULL DEFAULT '{}'::jsonb, created_at timestamptz NOT NULL DEFAULT now(), UNIQUE (order_id, event_key))`;
+	return db;
 }
 async function ensureProducts() {
 	const db = sql();
@@ -73,6 +89,156 @@ export async function getProducts(): Promise<Product[]> {
 		stock: row.stock == null ? undefined : Number(row.stock),
 		featured: Boolean(row.featured),
 	}));
+}
+
+function orderNumber() {
+	const stamp = new Date().toISOString().slice(0, 10).replace(/-/g, "");
+	return `VOT-${stamp}-${randomUUID().slice(0, 8).toUpperCase()}`;
+}
+
+function rowToOrder(rows: Array<Record<string, unknown>>): OrderRecord | null {
+	const first = rows[0];
+	if (!first) return null;
+	return {
+		orderNumber: String(first.order_number),
+		paypalOrderId: first.paypal_order_id ? String(first.paypal_order_id) : "",
+		paypalCaptureId: first.paypal_capture_id ? String(first.paypal_capture_id) : undefined,
+		status: String(first.status) as OrderRecord["status"],
+		customer: {
+			name: String(first.customer_name),
+			email: String(first.customer_email),
+			phone: String(first.phone || ""),
+			shippingAddress: first.shipping_address as CheckoutCustomer["shippingAddress"],
+			notes: String(first.order_notes || ""),
+		},
+		items: rows
+			.filter((row) => row.item_id != null)
+			.map((row) => ({
+				slug: String(row.product_slug),
+				name: String(row.product_name),
+				size: row.size ? String(row.size) : undefined,
+				quantity: Number(row.quantity),
+				unitPrice: Number(row.unit_price),
+				lineTotal: Number(row.line_total),
+			})),
+		subtotal: Number(first.subtotal),
+		total: Number(first.total),
+		internalNotificationSent: Boolean(first.internal_notification_sent_at),
+		customerNotificationSent: Boolean(first.customer_notification_sent_at),
+	};
+}
+
+export async function createPendingOrder(customer: CheckoutCustomer, requestedItems: CheckoutItem[]) {
+	const db = await ensureOrders();
+	if (!db) throw new Error("DATABASE_URL is required to create orders.");
+	if (!requestedItems.length || requestedItems.length > 50) throw new Error("Your cart is empty or too large.");
+
+	const products = await getProducts();
+	const items: PricedOrderItem[] = requestedItems.map((requested) => {
+		const product = products.find((entry) => entry.slug === requested.slug);
+		const quantity = Number(requested.quantity);
+		if (!product || !Number.isInteger(quantity) || quantity < 1 || quantity > 20) throw new Error("One or more cart items are invalid.");
+		if (product.sizes?.length && (!requested.size || !product.sizes.includes(requested.size))) {
+			throw new Error(`Please choose a valid size for ${product.shortName}.`);
+		}
+		const unitPrice = Number(product.price);
+		return {
+			slug: product.slug,
+			quantity,
+			size: requested.size,
+			name: product.shortName,
+			unitPrice,
+			lineTotal: unitPrice * quantity,
+		};
+	});
+	const subtotal = items.reduce((sum, item) => sum + item.lineTotal, 0);
+	const created = await db`
+		INSERT INTO orders (order_number, status, customer_name, customer_email, phone, shipping_address, order_notes, subtotal, total)
+		VALUES (${orderNumber()}, 'pending', ${customer.name}, ${customer.email}, ${customer.phone}, ${JSON.stringify(customer.shippingAddress)}, ${customer.notes}, ${subtotal}, ${subtotal})
+		RETURNING id, order_number
+	`;
+	const orderId = created[0]?.id;
+	if (!orderId) throw new Error("Unable to create order.");
+	for (const item of items) {
+		await db`INSERT INTO order_items (order_id, product_slug, product_name, size, quantity, unit_price, line_total) VALUES (${orderId}, ${item.slug}, ${item.name}, ${item.size || null}, ${item.quantity}, ${item.unitPrice}, ${item.lineTotal})`;
+	}
+	return { orderNumber: String(created[0].order_number), items, subtotal, total: subtotal };
+}
+
+export async function attachPayPalOrder(orderNumberValue: string, paypalOrderId: string) {
+	const db = await ensureOrders();
+	if (!db) throw new Error("DATABASE_URL is required to update orders.");
+	await db`UPDATE orders SET paypal_order_id = ${paypalOrderId} WHERE order_number = ${orderNumberValue} AND status = 'pending'`;
+}
+
+export async function markOrderPaymentFailed(orderNumberValue: string) {
+	const db = await ensureOrders();
+	if (!db) return;
+	await db`UPDATE orders SET status = 'payment_failed' WHERE order_number = ${orderNumberValue} AND status = 'pending'`;
+}
+
+export async function getOrderByPayPalId(paypalOrderId: string) {
+	const db = await ensureOrders();
+	if (!db) return null;
+	const rows = await db`
+		SELECT o.*, oi.id AS item_id, oi.product_slug, oi.product_name, oi.size, oi.quantity, oi.unit_price, oi.line_total
+		FROM orders o LEFT JOIN order_items oi ON oi.order_id = o.id
+		WHERE o.paypal_order_id = ${paypalOrderId}
+		ORDER BY oi.id
+	`;
+	return rowToOrder(rows as Array<Record<string, unknown>>);
+}
+
+export async function getOrderByNumber(orderNumberValue: string) {
+	const db = await ensureOrders();
+	if (!db) return null;
+	const rows = await db`
+		SELECT o.*, oi.id AS item_id, oi.product_slug, oi.product_name, oi.size, oi.quantity, oi.unit_price, oi.line_total
+		FROM orders o LEFT JOIN order_items oi ON oi.order_id = o.id
+		WHERE o.order_number = ${orderNumberValue}
+		ORDER BY oi.id
+	`;
+	return rowToOrder(rows as Array<Record<string, unknown>>);
+}
+
+export async function recordOrderEvent(orderNumberValue: string, eventKey: string, eventType: string, source: string, payload: unknown) {
+	const db = await ensureOrders();
+	if (!db) return;
+	await db`
+		INSERT INTO order_events (order_id, event_key, event_type, source, payload)
+		SELECT id, ${eventKey}, ${eventType}, ${source}, ${JSON.stringify(payload)} FROM orders WHERE order_number = ${orderNumberValue}
+		ON CONFLICT (order_id, event_key) DO NOTHING
+	`;
+}
+
+export async function markOrderPaid(paypalOrderId: string, paypalCaptureId: string) {
+	const db = await ensureOrders();
+	if (!db) throw new Error("DATABASE_URL is required to update orders.");
+	const existing = await getOrderByPayPalId(paypalOrderId);
+	if (!existing) throw new Error("Order was not found.");
+	if (existing.status !== "paid") {
+		await db`UPDATE orders SET status = 'paid', paypal_capture_id = ${paypalCaptureId}, paid_at = now() WHERE paypal_order_id = ${paypalOrderId} AND status = 'pending'`;
+	}
+	return { order: await getOrderByPayPalId(paypalOrderId), newlyPaid: existing.status !== "paid" };
+}
+
+export async function markOrderNotificationSent(orderNumberValue: string) {
+	const db = await ensureOrders();
+	if (!db) return;
+	await db`UPDATE orders SET notification_sent_at = now(), internal_notification_sent_at = now() WHERE order_number = ${orderNumberValue}`;
+}
+
+export async function markCustomerNotificationSent(orderNumberValue: string) {
+	const db = await ensureOrders();
+	if (!db) return;
+	await db`UPDATE orders SET customer_notification_sent_at = now() WHERE order_number = ${orderNumberValue}`;
+}
+
+export async function markOrderRefunded(paypalOrderId: string) {
+	const db = await ensureOrders();
+	if (!db) return null;
+	await db`UPDATE orders SET status = 'refunded', refunded_at = now() WHERE paypal_order_id = ${paypalOrderId}`;
+	return getOrderByPayPalId(paypalOrderId);
 }
 
 export async function saveProduct(product: Product) {
