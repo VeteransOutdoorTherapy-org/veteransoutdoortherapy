@@ -1,4 +1,4 @@
-import { ClipboardList, Copy, LockKeyhole, LogOut, PackagePlus, Pencil, MessageSquare, Plus, Trash2 } from "lucide-react";
+import { Copy, LockKeyhole, LogOut, PackagePlus, Pencil, Plus, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { isAdmin } from "@/lib/auth";
 import { getEvents, getProducts, getTestimonials, getGalleryImages, type Testimonial } from "@/lib/db";
@@ -182,13 +182,13 @@ export default async function AdminPage({
 						Events
 					</a>
 					<a className={view === "testimonials" ? "active" : ""} href="/admin?view=testimonials">
-						<MessageSquare size={17} /> Testimonials
+						Testimonials
 					</a>
 					<Link href="/admin/orders">
-						<ClipboardList size={17} /> Orders
+						Orders
 					</Link>
 					<Link className={view === "gallery" ? "active" : ""} href="/admin?view=gallery">Gallery</Link>
-					<Link className={view === "wiki" ? "active" : ""} href="/admin?view=wiki">Wiki</Link>
+					<Link href="/admin/wiki">Wiki</Link>
 				</nav>
 				{query.saved && <p className="success-note">Testimonial saved.</p>}
 				{query.deleted && <p className="success-note">Testimonial deleted.</p>}
