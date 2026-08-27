@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import { Trash2 } from "lucide-react";
 import type { GalleryImage } from "@/lib/data";
@@ -19,7 +21,8 @@ export function GalleryAdmin({ images }: { images: GalleryImage[] }) {
 					<label>Alt text<input className="field" name="alt" defaultValue={image.alt} required /></label>
 					<label>Caption<input className="field" name="caption" defaultValue={image.caption} /></label>
 					<div className="form-row"><label>Tags<input className="field" name="tags" defaultValue={image.tags.join(", ")} /></label><label>Year<input className="field" name="year" defaultValue={image.year} /></label></div>
-					<div className="button-row"><label className="consent"><input name="published" type="checkbox" defaultChecked={image.published} /> Published</label><button className="button secondary" type="submit">Save metadata</button></div>
+					<div className="button-row"><label className="consent"><input name="published" type="checkbox" defaultChecked={image.published} onChange={(event) => event.currentTarget.form?.requestSubmit()} /> Published</label><button className="button secondary" type="submit">Save metadata</button></div>
+					<small className="admin-help">Visibility saves immediately when changed. Use Save metadata for alt text, captions, tags, year, or sort order.</small>
 				</form>
 				<form action={deleteGalleryImageAction}><input type="hidden" name="id" value={image.id} /><button className="icon-button danger" type="submit" aria-label={`Delete ${image.alt}`}><Trash2 size={17} /></button></form>
 			</article>)}

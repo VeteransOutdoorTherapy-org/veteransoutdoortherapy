@@ -42,6 +42,8 @@ The authenticated `/admin` area includes Products, Events, Testimonials, Orders,
 
 The full gallery discovery, curation, UX, SEO, recognition, and QA record is in [`docs/GALLERY_IMPLEMENTATION_PLAN.md`](docs/GALLERY_IMPLEMENTATION_PLAN.md). The gallery requires `DATABASE_URL` for persistent edits and `BLOB_READ_WRITE_TOKEN` for uploads.
 
+The complete administrator operating manual and developer handoff is in [`docs/ADMIN_WIKI.md`](docs/ADMIN_WIKI.md), and the same guide is available to authenticated administrators at `/admin/wiki`.
+
 ## Getting Started
 
 First, run the development server:
