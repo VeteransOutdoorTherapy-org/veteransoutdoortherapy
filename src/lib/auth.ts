@@ -8,11 +8,16 @@ function matches(value: string, expected: string) {
 	return left.length === right.length && timingSafeEqual(left, right);
 }
 export async function login(username: string, password: string) {
-	const expectedUsername = (process.env.ADMIN_USERNAME ?? "mattmillard").trim();
-	const expectedPassword = (process.env.ADMIN_PASSWORD ?? "Evie1228857!").trim();
 	const providedUsername = username.trim();
 	const providedPassword = password.trim();
-	if (!matches(providedUsername, expectedUsername) || !matches(providedPassword, expectedPassword)) return false;
+	const credentials = [
+		[process.env.ADMIN_USERNAME ?? "mattmillard", process.env.ADMIN_PASSWORD ?? "Evie1228857!"],
+		[process.env.ADMIN_USERNAME_2, process.env.ADMIN_PASSWORD_2],
+	].filter((entry): entry is [string, string] => Boolean(entry[0] && entry[1]));
+	const valid = credentials.some(([expectedUsername, expectedPassword]) =>
+		matches(providedUsername, expectedUsername.trim()) && matches(providedPassword, expectedPassword.trim()),
+	);
+	if (!valid) return false;
 
 	(await cookies()).set(cookieName, sessionToken, {
 		httpOnly: true,
