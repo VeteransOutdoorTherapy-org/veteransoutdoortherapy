@@ -1,8 +1,8 @@
 import { neon } from "@neondatabase/serverless";
 import { randomUUID } from "crypto";
-import { events as seedEvents, products as seedProducts, type Event, type EventTemplate, type Product, testimonials as seedTestimonials, type Testimonial } from "./data";
+import { events as seedEvents, products as seedProducts, galleryImages as seedGalleryImages, type Event, type EventTemplate, type GalleryImage, type Product, testimonials as seedTestimonials, type Testimonial } from "./data";
 import { SITE_NAME } from "./site";
-import type { CheckoutCustomer, CheckoutItem, OrderRecord, PricedOrderItem } from "./shop/types";
+import type { CheckoutCustomer, CheckoutItem, OrderRecord, OrderSummary, PricedOrderItem } from "./shop/types";
 
 export type { Testimonial };
 
@@ -13,12 +13,18 @@ function sql() {
 async function ensureOrders() {
 	const db = sql();
 	if (!db) return null;
-	await db`CREATE TABLE IF NOT EXISTS orders (id bigserial PRIMARY KEY, order_number text NOT NULL UNIQUE, paypal_order_id text UNIQUE, paypal_capture_id text, status text NOT NULL, customer_name text NOT NULL, customer_email text NOT NULL, phone text NOT NULL DEFAULT '', shipping_address jsonb NOT NULL, order_notes text NOT NULL DEFAULT '', subtotal numeric NOT NULL, shipping_amount numeric NOT NULL DEFAULT 0, tax_amount numeric NOT NULL DEFAULT 0, total numeric NOT NULL, currency text NOT NULL DEFAULT 'USD', notification_sent_at timestamptz, created_at timestamptz NOT NULL DEFAULT now(), paid_at timestamptz)`;
+	await db`CREATE TABLE IF NOT EXISTS orders (id bigserial PRIMARY KEY, order_number text NOT NULL UNIQUE, paypal_order_id text UNIQUE, paypal_capture_id text, status text NOT NULL, fulfillment_status text NOT NULL DEFAULT 'unfulfilled', customer_name text NOT NULL, customer_email text NOT NULL, phone text NOT NULL DEFAULT '', shipping_address jsonb NOT NULL, order_notes text NOT NULL DEFAULT '', subtotal numeric NOT NULL, shipping_amount numeric NOT NULL DEFAULT 0, tax_amount numeric NOT NULL DEFAULT 0, total numeric NOT NULL, currency text NOT NULL DEFAULT 'USD', notification_sent_at timestamptz, created_at timestamptz NOT NULL DEFAULT now(), paid_at timestamptz, fulfilled_at timestamptz, cancelled_at timestamptz, refunded_at timestamptz, tracking_carrier text, tracking_number text, fulfillment_notes text NOT NULL DEFAULT '', shipment_notification_sent_at timestamptz, updated_at timestamptz NOT NULL DEFAULT now())`;
 	await db`ALTER TABLE orders ADD COLUMN IF NOT EXISTS internal_notification_sent_at timestamptz`;
 	await db`ALTER TABLE orders ADD COLUMN IF NOT EXISTS customer_notification_sent_at timestamptz`;
 	await db`ALTER TABLE orders ADD COLUMN IF NOT EXISTS fulfilled_at timestamptz`;
 	await db`ALTER TABLE orders ADD COLUMN IF NOT EXISTS cancelled_at timestamptz`;
 	await db`ALTER TABLE orders ADD COLUMN IF NOT EXISTS refunded_at timestamptz`;
+	await db`ALTER TABLE orders ADD COLUMN IF NOT EXISTS fulfillment_status text NOT NULL DEFAULT 'unfulfilled'`;
+	await db`ALTER TABLE orders ADD COLUMN IF NOT EXISTS tracking_carrier text`;
+	await db`ALTER TABLE orders ADD COLUMN IF NOT EXISTS tracking_number text`;
+	await db`ALTER TABLE orders ADD COLUMN IF NOT EXISTS fulfillment_notes text NOT NULL DEFAULT ''`;
+	await db`ALTER TABLE orders ADD COLUMN IF NOT EXISTS shipment_notification_sent_at timestamptz`;
+	await db`ALTER TABLE orders ADD COLUMN IF NOT EXISTS updated_at timestamptz NOT NULL DEFAULT now()`;
 	await db`CREATE TABLE IF NOT EXISTS order_items (id bigserial PRIMARY KEY, order_id bigint NOT NULL REFERENCES orders(id) ON DELETE CASCADE, product_slug text NOT NULL, product_name text NOT NULL, size text, quantity integer NOT NULL, unit_price numeric NOT NULL, line_total numeric NOT NULL)`;
 	await db`CREATE TABLE IF NOT EXISTS order_events (id bigserial PRIMARY KEY, order_id bigint NOT NULL REFERENCES orders(id) ON DELETE CASCADE, event_key text NOT NULL, event_type text NOT NULL, source text NOT NULL, payload jsonb NOT NULL DEFAULT '{}'::jsonb, created_at timestamptz NOT NULL DEFAULT now(), UNIQUE (order_id, event_key))`;
 	return db;
@@ -91,6 +97,55 @@ export async function getProducts(): Promise<Product[]> {
 	}));
 }
 
+async function ensureGallery() {
+	const db = sql();
+	if (!db) return null;
+	await db`CREATE TABLE IF NOT EXISTS gallery_images (id text PRIMARY KEY, src text NOT NULL UNIQUE, alt text NOT NULL, caption text, tags jsonb NOT NULL DEFAULT '[]', year text, published boolean NOT NULL DEFAULT true, sort_order integer NOT NULL DEFAULT 0, created_at timestamptz NOT NULL DEFAULT now(), updated_at timestamptz NOT NULL DEFAULT now())`;
+	return db;
+}
+
+function rowToGalleryImage(row: Record<string, unknown>): GalleryImage {
+	return {
+		id: String(row.id),
+		src: String(row.src),
+		alt: String(row.alt || "Veteran outdoor therapy experience in nature"),
+		caption: row.caption ? String(row.caption) : undefined,
+		tags: Array.isArray(row.tags) ? row.tags.map(String) : [],
+		year: row.year ? String(row.year) : undefined,
+		published: Boolean(row.published),
+		sortOrder: Number(row.sort_order || 0),
+		createdAt: String(row.created_at),
+		updatedAt: String(row.updated_at),
+	};
+}
+
+export async function getGalleryImages(): Promise<GalleryImage[]> {
+	const db = await ensureGallery();
+	if (!db) return seedGalleryImages;
+	const rows = await db`SELECT * FROM gallery_images ORDER BY sort_order, created_at`;
+	if (!rows.length) {
+		for (const image of seedGalleryImages) await saveGalleryImage(image);
+		return seedGalleryImages;
+	}
+	return rows.map((row) => rowToGalleryImage(row));
+}
+
+export async function getPublishedGalleryImages(): Promise<GalleryImage[]> {
+	return (await getGalleryImages()).filter((image) => image.published);
+}
+
+export async function saveGalleryImage(image: GalleryImage) {
+	const db = await ensureGallery();
+	if (!db) throw new Error("DATABASE_URL is required to save gallery images.");
+	await db`INSERT INTO gallery_images (id, src, alt, caption, tags, year, published, sort_order) VALUES (${image.id}, ${image.src}, ${image.alt}, ${image.caption || null}, ${JSON.stringify(image.tags)}, ${image.year || null}, ${image.published}, ${image.sortOrder}) ON CONFLICT (id) DO UPDATE SET src = EXCLUDED.src, alt = EXCLUDED.alt, caption = EXCLUDED.caption, tags = EXCLUDED.tags, year = EXCLUDED.year, published = EXCLUDED.published, sort_order = EXCLUDED.sort_order, updated_at = now()`;
+}
+
+export async function deleteGalleryImage(id: string) {
+	const db = await ensureGallery();
+	if (!db) throw new Error("DATABASE_URL is required to delete gallery images.");
+	await db`DELETE FROM gallery_images WHERE id = ${id}`;
+}
+
 function orderNumber() {
 	const stamp = new Date().toISOString().slice(0, 10).replace(/-/g, "");
 	return `VOT-${stamp}-${randomUUID().slice(0, 8).toUpperCase()}`;
@@ -104,6 +159,7 @@ function rowToOrder(rows: Array<Record<string, unknown>>): OrderRecord | null {
 		paypalOrderId: first.paypal_order_id ? String(first.paypal_order_id) : "",
 		paypalCaptureId: first.paypal_capture_id ? String(first.paypal_capture_id) : undefined,
 		status: String(first.status) as OrderRecord["status"],
+		fulfillmentStatus: String(first.fulfillment_status || "unfulfilled") as OrderRecord["fulfillmentStatus"],
 		customer: {
 			name: String(first.customer_name),
 			email: String(first.customer_email),
@@ -125,6 +181,11 @@ function rowToOrder(rows: Array<Record<string, unknown>>): OrderRecord | null {
 		total: Number(first.total),
 		internalNotificationSent: Boolean(first.internal_notification_sent_at),
 		customerNotificationSent: Boolean(first.customer_notification_sent_at),
+		shipmentNotificationSent: Boolean(first.shipment_notification_sent_at),
+		trackingCarrier: first.tracking_carrier ? String(first.tracking_carrier) : undefined,
+		trackingNumber: first.tracking_number ? String(first.tracking_number) : undefined,
+		fulfillmentNotes: String(first.fulfillment_notes || ""),
+		createdAt: first.created_at ? new Date(String(first.created_at)).toISOString() : undefined,
 	};
 }
 
@@ -209,6 +270,72 @@ export async function recordOrderEvent(orderNumberValue: string, eventKey: strin
 		SELECT id, ${eventKey}, ${eventType}, ${source}, ${JSON.stringify(payload)} FROM orders WHERE order_number = ${orderNumberValue}
 		ON CONFLICT (order_id, event_key) DO NOTHING
 	`;
+}
+
+export async function getOrderSummaries(filters: { search?: string; paymentStatus?: string; fulfillmentStatus?: string } = {}): Promise<OrderSummary[]> {
+	const db = await ensureOrders();
+	if (!db) return [];
+	const search = filters.search?.trim() || "";
+	const paymentStatus = filters.paymentStatus?.trim() || "";
+	const fulfillmentStatus = filters.fulfillmentStatus?.trim() || "";
+	const searchTerm = `%${search}%`;
+	const rows = await db`
+		SELECT order_number, status, fulfillment_status, customer_name, customer_email, subtotal, total,
+			tracking_carrier, tracking_number, fulfillment_notes, customer_notification_sent_at,
+			shipment_notification_sent_at, created_at
+		FROM orders
+		WHERE (${search} = '' OR order_number ILIKE ${searchTerm} OR customer_name ILIKE ${searchTerm} OR customer_email ILIKE ${searchTerm} OR paypal_order_id ILIKE ${searchTerm})
+			AND (${paymentStatus} = '' OR status = ${paymentStatus})
+			AND (${fulfillmentStatus} = '' OR fulfillment_status = ${fulfillmentStatus})
+		ORDER BY created_at DESC
+		LIMIT 100
+	`;
+	return (rows as Array<Record<string, unknown>>).map((row) => ({
+		orderNumber: String(row.order_number),
+		status: String(row.status) as OrderRecord["status"],
+		fulfillmentStatus: String(row.fulfillment_status) as OrderRecord["fulfillmentStatus"],
+		customer: { name: String(row.customer_name), email: String(row.customer_email) },
+		items: [],
+		subtotal: Number(row.subtotal),
+		total: Number(row.total),
+		customerNotificationSent: Boolean(row.customer_notification_sent_at),
+		shipmentNotificationSent: Boolean(row.shipment_notification_sent_at),
+		trackingCarrier: row.tracking_carrier ? String(row.tracking_carrier) : undefined,
+		trackingNumber: row.tracking_number ? String(row.tracking_number) : undefined,
+		fulfillmentNotes: String(row.fulfillment_notes || ""),
+		createdAt: row.created_at ? new Date(String(row.created_at)).toISOString() : undefined,
+	}));
+}
+
+export async function updateOrderFulfillment(
+	orderNumberValue: string,
+	fulfillment: {
+		status: OrderRecord["fulfillmentStatus"];
+		carrier: string;
+		trackingNumber: string;
+		notes: string;
+	},
+) {
+	const db = await ensureOrders();
+	if (!db) throw new Error("DATABASE_URL is required to update orders.");
+	if (!["unfulfilled", "processing", "shipped", "completed", "cancelled"].includes(fulfillment.status)) {
+		throw new Error("Invalid fulfillment status.");
+	}
+	const updated = await db`
+		UPDATE orders
+		SET fulfillment_status = ${fulfillment.status}, tracking_carrier = ${fulfillment.carrier || null}, tracking_number = ${fulfillment.trackingNumber || null}, fulfillment_notes = ${fulfillment.notes}, fulfilled_at = CASE WHEN ${fulfillment.status} IN ('shipped', 'completed') THEN COALESCE(fulfilled_at, now()) ELSE fulfilled_at END, cancelled_at = CASE WHEN ${fulfillment.status} = 'cancelled' THEN COALESCE(cancelled_at, now()) ELSE cancelled_at END, updated_at = now()
+		WHERE order_number = ${orderNumberValue}
+		RETURNING order_number
+	`;
+	if (!updated.length) throw new Error("Order was not found.");
+	await recordOrderEvent(orderNumberValue, `fulfillment:${Date.now()}`, "fulfillment_updated", "admin", fulfillment);
+	return getOrderByNumber(orderNumberValue);
+}
+
+export async function markShipmentNotificationSent(orderNumberValue: string) {
+	const db = await ensureOrders();
+	if (!db) return;
+	await db`UPDATE orders SET shipment_notification_sent_at = now(), updated_at = now() WHERE order_number = ${orderNumberValue}`;
 }
 
 export async function markOrderPaid(paypalOrderId: string, paypalCaptureId: string) {

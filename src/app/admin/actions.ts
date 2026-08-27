@@ -1,9 +1,10 @@
 "use server";
-import { put } from "@vercel/blob";
+import { del, put } from "@vercel/blob";
+import { randomUUID } from "crypto";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { isAdmin, login, logout } from "@/lib/auth";
-import { deleteEvent, deleteProduct, getEvents, getProducts, saveEvent, saveProduct, getTestimonials, saveTestimonial, deleteTestimonial } from "@/lib/db";
+import { deleteEvent, deleteProduct, getEvents, getProducts, saveEvent, saveProduct, getTestimonials, saveTestimonial, deleteTestimonial, deleteGalleryImage, getGalleryImages, saveGalleryImage } from "@/lib/db";
 
 function revalidateCatalogPages(slug: string) {
 	revalidatePath("/");
@@ -270,6 +271,71 @@ function safeTestimonialUploadPath(slug: string, fileName: string) {
 			.replace(/-+/g, "-")
 			.slice(-80) || "image";
 	return `testimonials/${safeSlug}/${Date.now()}-${safeName}`;
+}
+
+function safeGalleryUploadPath(fileName: string) {
+	const safeName = fileName.toLowerCase().replace(/[^a-z0-9._-]+/g, "-").replace(/-+/g, "-").slice(-100) || "image.jpg";
+	return `gallery/${Date.now()}-${randomUUID().slice(0, 8)}-${safeName}`;
+}
+
+export async function saveGalleryMetadataAction(form: FormData) {
+	if (!(await isAdmin())) redirect("/admin");
+	const id = String(form.get("id") || "").trim();
+	const existing = (await getGalleryImages()).find((image) => image.id === id);
+	if (!existing) redirect("/admin?view=gallery&saveError=not-found");
+	await saveGalleryImage({
+		...existing,
+		alt: String(form.get("alt") || "").trim() || existing.alt,
+		caption: String(form.get("caption") || "").trim() || undefined,
+		tags: String(form.get("tags") || "").split(",").map((tag) => tag.trim()).filter(Boolean),
+		year: String(form.get("year") || "").trim() || undefined,
+		published: form.get("published") === "on",
+		sortOrder: Number(form.get("sortOrder") || existing.sortOrder),
+	});
+	revalidatePath("/gallery");
+	redirect("/admin?view=gallery&saved=1");
+}
+
+export async function uploadGalleryImagesAction(form: FormData) {
+	if (!(await isAdmin())) redirect("/admin");
+	if (!process.env.BLOB_READ_WRITE_TOKEN) redirect("/admin?view=gallery&saveError=upload-config");
+	const files = form.getAll("imageFiles").filter((value): value is File => value instanceof File && value.size > 0);
+	if (!files.length || files.length > 50) redirect("/admin?view=gallery&saveError=file-limit");
+	const existing = await getGalleryImages();
+	try {
+		for (const [index, file] of files.entries()) {
+			const blob = await put(safeGalleryUploadPath(file.name), file, { access: "public", addRandomSuffix: true });
+			await saveGalleryImage({
+				id: `blob-${randomUUID()}`,
+				src: blob.url,
+				alt: "Veteran outdoor therapy experience in nature",
+				tags: ["outdoors", "veteran support"],
+				year: new Date().getFullYear().toString(),
+				published: true,
+				sortOrder: existing.length + index + 1,
+				createdAt: new Date().toISOString(),
+				updatedAt: new Date().toISOString(),
+			});
+		}
+	} catch (error) {
+		console.error("Gallery upload failed", error);
+		redirect("/admin?view=gallery&saveError=upload-failed");
+	}
+	revalidatePath("/gallery");
+	redirect("/admin?view=gallery&saved=1");
+}
+
+export async function deleteGalleryImageAction(form: FormData) {
+	if (!(await isAdmin())) redirect("/admin");
+	const id = String(form.get("id") || "").trim();
+	const image = (await getGalleryImages()).find((entry) => entry.id === id);
+	if (!image) redirect("/admin?view=gallery&saveError=not-found");
+	if (image.src.startsWith("http") && process.env.BLOB_READ_WRITE_TOKEN) {
+		try { await del(image.src); } catch (error) { console.error("Gallery blob deletion failed", error); }
+	}
+	await deleteGalleryImage(id);
+	revalidatePath("/gallery");
+	redirect("/admin?view=gallery&deleted=1");
 }
 
 export async function saveTestimonialAction(form: FormData) {

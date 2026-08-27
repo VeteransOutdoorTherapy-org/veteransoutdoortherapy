@@ -3,8 +3,9 @@
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import type { GalleryImage } from "@/lib/data";
 
-export function GalleryLightbox({ images }: { images: string[] }) {
+export function GalleryLightbox({ images }: { images: GalleryImage[] }) {
 	const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 	const dialogRef = useRef<HTMLDialogElement>(null);
 	const triggerRef = useRef<HTMLButtonElement>(null);
@@ -46,17 +47,18 @@ export function GalleryLightbox({ images }: { images: string[] }) {
 				{images.map((image, index) => (
 					<button
 						className={`gallery-item${index % 5 === 0 ? " wide" : ""}`}
-						key={image}
+					key={image.id}
 						type="button"
 						onClick={(event) => {
 							triggerRef.current = event.currentTarget;
 							setSelectedIndex(index);
 						}}
-						aria-label={`Open Veteran's Outdoor Therapy field experience photo ${index + 1} of ${images.length}`}
+						aria-label={`Open ${image.alt}, photo ${index + 1} of ${images.length}`}
+						title={image.caption || image.alt}
 					>
 						<Image
-							src={image}
-							alt={`Veteran's Outdoor Therapy field experience ${index + 1}`}
+							src={image.src}
+							alt={image.alt}
 							fill
 							sizes="(max-width: 700px) 100vw, 40vw"
 						/>
@@ -83,8 +85,8 @@ export function GalleryLightbox({ images }: { images: string[] }) {
 					<>
 						<div className="gallery-lightbox-image">
 							<Image
-								src={images[selectedIndex]}
-								alt={`Veteran's Outdoor Therapy field experience ${selectedIndex + 1}`}
+								src={images[selectedIndex].src}
+								alt={images[selectedIndex].alt}
 								fill
 								priority
 								sizes="95vw"
@@ -93,6 +95,7 @@ export function GalleryLightbox({ images }: { images: string[] }) {
 						<span className="gallery-lightbox-count">
 							{selectedIndex + 1} / {images.length}
 						</span>
+						{images[selectedIndex].caption && <p className="gallery-lightbox-caption">{images[selectedIndex].caption}</p>}
 						<button className="gallery-lightbox-close" type="button" onClick={() => setSelectedIndex(null)} title="Close image">
 							<X size={24} />
 							<span className="sr-only">Close image</span>

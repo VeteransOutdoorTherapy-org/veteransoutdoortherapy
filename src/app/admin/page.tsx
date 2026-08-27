@@ -1,14 +1,18 @@
-import { Copy, LockKeyhole, LogOut, PackagePlus, Pencil, MessageSquare, Plus, Trash2 } from "lucide-react";
+import { ClipboardList, Copy, LockKeyhole, LogOut, PackagePlus, Pencil, MessageSquare, Plus, Trash2 } from "lucide-react";
+import Link from "next/link";
 import { isAdmin } from "@/lib/auth";
-import { getEvents, getProducts, getTestimonials, type Testimonial } from "@/lib/db";
+import { getEvents, getProducts, getTestimonials, getGalleryImages, type Testimonial } from "@/lib/db";
 import { pageMetadata } from "@/lib/site";
 import { deleteProductAction, duplicateProductAction, loginAction, logoutAction, saveProductAction, saveTestimonialAction, duplicateTestimonialAction, deleteTestimonialAction } from "./actions";
 import { EventAdmin } from "./event-admin";
+import { GalleryAdmin } from "@/components/admin/gallery-admin";
 
 export const metadata = pageMetadata({ title: "Content Admin", description: "Authorized content administration.", path: "/admin", noIndex: true });
 
-function TestimonialAdmin({ testimonials, selected }: { testimonials: Testimonial[]; selected?: Testimonial }) {
+function TestimonialAdmin({ testimonials, selected, categoryFilter, yearFilter }: { testimonials: Testimonial[]; selected?: Testimonial; categoryFilter?: string; yearFilter?: string }) {
 	const categories = Array.from(new Set(testimonials.map((t) => t.category).filter(Boolean))).sort();
+	const years = Array.from(new Set(testimonials.map((t) => t.createdAt.slice(0, 4)))).sort().reverse();
+	const filtered = testimonials.filter((t) => (!categoryFilter || (t.category || "Uncategorized") === categoryFilter) && (!yearFilter || t.createdAt.startsWith(yearFilter)));
 	const imagePositions = ["top", "bottom", "left", "right", "top-left", "top-right", "bottom-left", "bottom-right", "center"] as const;
 	return (
 		<div className="admin-grid">
@@ -88,8 +92,9 @@ function TestimonialAdmin({ testimonials, selected }: { testimonials: Testimonia
 				</button>
 			</form>
 			<div className="admin-list">
-				<h2>Testimonials · {testimonials.length}</h2>
-				{testimonials.map((testimonial) => (
+				<form className="admin-inline-filters" method="get"><input type="hidden" name="view" value="testimonials" /><select className="field" name="category" defaultValue={categoryFilter}><option value="">All categories</option>{categories.map((cat) => <option key={cat}>{cat}</option>)}</select><select className="field" name="year" defaultValue={yearFilter}><option value="">All years</option>{years.map((year) => <option key={year}>{year}</option>)}</select><button className="button secondary" type="submit">Filter</button></form>
+				<h2>Testimonials · {filtered.length} of {testimonials.length}</h2>
+				{filtered.map((testimonial) => (
 					<article key={testimonial.slug}>
 						<div>
 							<strong>{testimonial.author}</strong>
@@ -121,7 +126,7 @@ function TestimonialAdmin({ testimonials, selected }: { testimonials: Testimonia
 export default async function AdminPage({
 	searchParams,
 }: {
-	searchParams: Promise<{ view?: string; edit?: string; error?: string; saved?: string; deleted?: string; saveError?: string }>;
+ searchParams: Promise<{ view?: string; edit?: string; error?: string; saved?: string; deleted?: string; saveError?: string; category?: string; year?: string }>;
 }) {
 	const query = await searchParams;
 	const authenticated = await isAdmin();
@@ -147,8 +152,8 @@ export default async function AdminPage({
 				</form>
 			</section>
 		);
-	const view = query.view === "events" ? "events" : query.view === "testimonials" ? "testimonials" : "products";
-	const [products, events, testimonials] = await Promise.all([getProducts(), getEvents(), getTestimonials()]);
+	const view = query.view === "events" ? "events" : query.view === "testimonials" ? "testimonials" : query.view === "gallery" ? "gallery" : query.view === "wiki" ? "wiki" : "products";
+	const [products, events, testimonials, gallery] = await Promise.all([getProducts(), getEvents(), getTestimonials(), getGalleryImages()]);
 	const categories = Array.from(
 		new Set(products.map((product) => product.category.trim()).filter((category) => category.length > 0)),
 	).sort((a, b) => a.localeCompare(b));
@@ -179,6 +184,11 @@ export default async function AdminPage({
 					<a className={view === "testimonials" ? "active" : ""} href="/admin?view=testimonials">
 						<MessageSquare size={17} /> Testimonials
 					</a>
+					<Link href="/admin/orders">
+						<ClipboardList size={17} /> Orders
+					</Link>
+					<Link className={view === "gallery" ? "active" : ""} href="/admin?view=gallery">Gallery</Link>
+					<Link className={view === "wiki" ? "active" : ""} href="/admin?view=wiki">Wiki</Link>
 				</nav>
 				{query.saved && <p className="success-note">Testimonial saved.</p>}
 				{query.deleted && <p className="success-note">Testimonial deleted.</p>}
@@ -194,7 +204,11 @@ export default async function AdminPage({
 				{view === "events" ? (
 					<EventAdmin events={events} selected={selectedEvent} />
 				) : view === "testimonials" ? (
-					<TestimonialAdmin testimonials={testimonials} selected={selectedTestimonial} />
+					<TestimonialAdmin testimonials={testimonials} selected={selectedTestimonial} categoryFilter={query.category} yearFilter={query.year} />
+				) : view === "gallery" ? (
+					<GalleryAdmin images={gallery} />
+				) : view === "wiki" ? (
+					<div className="admin-wiki"><h2>Admin wiki</h2><p>Use the dedicated <Link href="/admin/wiki">Wiki page</Link> for the operating handbook, content rules, and troubleshooting guidance.</p></div>
 				) : (
 					<div className="admin-grid">
 						<form className="product-form" action={saveProductAction}>

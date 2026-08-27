@@ -32,10 +32,34 @@ export type OrderRecord = {
 	paypalOrderId: string;
 	paypalCaptureId?: string;
 	status: "pending" | "paid" | "payment_failed" | "refunded" | "cancelled";
+	fulfillmentStatus: "unfulfilled" | "processing" | "shipped" | "completed" | "cancelled";
 	customer: CheckoutCustomer;
 	items: PricedOrderItem[];
 	subtotal: number;
 	total: number;
 	internalNotificationSent: boolean;
 	customerNotificationSent: boolean;
+	shipmentNotificationSent: boolean;
+	trackingCarrier?: string;
+	trackingNumber?: string;
+	fulfillmentNotes: string;
+	createdAt?: string;
+};
+
+export type OrderSummary = Pick<
+	OrderRecord,
+		| "orderNumber"
+		| "status"
+		| "fulfillmentStatus"
+		| "customerNotificationSent"
+		| "shipmentNotificationSent"
+		| "trackingCarrier"
+		| "trackingNumber"
+		| "fulfillmentNotes"
+		| "createdAt"
+	> & {
+	customer: Pick<CheckoutCustomer, "name" | "email">;
+	items: [];
+		subtotal: number;
+		total: number;
 };

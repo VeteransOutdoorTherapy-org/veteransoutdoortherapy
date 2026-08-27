@@ -459,7 +459,32 @@ const galleryFiles = `
 	.trim()
 	.split("\n");
 
-export const galleryImages = galleryFiles.map((file) => `${uploads}/${file}`);
+export type GalleryImage = {
+	id: string;
+	src: string;
+	alt: string;
+	caption?: string;
+	tags: string[];
+	year?: string;
+	published: boolean;
+	sortOrder: number;
+	createdAt: string;
+	updatedAt: string;
+};
+
+const excludedGalleryFiles = new Set(["2025/09/626884bbf04d340c565832d04f7da6ca.png"]);
+const uniqueGalleryFiles = Array.from(new Set(galleryFiles)).filter((file) => !excludedGalleryFiles.has(file));
+export const galleryImages: GalleryImage[] = uniqueGalleryFiles.map((file, index) => ({
+	id: `local-${file.replace(/[^a-z0-9]+/gi, "-").replace(/^-|-$/g, "")}`,
+	src: `${uploads}/${file}`,
+	alt: "Veteran outdoor therapy experience in nature",
+	tags: ["outdoors", "veteran support"],
+	year: file.slice(0, 4),
+	published: true,
+	sortOrder: index + 1,
+	createdAt: file.slice(0, 7),
+	updatedAt: file.slice(0, 7),
+}));
 
 export type Testimonial = {
 	slug: string;

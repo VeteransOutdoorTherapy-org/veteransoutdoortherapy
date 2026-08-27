@@ -36,6 +36,14 @@ export type OrderNotification = {
 	notes: string;
 };
 
+export type ShipmentNotification = {
+	orderNumber: string;
+	customerName: string;
+	customerEmail: string;
+	carrier: string;
+	trackingNumber: string;
+};
+
 function requiredEnvironment(name: string) {
 	const value = process.env[name]?.trim();
 	if (!value) throw new Error(`${name} is required to send contact notifications.`);
@@ -152,6 +160,26 @@ export async function sendCustomerOrderConfirmation(order: OrderNotification) {
 			order.shippingAddress.country,
 			"",
 			"Our team will review the order and follow up if anything is needed.",
+		].join("\n"),
+	});
+}
+
+export async function sendShipmentNotification(shipment: ShipmentNotification) {
+	const { user, transporter } = createTransporter();
+	await transporter.sendMail({
+		from: `Veteran's Outdoor Therapy <${user}>`,
+		to: shipment.customerEmail,
+		replyTo: requiredEnvironment("CONTACT_EMAIL_TO"),
+		subject: `Your order ${shipment.orderNumber} has shipped`,
+		text: [
+			`Hi ${shipment.customerName},`,
+			"",
+			`Your Veteran's Outdoor Therapy order ${shipment.orderNumber} has shipped.`,
+			"",
+			`Carrier: ${shipment.carrier || "Not provided"}`,
+			`Tracking number: ${shipment.trackingNumber}`,
+			"",
+			"Thank you for supporting the mission.",
 		].join("\n"),
 	});
 }

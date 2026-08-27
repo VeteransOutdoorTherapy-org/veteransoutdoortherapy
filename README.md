@@ -31,6 +31,17 @@ npm start
 
 See `CONTENT-MIGRATION.md` for the source-site inventory and migration status.
 
+## Content administration
+
+The authenticated `/admin` area includes Products, Events, Testimonials, Orders, Gallery, and Wiki tabs.
+
+- Gallery images are stored as database records with local seed assets as a fallback. Admins can upload one or many PNG/JPEG/WebP files, edit alt text, captions, tags, year, publication status, and sort order, or delete an image. Blob-backed uploads are removed from Vercel Blob when deleted.
+- The public gallery uses responsive local/Blob images, descriptive alt text, captions, keyboard navigation, and an accessible lightbox. Duplicate local seed entries are de-duplicated and the known standalone logo asset is excluded.
+- Testimonials can be filtered by category and year on `/testimonials` and in admin. Categories and dates are stored with each testimonial.
+- The admin Wiki at `/admin/wiki` explains publishing rules, checkout/order operations, and troubleshooting.
+
+The full gallery discovery, curation, UX, SEO, recognition, and QA record is in [`docs/GALLERY_IMPLEMENTATION_PLAN.md`](docs/GALLERY_IMPLEMENTATION_PLAN.md). The gallery requires `DATABASE_URL` for persistent edits and `BLOB_READ_WRITE_TOKEN` for uploads.
+
 ## Getting Started
 
 First, run the development server:

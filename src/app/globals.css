@@ -716,7 +716,7 @@ img {
 .quote {
 	background-image:
 		linear-gradient(90deg, rgba(12, 19, 14, 0.82) 0%, rgba(12, 19, 14, 0.6) 55%, rgba(12, 19, 14, 0.76) 100%),
-		url("https://veteransoutdoortherapy.org/wp-content/uploads/2025/09/552626219_122157680714799810_368606548123490962_n-980x735.jpg");
+		url("/wp-content/uploads/2025/09/552626219_122157680714799810_368606548123490962_n.jpg");
 	background-position: center -15%;
 	background-size: cover;
 	background-attachment: fixed;
@@ -1649,6 +1649,140 @@ img {
 	color: var(--moss);
 	font-size: 0.76rem;
 }
+.order-filters {
+	display: grid;
+	grid-template-columns: minmax(240px, 2fr) 1fr 1fr auto;
+	gap: 14px;
+	align-items: end;
+	background: var(--white);
+	border: 1px solid var(--line);
+	padding: 20px;
+	margin-bottom: 16px;
+}
+.admin-gallery { display: grid; gap: 22px; }
+.admin-gallery-list { display: grid; gap: 14px; }
+.admin-gallery-card { display: grid; grid-template-columns: 180px minmax(0, 1fr) auto; gap: 18px; align-items: start; background: var(--white); border: 1px solid var(--line); padding: 16px; }
+.admin-gallery-thumb { position: relative; min-height: 140px; background: var(--cream); }
+.admin-gallery-thumb img { object-fit: cover; }
+.gallery-meta-form { display: grid; gap: 10px; }
+.admin-inline-filters, .public-filters { display: flex; flex-wrap: wrap; gap: 10px; align-items: end; margin-bottom: 18px; }
+.public-filters label { display: grid; gap: 5px; font-weight: 700; font-size: .85rem; }
+.admin-wiki { display: grid; gap: 16px; }
+.wiki-card { background: var(--white); border: 1px solid var(--line); padding: clamp(22px, 4vw, 42px); }
+.wiki-card h2 { margin-top: 24px; }
+.wiki-card h2:first-child { margin-top: 0; }
+.order-filters label,
+.admin-order-detail .product-form label {
+	display: grid;
+	gap: 5px;
+	font-size: 0.82rem;
+	font-weight: 700;
+}
+.admin-result-count {
+	color: var(--moss);
+	font-size: 0.86rem;
+}
+.admin-order-list {
+	background: var(--white);
+	border: 1px solid var(--line);
+	padding: 0 22px;
+}
+.admin-order-row {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto auto;
+	gap: 22px;
+	align-items: center;
+	border-top: 1px solid var(--line);
+	padding: 18px 0;
+	color: var(--ink);
+}
+.admin-order-row:first-child {
+	border-top: 0;
+}
+.admin-order-row > div:first-child {
+	display: grid;
+	gap: 4px;
+}
+.admin-order-row > div:first-child span,
+.admin-order-row > div:first-child small {
+	color: var(--moss);
+	font-size: 0.8rem;
+}
+.order-status {
+	display: block;
+	font-size: 0.76rem;
+	font-weight: 700;
+	text-transform: capitalize;
+	white-space: nowrap;
+}
+.status-paid,
+.status-completed {
+	color: var(--forest);
+}
+.status-pending,
+.status-processing {
+	color: #996116;
+}
+.status-payment_failed,
+.status-cancelled {
+	color: #9d301f;
+}
+.admin-order-detail {
+	display: grid;
+	gap: 22px;
+}
+.button-row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 20px;
+}
+.invoice-card {
+	background: var(--white);
+	border: 1px solid var(--line);
+	padding: clamp(22px, 4vw, 42px);
+	display: grid;
+	gap: 28px;
+}
+.invoice-heading,
+.invoice-details {
+	display: flex;
+	justify-content: space-between;
+	gap: 25px;
+}
+.invoice-heading h1 {
+	font-size: clamp(2rem, 5vw, 3.4rem);
+}
+.invoice-heading > strong {
+	color: var(--forest);
+	font-size: 0.8rem;
+	letter-spacing: 0.08em;
+}
+.invoice-details > div {
+	display: grid;
+	gap: 4px;
+}
+.invoice-details strong {
+	margin-bottom: 5px;
+}
+.invoice-card table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 0.9rem;
+}
+.invoice-card th,
+.invoice-card td {
+	border-top: 1px solid var(--line);
+	padding: 12px 8px;
+	text-align: left;
+}
+.invoice-card th:not(:first-child),
+.invoice-card td:not(:first-child) {
+	text-align: right;
+}
+.invoice-card tfoot th {
+	font-size: 1rem;
+}
 .event-admin-list article {
 	grid-template-columns: 1fr repeat(4, 38px);
 }
@@ -2274,5 +2408,21 @@ img {
 		align-items: flex-start;
 		flex-direction: column;
 		gap: 15px;
+	}
+	.order-filters,
+	.admin-order-row {
+		grid-template-columns: 1fr;
+	}
+	.admin-gallery-card { grid-template-columns: 1fr; }
+	.admin-gallery-thumb { min-height: 220px; }
+	.order-filters .button {
+		width: 100%;
+	}
+	.invoice-heading,
+	.invoice-details {
+		flex-direction: column;
+	}
+	.invoice-card table {
+		font-size: 0.78rem;
 	}
 }

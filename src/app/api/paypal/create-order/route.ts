@@ -41,9 +41,12 @@ export async function POST(request: Request) {
 			...pending,
 			paypalOrderId: "",
 			status: "pending",
+			fulfillmentStatus: "unfulfilled",
 			customer: parsed.data.customer,
 			internalNotificationSent: false,
 			customerNotificationSent: false,
+			shipmentNotificationSent: false,
+			fulfillmentNotes: "",
 		});
 		await attachPayPalOrder(orderNumber, paypalOrder.id as string);
 		return NextResponse.json({ id: paypalOrder.id, orderNumber });

@@ -1,13 +1,14 @@
 import { GalleryLightbox } from "@/components/gallery-lightbox";
 import Link from "next/link";
-import { galleryImages } from "@/lib/data";
+import { getPublishedGalleryImages } from "@/lib/db";
 import { pageMetadata } from "@/lib/site";
 export const metadata = pageMetadata({
 	title: "Veteran Outdoor Adventure Photo Gallery",
 	description: "See Veteran's Outdoor Therapy in the field through photos from hunting, horseback riding, community events, and fully funded outdoor experiences.",
 	path: "/gallery",
 });
-export default function GalleryPage() {
+export default async function GalleryPage() {
+	const galleryImages = await getPublishedGalleryImages();
 	return (
 		<section className="section">
 			<div className="container">
