@@ -25,7 +25,6 @@ export default async function TestimonialsPage({ searchParams }: { searchParams:
 			<JsonLd
 				data={breadcrumbSchema([
 					{ name: "Home", path: "/" },
-					{ name: "Testimonials", path: "/testimonials" },
 				])}
 			/>
 			<JsonLd
@@ -72,6 +71,7 @@ export default async function TestimonialsPage({ searchParams }: { searchParams:
 
 			<section className="section">
 				<div className="container">
+					<form className="public-filters" method="get" aria-label="Filter testimonials"><label>Category<select className="field" name="category" defaultValue={query.category}><option value="">All categories</option>{categories.map((category) => <option key={category}>{category}</option>)}</select></label><label>Year<select className="field" name="year" defaultValue={query.year}><option value="">All years</option>{years.map((year) => <option key={year}>{year}</option>)}</select></label><button className="button secondary" type="submit">Filter</button></form>
 					{testimonials.length === 0 ? (
 						<div className="empty-state">
 							<h2>No testimonials yet</h2>
