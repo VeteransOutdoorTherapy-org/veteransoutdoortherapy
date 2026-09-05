@@ -229,7 +229,7 @@ export const events: Event[] = [
 		date: "September 16 - September 20, 2026",
 		startDate: "2026-09-16",
 		endDate: "2026-09-20",
-		image: `${uploads}/2025/09/552626219_122157680714799810_368606548123490962_n-980x735.jpg`,
+		image: `${uploads}/2025/09/photo-130.jpg`,
 		type: "Archery antelope hunt",
 		location: "Rocky Point Recreational Park",
 		summary: "An archery antelope hunt that creates space for challenge, reflection, and connection in open country.",

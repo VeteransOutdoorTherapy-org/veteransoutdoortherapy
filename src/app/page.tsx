@@ -122,6 +122,40 @@ export default async function Home() {
 					</div>
 				</div>
 			</section>
+			<section className="section field-film" aria-labelledby="field-film-title">
+				<div className="container">
+					<div className="field-film-heading">
+						<div>
+							<p className="eyebrow">New from the field</p>
+							<h2 className="display section-title" id="field-film-title">Healing through horses.</h2>
+						</div>
+						<div className="field-film-intro">
+							<p>
+								See how time with horses, trusted hosts, and fellow Veterans creates room for connection beyond
+								the noise of everyday life.
+							</p>
+							<div className="field-film-actions">
+								<Link className="button orange" href="/programs">Explore our programs</Link>
+								<Link className="text-link" href="/sponsorships">
+									Help fund the mission <ArrowRight size={17} />
+								</Link>
+							</div>
+						</div>
+					</div>
+					<div className="field-film-video">
+						<iframe
+							src="https://www.youtube-nocookie.com/embed/lDsib0mkSAM"
+							title="Healing through Horses - Veteran's Outdoor Therapy"
+							width="1280"
+							height="720"
+							loading="lazy"
+							referrerPolicy="strict-origin-when-cross-origin"
+							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+							allowFullScreen
+						/>
+					</div>
+				</div>
+			</section>
 			<section className="section">
 				<div className="container">
 					<p className="eyebrow">Mission gear</p>
