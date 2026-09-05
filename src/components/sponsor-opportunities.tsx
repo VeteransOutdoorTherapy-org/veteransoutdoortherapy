@@ -12,14 +12,14 @@ const opportunities = [
 		title: "Annual Benefit Dinner",
 		month: 2,
 		monthLabel: "March",
-		image: `${uploads}/2025/09/511570233_122138280608799810_3062368554634141654_n.jpg`,
+		image: `${uploads}/2025/09/photo-049.jpg`,
 		copy: "Help underwrite the annual community gathering that introduces supporters to the mission and funds a new season outdoors.",
 	},
 	{
 		title: "Missouri Spoonbill Fishing",
 		month: 2,
 		monthLabel: "March",
-		image: `${uploads}/2025/09/484977744_122104166432799810_7750842584414220054_n.jpg`,
+		image: `${uploads}/2025/09/photo-023.jpg`,
 		copy: "Fund boats, lodging, meals, equipment, and time on the water for a recurring spring fishing experience with Veterans.",
 	},
 	{
@@ -33,7 +33,7 @@ const opportunities = [
 		title: "Veteran's Outdoor Therapy Poker Run",
 		month: 5,
 		monthLabel: "June",
-		image: `${uploads}/2025/10/thumbnail_IMG_4884-980x735.jpg`,
+		image: `${uploads}/events/poker-run.webp`,
 		copy: "Put your organization behind the annual community ride that raises awareness and funding for outdoor programs.",
 	},
 	{

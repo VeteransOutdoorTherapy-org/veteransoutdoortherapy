@@ -41,7 +41,7 @@ export const fieldStories: FieldStory[] = [
 		location: "Columbia, Missouri",
 		summary:
 			"Volunteers, sponsors, participants, and riders came together for the second annual Poker Run supporting Veteran's Outdoor Therapy programs.",
-		image: `${uploads}/2025/10/thumbnail_IMG_4884-980x735.jpg`,
+		image: `${uploads}/events/poker-run.webp`,
 		imageAlt: "Motorcycles gathered for the Veteran's Outdoor Therapy Poker Run",
 		body: [
 			"The second annual Poker Run brought riders, volunteers, sponsors, and participants together in Columbia, Missouri, on June 20, 2026.",

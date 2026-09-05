@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
 		remotePatterns: [
 			{ protocol: "https", hostname: "veteransoutdoortherapy.org", pathname: "/wp-content/uploads/**" },
 			{ protocol: "https", hostname: "images.unsplash.com" },
+			{ protocol: "https", hostname: "*.public.blob.vercel-storage.com" },
 		],
 	},
 	async redirects() {

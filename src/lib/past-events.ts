@@ -20,7 +20,7 @@ export const documentedPastEvents: PastEvent[] = [
 		sortDate: "2026-03-13",
 		type: "Benefit dinner",
 		summary: "A sold-out evening centered on service, community, stories, and support for outdoor programs.",
-		image: `${uploads}/2025/09/511570233_122138280608799810_3062368554634141654_n.jpg`,
+		image: `${uploads}/2025/09/photo-049.jpg`,
 		href: "/wilderness-to-wellness",
 		recapUrl: "https://www.facebook.com/share/p/18jSBLgpCR/",
 	},
@@ -30,7 +30,7 @@ export const documentedPastEvents: PastEvent[] = [
 		sortDate: "2026-03-13",
 		type: "Fundraiser",
 		summary: "The annual benefit raffle concluded with its drawing during the Wilderness to Wellness event.",
-		image: `${uploads}/2025/09/626884bbf04d340c565832d04f7da6ca.png`,
+		image: `${uploads}/2025/09/photo-134.png`,
 		href: "/2026-gun-raffle",
 	},
 	{
@@ -40,7 +40,7 @@ export const documentedPastEvents: PastEvent[] = [
 		type: "Fishing",
 		location: "Missouri",
 		summary: "A multi-day Missouri spoonbill fishing experience for Veterans in the field together.",
-		image: `${uploads}/2025/09/484977744_122104166432799810_7750842584414220054_n.jpg`,
+		image: `${uploads}/2025/09/photo-023.jpg`,
 		recapUrl: "https://www.facebook.com/share/p/17xSyoKzX4/",
 	},
 	{
@@ -76,7 +76,7 @@ export const documentedPastEvents: PastEvent[] = [
 		sortDate: "2025-05-01",
 		type: "Fundraiser",
 		summary: "Riders and community supporters gathered to help fund outdoor experiences for Veterans and Gold Star families.",
-		image: `${uploads}/2025/10/thumbnail_IMG_4884-980x735.jpg`,
+		image: `${uploads}/events/poker-run.webp`,
 	},
 	{
 		title: "Spoonbill Fishing Adventure",
@@ -84,6 +84,6 @@ export const documentedPastEvents: PastEvent[] = [
 		sortDate: "2025-03-01",
 		type: "Fishing",
 		summary: "Veterans gathered for a Missouri spoonbill fishing adventure and time together on the water.",
-		image: `${uploads}/2025/09/484481779_122104166468799810_4566249416808408984_n.jpg`,
+		image: `${uploads}/2025/09/photo-012.jpg`,
 	},
 ];
