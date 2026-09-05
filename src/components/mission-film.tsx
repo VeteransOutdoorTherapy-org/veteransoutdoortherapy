@@ -15,7 +15,7 @@ export function MissionFilm() {
 				</div>
 				<div>
 					<p className="eyebrow">Our mission on film</p>
-					<h2 className="display section-title">Why the outdoors matters.</h2>
+					<h2 className="display section-title">Why the outdoors matter.</h2>
 					<p className="prose">
 						This film was produced for Veteran&apos;s Outdoor Therapy and captures the purpose that connects every hunt,
 						fishing trip, horseback experience, event, volunteer, and mission partner.

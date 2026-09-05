@@ -63,6 +63,30 @@ export default function AboutPage() {
 					</div>
 				</div>
 			</section>
+			<section className="section mission-film">
+				<div className="container healing-grid">
+					<div>
+						<p className="eyebrow">New from the field</p>
+						<h2 className="display section-title">Healing through horses.</h2>
+						<p className="prose">
+							See how time with horses, trusted hosts, and fellow Veterans creates room for connection beyond
+							the noise of everyday life.
+						</p>
+					</div>
+					<div className="healing-video">
+						<iframe
+							src="https://www.youtube-nocookie.com/embed/lDsib0mkSAM"
+							title="Healing through Horses - Veteran's Outdoor Therapy"
+							width="1280"
+							height="720"
+							loading="lazy"
+							referrerPolicy="strict-origin-when-cross-origin"
+							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+							allowFullScreen
+						/>
+					</div>
+				</div>
+			</section>
 		</>
 	);
 }

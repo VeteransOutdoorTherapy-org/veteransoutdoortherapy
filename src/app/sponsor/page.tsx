@@ -186,6 +186,18 @@ export default async function SponsorPage() {
 					<Link className="button orange" href="/product/custom-sponsor">
 						Become a sponsor
 					</Link>
+					<div className="giving-band-video">
+						<iframe
+							src="https://www.youtube-nocookie.com/embed/lDsib0mkSAM"
+							title="Healing through Horses - Veteran's Outdoor Therapy"
+							width="1280"
+							height="720"
+							loading="lazy"
+							referrerPolicy="strict-origin-when-cross-origin"
+							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+							allowFullScreen
+						/>
+					</div>
 				</div>
 			</section>
 		</>

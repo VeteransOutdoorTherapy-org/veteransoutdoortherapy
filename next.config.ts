@@ -1,5 +1,12 @@
 import type { NextConfig } from "next";
 
+// Old -> new slugs for products/events that were renamed after publishing.
+// Add an entry here whenever a live slug changes so bookmarked/indexed links still resolve.
+const renamedProductSlugs: Record<string, string> = {
+	"veterans-outdoor-therapy-t-shirt-nature-inspired-veteran-apparel-copy":
+		"veterans-outdoor-therapy-t-shirt-nature-inspired-veteran-apparel-burnt-orange",
+};
+
 const nextConfig: NextConfig = {
 	reactCompiler: true,
 	images: {
@@ -27,6 +34,11 @@ const nextConfig: NextConfig = {
 			{ source: "/products", destination: "/shop", permanent: true },
 			{ source: "/banquet-2026", destination: "/wilderness-to-wellness", permanent: true },
 			{ source: "/memberships", destination: "/donate", permanent: true },
+			...Object.entries(renamedProductSlugs).map(([oldSlug, newSlug]) => ({
+				source: `/product/${oldSlug}`,
+				destination: `/product/${newSlug}`,
+				permanent: false,
+			})),
 		];
 	},
 };
