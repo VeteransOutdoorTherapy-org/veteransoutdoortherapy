@@ -36,8 +36,8 @@ export const products: Product[] = [
 		category: "Merchandise",
 		description:
 			"A lightweight, moisture-wicking performance shirt with a breathable gray body and blaze-orange accents, designed for hikes, workouts, range days, and time in the field.",
-		image: `${uploads}/2025/12/IMG_4715.jpeg`,
-		gallery: [`${uploads}/2025/12/IMG_4715.jpeg`],
+		image: `${uploads}/products/performance-t-shirt.jpg`,
+		gallery: [`${uploads}/products/performance-t-shirt.jpg`],
 		sizes: ["S", "M", "L", "XL", "XXL"],
 		featured: true,
 	},
@@ -90,7 +90,7 @@ export const products: Product[] = [
 		sizes: ["S", "M", "L", "XL", "XXL"],
 	},
 	{
-		slug: "veterans-outdoor-therapy-t-shirt-nature-inspired-veteran-apparel-copy",
+		slug: "veterans-outdoor-therapy-t-shirt-nature-inspired-veteran-apparel-burnt-orange",
 		name: "Veteran's Outdoor Therapy T-Shirt - Burnt Orange",
 		shortName: "Orange Mission T-Shirt",
 		price: 25,
