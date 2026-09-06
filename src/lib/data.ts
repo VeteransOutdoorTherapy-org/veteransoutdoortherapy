@@ -1044,6 +1044,7 @@ export const fieldStories: FieldStory[] = [
 				],
 			},
 		],
+		reviewCategory: "Snagging",
 		programHref: "/programs",
 		programLabel: "Explore outdoor programs",
 		published: true,

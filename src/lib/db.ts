@@ -256,6 +256,11 @@ const dischargeMigration =
 	await seedMissingStory(db, "seed-missouri-turkey-story-2026", "missouri-turkey-hunt-2026");
 	await seedMissingStory(db, "seed-snagging-story-2026", "missouri-paddlefish-snagging-2026");
 	await seedMissingStory(db, "seed-wilderness-to-wellness-story-2026", "wilderness-to-wellness-benefit-dinner-2026");
+	const snaggingReviewCategoryMigration =
+		await db`INSERT INTO migrations (id) VALUES ('snagging-story-review-category-2026') ON CONFLICT (id) DO NOTHING RETURNING id`;
+	if (snaggingReviewCategoryMigration.length) {
+		await db`UPDATE field_stories SET review_category = 'Snagging', updated_at = now() WHERE slug = 'missouri-paddlefish-snagging-2026'`;
+	}
 	return db;
 }
 
