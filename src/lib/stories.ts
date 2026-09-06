@@ -66,6 +66,35 @@ export const fieldStories: FieldStory[] = [
 		programHref: "/fundraising-application",
 		programLabel: "Volunteer or host an event",
 	},
+	{
+		slug: "white-river-fly-fishing-2026",
+		title: "Veterans Learn to Fly Fish on the White River",
+		date: "August 28-31, 2026",
+		datePublished: "2026-08-31",
+		location: "Rainbow Drive Resort, White River, Arkansas",
+		summary:
+			"Veterans from Georgia and Missouri spent four days on Arkansas's White River learning to fly fish, guided by an Army veteran instructor.",
+		image: `${uploads}/2026/09/white-river-fly-fishing.jpg`,
+		imageAlt: "Veteran holding a trout caught while fly fishing on the White River",
+		body: [
+			"Veterans from Georgia and Missouri spent four days on Arkansas's White River learning to fly fish in August 2026.",
+			"Army veteran Stan, owner of Tat2flyfisher Guide Services, spent an afternoon teaching the group the basics of fly casting before they waded into the river.",
+			"Stories were told, memories were made, and healing was in the air as the group found the fish, and maybe a new hobby, in the outdoors.",
+			"Rainbow Drive Resort arranged an experienced guide for the trip, and Natural State Fly Shop supplied wader rentals for the group.",
+		],
+		facebookLinks: [
+			{
+				href: "https://www.facebook.com/permalink.php?story_fbid=pfbid037CoZVJ75arJBLhZuPVqsk88m3mdJcX7UftjjhYNPR4ErzBQR72jXZdJxceMaUXfVl&id=61573994307519",
+				label: "Read the fly-fishing lesson post on Facebook",
+			},
+			{
+				href: "https://www.facebook.com/permalink.php?story_fbid=pfbid02kwhiWbA6Ky1ZCPywcFXsdFybkEc6LpaA1iQMCyipNsCFxny57JRgJwja9qnibMh4l&id=61573994307519",
+				label: "Read the trip recap on Facebook",
+			},
+		],
+		programHref: "/programs",
+		programLabel: "Explore outdoor programs",
+	},
 ];
 
 export function getFieldStory(slug: string) {

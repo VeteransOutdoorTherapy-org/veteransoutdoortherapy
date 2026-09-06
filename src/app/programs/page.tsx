@@ -17,6 +17,7 @@ const programs = [
 		icon: Fish,
 		title: "Fishing",
 		copy: "Time on the water creates a steady setting for conversation, reflection, and connection with others who understand military service and loss.",
+		href: "/field-stories/white-river-fly-fishing-2026",
 	},
 	{
 		icon: Binoculars,
