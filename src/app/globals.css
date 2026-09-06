@@ -2201,6 +2201,10 @@ img {
 		grid-template-columns: repeat(3, minmax(0, 1fr));
 		gap: 18px;
 	}
+	.field-story-gallery-featured {
+		grid-column: span 2;
+		grid-row: span 2;
+	}
 }
 .field-story-gallery figure {
 	position: relative;

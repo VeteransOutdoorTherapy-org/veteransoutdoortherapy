@@ -33,11 +33,17 @@ export default async function FieldStoryPage({ params }: PageProps<"/field-stori
 	const reviews = story.reviewCategory
 		? (await getPublishedTestimonials()).filter((testimonial) => testimonial.category === story.reviewCategory)
 		: [];
-	const galleryPhotos = story.galleryTag
+	const taggedPhotos = story.galleryTag
 		? (await getPublishedGalleryImages())
 				.filter((image) => image.tags.some((tag) => tag.toLowerCase() === story.galleryTag!.toLowerCase()))
-				.slice(0, 9)
+				.map((image) => ({ src: image.src, alt: image.alt }))
 		: [];
+	const seenSrcs = new Set<string>();
+	const galleryPhotos = [...(story.photos ?? []), ...taggedPhotos].filter((photo) => {
+		if (seenSrcs.has(photo.src)) return false;
+		seenSrcs.add(photo.src);
+		return true;
+	});
 	const articleSchema = {
 		"@context": "https://schema.org",
 		"@type": "Article",
@@ -81,9 +87,14 @@ export default async function FieldStoryPage({ params }: PageProps<"/field-stori
 								<h2>Photos from the trip</h2>
 							</div>
 							<div className="field-story-gallery">
-								{galleryPhotos.map((photo) => (
-									<figure key={photo.id}>
-										<Image src={photo.src} alt={photo.alt} fill sizes="(max-width: 700px) 50vw, 33vw" />
+								{galleryPhotos.map((photo, index) => (
+									<figure key={photo.src} className={index === 0 ? "field-story-gallery-featured" : undefined}>
+										<Image
+											src={photo.src}
+											alt={photo.alt}
+											fill
+											sizes={index === 0 ? "(max-width: 700px) 100vw, 66vw" : "(max-width: 700px) 50vw, 33vw"}
+										/>
 									</figure>
 								))}
 							</div>
