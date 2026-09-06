@@ -4,7 +4,7 @@ import { Quote, Star, ArrowRight } from "lucide-react";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { JsonLd } from "@/components/json-ld";
 import { pageMetadata, breadcrumbSchema } from "@/lib/site";
-import { getPublishedTestimonials } from "@/lib/db";
+import { getPublishedGalleryImages, getPublishedTestimonials } from "@/lib/db";
 
 export const metadata = pageMetadata({
 	title: "Veteran Testimonials — Stories of Healing & Hope",
@@ -19,6 +19,8 @@ export default async function TestimonialsPage({ searchParams }: { searchParams:
 	const categories = Array.from(new Set(allTestimonials.map((t) => t.category || "Uncategorized"))).sort();
 	const years = Array.from(new Set(allTestimonials.map((t) => t.createdAt.slice(0, 4)))).sort().reverse();
 	const testimonials = allTestimonials.filter((t) => (!query.category || (t.category || "Uncategorized") === query.category) && (!query.year || t.createdAt.startsWith(query.year)));
+	const galleryImages = await getPublishedGalleryImages();
+	const heroCollage = [...galleryImages].sort(() => Math.random() - 0.5).slice(0, 8);
 
 	return (
 		<>
@@ -50,7 +52,16 @@ export default async function TestimonialsPage({ searchParams }: { searchParams:
 					})),
 				}}
 			/>
-			<section className="page-hero">
+			<section className="page-hero testimonials-hero">
+				{heroCollage.length > 0 && (
+					<div className="testimonials-hero-collage" aria-hidden="true">
+						{heroCollage.map((image) => (
+							<div key={image.id}>
+								<Image src={image.src} alt="" fill sizes="25vw" />
+							</div>
+						))}
+					</div>
+				)}
 				<div className="container">
 					<Breadcrumbs
 						light
