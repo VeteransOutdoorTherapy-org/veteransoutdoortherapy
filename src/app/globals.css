@@ -2358,12 +2358,18 @@ img {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
 		gap: 24px;
 	}
+	.testimonial-card-wide {
+		grid-column: span 2;
+	}
 }
 
 @media (min-width: 1100px) {
 	.testimonials-masonry {
 		grid-template-columns: repeat(3, minmax(0, 1fr));
 		gap: 28px;
+	}
+	.testimonial-card-wide {
+		grid-column: span 2;
 	}
 }
 

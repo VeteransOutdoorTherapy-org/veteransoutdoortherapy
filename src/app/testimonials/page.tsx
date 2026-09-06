@@ -81,7 +81,10 @@ export default async function TestimonialsPage({ searchParams }: { searchParams:
 					) : (
 						<div className="testimonials-masonry">
 							{testimonials.map((testimonial) => (
-								<article key={testimonial.slug} className="testimonial-card">
+								<article
+									key={testimonial.slug}
+									className={testimonial.quote.length > 500 ? "testimonial-card testimonial-card-wide" : "testimonial-card"}
+								>
 									<div className="testimonial-quote">
 										<Quote size={48} className="quote-icon" aria-hidden="true" />
 										<blockquote>

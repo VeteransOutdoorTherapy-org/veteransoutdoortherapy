@@ -157,7 +157,10 @@ export default async function FieldStoryPage({ params }: PageProps<"/field-stori
 							</div>
 							<div className="testimonials-masonry">
 								{reviews.map((review) => (
-									<article key={review.slug} className="testimonial-card">
+									<article
+										key={review.slug}
+										className={review.quote.length > 500 ? "testimonial-card testimonial-card-wide" : "testimonial-card"}
+									>
 										<div className="testimonial-quote">
 											<Quote size={40} className="quote-icon" aria-hidden="true" />
 											<blockquote><p>{review.quote}</p></blockquote>
