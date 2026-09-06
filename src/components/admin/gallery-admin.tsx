@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { Trash2 } from "lucide-react";
 import type { GalleryImage } from "@/lib/data";
-import { deleteGalleryImageAction, saveGalleryMetadataAction, uploadGalleryImagesAction } from "@/app/admin/actions";
+import { addGalleryImagesByUrlAction, deleteGalleryImageAction, saveGalleryMetadataAction, uploadGalleryImagesAction } from "@/app/admin/actions";
 
 export function GalleryAdmin({ images }: { images: GalleryImage[] }) {
 	return <div className="admin-gallery">
@@ -12,6 +12,16 @@ export function GalleryAdmin({ images }: { images: GalleryImage[] }) {
 			<p className="prose">Upload one or many approved photos. New uploads are published immediately with editable metadata.</p>
 			<label>Images<input className="field" name="imageFiles" type="file" accept="image/png,image/jpeg,image/webp" multiple required /></label>
 			<button className="button orange" type="submit">Upload images</button>
+		</form>
+		<form className="product-form" action={addGalleryImagesByUrlAction}>
+			<h2>Add existing image URLs</h2>
+			<p className="prose">Already uploaded files straight to Blob storage? Paste their public URLs here (one per line) to add them to the Gallery without re-uploading.</p>
+			<label>Image URLs, one per line<textarea className="field" name="urls" rows={5} placeholder="https://xxxxxxxx.public.blob.vercel-storage.com/image-123.jpg" required /></label>
+			<div className="form-row">
+				<label>Tags, comma separated<input className="field" name="tags" placeholder="horseback, female veterans" /></label>
+				<label>Year<input className="field" name="year" placeholder={new Date().getFullYear().toString()} /></label>
+			</div>
+			<button className="button orange" type="submit">Add images</button>
 		</form>
 		<div className="admin-gallery-list"><h2>Gallery · {images.length}</h2>
 			{images.map((image) => <article className="admin-gallery-card" key={image.id}>

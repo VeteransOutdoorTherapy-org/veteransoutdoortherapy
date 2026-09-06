@@ -365,6 +365,51 @@ export async function uploadGalleryImagesAction(form: FormData) {
 	redirect("/admin?view=gallery&saved=1");
 }
 
+export async function addGalleryImagesByUrlAction(form: FormData) {
+	if (!(await isAdmin())) redirect("/admin");
+	const urls = String(form.get("urls") || "")
+		.split("\n")
+		.map((line) => line.trim())
+		.filter((line) => line.startsWith("http"));
+	const tags = String(form.get("tags") || "")
+		.split(",")
+		.map((tag) => tag.trim())
+		.filter(Boolean);
+	const year = String(form.get("year") || "").trim() || new Date().getFullYear().toString();
+	if (!urls.length) redirect("/admin?view=gallery&saveError=save-failed");
+
+	const existing = await getGalleryImages();
+	const existingSrcs = new Set(existing.map((image) => image.src));
+	let sortOrder = existing.length;
+	for (const src of urls) {
+		if (existingSrcs.has(src)) continue;
+		sortOrder += 1;
+		await saveGalleryImage({
+			id: `auto-${randomUUID()}`,
+			src,
+			alt: "Veteran outdoor therapy experience in nature",
+			tags,
+			year,
+			published: true,
+			sortOrder,
+			createdAt: new Date().toISOString(),
+			updatedAt: new Date().toISOString(),
+		});
+		existingSrcs.add(src);
+	}
+
+	revalidatePath("/gallery");
+	if (tags.length) {
+		const stories = await getFieldStories();
+		for (const story of stories) {
+			if (story.galleryTag && tags.some((tag) => tag.toLowerCase() === story.galleryTag!.toLowerCase())) {
+				revalidatePath(`/field-stories/${story.slug}`);
+			}
+		}
+	}
+	redirect("/admin?view=gallery&saved=1");
+}
+
 export async function deleteGalleryImageAction(form: FormData) {
 	if (!(await isAdmin())) redirect("/admin");
 	const id = String(form.get("id") || "").trim();
