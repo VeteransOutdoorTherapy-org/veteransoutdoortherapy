@@ -961,6 +961,53 @@ export const fieldStories: FieldStory[] = [
 		programLabel: "Explore veteran hunting",
 		published: true,
 	},
+	{
+		slug: "missouri-turkey-hunt-2026",
+		title: "Veterans Tag Toms on the Inaugural Missouri Turkey Hunt",
+		date: "April 30 - May 4, 2026",
+		datePublished: "2026-05-04",
+		location: "Missouri",
+		summary:
+			"Veterans from Ohio, Nebraska, and Missouri gathered for the inaugural Missouri Turkey Hunt, tagging four birds and spending a day catfishing on the river.",
+		image: `${uploads}/2026/09/mo-turkey/underway-02.jpg`,
+		imageAlt: "Veteran with a harvested turkey in a Missouri field",
+		body: [
+			"Veterans from Ohio, Nebraska, and Missouri gathered for the inaugural Missouri Turkey Hunt in early May 2026, combining turkey hunting with a day of catfishing on the river.",
+			"Huge thanks to Conservation Federation of Missouri for their support and to all the volunteers who helped make the hunt possible.",
+			"By the time the hunt came to a close, all four hunters had tagged a bird, with two of them harvesting their first toms, and every bird over 22 lbs.",
+			"Thank you to Zachary Martin, Kevin Spatafora, Travis Doerhoff, and Hunter Fansler for getting the guys on the birds, and to John Spatafora, Chris Shoaf, and Aaron Mattox for putting them on the fish.",
+		],
+		facebookLinks: [
+			{ href: "https://www.facebook.com/share/p/19SyiWwjLQ/", label: "Read the mid-hunt update on Facebook" },
+			{ href: "https://www.facebook.com/share/p/1cBZ4V3MQ7/", label: "Read the recap on Facebook" },
+		],
+		galleryTag: "mo-turkey",
+		photoGalleries: [
+			{
+				title: "The hunt is underway",
+				photos: [
+					{ src: `${uploads}/2026/09/mo-turkey/underway-01.jpg`, alt: "Veterans with harvested turkeys and a Veteran's Outdoor Therapy banner" },
+					{ src: `${uploads}/2026/09/mo-turkey/underway-02.jpg`, alt: "Veteran with a harvested turkey in a Missouri field" },
+					{ src: `${uploads}/2026/09/mo-turkey/underway-03.jpg`, alt: "Veteran with a harvested turkey on a fallen log" },
+					{ src: `${uploads}/2026/09/mo-turkey/underway-04.jpg`, alt: "Veteran with a harvested turkey at sunset in Missouri" },
+					{ src: `${uploads}/2026/09/mo-turkey/underway-05.jpg`, alt: "Camp gear and a Veteran's Outdoor Therapy banner at night" },
+				],
+			},
+			{
+				title: "Tags filled, and time on the water",
+				photos: [
+					{ src: `${uploads}/2026/09/mo-turkey/recap-01.jpg`, alt: "Veteran with a harvested turkey in the Missouri woods" },
+					{ src: `${uploads}/2026/09/mo-turkey/recap-02.jpg`, alt: "Veteran holding a catfish on the river" },
+					{ src: `${uploads}/2026/09/mo-turkey/recap-03.jpg`, alt: "Veteran holding a catfish on the river" },
+					{ src: `${uploads}/2026/09/mo-turkey/recap-04.jpg`, alt: "Veterans holding a large catfish on the river" },
+					{ src: `${uploads}/2026/09/mo-turkey/recap-05.jpg`, alt: "Veterans gathered for a cookout on the porch" },
+				],
+			},
+		],
+		programHref: "/programs/veteran-hunting",
+		programLabel: "Explore veteran hunting",
+		published: true,
+	},
 ];
 
 export const mission =
