@@ -907,6 +907,60 @@ export const fieldStories: FieldStory[] = [
 		programLabel: "Explore outdoor programs",
 		published: true,
 	},
+	{
+		slug: "flint-hills-kansas-turkey-hunt-2026",
+		title: "Veterans Chase Turkeys in the Flint Hills",
+		date: "May 14-17, 2026",
+		datePublished: "2026-05-17",
+		location: "Flint Hills, Kansas",
+		summary:
+			"Veterans from Texas and Kansas gathered in the Flint Hills for the first inaugural Kansas Turkey Hunt, hosted by Forest, Jardine, and Dru.",
+		image: `${uploads}/2026/09/flint-hills/sunset-02.jpg`,
+		imageAlt: "Veteran carrying a harvested turkey at sunset in the Flint Hills",
+		body: [
+			"Veterans from Texas and Kansas joined together in the Flint Hills for the first inaugural Kansas Turkey Hunt in May 2026.",
+			"Forest, Jardine, and Dru generously hosted the group, opening up their home for a weekend of chasing birds together.",
+			"Tags and hearts were filled by the end of the trip. The weather and scenery were perfect, and the camaraderie shared with fellow brothers was top notch.",
+		],
+		facebookLinks: [
+			{ href: "https://www.facebook.com/share/p/1Du6u23hSF/", label: "Read the arrival post on Facebook" },
+			{ href: "https://www.facebook.com/share/p/1DkWQjT6X9/", label: "Watch the video on Facebook" },
+			{ href: "https://www.facebook.com/share/p/1GxJEPVU8n/", label: "Read the recap on Facebook" },
+		],
+		galleryTag: "flint-hills",
+		photoGalleries: [
+			{
+				title: "Arrival in the Flint Hills",
+				photos: [
+					{ src: `${uploads}/2026/09/flint-hills/arrival-01.jpg`, alt: "Experience the Flint Hills road sign in Kansas" },
+					{ src: `${uploads}/2026/09/flint-hills/arrival-02.jpg`, alt: "Veterans watching the sunset in the Flint Hills" },
+					{ src: `${uploads}/2026/09/flint-hills/arrival-03.jpg`, alt: "Veterans with a harvested turkey at sunset in the Flint Hills" },
+					{ src: `${uploads}/2026/09/flint-hills/arrival-04.jpg`, alt: "Veterans gathered with a Veteran's Outdoor Therapy banner in the Flint Hills" },
+					{ src: `${uploads}/2026/09/flint-hills/arrival-05.jpg`, alt: "Veterans walking with a harvested turkey at dusk in the Flint Hills" },
+				],
+			},
+			{
+				title: "Out at first light",
+				photos: [
+					{ src: `${uploads}/2026/09/flint-hills/sunset-01.jpg`, alt: "Veteran carrying a harvested turkey at sunset in the Flint Hills" },
+					{ src: `${uploads}/2026/09/flint-hills/sunset-02.jpg`, alt: "Veteran carrying a harvested turkey at sunset in the Flint Hills" },
+				],
+			},
+			{
+				title: "Tags filled",
+				photos: [
+					{ src: `${uploads}/2026/09/flint-hills/recap-01.jpg`, alt: "Veteran with a harvested turkey in the Flint Hills" },
+					{ src: `${uploads}/2026/09/flint-hills/recap-02.jpg`, alt: "Wild turkeys in a field in the Flint Hills" },
+					{ src: `${uploads}/2026/09/flint-hills/recap-03.jpg`, alt: "Veterans with harvested turkeys in the Flint Hills" },
+					{ src: `${uploads}/2026/09/flint-hills/recap-04.jpg`, alt: "Veteran with a harvested turkey along a fence line in the Flint Hills" },
+					{ src: `${uploads}/2026/09/flint-hills/recap-05.jpg`, alt: "Veteran with a harvested turkey along a creek in the Flint Hills" },
+				],
+			},
+		],
+		programHref: "/programs/veteran-hunting",
+		programLabel: "Explore veteran hunting",
+		published: true,
+	},
 ];
 
 export const mission =

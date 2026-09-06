@@ -80,6 +80,7 @@ export default function VeteranHuntingPage() {
 						<Link className="button orange" href="/veteran-application">Apply as a Veteran</Link>
 						<Link className="text-link" href="/events">View upcoming hunts</Link>
 						<Link className="text-link" href="/fundraising-application">Offer land or expertise</Link>
+						<Link className="text-link" href="/field-stories/flint-hills-kansas-turkey-hunt-2026">Read a recent hunt recap</Link>
 					</div>
 				</div>
 			</section>
