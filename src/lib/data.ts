@@ -1048,6 +1048,40 @@ export const fieldStories: FieldStory[] = [
 		programLabel: "Explore outdoor programs",
 		published: true,
 	},
+	{
+		slug: "wilderness-to-wellness-benefit-dinner-2026",
+		title: "Wilderness to Wellness: The Inaugural Benefit Dinner",
+		date: "March 18, 2026",
+		datePublished: "2026-03-18",
+		location: "54 Country, Missouri",
+		summary:
+			"Veterans, sponsors, and supporting organizations packed the house at 54 Country for Veteran's Outdoor Therapy's inaugural Wilderness to Wellness benefit dinner.",
+		image: `${uploads}/2026/09/wilderness-to-wellness/dinner-03.jpg`,
+		imageAlt: "Full house of Veterans and supporters at the Wilderness to Wellness benefit dinner",
+		body: [
+			"Veteran's Outdoor Therapy hosted its inaugural Wilderness to Wellness benefit dinner at 54 Country, bringing together Veterans, volunteers, sponsors, and supporting organizations for an evening of food, fellowship, and fundraising.",
+			"Combat Veterans Motorcycle Association Chapter 4-7 joined the celebration, and shared afterward: \"Great evening at Veteran's Outdoor Therapy Inaugural Benefit Dinner, with a full house of veterans and other supporting organizations. Already looking forward to next year's event!\"",
+			"The dinner raised support for the fully funded hunts, fishing trips, horseback rides, and other outdoor experiences that make up the Wilderness to Wellness mission, and set the stage for it to become an annual tradition.",
+		],
+		facebookLinks: [
+			{ href: "https://www.facebook.com/share/p/1ED884Mj3j/", label: "Read the recap on Facebook" },
+		],
+		galleryTag: "wilderness-to-wellness",
+		photoGalleries: [
+			{
+				title: "A full house for a good cause",
+				photos: [
+					{ src: `${uploads}/2026/09/wilderness-to-wellness/dinner-01.jpg`, alt: "Veterans and supporters gathered around a table at the Wilderness to Wellness benefit dinner" },
+					{ src: `${uploads}/2026/09/wilderness-to-wellness/dinner-02.jpg`, alt: "The 54 Country signed wooden sign at the benefit dinner venue" },
+					{ src: `${uploads}/2026/09/wilderness-to-wellness/dinner-04.jpg`, alt: "Cars and an American flag outside the Wilderness to Wellness benefit dinner venue" },
+					{ src: `${uploads}/2026/09/wilderness-to-wellness/dinner-05.jpg`, alt: "Veterans and supporters seated for dinner at the Wilderness to Wellness benefit dinner" },
+				],
+			},
+		],
+		programHref: "/programs",
+		programLabel: "Explore outdoor programs",
+		published: true,
+	},
 ];
 
 export const mission =

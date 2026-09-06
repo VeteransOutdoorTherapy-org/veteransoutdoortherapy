@@ -244,20 +244,18 @@ const dischargeMigration =
 			updated_at = now()
 		WHERE slug = 'second-annual-poker-run-2026'`;
 	}
-	const newStoriesMigration =
-		await db`INSERT INTO migrations (id) VALUES ('seed-new-field-stories-2026') ON CONFLICT (id) DO NOTHING RETURNING id`;
-	if (newStoriesMigration.length) {
-		const newSlugs = [
-			"flint-hills-kansas-turkey-hunt-2026",
-			"missouri-turkey-hunt-2026",
-			"missouri-paddlefish-snagging-2026",
-		];
-		for (const slug of newSlugs) {
-			const story = seedFieldStories.find((s) => s.slug === slug);
-			if (!story) continue;
-			await db`INSERT INTO field_stories (slug, title, date_label, date_published, location, summary, image, image_alt, body, video, facebook_links, review_category, gallery_tag, photo_galleries, program_href, program_label, published) VALUES (${story.slug}, ${story.title}, ${story.date}, ${story.datePublished}, ${story.location}, ${story.summary}, ${story.image}, ${story.imageAlt}, ${JSON.stringify(story.body)}, ${story.video ? JSON.stringify(story.video) : null}, ${JSON.stringify(story.facebookLinks || [])}, ${story.reviewCategory || null}, ${story.galleryTag || null}, ${JSON.stringify(story.photoGalleries || [])}, ${story.programHref}, ${story.programLabel}, ${story.published}) ON CONFLICT (slug) DO NOTHING`;
-		}
+	async function seedMissingStory(db: NonNullable<ReturnType<typeof sql>>, migrationId: string, slug: string) {
+		const migration =
+			await db`INSERT INTO migrations (id) VALUES (${migrationId}) ON CONFLICT (id) DO NOTHING RETURNING id`;
+		if (!migration.length) return;
+		const story = seedFieldStories.find((s) => s.slug === slug);
+		if (!story) return;
+		await db`INSERT INTO field_stories (slug, title, date_label, date_published, location, summary, image, image_alt, body, video, facebook_links, review_category, gallery_tag, photo_galleries, program_href, program_label, published) VALUES (${story.slug}, ${story.title}, ${story.date}, ${story.datePublished}, ${story.location}, ${story.summary}, ${story.image}, ${story.imageAlt}, ${JSON.stringify(story.body)}, ${story.video ? JSON.stringify(story.video) : null}, ${JSON.stringify(story.facebookLinks || [])}, ${story.reviewCategory || null}, ${story.galleryTag || null}, ${JSON.stringify(story.photoGalleries || [])}, ${story.programHref}, ${story.programLabel}, ${story.published}) ON CONFLICT (slug) DO NOTHING`;
 	}
+	await seedMissingStory(db, "seed-flint-hills-story-2026", "flint-hills-kansas-turkey-hunt-2026");
+	await seedMissingStory(db, "seed-missouri-turkey-story-2026", "missouri-turkey-hunt-2026");
+	await seedMissingStory(db, "seed-snagging-story-2026", "missouri-paddlefish-snagging-2026");
+	await seedMissingStory(db, "seed-wilderness-to-wellness-story-2026", "wilderness-to-wellness-benefit-dinner-2026");
 	return db;
 }
 
