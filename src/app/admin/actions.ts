@@ -4,7 +4,7 @@ import { randomUUID } from "crypto";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { isAdmin, login, logout } from "@/lib/auth";
-import { deleteEvent, deleteProduct, getEvents, getProducts, saveEvent, saveProduct, getTestimonials, saveTestimonial, deleteTestimonial, deleteGalleryImage, getGalleryImages, saveGalleryImage } from "@/lib/db";
+import { deleteEvent, deleteProduct, getEvents, getProducts, saveEvent, saveProduct, getTestimonials, saveTestimonial, deleteTestimonial, deleteGalleryImage, getGalleryImages, saveGalleryImage, getFieldStories, saveFieldStory, deleteFieldStory } from "@/lib/db";
 
 function revalidateCatalogPages(slug: string) {
 	revalidatePath("/");
@@ -23,6 +23,25 @@ function revalidateEventPages(slug: string) {
 	revalidatePath(`/events/${slug}`);
 	revalidatePath("/events/[slug]", "page");
 	revalidatePath("/admin");
+}
+
+function revalidateFieldStoryPages(slug: string) {
+	revalidatePath("/");
+	revalidatePath("/field-stories");
+	revalidatePath(`/field-stories/${slug}`);
+	revalidatePath("/field-stories/[slug]", "page");
+	revalidatePath("/admin");
+}
+
+function safeFieldStoryUploadPath(slug: string, fileName: string) {
+	const safeSlug = slugify(slug).slice(0, 60) || "field-story";
+	const safeName =
+		fileName
+			.toLowerCase()
+			.replace(/[^a-z0-9._-]+/g, "-")
+			.replace(/-+/g, "-")
+			.slice(-80) || "image";
+	return `field-stories/${safeSlug}/${Date.now()}-${safeName}`;
 }
 
 function slugify(value: string) {
@@ -435,4 +454,115 @@ export async function deleteTestimonialAction(form: FormData) {
 	await deleteTestimonial(slug);
 	revalidateTestimonialPages(slug);
 	redirect("/admin?view=testimonials&deleted=1");
+}
+
+function parseLines(value: string) {
+	return value
+		.split("\n")
+		.map((line) => line.trim())
+		.filter(Boolean);
+}
+
+function parseFacebookLinks(value: string) {
+	return parseLines(value)
+		.map((line) => {
+			const [label, href] = line.split("|").map((part) => part.trim());
+			return href ? { label: label || href, href } : null;
+		})
+		.filter((link): link is { label: string; href: string } => link !== null);
+}
+
+export async function saveFieldStoryAction(form: FormData) {
+	if (!(await isAdmin())) redirect("/admin");
+	const title = String(form.get("title") || "").trim();
+	const slug = slugify(String(form.get("slug") || title));
+	const previousSlug = String(form.get("previousSlug") || slug).trim();
+	const file = form.get("imageFile");
+	const existingImage = String(form.get("existingImage") || "").trim();
+	let image = String(form.get("image") || "").trim() || existingImage;
+
+	if (file instanceof File && file.size > 0) {
+		if (!process.env.BLOB_READ_WRITE_TOKEN) redirect("/admin?view=field-stories&saveError=upload-config");
+		try {
+			image = (await put(safeFieldStoryUploadPath(slug, file.name), file, { access: "public", addRandomSuffix: true })).url;
+		} catch (error) {
+			console.error("Field story image upload failed", { slug, fileName: file.name, error });
+			redirect("/admin?view=field-stories&saveError=upload-failed");
+		}
+	}
+
+	const videoUrl = String(form.get("videoUrl") || "").trim();
+	const videoTitle = String(form.get("videoTitle") || "").trim();
+
+	try {
+		if (!title || !slug || !image) throw new Error("Missing required field story fields.");
+		await saveFieldStory(
+			{
+				slug,
+				title,
+				date: String(form.get("date") || "").trim(),
+				datePublished: String(form.get("datePublished") || "").trim(),
+				location: String(form.get("location") || "").trim(),
+				summary: String(form.get("summary") || "").trim(),
+				image,
+				imageAlt: String(form.get("imageAlt") || "").trim(),
+				body: parseLines(String(form.get("body") || "")),
+				video: videoUrl ? { url: videoUrl, title: videoTitle || title } : undefined,
+				facebookLinks: parseFacebookLinks(String(form.get("facebookLinks") || "")),
+				reviewCategory: String(form.get("reviewCategory") || "").trim() || undefined,
+				galleryTag: String(form.get("galleryTag") || "").trim() || undefined,
+				programHref: String(form.get("programHref") || "/programs").trim(),
+				programLabel: String(form.get("programLabel") || "Explore outdoor programs").trim(),
+				published: form.get("published") === "on",
+			},
+			previousSlug,
+		);
+	} catch (error) {
+		console.error("Field story save failed", { slug, error });
+		redirect("/admin?view=field-stories&saveError=save-failed");
+	}
+
+	revalidateFieldStoryPages(previousSlug);
+	revalidateFieldStoryPages(slug);
+	redirect(`/admin?view=field-stories&edit=${slug}&saved=1`);
+}
+
+export async function duplicateFieldStoryAction(form: FormData) {
+	if (!(await isAdmin())) redirect("/admin");
+	const sourceSlug = String(form.get("slug") || "").trim();
+	const storyList = await getFieldStories();
+	const source = storyList.find((story) => story.slug === sourceSlug);
+	if (!source) redirect("/admin?view=field-stories&saveError=save-failed");
+
+	function getDuplicateSlug(existingSlugs: Set<string>, sourceSlug: string) {
+		const base = `${slugify(sourceSlug).slice(0, 48) || "field-story"}-copy`;
+		if (!existingSlugs.has(base)) return base;
+		let index = 2;
+		while (existingSlugs.has(`${base}-${index}`)) index += 1;
+		return `${base}-${index}`;
+	}
+
+	const existingSlugs = new Set(storyList.map((s) => s.slug));
+	const duplicateSlug = getDuplicateSlug(existingSlugs, source.slug);
+	try {
+		await saveFieldStory({
+			...source,
+			slug: duplicateSlug,
+			title: `${source.title} (Copy)`,
+			published: false,
+		});
+	} catch {
+		redirect("/admin?view=field-stories&saveError=save-failed");
+	}
+
+	revalidateFieldStoryPages(duplicateSlug);
+	redirect(`/admin?view=field-stories&edit=${duplicateSlug}&saved=1`);
+}
+
+export async function deleteFieldStoryAction(form: FormData) {
+	if (!(await isAdmin())) redirect("/admin");
+	const slug = String(form.get("slug") || "").trim();
+	await deleteFieldStory(slug);
+	revalidateFieldStoryPages(slug);
+	redirect("/admin?view=field-stories&deleted=1");
 }

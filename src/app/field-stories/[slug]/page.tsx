@@ -5,17 +5,16 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { JsonLd } from "@/components/json-ld";
-import { getPublishedGalleryImages, getPublishedTestimonials } from "@/lib/db";
+import { getFieldStories, getFieldStory, getPublishedGalleryImages, getPublishedTestimonials } from "@/lib/db";
 import { absoluteUrl, breadcrumbSchema, pageMetadata, SITE_NAME, SITE_URL } from "@/lib/site";
-import { fieldStories, getFieldStory } from "@/lib/stories";
 
-export function generateStaticParams() {
-	return fieldStories.map((story) => ({ slug: story.slug }));
+export async function generateStaticParams() {
+	return (await getFieldStories()).map((story) => ({ slug: story.slug }));
 }
 
 export async function generateMetadata({ params }: PageProps<"/field-stories/[slug]">): Promise<Metadata> {
 	const { slug } = await params;
-	const story = getFieldStory(slug);
+	const story = await getFieldStory(slug);
 	if (!story) return {};
 	return pageMetadata({
 		title: story.title,
@@ -27,7 +26,7 @@ export async function generateMetadata({ params }: PageProps<"/field-stories/[sl
 
 export default async function FieldStoryPage({ params }: PageProps<"/field-stories/[slug]">) {
 	const { slug } = await params;
-	const story = getFieldStory(slug);
+	const story = await getFieldStory(slug);
 	if (!story) notFound();
 	const path = `/field-stories/${story.slug}`;
 	const reviews = story.reviewCategory
@@ -91,27 +90,6 @@ export default async function FieldStoryPage({ params }: PageProps<"/field-stori
 					<p className="field-story-lead">{story.summary}</p>
 					{story.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
 
-					{photoGalleries.map((gallery, galleryIndex) => (
-						<section className="field-story-section" key={gallery.title}>
-							<div className="field-story-section-head">
-								<p className="eyebrow">From the field</p>
-								<h2>{gallery.title}</h2>
-							</div>
-							<div className="field-story-gallery">
-								{gallery.photos.map((photo, index) => (
-									<figure key={photo.src} className={galleryIndex === 0 && index === 0 ? "field-story-gallery-featured" : undefined}>
-										<Image
-											src={photo.src}
-											alt={photo.alt}
-											fill
-											sizes={galleryIndex === 0 && index === 0 ? "(max-width: 700px) 100vw, 66vw" : "(max-width: 700px) 50vw, 33vw"}
-										/>
-									</figure>
-								))}
-							</div>
-						</section>
-					))}
-
 					{story.video && (
 						<section className="field-story-section">
 							<div className="field-story-section-head">
@@ -129,22 +107,6 @@ export default async function FieldStoryPage({ params }: PageProps<"/field-stori
 									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 									allowFullScreen
 								/>
-							</div>
-						</section>
-					)}
-
-					{story.facebookLinks && story.facebookLinks.length > 0 && (
-						<section className="field-story-section field-story-facebook">
-							<div className="field-story-section-head">
-								<p className="eyebrow">More from Facebook</p>
-								<h2>Read the original posts</h2>
-							</div>
-							<div className="field-story-facebook-links">
-								{story.facebookLinks.map((link) => (
-									<Link key={link.href} href={link.href} target="_blank" rel="noopener noreferrer">
-										{link.label} <ArrowRight size={17} />
-									</Link>
-								))}
 							</div>
 						</section>
 					)}
@@ -172,6 +134,43 @@ export default async function FieldStoryPage({ params }: PageProps<"/field-stori
 											</div>
 										</footer>
 									</article>
+								))}
+							</div>
+						</section>
+					)}
+
+					{photoGalleries.map((gallery, galleryIndex) => (
+						<section className="field-story-section" key={gallery.title}>
+							<div className="field-story-section-head">
+								<p className="eyebrow">From the field</p>
+								<h2>{gallery.title}</h2>
+							</div>
+							<div className="field-story-gallery">
+								{gallery.photos.map((photo, index) => (
+									<figure key={photo.src} className={galleryIndex === 0 && index === 0 ? "field-story-gallery-featured" : undefined}>
+										<Image
+											src={photo.src}
+											alt={photo.alt}
+											fill
+											sizes={galleryIndex === 0 && index === 0 ? "(max-width: 700px) 100vw, 66vw" : "(max-width: 700px) 50vw, 33vw"}
+										/>
+									</figure>
+								))}
+							</div>
+						</section>
+					))}
+
+					{story.facebookLinks && story.facebookLinks.length > 0 && (
+						<section className="field-story-section field-story-facebook">
+							<div className="field-story-section-head">
+								<p className="eyebrow">More from Facebook</p>
+								<h2>Read the original posts</h2>
+							</div>
+							<div className="field-story-facebook-links">
+								{story.facebookLinks.map((link) => (
+									<Link key={link.href} href={link.href} target="_blank" rel="noopener noreferrer">
+										{link.label} <ArrowRight size={17} />
+									</Link>
 								))}
 							</div>
 						</section>

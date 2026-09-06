@@ -1,9 +1,8 @@
 import type { MetadataRoute } from "next";
-import { getEvents, getProducts } from "@/lib/db";
+import { getEvents, getProducts, getPublishedFieldStories } from "@/lib/db";
 import { SITE_URL } from "@/lib/site";
-import { fieldStories } from "@/lib/stories";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-	const [products, events] = await Promise.all([getProducts(), getEvents()]);
+	const [products, events, fieldStories] = await Promise.all([getProducts(), getEvents(), getPublishedFieldStories()]);
 	const routes = [
 		"",
 		"/about",

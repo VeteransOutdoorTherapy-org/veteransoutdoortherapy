@@ -1,10 +1,11 @@
 import { Copy, LockKeyhole, LogOut, PackagePlus, Pencil, Plus, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { isAdmin } from "@/lib/auth";
-import { getEvents, getProducts, getTestimonials, getGalleryImages, type Testimonial } from "@/lib/db";
+import { getEvents, getProducts, getTestimonials, getGalleryImages, getFieldStories, type Testimonial } from "@/lib/db";
 import { pageMetadata } from "@/lib/site";
 import { deleteProductAction, duplicateProductAction, loginAction, logoutAction, saveProductAction, saveTestimonialAction, duplicateTestimonialAction, deleteTestimonialAction } from "./actions";
 import { EventAdmin } from "./event-admin";
+import { FieldStoryAdmin } from "./field-story-admin";
 import { GalleryAdmin } from "@/components/admin/gallery-admin";
 
 export const metadata = pageMetadata({ title: "Content Admin", description: "Authorized content administration.", path: "/admin", noIndex: true });
@@ -152,14 +153,29 @@ export default async function AdminPage({
 				</form>
 			</section>
 		);
-	const view = query.view === "events" ? "events" : query.view === "testimonials" ? "testimonials" : query.view === "gallery" ? "gallery" : query.view === "wiki" ? "wiki" : "products";
-	const [products, events, testimonials, gallery] = await Promise.all([getProducts(), getEvents(), getTestimonials(), getGalleryImages()]);
+	const view =
+		query.view === "events" ? "events"
+		: query.view === "testimonials" ? "testimonials"
+		: query.view === "gallery" ? "gallery"
+		: query.view === "field-stories" ? "field-stories"
+		: query.view === "wiki" ? "wiki"
+		: "products";
+	const [products, events, testimonials, gallery, fieldStories] = await Promise.all([
+		getProducts(),
+		getEvents(),
+		getTestimonials(),
+		getGalleryImages(),
+		getFieldStories(),
+	]);
 	const categories = Array.from(
 		new Set(products.map((product) => product.category.trim()).filter((category) => category.length > 0)),
 	).sort((a, b) => a.localeCompare(b));
 	const selectedProduct = products.find((product) => product.slug === query.edit);
 	const selectedEvent = events.find((event) => event.slug === query.edit);
 	const selectedTestimonial = testimonials.find((testimonial) => testimonial.slug === query.edit);
+	const selectedFieldStory = fieldStories.find((story) => story.slug === query.edit);
+	const testimonialCategories = Array.from(new Set(testimonials.map((t) => t.category).filter((c): c is string => Boolean(c)))).sort();
+	const galleryTags = Array.from(new Set(gallery.flatMap((image) => image.tags))).sort();
 	return (
 		<section className="admin-page">
 			<div className="container">
@@ -184,14 +200,17 @@ export default async function AdminPage({
 					<a className={view === "testimonials" ? "active" : ""} href="/admin?view=testimonials">
 						Testimonials
 					</a>
+					<a className={view === "field-stories" ? "active" : ""} href="/admin?view=field-stories">
+						Field Notes
+					</a>
 					<Link href="/admin/orders">
 						Orders
 					</Link>
 					<Link className={view === "gallery" ? "active" : ""} href="/admin?view=gallery">Gallery</Link>
 					<Link href="/admin/wiki">Wiki</Link>
 				</nav>
-				{query.saved && <p className="success-note">Testimonial saved.</p>}
-				{query.deleted && <p className="success-note">Testimonial deleted.</p>}
+				{query.saved && <p className="success-note">Saved.</p>}
+				{query.deleted && <p className="success-note">Deleted.</p>}
 				{query.saveError === "upload-config" && (
 					<p className="form-error">Image upload is not configured. Add BLOB_READ_WRITE_TOKEN to your environment.</p>
 				)}
@@ -207,6 +226,13 @@ export default async function AdminPage({
 					<TestimonialAdmin testimonials={testimonials} selected={selectedTestimonial} categoryFilter={query.category} yearFilter={query.year} />
 				) : view === "gallery" ? (
 					<GalleryAdmin images={gallery} />
+				) : view === "field-stories" ? (
+					<FieldStoryAdmin
+						stories={fieldStories}
+						selected={selectedFieldStory}
+						testimonialCategories={testimonialCategories}
+						galleryTags={galleryTags}
+					/>
 				) : view === "wiki" ? (
 					<div className="admin-wiki"><h2>Admin wiki</h2><p>Use the dedicated <Link href="/admin/wiki">Wiki page</Link> for the operating handbook, content rules, and troubleshooting guidance.</p></div>
 				) : (

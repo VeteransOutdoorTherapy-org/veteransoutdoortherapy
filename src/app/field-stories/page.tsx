@@ -3,8 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { JsonLd } from "@/components/json-ld";
+import { getPublishedFieldStories } from "@/lib/db";
 import { breadcrumbSchema, pageMetadata } from "@/lib/site";
-import { fieldStories } from "@/lib/stories";
 
 export const metadata = pageMetadata({
 	title: "Stories from Veteran Outdoor Adventures",
@@ -13,7 +13,8 @@ export const metadata = pageMetadata({
 	path: "/field-stories",
 });
 
-export default function FieldStoriesPage() {
+export default async function FieldStoriesPage() {
+	const fieldStories = await getPublishedFieldStories();
 	return (
 		<>
 			<JsonLd data={breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Field stories", path: "/field-stories" }])} />
