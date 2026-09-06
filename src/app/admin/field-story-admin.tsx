@@ -67,6 +67,10 @@ export function FieldStoryAdmin({
 					Image alt text
 					<input className="field" name="imageAlt" defaultValue={selected?.imageAlt} required />
 				</label>
+				<label>
+					Upload more photos from this trip (added to the Gallery automatically)
+					<input className="field" name="photoFiles" type="file" accept="image/png,image/jpeg,image/webp" multiple />
+				</label>
 				<div className="form-row">
 					<label>
 						Video URL (YouTube embed, optional)
@@ -93,8 +97,8 @@ export function FieldStoryAdmin({
 						<input className="field" name="reviewCategory" list="field-story-review-categories" defaultValue={selected?.reviewCategory} />
 					</label>
 					<label>
-						Gallery tag (pulls every published gallery photo with this tag)
-						<input className="field" name="galleryTag" list="field-story-gallery-tags" defaultValue={selected?.galleryTag} />
+						Gallery tag (defaults to the slug — pulls every published gallery photo with this tag)
+						<input className="field" name="galleryTag" list="field-story-gallery-tags" defaultValue={selected?.galleryTag} placeholder={selected?.slug} />
 					</label>
 				</div>
 				<datalist id="field-story-review-categories">
@@ -108,8 +112,8 @@ export function FieldStoryAdmin({
 					))}
 				</datalist>
 				<p className="admin-hint">
-					Tag photos with the same word in the Gallery to have them show up automatically under &quot;From the field&quot; on this
-					story.
+					The hero photo and any uploaded trip photos are saved to the Gallery under this tag automatically, and show up
+					here under &quot;From the field&quot; too. Tag existing Gallery photos with the same word to pull them in as well.
 				</p>
 				<div className="form-row">
 					<label>

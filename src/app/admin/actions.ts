@@ -6,6 +6,24 @@ import { redirect } from "next/navigation";
 import { isAdmin, login, logout } from "@/lib/auth";
 import { deleteEvent, deleteProduct, getEvents, getProducts, saveEvent, saveProduct, getTestimonials, saveTestimonial, deleteTestimonial, deleteGalleryImage, getGalleryImages, saveGalleryImage, getFieldStories, saveFieldStory, deleteFieldStory } from "@/lib/db";
 
+async function addToGalleryIfMissing(src: string, tag: string, alt: string) {
+	if (!src || !src.startsWith("http")) return;
+	const existing = await getGalleryImages();
+	if (existing.some((image) => image.src === src)) return;
+	await saveGalleryImage({
+		id: `auto-${randomUUID()}`,
+		src,
+		alt,
+		tags: [tag].filter(Boolean),
+		year: new Date().getFullYear().toString(),
+		published: true,
+		sortOrder: existing.length + 1,
+		createdAt: new Date().toISOString(),
+		updatedAt: new Date().toISOString(),
+	});
+	revalidatePath("/gallery");
+}
+
 function revalidateCatalogPages(slug: string) {
 	revalidatePath("/");
 	revalidatePath("/shop");
@@ -235,6 +253,9 @@ export async function saveEventAction(form: FormData) {
 		redirect("/admin?view=events&saveError=save-failed");
 	}
 
+	const eventType = String(form.get("type") || "").trim();
+	await addToGalleryIfMissing(image, eventType.toLowerCase() || "event", `${title} event photo`);
+
 	revalidateEventPages(previousSlug);
 	revalidateEventPages(slug);
 	redirect(`/admin?view=events&edit=${slug}&saved=1`);
@@ -410,6 +431,9 @@ export async function saveTestimonialAction(form: FormData) {
 		redirect("/admin?view=testimonials&saveError=save-failed");
 	}
 
+	const testimonialCategory = String(form.get("category") || "").trim();
+	await addToGalleryIfMissing(image, testimonialCategory.toLowerCase() || "testimonial", `${author} testimonial photo`);
+
 	revalidateTestimonialPages(previousSlug);
 	revalidateTestimonialPages(slug);
 	redirect(`/admin?view=testimonials&edit=${slug}&saved=1`);
@@ -493,6 +517,9 @@ export async function saveFieldStoryAction(form: FormData) {
 
 	const videoUrl = String(form.get("videoUrl") || "").trim();
 	const videoTitle = String(form.get("videoTitle") || "").trim();
+	const imageAlt = String(form.get("imageAlt") || "").trim();
+	// Every field note gets a gallery tag so its photos always surface in the Gallery, even if left blank.
+	const galleryTag = String(form.get("galleryTag") || "").trim() || slug;
 
 	try {
 		if (!title || !slug || !image) throw new Error("Missing required field story fields.");
@@ -505,12 +532,12 @@ export async function saveFieldStoryAction(form: FormData) {
 				location: String(form.get("location") || "").trim(),
 				summary: String(form.get("summary") || "").trim(),
 				image,
-				imageAlt: String(form.get("imageAlt") || "").trim(),
+				imageAlt,
 				body: parseLines(String(form.get("body") || "")),
 				video: videoUrl ? { url: videoUrl, title: videoTitle || title } : undefined,
 				facebookLinks: parseFacebookLinks(String(form.get("facebookLinks") || "")),
 				reviewCategory: String(form.get("reviewCategory") || "").trim() || undefined,
-				galleryTag: String(form.get("galleryTag") || "").trim() || undefined,
+				galleryTag,
 				programHref: String(form.get("programHref") || "/programs").trim(),
 				programLabel: String(form.get("programLabel") || "Explore outdoor programs").trim(),
 				published: form.get("published") === "on",
@@ -520,6 +547,34 @@ export async function saveFieldStoryAction(form: FormData) {
 	} catch (error) {
 		console.error("Field story save failed", { slug, error });
 		redirect("/admin?view=field-stories&saveError=save-failed");
+	}
+
+	await addToGalleryIfMissing(image, galleryTag, imageAlt);
+
+	const photoFiles = form.getAll("photoFiles").filter((value): value is File => value instanceof File && value.size > 0);
+	if (photoFiles.length && process.env.BLOB_READ_WRITE_TOKEN) {
+		const existingGallery = await getGalleryImages();
+		let sortOrder = existingGallery.length;
+		for (const photoFile of photoFiles) {
+			try {
+				const blob = await put(safeGalleryUploadPath(photoFile.name), photoFile, { access: "public", addRandomSuffix: true });
+				sortOrder += 1;
+				await saveGalleryImage({
+					id: `auto-${randomUUID()}`,
+					src: blob.url,
+					alt: imageAlt || title,
+					tags: [galleryTag],
+					year: new Date().getFullYear().toString(),
+					published: true,
+					sortOrder,
+					createdAt: new Date().toISOString(),
+					updatedAt: new Date().toISOString(),
+				});
+			} catch (error) {
+				console.error("Field story photo upload failed", { slug, fileName: photoFile.name, error });
+			}
+		}
+		revalidatePath("/gallery");
 	}
 
 	revalidateFieldStoryPages(previousSlug);
