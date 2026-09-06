@@ -32,7 +32,7 @@ export default function AboutPage() {
 					</div>
 					<div className="story-image">
 						<Image
-							src="https://veteransoutdoortherapy.org/wp-content/uploads/2025/09/549644240_122157681338799810_154435253116294159_n-980x586.jpg"
+							src="/wp-content/uploads/2025/09/549644240_122157681338799810_154435253116294159_n-980x586.jpg"
 							alt="Veterans gathering outdoors"
 							fill
 							sizes="(max-width: 800px) 100vw, 50vw"

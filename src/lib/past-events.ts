@@ -1,4 +1,4 @@
-const uploads = "https://veteransoutdoortherapy.org/wp-content/uploads";
+const uploads = "/wp-content/uploads";
 
 export type PastEvent = {
 	title: string;

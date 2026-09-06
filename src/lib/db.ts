@@ -10,6 +10,8 @@ function sql() {
 	return process.env.DATABASE_URL ? neon(process.env.DATABASE_URL) : null;
 }
 
+const productFallbackImage = "/vot-logo-original.png";
+
 async function ensureOrders() {
 	const db = sql();
 	if (!db) return null;
@@ -42,6 +44,23 @@ async function ensureProducts() {
 		await db`INSERT INTO migrations (id) VALUES ('official-name-veterans-to-veteran') ON CONFLICT (id) DO NOTHING RETURNING id`;
 	if (officialNameMigration.length)
 		await db`UPDATE products SET name = replace(name, 'Veterans Outdoor Therapy', ${SITE_NAME}), short_name = replace(short_name, 'Veterans Outdoor Therapy', ${SITE_NAME}), description = replace(description, 'Veterans Outdoor Therapy', ${SITE_NAME}), updated_at = now()`;
+	const brokenProductImageMigration =
+		await db`INSERT INTO migrations (id) VALUES ('local-product-image-fallbacks') ON CONFLICT (id) DO NOTHING RETURNING id`;
+	if (brokenProductImageMigration.length) {
+		const brokenProductImages = [
+			"/wp-content/uploads/2026/01/thumbnail_IMG_7725.jpg",
+			"/wp-content/uploads/2025/12/IMG_4715.jpeg",
+			"/wp-content/uploads/2025/12/FullSizeRender-3-scaled.jpeg",
+			"/wp-content/uploads/2025/12/FullSizeRender-scaled.jpeg",
+			"/wp-content/uploads/2025/12/FullSizeRender-4.jpeg",
+			"/wp-content/uploads/2025/12/IMG_4733-scaled.jpeg",
+			"/wp-content/uploads/2025/12/IMG_4726.jpeg",
+			"/wp-content/uploads/2025/12/IMG_7112.jpeg",
+			"/wp-content/uploads/2026/01/GetAttachmentThumbnail.jpg",
+		];
+		for (const brokenImage of brokenProductImages)
+			await db`UPDATE products SET image = ${productFallbackImage}, gallery = ${JSON.stringify([productFallbackImage])}, updated_at = now() WHERE image = ${brokenImage}`;
+	}
 	return db;
 }
 

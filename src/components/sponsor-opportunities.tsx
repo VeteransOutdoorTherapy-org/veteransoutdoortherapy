@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-const uploads = "https://veteransoutdoortherapy.org/wp-content/uploads";
+const uploads = "/wp-content/uploads";
 
 type Opportunity = {
 	title: string;
