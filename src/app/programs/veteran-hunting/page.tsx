@@ -68,7 +68,13 @@ export default function VeteranHuntingPage() {
 					<p className="eyebrow">Veteran hunting questions</p>
 					<h2 className="display section-title">Prepare for the right experience.</h2>
 					<div className="faq-grid">
-						{faqs.map((faq) => <article key={faq.question}><h3>{faq.question}</h3><p>{faq.answer}</p></article>)}
+						{faqs.map((faq, index) => (
+						<article key={faq.question}>
+							<span className="faq-index">{String(index + 1).padStart(2, "0")}</span>
+							<h3>{faq.question}</h3>
+							<p>{faq.answer}</p>
+						</article>
+					))}
 					</div>
 					<div className="hero-actions">
 						<Link className="button orange" href="/veteran-application">Apply as a Veteran</Link>

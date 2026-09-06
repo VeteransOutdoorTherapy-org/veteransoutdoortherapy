@@ -2045,20 +2045,42 @@ img {
 .faq-grid {
 	display: grid;
 	grid-template-columns: repeat(2, minmax(0, 1fr));
-	gap: 1px;
-	border: 1px solid var(--line);
-	background: var(--line);
+	gap: 24px;
 }
 .faq-grid article {
+	position: relative;
 	background: var(--white);
-	padding: 28px;
+	border: 1px solid var(--line);
+	border-radius: 12px;
+	padding: 36px 32px 32px;
+	box-shadow: 0 6px 18px rgba(10, 16, 12, 0.06);
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.faq-grid article:hover {
+	transform: translateY(-4px);
+	box-shadow: 0 14px 32px rgba(10, 16, 12, 0.12);
+}
+.faq-index {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	margin-bottom: 18px;
+	border-radius: 999px;
+	background: var(--orange);
+	color: var(--white);
+	font: 700 1.05rem var(--font-display);
 }
 .faq-grid h3 {
-	margin: 0 0 10px;
-	font-size: 1.05rem;
+	margin: 0 0 12px;
+	font: 700 1.35rem/1.25 var(--font-display);
+	color: var(--ink);
 }
 .faq-grid p {
 	margin: 0;
+	color: var(--moss);
+	line-height: 1.65;
 }
 .story-list {
 	display: grid;

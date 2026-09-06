@@ -73,12 +73,12 @@ export const fieldStories: FieldStory[] = [
 		datePublished: "2026-08-31",
 		location: "Rainbow Drive Resort, White River, Arkansas",
 		summary:
-			"Veterans from Georgia and Missouri spent four days on Arkansas's White River learning to fly fish, guided by an Army veteran instructor.",
+			"Veterans from Georgia and Missouri spent four days on Arkansas's White River learning to fly fish, guided by an Army Veteran instructor.",
 		image: `${uploads}/2026/09/white-river-fly-fishing.jpg`,
 		imageAlt: "Veteran holding a trout caught while fly fishing on the White River",
 		body: [
 			"Veterans from Georgia and Missouri spent four days on Arkansas's White River learning to fly fish in August 2026.",
-			"Army veteran Stan, owner of Tat2flyfisher Guide Services, spent an afternoon teaching the group the basics of fly casting before they waded into the river.",
+			"Army Veteran Stan, owner of Tat2flyfisher Guide Services, spent an afternoon teaching the group the basics of fly casting before they waded into the river.",
 			"Stories were told, memories were made, and healing was in the air as the group found the fish, and maybe a new hobby, in the outdoors.",
 			"Rainbow Drive Resort arranged an experienced guide for the trip, and Natural State Fly Shop supplied wader rentals for the group.",
 		],

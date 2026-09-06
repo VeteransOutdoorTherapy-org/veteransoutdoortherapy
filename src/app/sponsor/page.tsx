@@ -169,7 +169,13 @@ export default async function SponsorPage() {
 					<p className="eyebrow">Partnership questions</p>
 					<h2 className="display section-title">Build support around real program needs.</h2>
 					<div className="faq-grid">
-						{sponsorFaqs.map((faq) => <article key={faq.question}><h3>{faq.question}</h3><p>{faq.answer}</p></article>)}
+						{sponsorFaqs.map((faq, index) => (
+						<article key={faq.question}>
+							<span className="faq-index">{String(index + 1).padStart(2, "0")}</span>
+							<h3>{faq.question}</h3>
+							<p>{faq.answer}</p>
+						</article>
+					))}
 					</div>
 				</div>
 			</section>
