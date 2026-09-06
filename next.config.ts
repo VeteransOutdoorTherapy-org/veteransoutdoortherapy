@@ -1,10 +1,15 @@
 import type { NextConfig } from "next";
 
 // Old -> new slugs for products/events that were renamed after publishing.
-// Add an entry here whenever a live slug changes so bookmarked/indexed links still resolve.
+// IMPORTANT: only add a redirect entry once the production database's stored
+// slug has actually been updated to the new value. The `products` table has
+// no rename support in the admin UI, so until that row is updated directly,
+// a redirect here will send visitors from the (working, old-slug) live page
+// to a URL that 404s. Keep this map empty rather than shipping a redirect
+// that breaks a currently-working product page.
 const renamedProductSlugs: Record<string, string> = {
-	"veterans-outdoor-therapy-t-shirt-nature-inspired-veteran-apparel-copy":
-		"veterans-outdoor-therapy-t-shirt-nature-inspired-veteran-apparel-burnt-orange",
+	// "veterans-outdoor-therapy-t-shirt-nature-inspired-veteran-apparel-copy":
+	// 	"veterans-outdoor-therapy-t-shirt-nature-inspired-veteran-apparel-burnt-orange",
 };
 
 const nextConfig: NextConfig = {
