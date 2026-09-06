@@ -14,7 +14,7 @@ export type FieldStory = {
 	facebookLinks?: { href: string; label: string }[];
 	reviewCategory?: string;
 	galleryTag?: string;
-	photos?: { src: string; alt: string }[];
+	photoGalleries?: { title: string; photos: { src: string; alt: string }[] }[];
 	programHref: string;
 	programLabel: string;
 };
@@ -48,17 +48,22 @@ export const fieldStories: FieldStory[] = [
 		],
 		reviewCategory: "Horseback",
 		galleryTag: "horseback",
-		photos: [
-			{ src: `${uploads}/2026/09/horseback/horseback-01.jpg`, alt: "Female Veterans with a horse at Coulter Lake Guest Ranch" },
-			{ src: `${uploads}/2026/09/horseback/horseback-02.jpg`, alt: "Female Veteran horseback riding at Coulter Lake Guest Ranch" },
-			{ src: `${uploads}/2026/09/horseback/horseback-03.jpg`, alt: "Female Veteran horseback riding at Coulter Lake Guest Ranch" },
-			{ src: `${uploads}/2026/09/horseback/horseback-04.jpg`, alt: "Female Veteran horseback riding at Coulter Lake Guest Ranch" },
-			{ src: `${uploads}/2026/09/horseback/horseback-05.jpg`, alt: "Female Veteran horseback riding at Coulter Lake Guest Ranch" },
-			{ src: `${uploads}/2026/09/horseback/horseback-06.jpg`, alt: "Female Veterans grooming a horse at Coulter Lake Guest Ranch" },
-			{ src: `${uploads}/2026/09/horseback/horseback-07.jpg`, alt: "Female Veteran horseback riding at Coulter Lake Guest Ranch" },
-			{ src: `${uploads}/2026/09/horseback/horseback-08.jpg`, alt: "Female Veterans hiking at Rifle Falls State Park" },
-			{ src: `${uploads}/2026/09/horseback/horseback-09.jpg`, alt: "Female Veteran horseback riding at Coulter Lake Guest Ranch" },
-			{ src: `${uploads}/2026/09/horseback/horseback-10.jpg`, alt: "Female Veterans off-roading at Coulter Lake Guest Ranch" },
+		photoGalleries: [
+			{
+				title: "Photos from the trip",
+				photos: [
+					{ src: `${uploads}/2026/09/horseback/horseback-01.jpg`, alt: "Female Veterans with a horse at Coulter Lake Guest Ranch" },
+					{ src: `${uploads}/2026/09/horseback/horseback-02.jpg`, alt: "Female Veteran horseback riding at Coulter Lake Guest Ranch" },
+					{ src: `${uploads}/2026/09/horseback/horseback-03.jpg`, alt: "Female Veteran horseback riding at Coulter Lake Guest Ranch" },
+					{ src: `${uploads}/2026/09/horseback/horseback-04.jpg`, alt: "Female Veteran horseback riding at Coulter Lake Guest Ranch" },
+					{ src: `${uploads}/2026/09/horseback/horseback-05.jpg`, alt: "Female Veteran horseback riding at Coulter Lake Guest Ranch" },
+					{ src: `${uploads}/2026/09/horseback/horseback-06.jpg`, alt: "Female Veterans grooming a horse at Coulter Lake Guest Ranch" },
+					{ src: `${uploads}/2026/09/horseback/horseback-07.jpg`, alt: "Female Veteran horseback riding at Coulter Lake Guest Ranch" },
+					{ src: `${uploads}/2026/09/horseback/horseback-08.jpg`, alt: "Female Veterans hiking at Rifle Falls State Park" },
+					{ src: `${uploads}/2026/09/horseback/horseback-09.jpg`, alt: "Female Veteran horseback riding at Coulter Lake Guest Ranch" },
+					{ src: `${uploads}/2026/09/horseback/horseback-10.jpg`, alt: "Female Veterans off-roading at Coulter Lake Guest Ranch" },
+				],
+			},
 		],
 		programHref: "/programs",
 		programLabel: "Explore outdoor programs",
@@ -89,8 +94,8 @@ export const fieldStories: FieldStory[] = [
 		location: "Rainbow Drive Resort, White River, Arkansas",
 		summary:
 			"Veterans from Georgia and Missouri spent four days on Arkansas's White River learning to fly fish, guided by an Army Veteran instructor.",
-		image: `${uploads}/2026/09/white-river-fly-fishing.jpg`,
-		imageAlt: "Veteran holding a trout caught while fly fishing on the White River",
+		image: `${uploads}/2026/09/fishing/fishing-02.jpg`,
+		imageAlt: "Veteran holding a rainbow trout caught while fly fishing on the White River",
 		body: [
 			"Veterans from Georgia and Missouri spent four days on Arkansas's White River learning to fly fish in August 2026.",
 			"Army Veteran Stan, owner of Tat2flyfisher Guide Services, spent an afternoon teaching the group the basics of fly casting before they waded into the river.",
@@ -108,16 +113,25 @@ export const fieldStories: FieldStory[] = [
 			},
 		],
 		galleryTag: "fishing",
-		photos: [
-			{ src: `${uploads}/2026/09/fishing/fishing-06.jpg`, alt: "Veteran learning to fly fish on the White River" },
-			{ src: `${uploads}/2026/09/fishing/fishing-07.jpg`, alt: "Veterans fly fishing on the White River" },
-			{ src: `${uploads}/2026/09/fishing/fishing-08.jpg`, alt: "Veterans fly fishing on the White River" },
-			{ src: `${uploads}/2026/09/fishing/fishing-09.jpg`, alt: "Veteran fly fishing on the White River" },
-			{ src: `${uploads}/2026/09/fishing/fishing-01.jpg`, alt: "Veteran holding a trout caught on the White River" },
-			{ src: `${uploads}/2026/09/fishing/fishing-02.jpg`, alt: "Veteran fly fishing on the White River" },
-			{ src: `${uploads}/2026/09/fishing/fishing-03.jpg`, alt: "Veteran holding a trout caught on the White River" },
-			{ src: `${uploads}/2026/09/fishing/fishing-04.jpg`, alt: "Veterans fly fishing on the White River at dusk" },
-			{ src: `${uploads}/2026/09/fishing/fishing-05.jpg`, alt: "Veterans gathered for dinner after fly fishing on the White River" },
+		photoGalleries: [
+			{
+				title: "The fly-casting lesson",
+				photos: [
+					{ src: `${uploads}/2026/09/fishing/fishing-06.jpg`, alt: "Veteran learning to fly fish on the White River" },
+					{ src: `${uploads}/2026/09/fishing/fishing-07.jpg`, alt: "Veterans fly fishing on the White River" },
+					{ src: `${uploads}/2026/09/fishing/fishing-08.jpg`, alt: "Veterans fly fishing on the White River" },
+					{ src: `${uploads}/2026/09/fishing/fishing-09.jpg`, alt: "Veteran fly fishing on the White River" },
+				],
+			},
+			{
+				title: "Stories were told, memories were made",
+				photos: [
+					{ src: `${uploads}/2026/09/fishing/fishing-01.jpg`, alt: "Veteran holding a trout caught on the White River" },
+					{ src: `${uploads}/2026/09/fishing/fishing-03.jpg`, alt: "Veteran holding a trout caught on the White River" },
+					{ src: `${uploads}/2026/09/fishing/fishing-04.jpg`, alt: "Veterans fly fishing on the White River at dusk" },
+					{ src: `${uploads}/2026/09/fishing/fishing-05.jpg`, alt: "Veterans gathered for dinner after fly fishing on the White River" },
+				],
+			},
 		],
 		programHref: "/programs",
 		programLabel: "Explore outdoor programs",

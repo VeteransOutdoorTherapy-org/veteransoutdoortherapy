@@ -33,17 +33,28 @@ export default async function FieldStoryPage({ params }: PageProps<"/field-stori
 	const reviews = story.reviewCategory
 		? (await getPublishedTestimonials()).filter((testimonial) => testimonial.category === story.reviewCategory)
 		: [];
-	const taggedPhotos = story.galleryTag
-		? (await getPublishedGalleryImages())
-				.filter((image) => image.tags.some((tag) => tag.toLowerCase() === story.galleryTag!.toLowerCase()))
-				.map((image) => ({ src: image.src, alt: image.alt }))
-		: [];
-	const seenSrcs = new Set<string>();
-	const galleryPhotos = [...(story.photos ?? []), ...taggedPhotos].filter((photo) => {
-		if (seenSrcs.has(photo.src)) return false;
-		seenSrcs.add(photo.src);
-		return true;
-	});
+	const seenSrcs = new Set<string>([story.image]);
+	const photoGalleries = (story.photoGalleries ?? [])
+		.map((gallery) => ({
+			title: gallery.title,
+			photos: gallery.photos.filter((photo) => {
+				if (seenSrcs.has(photo.src)) return false;
+				seenSrcs.add(photo.src);
+				return true;
+			}),
+		}))
+		.filter((gallery) => gallery.photos.length > 0);
+	if (story.galleryTag) {
+		const taggedPhotos = (await getPublishedGalleryImages())
+			.filter((image) => image.tags.some((tag) => tag.toLowerCase() === story.galleryTag!.toLowerCase()))
+			.map((image) => ({ src: image.src, alt: image.alt }))
+			.filter((photo) => {
+				if (seenSrcs.has(photo.src)) return false;
+				seenSrcs.add(photo.src);
+				return true;
+			});
+		if (taggedPhotos.length > 0) photoGalleries.push({ title: "More from the gallery", photos: taggedPhotos });
+	}
 	const articleSchema = {
 		"@context": "https://schema.org",
 		"@type": "Article",
@@ -80,26 +91,26 @@ export default async function FieldStoryPage({ params }: PageProps<"/field-stori
 					<p className="field-story-lead">{story.summary}</p>
 					{story.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
 
-					{galleryPhotos.length > 0 && (
-						<section className="field-story-section">
+					{photoGalleries.map((gallery, galleryIndex) => (
+						<section className="field-story-section" key={gallery.title}>
 							<div className="field-story-section-head">
 								<p className="eyebrow">From the field</p>
-								<h2>Photos from the trip</h2>
+								<h2>{gallery.title}</h2>
 							</div>
 							<div className="field-story-gallery">
-								{galleryPhotos.map((photo, index) => (
-									<figure key={photo.src} className={index === 0 ? "field-story-gallery-featured" : undefined}>
+								{gallery.photos.map((photo, index) => (
+									<figure key={photo.src} className={galleryIndex === 0 && index === 0 ? "field-story-gallery-featured" : undefined}>
 										<Image
 											src={photo.src}
 											alt={photo.alt}
 											fill
-											sizes={index === 0 ? "(max-width: 700px) 100vw, 66vw" : "(max-width: 700px) 50vw, 33vw"}
+											sizes={galleryIndex === 0 && index === 0 ? "(max-width: 700px) 100vw, 66vw" : "(max-width: 700px) 50vw, 33vw"}
 										/>
 									</figure>
 								))}
 							</div>
 						</section>
-					)}
+					))}
 
 					{story.video && (
 						<section className="field-story-section">
