@@ -18,10 +18,10 @@ export function Footer() {
 				</div>
 				<div>
 					<h3>Explore</h3>
-					<Link href="/about">Our mission</Link>
+					<Link href="/about">Our Mission</Link>
 					<Link href="/programs">Programs</Link>
-					<Link href="/gold-star-families">Gold Star families</Link>
-					<Link href="/field-stories">Field stories</Link>
+					<Link href="/gold-star-families">Gold Star Families</Link>
+					<Link href="/field-stories">Field Notes</Link>
 				</div>
 				<div>
 					<h3>Take action</h3>
@@ -33,7 +33,7 @@ export function Footer() {
 				<div>
 					<h3>Connect</h3>
 					<a href="mailto:contact@veteransoutdoortherapy.org">
-						<Mail size={16} /> Email us
+						<Mail size={16} /> Email Us
 					</a>
 					<a
 						href={FACEBOOK_URL}

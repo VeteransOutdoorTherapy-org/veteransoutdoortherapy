@@ -517,7 +517,7 @@ export const testimonials: Testimonial[] = [
 	},
 	{
 		slug: "nancy-neal-air-force",
-		quote: "I am so grateful for this experience! I genuinely enjoyed being around so many strong and inspiring veterans. The hosts, Kelly, Forest, Dina, and Maru were so gracious and welcoming. I loved the home-cooked and family-style meals as well as the stimulating conversations. I really had such a great time.",
+		quote: "I am so grateful for this experience! I genuinely enjoyed being around so many strong and inspiring Veterans. The hosts, Kelly, Forest, Dina, and Maru were so gracious and welcoming. I loved the home-cooked and family-style meals as well as the stimulating conversations. I really had such a great time.",
 		author: "Nancy Neal",
 		service: "Air Force",
 		image: undefined,
@@ -531,7 +531,7 @@ export const testimonials: Testimonial[] = [
 	},
 	{
 		slug: "female-veterans-healing",
-		quote: "This event has meant everything to me. It was so amazing to connect with fellow female veterans who get it. It has helped heal parts of me I didn't know needed it. Talking with Connie about same shared feelings has helped me realize I'm not alone and that seeking help can only help. Thank you for organizing this incredible trip.",
+		quote: "This event has meant everything to me. It was so amazing to connect with fellow female Veterans who get it. It has helped heal parts of me I didn't know needed it. Talking with Connie about same shared feelings has helped me realize I'm not alone and that seeking help can only help. Thank you for organizing this incredible trip.",
 		author: "Anonymous",
 		service: "Female Veteran",
 		image: undefined,
@@ -615,7 +615,7 @@ export const testimonials: Testimonial[] = [
 		},
 		{
 			slug: "ryan-fasano-purple-heart",
-			quote: "Cooking was phenomenal! Food was delicious, well planned and plentiful. The amount of game we were able to locate was more than expected. The staff were professional, knowledgeable and very respectful! The coordination between hunters/guides allowed us to remain well informed and had a very good idea of what the plan for each day was. As a combat wounded veteran that has recently retired; this hunt was an incredible opportunity to get into the outdoors with fellow vets and share stories and feel as though you are still part of something. Hunting is my biggest passion. It is more that just a hobby. It is a way of life; most of all – it is my therapy! I would come back to do this hunt every year if given the opportunity!",
+			quote: "Cooking was phenomenal! Food was delicious, well planned and plentiful. The amount of game we were able to locate was more than expected. The staff were professional, knowledgeable and very respectful! The coordination between hunters/guides allowed us to remain well informed and had a very good idea of what the plan for each day was. As a combat wounded Veteran that has recently retired; this hunt was an incredible opportunity to get into the outdoors with fellow vets and share stories and feel as though you are still part of something. Hunting is my biggest passion. It is more that just a hobby. It is a way of life; most of all – it is my therapy! I would come back to do this hunt every year if given the opportunity!",
 			author: "Ryan Fasano",
 			service: "Purple Heart Recipient",
 			image: undefined,
@@ -699,7 +699,7 @@ export const testimonials: Testimonial[] = [
 		},
 		{
 			slug: "james-peoples-snagging",
-			quote: "Getting out on the water with Veterans Outdoor Therapy was an incredible experience. There's a unique and powerful sense of connection that comes from being with fellow veterans. We didn't need to explain our pasts; we just understood. We spent the weekend sharing stories, laughing, and enjoying the simple pleasure of fishing. It was more than a trip; it was a reminder of the brotherhood that stays with us long after we take off the uniform. I am incredibly grateful to this organization for creating these opportunities.",
+			quote: "Getting out on the water with Veterans Outdoor Therapy was an incredible experience. There's a unique and powerful sense of connection that comes from being with fellow Veterans. We didn't need to explain our pasts; we just understood. We spent the weekend sharing stories, laughing, and enjoying the simple pleasure of fishing. It was more than a trip; it was a reminder of the brotherhood that stays with us long after we take off the uniform. I am incredibly grateful to this organization for creating these opportunities.",
 			author: "James Peoples",
 			service: "MSG (R), Army, Purple Heart Recipient",
 			image: undefined,
@@ -727,7 +727,7 @@ export const testimonials: Testimonial[] = [
 		},
 		{
 			slug: "chris-shoaf-snagging",
-			quote: "I had the opportunity to participate in Veterans Outdoor Therapy's annual paddlefish snagging trip in March 2025, and it was an experience I won't forget. Being able to get outdoors and connect with other combat veterans who have faced similar challenges was incredibly meaningful. There's something different about being around people who truly understand what you've been through without having to explain it. The camaraderie, support, and shared experiences made a lasting impact on me. The entire trip was well organized, and the environment they created allowed everyone to relax, open up, and just enjoy the moment. It was more than just a fishing trip; it was a chance to reset, reconnect, and be part of a community again. Because of how much this experience meant to me, I've volunteered to help with the 2026 snagging trip. I want to be part of giving other veterans the same opportunity that meant so much to me. I highly recommend Veterans Outdoor Therapy to any veteran looking for connection, support, and a chance to get back outdoors with people who understand.",
+			quote: "I had the opportunity to participate in Veterans Outdoor Therapy's annual paddlefish snagging trip in March 2025, and it was an experience I won't forget. Being able to get outdoors and connect with other combat Veterans who have faced similar challenges was incredibly meaningful. There's something different about being around people who truly understand what you've been through without having to explain it. The camaraderie, support, and shared experiences made a lasting impact on me. The entire trip was well organized, and the environment they created allowed everyone to relax, open up, and just enjoy the moment. It was more than just a fishing trip; it was a chance to reset, reconnect, and be part of a community again. Because of how much this experience meant to me, I've volunteered to help with the 2026 snagging trip. I want to be part of giving other Veterans the same opportunity that meant so much to me. I highly recommend Veterans Outdoor Therapy to any Veteran looking for connection, support, and a chance to get back outdoors with people who understand.",
 			author: "Chris Shoaf",
 			service: "Army",
 			image: undefined,

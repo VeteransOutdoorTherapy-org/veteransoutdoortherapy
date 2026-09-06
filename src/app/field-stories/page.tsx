@@ -32,10 +32,12 @@ export default function FieldStoriesPage() {
 				<div className="container story-list">
 					{fieldStories.map((story) => (
 						<article key={story.slug}>
-							<div className="story-list-image"><Image src={story.image} alt={story.imageAlt} fill sizes="(max-width: 800px) 100vw, 42vw" /></div>
+							<Link className="story-list-image" href={`/field-stories/${story.slug}`}>
+								<Image src={story.image} alt={story.imageAlt} fill sizes="(max-width: 800px) 100vw, 42vw" />
+							</Link>
 							<div>
 								<p className="eyebrow">{story.date}</p>
-								<h2 className="display">{story.title}</h2>
+								<h2 className="display"><Link href={`/field-stories/${story.slug}`}>{story.title}</Link></h2>
 								<p className="story-location"><MapPin size={17} /> {story.location}</p>
 								<p>{story.summary}</p>
 								<Link className="text-link" href={`/field-stories/${story.slug}`}>Read the field story <ArrowRight size={17} /></Link>

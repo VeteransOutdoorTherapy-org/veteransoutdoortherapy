@@ -11,16 +11,17 @@ const groups = [
 	{
 		label: "Programs",
 		links: [
-			["All programs", "/programs"],
-			["Veteran hunting", "/programs/veteran-hunting"],
-			["Gold Star families", "/gold-star-families"],
+			["All Programs", "/programs"],
+			["Veteran Hunting", "/programs/veteran-hunting"],
+			["Gold Star Families", "/gold-star-families"],
 		],
 	},
 	{
 		label: "About",
 		links: [
-			["Our mission", "/about"],
+			["Our Mission", "/about"],
 			["Gallery", "/gallery"],
+			["Field Notes", "/field-stories"],
 			["Testimonials", "/testimonials"],
 			["Contact", "/contact"],
 		],
