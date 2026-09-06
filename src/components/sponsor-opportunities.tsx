@@ -50,7 +50,7 @@ const opportunities: Opportunity[] = [
 		title: "Female Veteran Horseback Adventure",
 		month: 6,
 		monthLabel: "July",
-		image: `${uploads}/2026/01/horseback.jpg`,
+		image: `${uploads}/2026/09/horseback/horseback-01.jpg`,
 		copy: "Help provide ranch lodging, meals, riding support, and travel for an annual outdoor experience created for female Veterans.",
 		recapHref: "/field-stories/coulter-lake-female-veteran-horseback-adventure-2026",
 		recapLabel: "See last year's trip",

@@ -90,6 +90,10 @@ async function ensureEvents() {
 		await db`UPDATE events SET is_over = true, recap_url = 'https://www.facebook.com/share/p/18y8SZtxbM/', location = 'Coulter Lake Guest Ranch, Rifle, Colorado', summary = 'The first annual horseback riding adventure brought female Veterans from Alabama, Wisconsin, South Dakota, and Missouri together at Coulter Lake Guest Ranch.', details = 'Kelly and Forest Keith, Dina, and Maru hosted the group, with first-year funding support from the Military Order of the Purple Heart.', updated_at = now() WHERE slug = 'coulter-lake-guest-ranch-2026'`;
 		await db`UPDATE events SET is_over = true, recap_url = 'https://www.facebook.com/share/p/1LZEGfVeTT/', summary = 'Volunteers, sponsors, participants, and riders gathered for the second annual Poker Run, raising support for Veterans and Gold Star families.', updated_at = now() WHERE slug = 'poker-run-2026'`;
 	}
+	const brokenHorsebackImageMigration =
+		await db`INSERT INTO migrations (id) VALUES ('event-horseback-image-fix') ON CONFLICT (id) DO NOTHING RETURNING id`;
+	if (brokenHorsebackImageMigration.length)
+		await db`UPDATE events SET image = '/wp-content/uploads/2026/09/horseback/horseback-01.jpg', updated_at = now() WHERE image = '/wp-content/uploads/2026/01/horseback.jpg'`;
 	return db;
 }
 
@@ -170,9 +174,9 @@ async function ensureFieldStories() {
 	if (!db) return null;
 	await db`CREATE TABLE IF NOT EXISTS field_stories (slug text PRIMARY KEY, title text NOT NULL, date_label text NOT NULL, date_published date NOT NULL, location text NOT NULL, summary text NOT NULL, image text NOT NULL, image_alt text NOT NULL, body jsonb NOT NULL DEFAULT '[]', video jsonb, facebook_links jsonb NOT NULL DEFAULT '[]', review_category text, gallery_tag text, photo_galleries jsonb NOT NULL DEFAULT '[]', program_href text NOT NULL, program_label text NOT NULL, published boolean NOT NULL DEFAULT true, created_at timestamptz NOT NULL DEFAULT now(), updated_at timestamptz NOT NULL DEFAULT now())`;
 	await db`CREATE TABLE IF NOT EXISTS migrations (id text PRIMARY KEY, applied_at timestamptz NOT NULL DEFAULT now())`;
-	const horsebackPhotoFixMigration =
+const dischargeMigration =
 		await db`INSERT INTO migrations (id) VALUES ('fix-horseback-photo-mismatch-2026') ON CONFLICT (id) DO NOTHING RETURNING id`;
-	if (horsebackPhotoFixMigration.length) {
+	if (dischargeMigration.length) {
 		const correctedPhotos = JSON.stringify([
 			{
 				title: "Photos from the trip",
@@ -187,6 +191,7 @@ async function ensureFieldStories() {
 			},
 		]);
 		await db`UPDATE field_stories SET photo_galleries = ${correctedPhotos}::jsonb, updated_at = now() WHERE slug = 'coulter-lake-female-veteran-horseback-adventure-2026'`;
+		await db`UPDATE field_stories SET image = '/wp-content/uploads/2026/09/horseback/horseback-01.jpg', updated_at = now() WHERE image = '/wp-content/uploads/2026/01/horseback.jpg'`;
 	}
 	return db;
 }
