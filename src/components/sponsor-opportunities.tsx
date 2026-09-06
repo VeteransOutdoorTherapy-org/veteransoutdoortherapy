@@ -7,7 +7,17 @@ import { useEffect, useState } from "react";
 
 const uploads = "https://veteransoutdoortherapy.org/wp-content/uploads";
 
-const opportunities = [
+type Opportunity = {
+	title: string;
+	month: number;
+	monthLabel: string;
+	image: string;
+	copy: string;
+	recapHref?: string;
+	recapLabel?: string;
+};
+
+const opportunities: Opportunity[] = [
 	{
 		title: "Annual Benefit Dinner",
 		month: 2,
@@ -42,6 +52,8 @@ const opportunities = [
 		monthLabel: "July",
 		image: `${uploads}/2026/01/horseback.jpg`,
 		copy: "Help provide ranch lodging, meals, riding support, and travel for an annual outdoor experience created for female Veterans.",
+		recapHref: "/field-stories/coulter-lake-female-veteran-horseback-adventure-2026",
+		recapLabel: "See last year's trip",
 	},
 	{
 		title: "Archery Antelope Hunt",
@@ -87,6 +99,11 @@ export function SponsorOpportunities() {
 					<Link className="text-link" href="/contact">
 						Sponsor this cause <ArrowRight size={17} />
 					</Link>
+					{opportunity.recapHref && (
+						<Link className="text-link" href={opportunity.recapHref}>
+							{opportunity.recapLabel} <ArrowRight size={17} />
+						</Link>
+					)}
 				</article>
 			))}
 		</div>

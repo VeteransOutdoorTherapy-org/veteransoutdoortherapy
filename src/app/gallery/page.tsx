@@ -1,7 +1,7 @@
 import { GalleryLightbox } from "@/components/gallery-lightbox";
 import Link from "next/link";
 import { getPublishedGalleryImages } from "@/lib/db";
-import { pageMetadata } from "@/lib/site";
+import { FACEBOOK_URL, pageMetadata } from "@/lib/site";
 export const metadata = pageMetadata({
 	title: "Veteran Outdoor Adventure Photo Gallery",
 	description: "See Veteran's Outdoor Therapy in the field through photos from hunting, horseback riding, community events, and fully funded outdoor experiences.",
@@ -19,6 +19,7 @@ export default async function GalleryPage() {
 					the water to laughter around camp.
 				</p>
 				<Link className="text-link" href="/field-stories">Read the stories behind recent experiences</Link>
+				<Link className="text-link" href={FACEBOOK_URL} target="_blank" rel="noreferrer">Follow along on Facebook for more photos</Link>
 				<GalleryLightbox images={galleryImages} />
 			</div>
 		</section>

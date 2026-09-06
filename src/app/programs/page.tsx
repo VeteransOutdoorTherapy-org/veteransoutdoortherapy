@@ -28,6 +28,7 @@ const programs = [
 		icon: Footprints,
 		title: "Horseback riding and hiking",
 		copy: "Trails and ranch experiences offer movement, new perspective, and unhurried time with a community built around mutual respect.",
+		href: "/field-stories/coulter-lake-female-veteran-horseback-adventure-2026",
 	},
 	{
 		icon: Trees,
@@ -81,7 +82,7 @@ export default function ProgramsPage() {
 							<Icon />
 							<h2 className="display">{title}</h2>
 							<p>{copy}</p>
-							{href && <Link className="text-link" href={href}>Explore Veteran hunting</Link>}
+							{href && <Link className="text-link" href={href}>Explore {title}</Link>}
 						</article>
 					))}
 				</div>
