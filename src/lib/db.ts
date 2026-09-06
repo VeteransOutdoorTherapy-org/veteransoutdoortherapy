@@ -110,6 +110,21 @@ async function ensureEvents() {
 		await db`INSERT INTO migrations (id) VALUES ('event-horseback-image-fix') ON CONFLICT (id) DO NOTHING RETURNING id`;
 	if (brokenHorsebackImageMigration.length)
 		await db`UPDATE events SET image = '/wp-content/uploads/2026/09/horseback/horseback-01.jpg', updated_at = now() WHERE image = '/wp-content/uploads/2026/01/horseback.jpg'`;
+	async function seedMissingEvent(db: NonNullable<ReturnType<typeof sql>>, migrationId: string, slug: string) {
+		const migration =
+			await db`INSERT INTO migrations (id) VALUES (${migrationId}) ON CONFLICT (id) DO NOTHING RETURNING id`;
+		if (!migration.length) return;
+		const event = seedEvents.find((e) => e.slug === slug);
+		if (!event) return;
+		await db`INSERT INTO events (slug, title, date_label, start_date, end_date, image, event_type, location, summary, hero_title, overview_title, overview, details_title, details, cta_label, cta_href, template, published, featured, is_over, recap_url, sort_order) VALUES (${event.slug}, ${event.title}, ${event.date}, ${event.startDate}, ${event.endDate}, ${event.image}, ${event.type}, ${event.location}, ${event.summary}, ${event.heroTitle}, ${event.overviewTitle}, ${event.overview}, ${event.detailsTitle}, ${event.details}, ${event.ctaLabel}, ${event.ctaHref}, ${event.template}, ${event.published}, ${event.featured}, ${event.over}, ${event.recapUrl ?? null}, ${event.sortOrder}) ON CONFLICT (slug) DO NOTHING`;
+	}
+	await seedMissingEvent(db, "seed-tba-missouri-turkey-2027", "missouri-turkey-hunt-2027");
+	await seedMissingEvent(db, "seed-tba-flint-hills-2027", "flint-hills-kansas-turkey-hunt-2027");
+	await seedMissingEvent(db, "seed-tba-coulter-lake-2027", "coulter-lake-guest-ranch-2027");
+	await seedMissingEvent(db, "seed-tba-poker-run-2027", "poker-run-2027");
+	await seedMissingEvent(db, "seed-tba-white-river-2027", "white-river-fly-fishing-2027");
+	await seedMissingEvent(db, "seed-tba-snagging-2027", "missouri-snagging-trip-2027");
+	await seedMissingEvent(db, "seed-tba-wilderness-to-wellness-2027", "wilderness-to-wellness-benefit-dinner-2027");
 	return db;
 }
 
@@ -287,6 +302,28 @@ const dischargeMigration =
 		await db`INSERT INTO migrations (id) VALUES ('snagging-story-review-category-2026') ON CONFLICT (id) DO NOTHING RETURNING id`;
 	if (snaggingReviewCategoryMigration.length) {
 		await db`UPDATE field_stories SET review_category = 'Snagging', updated_at = now() WHERE slug = 'missouri-paddlefish-snagging-2026'`;
+	}
+	const snaggingDateFixMigration =
+		await db`INSERT INTO migrations (id) VALUES ('snagging-story-date-fix-2026') ON CONFLICT (id) DO NOTHING RETURNING id`;
+	if (snaggingDateFixMigration.length) {
+		await db`UPDATE field_stories SET date_label = 'March 20-22, 2026', date_published = '2026-03-22', updated_at = now() WHERE slug = 'missouri-paddlefish-snagging-2026'`;
+	}
+	const wildernessToWellnessFixMigration =
+		await db`INSERT INTO migrations (id) VALUES ('wilderness-to-wellness-official-recap-2026') ON CONFLICT (id) DO NOTHING RETURNING id`;
+	if (wildernessToWellnessFixMigration.length) {
+		const story = seedFieldStories.find((s) => s.slug === "wilderness-to-wellness-benefit-dinner-2026");
+		if (story) {
+			await db`UPDATE field_stories SET
+				date_label = ${story.date},
+				date_published = ${story.datePublished},
+				image = ${story.image},
+				image_alt = ${story.imageAlt},
+				body = ${JSON.stringify(story.body)}::jsonb,
+				facebook_links = ${JSON.stringify(story.facebookLinks || [])}::jsonb,
+				photo_galleries = ${JSON.stringify(story.photoGalleries || [])}::jsonb,
+				updated_at = now()
+			WHERE slug = 'wilderness-to-wellness-benefit-dinner-2026'`;
+		}
 	}
 	return db;
 }
