@@ -5,7 +5,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { JsonLd } from "@/components/json-ld";
-import { getPublishedTestimonials } from "@/lib/db";
+import { getPublishedGalleryImages, getPublishedTestimonials } from "@/lib/db";
 import { absoluteUrl, breadcrumbSchema, pageMetadata, SITE_NAME, SITE_URL } from "@/lib/site";
 import { fieldStories, getFieldStory } from "@/lib/stories";
 
@@ -32,6 +32,11 @@ export default async function FieldStoryPage({ params }: PageProps<"/field-stori
 	const path = `/field-stories/${story.slug}`;
 	const reviews = story.reviewCategory
 		? (await getPublishedTestimonials()).filter((testimonial) => testimonial.category === story.reviewCategory)
+		: [];
+	const galleryPhotos = story.galleryTag
+		? (await getPublishedGalleryImages())
+				.filter((image) => image.tags.some((tag) => tag.toLowerCase() === story.galleryTag!.toLowerCase()))
+				.slice(0, 9)
 		: [];
 	const articleSchema = {
 		"@context": "https://schema.org",
@@ -68,33 +73,66 @@ export default async function FieldStoryPage({ params }: PageProps<"/field-stori
 				<div className="container field-story-body">
 					<p className="field-story-lead">{story.summary}</p>
 					{story.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+
+					{galleryPhotos.length > 0 && (
+						<section className="field-story-section">
+							<div className="field-story-section-head">
+								<p className="eyebrow">From the field</p>
+								<h2>Photos from the trip</h2>
+							</div>
+							<div className="field-story-gallery">
+								{galleryPhotos.map((photo) => (
+									<figure key={photo.id}>
+										<Image src={photo.src} alt={photo.alt} fill sizes="(max-width: 700px) 50vw, 33vw" />
+									</figure>
+								))}
+							</div>
+						</section>
+					)}
+
 					{story.video && (
-						<div className="giving-band-video">
-							<iframe
-								src={story.video.url}
-								title={story.video.title}
-								width="1280"
-								height="720"
-								loading="lazy"
-								referrerPolicy="strict-origin-when-cross-origin"
-								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-								allowFullScreen
-							/>
-						</div>
+						<section className="field-story-section">
+							<div className="field-story-section-head">
+								<p className="eyebrow">Watch</p>
+								<h2>{story.video.title}</h2>
+							</div>
+							<div className="giving-band-video">
+								<iframe
+									src={story.video.url}
+									title={story.video.title}
+									width="1280"
+									height="720"
+									loading="lazy"
+									referrerPolicy="strict-origin-when-cross-origin"
+									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+									allowFullScreen
+								/>
+							</div>
+						</section>
 					)}
+
 					{story.facebookLinks && story.facebookLinks.length > 0 && (
-						<div className="field-story-facebook">
-							<p className="eyebrow">More from Facebook</p>
-							{story.facebookLinks.map((link) => (
-								<Link key={link.href} className="text-link" href={link.href} target="_blank" rel="noopener noreferrer">
-									{link.label} <ArrowRight size={15} />
-								</Link>
-							))}
-						</div>
+						<section className="field-story-section field-story-facebook">
+							<div className="field-story-section-head">
+								<p className="eyebrow">More from Facebook</p>
+								<h2>Read the original posts</h2>
+							</div>
+							<div className="field-story-facebook-links">
+								{story.facebookLinks.map((link) => (
+									<Link key={link.href} href={link.href} target="_blank" rel="noopener noreferrer">
+										{link.label} <ArrowRight size={17} />
+									</Link>
+								))}
+							</div>
+						</section>
 					)}
+
 					{reviews.length > 0 && (
-						<div className="field-story-reviews">
-							<p className="eyebrow">What participants are saying</p>
+						<section className="field-story-section field-story-reviews">
+							<div className="field-story-section-head">
+								<p className="eyebrow">In their words</p>
+								<h2>What participants are saying</h2>
+							</div>
 							<div className="testimonials-masonry">
 								{reviews.map((review) => (
 									<article key={review.slug} className="testimonial-card">
@@ -111,9 +149,10 @@ export default async function FieldStoryPage({ params }: PageProps<"/field-stori
 									</article>
 								))}
 							</div>
-						</div>
+						</section>
 					)}
-					<div className="hero-actions">
+
+					<div className="hero-actions field-story-cta">
 						<Link className="button orange" href={story.programHref}>{story.programLabel}</Link>
 						<Link className="text-link" href="/field-stories">More field stories <ArrowRight size={17} /></Link>
 					</div>

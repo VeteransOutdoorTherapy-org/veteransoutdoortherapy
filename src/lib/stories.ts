@@ -13,6 +13,7 @@ export type FieldStory = {
 	video?: { url: string; title: string };
 	facebookLinks?: { href: string; label: string }[];
 	reviewCategory?: string;
+	galleryTag?: string;
 	programHref: string;
 	programLabel: string;
 };
@@ -45,6 +46,7 @@ export const fieldStories: FieldStory[] = [
 			{ href: "https://www.facebook.com/share/v/1JWQBKDUvb/", label: "Watch the recap video on Facebook" },
 		],
 		reviewCategory: "Horseback",
+		galleryTag: "horseback",
 		programHref: "/programs",
 		programLabel: "Explore outdoor programs",
 	},
@@ -92,6 +94,7 @@ export const fieldStories: FieldStory[] = [
 				label: "Read the trip recap on Facebook",
 			},
 		],
+		galleryTag: "fishing",
 		programHref: "/programs",
 		programLabel: "Explore outdoor programs",
 	},
