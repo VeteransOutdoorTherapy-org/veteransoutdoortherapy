@@ -150,6 +150,25 @@ async function ensureFieldStories() {
 	const db = sql();
 	if (!db) return null;
 	await db`CREATE TABLE IF NOT EXISTS field_stories (slug text PRIMARY KEY, title text NOT NULL, date_label text NOT NULL, date_published date NOT NULL, location text NOT NULL, summary text NOT NULL, image text NOT NULL, image_alt text NOT NULL, body jsonb NOT NULL DEFAULT '[]', video jsonb, facebook_links jsonb NOT NULL DEFAULT '[]', review_category text, gallery_tag text, photo_galleries jsonb NOT NULL DEFAULT '[]', program_href text NOT NULL, program_label text NOT NULL, published boolean NOT NULL DEFAULT true, created_at timestamptz NOT NULL DEFAULT now(), updated_at timestamptz NOT NULL DEFAULT now())`;
+	await db`CREATE TABLE IF NOT EXISTS migrations (id text PRIMARY KEY, applied_at timestamptz NOT NULL DEFAULT now())`;
+	const horsebackPhotoFixMigration =
+		await db`INSERT INTO migrations (id) VALUES ('fix-horseback-photo-mismatch-2026') ON CONFLICT (id) DO NOTHING RETURNING id`;
+	if (horsebackPhotoFixMigration.length) {
+		const correctedPhotos = JSON.stringify([
+			{
+				title: "Photos from the trip",
+				photos: [
+					{ src: "/wp-content/uploads/2026/09/horseback/horseback-01.jpg", alt: "Female Veterans gathered with a horse at Coulter Lake Guest Ranch" },
+					{ src: "/wp-content/uploads/2026/09/horseback/horseback-06.jpg", alt: "Female Veteran with a horse at Coulter Lake Guest Ranch" },
+					{ src: "/wp-content/uploads/2026/09/horseback/horseback-07.jpg", alt: "Female Veteran with a horse at Coulter Lake Guest Ranch" },
+					{ src: "/wp-content/uploads/2026/09/horseback/horseback-08.jpg", alt: "Female Veterans gathered at the corral at Coulter Lake Guest Ranch" },
+					{ src: "/wp-content/uploads/2026/09/horseback/horseback-09.jpg", alt: "Female Veterans gathered on the ranch porch at Coulter Lake Guest Ranch" },
+					{ src: "/wp-content/uploads/2026/09/horseback/horseback-10.jpg", alt: "Female Veterans relaxing on the ranch porch at Coulter Lake Guest Ranch" },
+				],
+			},
+		]);
+		await db`UPDATE field_stories SET photo_galleries = ${correctedPhotos}::jsonb, updated_at = now() WHERE slug = 'coulter-lake-female-veteran-horseback-adventure-2026'`;
+	}
 	return db;
 }
 
