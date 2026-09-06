@@ -50,8 +50,8 @@ export const documentedPastEvents: PastEvent[] = [
 		type: "Elk hunt",
 		location: "Arizona",
 		summary: "Larry encountered cow elk at close range while the group searched for a bull; the trip remained a meaningful time among friends despite difficult weather.",
-		image: `${uploads}/2025/10/AdobeStock_761949620-scaled.jpeg`,
-		imageAlt: "Elk at sunset representing Larry's Arizona Elk Hunt",
+		image: "/vot-logo-original.png",
+		imageAlt: "Veteran's Outdoor Therapy logo representing Larry's Arizona Elk Hunt",
 		recapUrl: "https://www.facebook.com/share/p/19Z3SwTEUq/",
 	},
 	{
@@ -60,7 +60,8 @@ export const documentedPastEvents: PastEvent[] = [
 		sortDate: "2025-09-01",
 		type: "Hunt",
 		summary: "A supported antelope hunt built around time in open country and connection with fellow Veterans.",
-		image: `${uploads}/2025/09/552154529_122157952622799810_7348700458735825128_n.jpg`,
+		image: `${uploads}/2025/09/photo-130.jpg`,
+		imageAlt: "Veteran with a harvested antelope in open country",
 	},
 	{
 		title: "Gold Star Peak Hike",
@@ -68,7 +69,8 @@ export const documentedPastEvents: PastEvent[] = [
 		sortDate: "2025-06-01",
 		type: "Hiking",
 		summary: "A shared mountain experience honoring service, sacrifice, and Gold Star families.",
-		image: `${uploads}/2025/09/510943338_122138281850799810_4751360453603558598_n-980x575.jpg`,
+		image: "/vot-logo-original.png",
+		imageAlt: "Veteran's Outdoor Therapy logo representing the Gold Star Peak Hike",
 	},
 	{
 		title: "Poker Run",

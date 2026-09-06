@@ -36,7 +36,7 @@ const opportunities: Opportunity[] = [
 		title: "Spring Turkey Hunts",
 		month: 3,
 		monthLabel: "April",
-		image: `${uploads}/2026/01/turkey.jpg`,
+		image: `${uploads}/2026/09/mo-turkey/underway-02.jpg`,
 		copy: "Support annual turkey hunts with travel, field access, guides, lodging, meals, and the gear participants need.",
 	},
 	{
@@ -59,7 +59,7 @@ const opportunities: Opportunity[] = [
 		title: "Archery Antelope Hunt",
 		month: 8,
 		monthLabel: "September",
-		image: `${uploads}/2025/09/552626211_122157952436799810_562294068412297872_n-980x735.jpg`,
+		image: `${uploads}/2025/09/photo-130.jpg`,
 		copy: "Sponsor a recurring fall hunt built around ethical field practice, challenge, reflection, and connection in open country.",
 	},
 ];
