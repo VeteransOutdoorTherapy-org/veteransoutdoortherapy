@@ -1,3 +1,4 @@
+import { ArrowRight } from "lucide-react";
 import { GalleryLightbox } from "@/components/gallery-lightbox";
 import Link from "next/link";
 import { getPublishedGalleryImages } from "@/lib/db";
@@ -18,8 +19,10 @@ export default async function GalleryPage() {
 					Every photo reflects more than an adventure. It is a story of healing, hope, and connection, from sunrise on
 					the water to laughter around camp.
 				</p>
-				<Link className="text-link" href="/field-stories">Read the stories behind recent experiences</Link>
-				<Link className="text-link" href={FACEBOOK_URL} target="_blank" rel="noreferrer">Follow along on Facebook for more photos</Link>
+				<div className="gallery-links">
+					<Link className="text-link" href="/field-stories">Read the stories behind recent experiences <ArrowRight size={17} /></Link>
+					<Link className="text-link" href={FACEBOOK_URL} target="_blank" rel="noreferrer">Follow along on Facebook for more photos <ArrowRight size={17} /></Link>
+				</div>
 				<GalleryLightbox images={galleryImages} />
 			</div>
 		</section>

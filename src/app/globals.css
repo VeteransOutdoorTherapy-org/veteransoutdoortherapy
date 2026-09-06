@@ -574,6 +574,12 @@ img {
 	object-fit: contain;
 	padding: 4px;
 }
+.gallery-links {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 4px;
+}
 .text-link,
 .back-link {
 	display: inline-flex;

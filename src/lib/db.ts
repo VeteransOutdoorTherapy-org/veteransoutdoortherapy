@@ -69,6 +69,22 @@ async function ensureTestimonials() {
 	if (!db) return null;
 	await db`CREATE TABLE IF NOT EXISTS testimonials (slug text PRIMARY KEY, quote text NOT NULL, author text NOT NULL, service text NOT NULL, image text, image_alt text, image_position text, category text, published boolean NOT NULL DEFAULT true, sort_order integer NOT NULL DEFAULT 0, created_at timestamptz NOT NULL DEFAULT now(), updated_at timestamptz NOT NULL DEFAULT now())`;
 	await db`CREATE TABLE IF NOT EXISTS migrations (id text PRIMARY KEY, applied_at timestamptz NOT NULL DEFAULT now())`;
+	const horsebackTestimonialImageMigration =
+		await db`INSERT INTO migrations (id) VALUES ('horseback-testimonial-images-2026') ON CONFLICT (id) DO NOTHING RETURNING id`;
+	if (horsebackTestimonialImageMigration.length) {
+		const uploads = "/wp-content/uploads";
+		const assignments: [string, string, string][] = [
+			["connie-stone-army", `${uploads}/2026/09/horseback/horseback-01.jpg`, "Female Veterans gathered with a horse at Coulter Lake Guest Ranch"],
+			["nancy-neal-air-force", `${uploads}/2026/09/horseback/horseback-08.jpg`, "Female Veterans gathered at the corral at Coulter Lake Guest Ranch"],
+			["female-veterans-healing", `${uploads}/2026/09/horseback/horseback-10.jpg`, "Female Veterans relaxing on the ranch porch at Coulter Lake Guest Ranch"],
+			["ranch-hospitality", `${uploads}/2026/09/horseback/horseback-06.jpg`, "Female Veteran with a horse at Coulter Lake Guest Ranch"],
+			["guided-rides-hospitality", `${uploads}/2026/09/horseback/horseback-01.jpg`, "Female Veterans gathered with a horse at Coulter Lake Guest Ranch"],
+			["tiffany-baker-army", `${uploads}/2026/09/horseback/horseback-07.jpg`, "Female Veteran with a horse at Coulter Lake Guest Ranch"],
+			["heather-pippin-army", `${uploads}/2026/09/horseback/horseback-09.jpg`, "Female Veterans gathered on the ranch porch at Coulter Lake Guest Ranch"],
+		];
+		for (const [slug, image, imageAlt] of assignments)
+			await db`UPDATE testimonials SET image = ${image}, image_alt = ${imageAlt}, updated_at = now() WHERE slug = ${slug}`;
+	}
 	return db;
 }
 
