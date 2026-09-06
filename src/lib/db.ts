@@ -140,6 +140,33 @@ async function ensureGallery() {
 	const db = sql();
 	if (!db) return null;
 	await db`CREATE TABLE IF NOT EXISTS gallery_images (id text PRIMARY KEY, src text NOT NULL UNIQUE, alt text NOT NULL, caption text, tags jsonb NOT NULL DEFAULT '[]', year text, published boolean NOT NULL DEFAULT true, sort_order integer NOT NULL DEFAULT 0, created_at timestamptz NOT NULL DEFAULT now(), updated_at timestamptz NOT NULL DEFAULT now())`;
+	await db`CREATE TABLE IF NOT EXISTS migrations (id text PRIMARY KEY, applied_at timestamptz NOT NULL DEFAULT now())`;
+	const removePhoto063Migration =
+		await db`INSERT INTO migrations (id) VALUES ('remove-gallery-photo-063-2026') ON CONFLICT (id) DO NOTHING RETURNING id`;
+	if (removePhoto063Migration.length) {
+		await db`DELETE FROM gallery_images WHERE src = '/wp-content/uploads/2025/09/photo-063.jpg'`;
+	}
+	const syncFieldStoryPhotosMigration =
+		await db`INSERT INTO migrations (id) VALUES ('sync-field-story-photos-to-gallery-2026') ON CONFLICT (id) DO NOTHING RETURNING id`;
+	if (syncFieldStoryPhotosMigration.length) {
+		const existingRows = await db`SELECT src FROM gallery_images`;
+		const existingSrcs = new Set(existingRows.map((row) => String(row.src)));
+		let nextSortOrder = Number((await db`SELECT COALESCE(MAX(sort_order), 0) AS max FROM gallery_images`)[0].max) + 1;
+		const toIdSlug = (src: string) => `local-${src.replace(/[^a-z0-9]+/gi, "-").replace(/^-|-$/g, "")}`;
+		for (const story of seedFieldStories) {
+			const tag = story.galleryTag || story.slug;
+			const photos: { src: string; alt: string }[] = [
+				{ src: story.image, alt: story.imageAlt },
+				...(story.photoGalleries || []).flatMap((gallery) => gallery.photos),
+			];
+			for (const photo of photos) {
+				if (existingSrcs.has(photo.src)) continue;
+				existingSrcs.add(photo.src);
+				await db`INSERT INTO gallery_images (id, src, alt, tags, year, published, sort_order) VALUES (${toIdSlug(photo.src)}, ${photo.src}, ${photo.alt}, ${JSON.stringify([tag])}, ${story.datePublished.slice(0, 4)}, true, ${nextSortOrder}) ON CONFLICT (src) DO NOTHING`;
+				nextSortOrder += 1;
+			}
+		}
+	}
 	return db;
 }
 

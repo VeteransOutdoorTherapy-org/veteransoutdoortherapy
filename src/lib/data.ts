@@ -472,7 +472,7 @@ export type GalleryImage = {
 	updatedAt: string;
 };
 
-const excludedGalleryFiles = new Set(["2025/09/photo-134.png"]);
+const excludedGalleryFiles = new Set(["2025/09/photo-134.png", "2025/09/photo-063.jpg"]);
 const uniqueGalleryFiles = Array.from(new Set(galleryFiles)).filter((file) => !excludedGalleryFiles.has(file));
 export const galleryImages: GalleryImage[] = uniqueGalleryFiles.map((file, index) => ({
 	id: `local-${file.replace(/[^a-z0-9]+/gi, "-").replace(/^-|-$/g, "")}`,
