@@ -826,15 +826,31 @@ export const fieldStories: FieldStory[] = [
 		title: "Riders Rally for the Second Annual Poker Run",
 		date: "June 20, 2026",
 		datePublished: "2026-06-20",
-		location: "Columbia, Missouri",
+		location: "Head's Blacktop Harley-Davidson, Columbia, Missouri",
 		summary:
-			"Volunteers, sponsors, participants, and riders came together for the second annual Poker Run supporting Veteran's Outdoor Therapy programs.",
-		image: `${uploads}/events/poker-run.webp`,
-		imageAlt: "Motorcycles gathered for the Veteran's Outdoor Therapy Poker Run",
+			"Volunteers, sponsors, and participants gathered at Head's Blacktop Harley-Davidson for the second annual Poker Run, raising money to support Veterans and Gold Star families.",
+		image: `${uploads}/2026/09/pokerrun/pokerrun-05.jpg`,
+		imageAlt: "Veteran's Outdoor Therapy volunteers and riders at the second annual Poker Run",
 		body: [
-			"The second annual Poker Run brought riders, volunteers, sponsors, and participants together in Columbia, Missouri, on June 20, 2026.",
-			"The community fundraiser supported the outdoor program work behind Veteran hunts, fishing trips, horseback riding experiences, and other time in the field.",
+			"Volunteers, sponsors, and participants gathered at Head's Blacktop Harley-Davidson in Columbia, Missouri, for the second annual Poker Run on June 20, 2026.",
+			"The community fundraiser supported the outdoor program work behind Veteran hunts, fishing trips, horseback riding experiences, and other time in the field, all while everyone had a great time together. Win-win.",
 			"Volunteer effort and local partnerships made the day possible. The event is one example of how supporters can contribute their time, networks, and event experience as well as financial support.",
+		],
+		facebookLinks: [
+			{ href: "https://www.facebook.com/share/p/18S2gUCPoy/", label: "Read the recap on Facebook" },
+		],
+		galleryTag: "poker-run",
+		photoGalleries: [
+			{
+				title: "Photos from the day",
+				photos: [
+					{ src: `${uploads}/2026/09/pokerrun/pokerrun-01.jpg`, alt: "Riders gathered around the table at Head's Blacktop Harley-Davidson" },
+					{ src: `${uploads}/2026/09/pokerrun/pokerrun-02.jpg`, alt: "Riders gathered at the bar at Head's Blacktop Harley-Davidson" },
+					{ src: `${uploads}/2026/09/pokerrun/pokerrun-03.jpg`, alt: "Riders gathered around the table at Head's Blacktop Harley-Davidson" },
+					{ src: `${uploads}/2026/09/pokerrun/pokerrun-04.jpg`, alt: "Riders at Head's Blacktop Harley-Davidson" },
+					{ src: `${uploads}/2026/09/pokerrun/pokerrun-05.jpg`, alt: "Veteran's Outdoor Therapy volunteers and riders at the second annual Poker Run" },
+				],
+			},
 		],
 		programHref: "/fundraising-application",
 		programLabel: "Volunteer or host an event",

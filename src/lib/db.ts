@@ -209,6 +209,41 @@ const dischargeMigration =
 		await db`UPDATE field_stories SET photo_galleries = ${correctedPhotos}::jsonb, updated_at = now() WHERE slug = 'coulter-lake-female-veteran-horseback-adventure-2026'`;
 		await db`UPDATE field_stories SET image = '/wp-content/uploads/2026/09/horseback/horseback-01.jpg', updated_at = now() WHERE image = '/wp-content/uploads/2026/01/horseback.jpg'`;
 	}
+	const pokerRunUpdateMigration =
+		await db`INSERT INTO migrations (id) VALUES ('poker-run-recap-photos-2026') ON CONFLICT (id) DO NOTHING RETURNING id`;
+	if (pokerRunUpdateMigration.length) {
+		const pokerRunPhotos = JSON.stringify([
+			{
+				title: "Photos from the day",
+				photos: [
+					{ src: "/wp-content/uploads/2026/09/pokerrun/pokerrun-01.jpg", alt: "Riders gathered around the table at Head's Blacktop Harley-Davidson" },
+					{ src: "/wp-content/uploads/2026/09/pokerrun/pokerrun-02.jpg", alt: "Riders gathered at the bar at Head's Blacktop Harley-Davidson" },
+					{ src: "/wp-content/uploads/2026/09/pokerrun/pokerrun-03.jpg", alt: "Riders gathered around the table at Head's Blacktop Harley-Davidson" },
+					{ src: "/wp-content/uploads/2026/09/pokerrun/pokerrun-04.jpg", alt: "Riders at Head's Blacktop Harley-Davidson" },
+					{ src: "/wp-content/uploads/2026/09/pokerrun/pokerrun-05.jpg", alt: "Veteran's Outdoor Therapy volunteers and riders at the second annual Poker Run" },
+				],
+			},
+		]);
+		const pokerRunBody = JSON.stringify([
+			"Volunteers, sponsors, and participants gathered at Head's Blacktop Harley-Davidson in Columbia, Missouri, for the second annual Poker Run on June 20, 2026.",
+			"The community fundraiser supported the outdoor program work behind Veteran hunts, fishing trips, horseback riding experiences, and other time in the field, all while everyone had a great time together. Win-win.",
+			"Volunteer effort and local partnerships made the day possible. The event is one example of how supporters can contribute their time, networks, and event experience as well as financial support.",
+		]);
+		const pokerRunFacebookLinks = JSON.stringify([
+			{ href: "https://www.facebook.com/share/p/18S2gUCPoy/", label: "Read the recap on Facebook" },
+		]);
+		await db`UPDATE field_stories SET
+			location = ${"Head's Blacktop Harley-Davidson, Columbia, Missouri"},
+			summary = ${"Volunteers, sponsors, and participants gathered at Head's Blacktop Harley-Davidson for the second annual Poker Run, raising money to support Veterans and Gold Star families."},
+			image = ${"/wp-content/uploads/2026/09/pokerrun/pokerrun-05.jpg"},
+			image_alt = ${"Veteran's Outdoor Therapy volunteers and riders at the second annual Poker Run"},
+			body = ${pokerRunBody}::jsonb,
+			facebook_links = ${pokerRunFacebookLinks}::jsonb,
+			gallery_tag = ${"poker-run"},
+			photo_galleries = ${pokerRunPhotos}::jsonb,
+			updated_at = now()
+		WHERE slug = 'second-annual-poker-run-2026'`;
+	}
 	return db;
 }
 
