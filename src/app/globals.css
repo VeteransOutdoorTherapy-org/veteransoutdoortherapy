@@ -2135,6 +2135,15 @@ img {
 	font-size: 1.35rem;
 	font-weight: 700;
 }
+.field-story-facebook,
+.field-story-reviews {
+	margin-top: 40px;
+}
+.field-story-facebook .text-link {
+	display: flex;
+	width: fit-content;
+	margin-top: 10px;
+}
 .policy-copy h2 {
 	margin: 38px 0 10px;
 	font: 700 2rem/1 var(--font-display);

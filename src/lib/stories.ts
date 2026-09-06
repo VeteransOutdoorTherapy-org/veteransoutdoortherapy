@@ -10,6 +10,9 @@ export type FieldStory = {
 	image: string;
 	imageAlt: string;
 	body: string[];
+	video?: { url: string; title: string };
+	facebookLinks?: { href: string; label: string }[];
+	reviewCategory?: string;
 	programHref: string;
 	programLabel: string;
 };
@@ -29,7 +32,19 @@ export const fieldStories: FieldStory[] = [
 			"Female Veterans traveled from Alabama, Wisconsin, South Dakota, and Missouri for the first annual Coulter Lake Guest Ranch Horseback Riding Adventure in Rifle, Colorado, in July 2026.",
 			"Kelly and Forest Keith, Dina, and Maru welcomed the group to the ranch for horseback riding, shared meals, open country, and time with other Veterans.",
 			"The Military Order of the Purple Heart helped fund the experience during Veteran's Outdoor Therapy's first year.",
+			"Over the following days, the group covered basic grooming, tacking, round pen work, and beginning riding practices with Connie Stone as their Equine Therapy Instructor, along with off-roading and a hike through Rifle Falls State Park.",
+			"Videographer Amanda Trudell captured the trip on film, and Veteran's Outdoor Therapy is grateful to every volunteer and donor whose generosity made the experience possible.",
 		],
+		video: {
+			url: "https://www.youtube-nocookie.com/embed/lDsib0mkSAM",
+			title: "Healing through Horses - Veteran's Outdoor Therapy",
+		},
+		facebookLinks: [
+			{ href: "https://www.facebook.com/share/p/1Fzt4iftJn/", label: "Read the arrival post on Facebook" },
+			{ href: "https://www.facebook.com/share/p/19L9J99nGh/", label: "Read the mid-week update on Facebook" },
+			{ href: "https://www.facebook.com/share/v/1JWQBKDUvb/", label: "Watch the recap video on Facebook" },
+		],
+		reviewCategory: "Horseback",
 		programHref: "/programs",
 		programLabel: "Explore outdoor programs",
 	},
