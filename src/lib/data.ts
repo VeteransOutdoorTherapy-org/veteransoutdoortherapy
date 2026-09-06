@@ -1008,6 +1008,46 @@ export const fieldStories: FieldStory[] = [
 		programLabel: "Explore veteran hunting",
 		published: true,
 	},
+	{
+		slug: "missouri-paddlefish-snagging-2026",
+		title: "Veterans Snag Paddlefish on the Missouri River",
+		date: "March 2026",
+		datePublished: "2026-03-26",
+		location: "Missouri River, Missouri",
+		summary:
+			"The 2026 Missouri snagging season wrapped with Veterans pulling paddlefish from the river, campfire evenings, and a season made possible by dedicated volunteers.",
+		image: `${uploads}/2026/09/snagging/catch-01.jpg`,
+		imageAlt: "Veterans holding a paddlefish caught snagging on the Missouri River",
+		body: [
+			"Well, our 2026 Missouri snagging season is in the books! Veterans spent their days out on the river snagging paddlefish, and their evenings back at camp around the fire.",
+			"Thank you to all the volunteers who helped make this event happen. We couldn't do it without you!",
+			"Special thanks as well to VFW Post 2657 and their Riders Group for helping fund this event this year.",
+		],
+		facebookLinks: [
+			{ href: "https://www.facebook.com/share/p/19EjeEUop1/", label: "Read the recap on Facebook" },
+		],
+		galleryTag: "snagging",
+		photoGalleries: [
+			{
+				title: "Out on the river",
+				photos: [
+					{ src: `${uploads}/2026/09/snagging/snagging-01.jpg`, alt: "Veterans snagging for paddlefish from a boat on the Missouri River" },
+					{ src: `${uploads}/2026/09/snagging/catch-01.jpg`, alt: "Veterans holding a paddlefish caught snagging on the Missouri River" },
+					{ src: `${uploads}/2026/09/snagging/catch-02.jpg`, alt: "Veteran holding up a paddlefish next to a Veteran's Outdoor Therapy trailer" },
+				],
+			},
+			{
+				title: "Evenings at camp",
+				photos: [
+					{ src: `${uploads}/2026/09/snagging/campfire-01.jpg`, alt: "Veterans gathered around a campfire at night" },
+					{ src: `${uploads}/2026/09/snagging/camp-01.jpg`, alt: "Veterans relaxing at camp outside an RV at night" },
+				],
+			},
+		],
+		programHref: "/programs",
+		programLabel: "Explore outdoor programs",
+		published: true,
+	},
 ];
 
 export const mission =
