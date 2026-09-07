@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Trash2 } from "lucide-react";
 import { FormEvent, useRef, useState } from "react";
+import { formatPhone, phoneDigits } from "@/lib/phone";
 import { useCart } from "./cart-provider";
 
 type CustomerDetails = {
@@ -99,8 +100,19 @@ export function Checkout() {
 							<input className="field" type="email" required value={customer.email} onChange={(event) => updateCustomer("email", event.target.value)} />
 						</label>
 						<label>
-							Phone
-							<input className="field" type="tel" value={customer.phone} onChange={(event) => updateCustomer("phone", event.target.value)} />
+							Phone <span>(optional)</span>
+							<input
+								className="field"
+								type="tel"
+								inputMode="tel"
+								autoComplete="tel"
+								placeholder="(573) 544-7788"
+								maxLength={14}
+								pattern="\(\d{3}\) \d{3}-\d{4}"
+								title="Enter a 10-digit US phone number, like (573) 544-7788."
+								value={formatPhone(customer.phone)}
+								onChange={(event) => updateCustomer("phone", phoneDigits(event.target.value))}
+							/>
 						</label>
 					</div>
 					<label>
@@ -146,8 +158,13 @@ export function Checkout() {
 						<PayPalButtons
 							style={{ layout: "vertical", shape: "rect" }}
 							createOrder={async () => {
-								if (!formRef.current?.reportValidity()) throw new Error("Please complete your details first.");
+								if (!formRef.current?.reportValidity()) {
+									setMessage("");
+									setError("Please complete your details above before paying.");
+									throw new Error("Checkout details are incomplete.");
+								}
 								setError("");
+								setMessage("");
 								const response = await fetch("/api/paypal/create-order", {
 									method: "POST",
 									headers: { "Content-Type": "application/json" },
@@ -157,13 +174,23 @@ export function Checkout() {
 											name: customer.name,
 											email: customer.email,
 											phone: customer.phone,
-												shippingAddress: { ...customer, country: "US" },
-												notes: customer.notes,
+											shippingAddress: {
+												addressLine1: customer.addressLine1,
+												addressLine2: customer.addressLine2,
+												city: customer.city,
+												state: customer.state,
+												postalCode: customer.postalCode,
+												country: "US",
+											},
+											notes: customer.notes,
 										},
 									}),
 								});
 								const result = (await response.json()) as { id?: string; orderNumber?: string; error?: string };
-								if (!response.ok || !result.id || !result.orderNumber) throw new Error(result.error || "We could not start checkout.");
+								if (!response.ok || !result.id || !result.orderNumber) {
+									setError(result.error || "We could not start checkout. Please try again.");
+									throw new Error(result.error || "We could not start checkout.");
+								}
 								orderNumberRef.current = result.orderNumber;
 								return result.id;
 							}}
@@ -178,7 +205,7 @@ export function Checkout() {
 								clear();
 								router.push(`/checkout/success?order=${encodeURIComponent(result.orderNumber)}${result.notificationSent ? "" : "&notification=delayed"}`);
 							}}
-							onError={() => setError("PayPal checkout could not be completed. Please try again or contact our team.")}
+							onError={() => setError((current) => current || "PayPal checkout could not be completed. Please try again or contact our team.")}
 							onCancel={() => setMessage("Payment was cancelled. Your cart is still saved.")}
 						/>
 					</PayPalScriptProvider>

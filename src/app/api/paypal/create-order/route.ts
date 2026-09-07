@@ -1,16 +1,20 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { attachPayPalOrder, createPendingOrder, markOrderPaymentFailed } from "@/lib/db";
+import { isValidPhone, phoneDigits } from "@/lib/phone";
 import { createPayPalOrder } from "@/lib/shop/paypal";
 
 export const runtime = "nodejs";
 
 const checkoutSchema = z.object({
-	items: z.array(z.object({ slug: z.string().trim().min(1).max(200), quantity: z.number().int().min(1).max(20), size: z.string().trim().max(30).optional() })),
+	items: z
+		.array(z.object({ slug: z.string().trim().min(1).max(200), quantity: z.number().int().min(1).max(20), size: z.string().trim().max(30).optional() }))
+		.min(1)
+		.max(50),
 	customer: z.object({
 		name: z.string().trim().min(1).max(120),
 		email: z.email().max(254),
-		phone: z.string().trim().max(40),
+		phone: z.string().trim().max(40).transform(phoneDigits).refine(isValidPhone, "Enter a 10-digit US phone number."),
 		shippingAddress: z.object({
 			addressLine1: z.string().trim().min(1).max(150),
 			addressLine2: z.string().trim().max(150),

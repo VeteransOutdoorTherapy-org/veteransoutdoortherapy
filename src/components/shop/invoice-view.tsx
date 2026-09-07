@@ -1,3 +1,4 @@
+import { displayPhone } from "@/lib/phone";
 import type { OrderRecord } from "@/lib/shop/types";
 
 export function InvoiceView({ order }: { order: OrderRecord }) {
@@ -15,7 +16,7 @@ export function InvoiceView({ order }: { order: OrderRecord }) {
 					<strong>Customer</strong>
 					<span>{order.customer.name}</span>
 					<span>{order.customer.email}</span>
-					{order.customer.phone && <span>{order.customer.phone}</span>}
+					{order.customer.phone && <span>{displayPhone(order.customer.phone)}</span>}
 				</div>
 				<div>
 					<strong>Ship to</strong>

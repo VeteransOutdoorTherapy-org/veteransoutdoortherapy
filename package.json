@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "verify:paypal": "node --env-file=.env.local scripts/verify-paypal.mjs"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",

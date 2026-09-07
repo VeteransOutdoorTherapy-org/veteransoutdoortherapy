@@ -1,5 +1,6 @@
 import "server-only";
 import nodemailer from "nodemailer";
+import { displayPhone } from "./phone";
 
 export type ContactNotification = {
 	firstName: string;
@@ -112,7 +113,7 @@ export async function sendOrderNotification(order: OrderNotification) {
 			"",
 			`Customer: ${order.customerName}`,
 			`Email: ${order.customerEmail}`,
-			`Phone: ${order.phone || "Not provided"}`,
+			`Phone: ${order.phone ? displayPhone(order.phone) : "Not provided"}`,
 			"",
 			"Shipping address:",
 			order.shippingAddress.addressLine1,
