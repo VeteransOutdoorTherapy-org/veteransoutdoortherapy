@@ -1,6 +1,6 @@
 import { neon } from "@neondatabase/serverless";
 import { randomUUID } from "crypto";
-import { events as seedEvents, fieldStories as seedFieldStories, products as seedProducts, galleryImages as seedGalleryImages, type Event, type EventTemplate, type FieldStory, type GalleryImage, type Product, testimonials as seedTestimonials, type Testimonial } from "./data";
+import { events as seedEvents, fieldStories as seedFieldStories, products as seedProducts, galleryImages as seedGalleryImages, type Event, type EventTemplate, type FieldStory, type GalleryImage, IMAGE_POSITIONS, type ImagePosition, type Product, testimonials as seedTestimonials, type Testimonial } from "./data";
 import { SITE_NAME } from "./site";
 import type { CheckoutCustomer, CheckoutItem, OrderRecord, OrderSummary, PricedOrderItem } from "./shop/types";
 
@@ -241,7 +241,9 @@ export async function deleteGalleryImage(id: string) {
 async function ensureFieldStories() {
 	const db = sql();
 	if (!db) return null;
-	await db`CREATE TABLE IF NOT EXISTS field_stories (slug text PRIMARY KEY, title text NOT NULL, date_label text NOT NULL, date_published date NOT NULL, location text NOT NULL, summary text NOT NULL, image text NOT NULL, image_alt text NOT NULL, body jsonb NOT NULL DEFAULT '[]', video jsonb, facebook_links jsonb NOT NULL DEFAULT '[]', review_category text, gallery_tag text, photo_galleries jsonb NOT NULL DEFAULT '[]', program_href text NOT NULL, program_label text NOT NULL, published boolean NOT NULL DEFAULT true, created_at timestamptz NOT NULL DEFAULT now(), updated_at timestamptz NOT NULL DEFAULT now())`;
+	await db`CREATE TABLE IF NOT EXISTS field_stories (slug text PRIMARY KEY, title text NOT NULL, date_label text NOT NULL, date_published date NOT NULL, location text NOT NULL, summary text NOT NULL, image text NOT NULL, image_alt text NOT NULL, image_position text, image_position_mobile text, body jsonb NOT NULL DEFAULT '[]', video jsonb, facebook_links jsonb NOT NULL DEFAULT '[]', review_category text, gallery_tag text, photo_galleries jsonb NOT NULL DEFAULT '[]', program_href text NOT NULL, program_label text NOT NULL, published boolean NOT NULL DEFAULT true, created_at timestamptz NOT NULL DEFAULT now(), updated_at timestamptz NOT NULL DEFAULT now())`;
+	await db`ALTER TABLE field_stories ADD COLUMN IF NOT EXISTS image_position text`;
+	await db`ALTER TABLE field_stories ADD COLUMN IF NOT EXISTS image_position_mobile text`;
 	await db`CREATE TABLE IF NOT EXISTS migrations (id text PRIMARY KEY, applied_at timestamptz NOT NULL DEFAULT now())`;
 const dischargeMigration =
 		await db`INSERT INTO migrations (id) VALUES ('fix-horseback-photo-mismatch-2026') ON CONFLICT (id) DO NOTHING RETURNING id`;
@@ -303,7 +305,7 @@ const dischargeMigration =
 		if (!migration.length) return;
 		const story = seedFieldStories.find((s) => s.slug === slug);
 		if (!story) return;
-		await db`INSERT INTO field_stories (slug, title, date_label, date_published, location, summary, image, image_alt, body, video, facebook_links, review_category, gallery_tag, photo_galleries, program_href, program_label, published) VALUES (${story.slug}, ${story.title}, ${story.date}, ${story.datePublished}, ${story.location}, ${story.summary}, ${story.image}, ${story.imageAlt}, ${JSON.stringify(story.body)}, ${story.video ? JSON.stringify(story.video) : null}, ${JSON.stringify(story.facebookLinks || [])}, ${story.reviewCategory || null}, ${story.galleryTag || null}, ${JSON.stringify(story.photoGalleries || [])}, ${story.programHref}, ${story.programLabel}, ${story.published}) ON CONFLICT (slug) DO NOTHING`;
+		await db`INSERT INTO field_stories (slug, title, date_label, date_published, location, summary, image, image_alt, image_position, image_position_mobile, body, video, facebook_links, review_category, gallery_tag, photo_galleries, program_href, program_label, published) VALUES (${story.slug}, ${story.title}, ${story.date}, ${story.datePublished}, ${story.location}, ${story.summary}, ${story.image}, ${story.imageAlt}, ${story.imagePosition ?? null}, ${story.imagePositionMobile ?? null}, ${JSON.stringify(story.body)}, ${story.video ? JSON.stringify(story.video) : null}, ${JSON.stringify(story.facebookLinks || [])}, ${story.reviewCategory || null}, ${story.galleryTag || null}, ${JSON.stringify(story.photoGalleries || [])}, ${story.programHref}, ${story.programLabel}, ${story.published}) ON CONFLICT (slug) DO NOTHING`;
 	}
 	await seedMissingStory(db, "seed-flint-hills-story-2026", "flint-hills-kansas-turkey-hunt-2026");
 	await seedMissingStory(db, "seed-missouri-turkey-story-2026", "missouri-turkey-hunt-2026");
@@ -339,6 +341,10 @@ const dischargeMigration =
 	return db;
 }
 
+function fieldStoryImagePosition(value: unknown): ImagePosition | undefined {
+	return IMAGE_POSITIONS.includes(String(value ?? "") as ImagePosition) ? (String(value) as ImagePosition) : undefined;
+}
+
 function rowToFieldStory(row: Record<string, unknown>): FieldStory {
 	return {
 		slug: String(row.slug),
@@ -349,6 +355,8 @@ function rowToFieldStory(row: Record<string, unknown>): FieldStory {
 		summary: String(row.summary),
 		image: String(row.image),
 		imageAlt: String(row.image_alt),
+		imagePosition: fieldStoryImagePosition(row.image_position),
+		imagePositionMobile: fieldStoryImagePosition(row.image_position_mobile),
 		body: Array.isArray(row.body) ? row.body.map(String) : [],
 		video: row.video ? (row.video as { url: string; title: string }) : undefined,
 		facebookLinks: Array.isArray(row.facebook_links) ? (row.facebook_links as { href: string; label: string }[]) : [],
@@ -386,7 +394,7 @@ export async function saveFieldStory(story: FieldStory, previousSlug = story.slu
 	const db = await ensureFieldStories();
 	if (!db) throw new Error("DATABASE_URL is required to save field stories.");
 	if (previousSlug && previousSlug !== story.slug) await db`DELETE FROM field_stories WHERE slug = ${previousSlug}`;
-	await db`INSERT INTO field_stories (slug, title, date_label, date_published, location, summary, image, image_alt, body, video, facebook_links, review_category, gallery_tag, photo_galleries, program_href, program_label, published) VALUES (${story.slug}, ${story.title}, ${story.date}, ${story.datePublished}, ${story.location}, ${story.summary}, ${story.image}, ${story.imageAlt}, ${JSON.stringify(story.body)}, ${story.video ? JSON.stringify(story.video) : null}, ${JSON.stringify(story.facebookLinks || [])}, ${story.reviewCategory || null}, ${story.galleryTag || null}, ${JSON.stringify(story.photoGalleries || [])}, ${story.programHref}, ${story.programLabel}, ${story.published}) ON CONFLICT (slug) DO UPDATE SET title = EXCLUDED.title, date_label = EXCLUDED.date_label, date_published = EXCLUDED.date_published, location = EXCLUDED.location, summary = EXCLUDED.summary, image = EXCLUDED.image, image_alt = EXCLUDED.image_alt, body = EXCLUDED.body, video = EXCLUDED.video, facebook_links = EXCLUDED.facebook_links, review_category = EXCLUDED.review_category, gallery_tag = EXCLUDED.gallery_tag, photo_galleries = EXCLUDED.photo_galleries, program_href = EXCLUDED.program_href, program_label = EXCLUDED.program_label, published = EXCLUDED.published, updated_at = now()`;
+	await db`INSERT INTO field_stories (slug, title, date_label, date_published, location, summary, image, image_alt, image_position, image_position_mobile, body, video, facebook_links, review_category, gallery_tag, photo_galleries, program_href, program_label, published) VALUES (${story.slug}, ${story.title}, ${story.date}, ${story.datePublished}, ${story.location}, ${story.summary}, ${story.image}, ${story.imageAlt}, ${story.imagePosition ?? null}, ${story.imagePositionMobile ?? null}, ${JSON.stringify(story.body)}, ${story.video ? JSON.stringify(story.video) : null}, ${JSON.stringify(story.facebookLinks || [])}, ${story.reviewCategory || null}, ${story.galleryTag || null}, ${JSON.stringify(story.photoGalleries || [])}, ${story.programHref}, ${story.programLabel}, ${story.published}) ON CONFLICT (slug) DO UPDATE SET title = EXCLUDED.title, date_label = EXCLUDED.date_label, date_published = EXCLUDED.date_published, location = EXCLUDED.location, summary = EXCLUDED.summary, image = EXCLUDED.image, image_alt = EXCLUDED.image_alt, image_position = EXCLUDED.image_position, image_position_mobile = EXCLUDED.image_position_mobile, body = EXCLUDED.body, video = EXCLUDED.video, facebook_links = EXCLUDED.facebook_links, review_category = EXCLUDED.review_category, gallery_tag = EXCLUDED.gallery_tag, photo_galleries = EXCLUDED.photo_galleries, program_href = EXCLUDED.program_href, program_label = EXCLUDED.program_label, published = EXCLUDED.published, updated_at = now()`;
 }
 
 export async function deleteFieldStory(slug: string) {

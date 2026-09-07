@@ -1,12 +1,22 @@
 import { ArrowRight, CalendarDays, MapPin, Quote } from "lucide-react";
 import type { Metadata } from "next";
+import type { CSSProperties } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { JsonLd } from "@/components/json-ld";
+import { cssImagePosition, type FieldStory } from "@/lib/data";
 import { getFieldStories, getFieldStory, getPublishedGalleryImages, getPublishedTestimonials } from "@/lib/db";
 import { absoluteUrl, breadcrumbSchema, pageMetadata, SITE_NAME, SITE_URL } from "@/lib/site";
+
+/** Exposes the admin-picked hero crop to CSS, desktop and mobile separately. */
+function heroFocusStyle(story: FieldStory) {
+	return {
+		"--story-image-position": cssImagePosition(story.imagePosition),
+		"--story-image-position-mobile": cssImagePosition(story.imagePositionMobile, cssImagePosition(story.imagePosition)),
+	} as CSSProperties;
+}
 
 export async function generateStaticParams() {
 	return (await getFieldStories()).map((story) => ({ slug: story.slug }));
@@ -78,7 +88,7 @@ export default async function FieldStoryPage({ params }: PageProps<"/field-stori
 			]} />
 			<article className="field-story">
 				<header className="field-story-hero">
-					<div className="field-story-image"><Image src={story.image} alt={story.imageAlt} fill priority sizes="100vw" /></div>
+					<div className="field-story-image" style={heroFocusStyle(story)}><Image src={story.image} alt={story.imageAlt} fill priority sizes="100vw" /></div>
 					<div className="container field-story-heading">
 						<Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Field stories", href: "/field-stories" }, { label: story.title }]} />
 						<p className="eyebrow">Story from the field</p>

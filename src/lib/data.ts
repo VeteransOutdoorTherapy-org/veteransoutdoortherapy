@@ -647,6 +647,24 @@ export const galleryImages: GalleryImage[] = uniqueGalleryFiles.map((file, index
 	updatedAt: file.slice(0, 7),
 }));
 
+export const IMAGE_POSITIONS = [
+	"center",
+	"top",
+	"bottom",
+	"left",
+	"right",
+	"top-left",
+	"top-right",
+	"bottom-left",
+	"bottom-right",
+] as const;
+export type ImagePosition = (typeof IMAGE_POSITIONS)[number];
+
+/** Turns a stored image position into a CSS object-position value. */
+export function cssImagePosition(position?: string, fallback = "center") {
+	return IMAGE_POSITIONS.includes((position || "") as ImagePosition) ? position!.replace("-", " ") : fallback;
+}
+
 export type Testimonial = {
 	slug: string;
 	quote: string;
@@ -654,7 +672,7 @@ export type Testimonial = {
 	service: string;
 	image?: string;
 	imageAlt?: string;
-	imagePosition?: "top" | "bottom" | "left" | "right" | "top-left" | "top-right" | "bottom-left" | "bottom-right" | "center";
+	imagePosition?: ImagePosition;
 	category?: string;
 	published: boolean;
 	sortOrder: number;
@@ -911,6 +929,8 @@ export type FieldStory = {
 	summary: string;
 	image: string;
 	imageAlt: string;
+	imagePosition?: ImagePosition;
+	imagePositionMobile?: ImagePosition;
 	body: string[];
 	video?: { url: string; title: string };
 	facebookLinks?: { href: string; label: string }[];

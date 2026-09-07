@@ -1,8 +1,10 @@
 import { ArrowRight, MapPin } from "lucide-react";
+import type { CSSProperties } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { JsonLd } from "@/components/json-ld";
+import { cssImagePosition } from "@/lib/data";
 import { getPublishedFieldStories } from "@/lib/db";
 import { breadcrumbSchema, pageMetadata } from "@/lib/site";
 
@@ -33,7 +35,14 @@ export default async function FieldStoriesPage() {
 				<div className="container story-list">
 					{fieldStories.map((story) => (
 						<article key={story.slug}>
-							<Link className="story-list-image" href={`/field-stories/${story.slug}`}>
+							<Link
+								className="story-list-image"
+								href={`/field-stories/${story.slug}`}
+								style={{
+									"--story-image-position": cssImagePosition(story.imagePosition),
+									"--story-image-position-mobile": cssImagePosition(story.imagePositionMobile, cssImagePosition(story.imagePosition)),
+								} as CSSProperties}
+							>
 								<Image src={story.image} alt={story.imageAlt} fill sizes="(max-width: 800px) 100vw, 42vw" />
 							</Link>
 							<div>

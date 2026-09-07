@@ -1,6 +1,11 @@
 import { Copy, ExternalLink, Newspaper, Pencil } from "lucide-react";
-import type { FieldStory } from "@/lib/data";
+import { type FieldStory, IMAGE_POSITIONS } from "@/lib/data";
 import { deleteFieldStoryAction, duplicateFieldStoryAction, saveFieldStoryAction } from "./actions";
+
+function positionLabel(position: string) {
+	const spaced = position.replace("-", " ");
+	return spaced.charAt(0).toUpperCase() + spaced.slice(1);
+}
 
 export function FieldStoryAdmin({
 	stories,
@@ -67,6 +72,36 @@ export function FieldStoryAdmin({
 					Image alt text
 					<input className="field" name="imageAlt" defaultValue={selected?.imageAlt} required />
 				</label>
+				<div className="form-row">
+					<label>
+						Hero focus — desktop
+						<select className="field" name="imagePosition" defaultValue={selected?.imagePosition || "center"}>
+							{IMAGE_POSITIONS.map((position) => (
+								<option key={position} value={position}>
+									{positionLabel(position)}
+								</option>
+							))}
+						</select>
+					</label>
+					<label>
+						Hero focus — mobile
+						<select
+							className="field"
+							name="imagePositionMobile"
+							defaultValue={selected?.imagePositionMobile || selected?.imagePosition || "center"}
+						>
+							{IMAGE_POSITIONS.map((position) => (
+								<option key={position} value={position}>
+									{positionLabel(position)}
+								</option>
+							))}
+						</select>
+					</label>
+				</div>
+				<p className="admin-hint">
+					Hero focus picks the part of the photo that stays in frame when the hero and story card crop it — use Top or
+					Top left when a face sits high in the photo. The mobile setting takes over at 900px wide and below.
+				</p>
 				<label>
 					Upload more photos from this trip (added to the Gallery automatically)
 					<input className="field" name="photoFiles" type="file" accept="image/png,image/jpeg,image/webp" multiple />

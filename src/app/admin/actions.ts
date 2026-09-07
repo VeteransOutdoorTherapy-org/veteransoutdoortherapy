@@ -4,6 +4,7 @@ import { randomUUID } from "crypto";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { isAdmin, login, logout } from "@/lib/auth";
+import { IMAGE_POSITIONS, type ImagePosition } from "@/lib/data";
 import { deleteEvent, deleteProduct, getEvents, getProducts, saveEvent, saveProduct, getTestimonials, saveTestimonial, deleteTestimonial, deleteGalleryImage, getGalleryImages, saveGalleryImage, getFieldStories, saveFieldStory, deleteFieldStory } from "@/lib/db";
 
 async function addToGalleryIfMissing(src: string, tag: string, alt: string) {
@@ -541,6 +542,11 @@ function parseFacebookLinks(value: string) {
 		.filter((link): link is { label: string; href: string } => link !== null);
 }
 
+function parseImagePosition(value: FormDataEntryValue | null): ImagePosition | undefined {
+	const position = String(value || "").trim();
+	return IMAGE_POSITIONS.includes(position as ImagePosition) ? (position as ImagePosition) : undefined;
+}
+
 export async function saveFieldStoryAction(form: FormData) {
 	if (!(await isAdmin())) redirect("/admin");
 	const title = String(form.get("title") || "").trim();
@@ -578,6 +584,8 @@ export async function saveFieldStoryAction(form: FormData) {
 				summary: String(form.get("summary") || "").trim(),
 				image,
 				imageAlt,
+				imagePosition: parseImagePosition(form.get("imagePosition")),
+				imagePositionMobile: parseImagePosition(form.get("imagePositionMobile")),
 				body: parseLines(String(form.get("body") || "")),
 				video: videoUrl ? { url: videoUrl, title: videoTitle || title } : undefined,
 				facebookLinks: parseFacebookLinks(String(form.get("facebookLinks") || "")),

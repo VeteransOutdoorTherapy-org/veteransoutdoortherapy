@@ -2151,6 +2151,7 @@ img {
 }
 .story-list-image img {
 	object-fit: cover;
+	object-position: var(--story-image-position, center);
 	transition: transform 0.4s ease;
 }
 .story-list-image:hover img {
@@ -2158,6 +2159,7 @@ img {
 }
 .field-story-image img {
 	object-fit: cover;
+	object-position: var(--story-image-position, center);
 }
 .story-list h2 a {
 	color: inherit;
@@ -2370,6 +2372,10 @@ img {
 	}
 	.story-list-image {
 		min-height: 360px;
+	}
+	.story-list-image img,
+	.field-story-image img {
+		object-position: var(--story-image-position-mobile, var(--story-image-position, center));
 	}
 	.sponsor-badge-grid {
 		grid-template-columns: repeat(3, minmax(0, 1fr));
