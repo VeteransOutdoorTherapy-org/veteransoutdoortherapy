@@ -123,7 +123,7 @@ export function FieldStoryAdmin({
 					</label>
 				</div>
 				<label>
-					Facebook links — one per line, as "Label | https://url"
+					Facebook links — one per line, as &quot;Label | https://url&quot;
 					<textarea className="field" name="facebookLinks" rows={3} defaultValue={facebookLinksValue} placeholder="Read the recap on Facebook | https://www.facebook.com/share/p/..." />
 				</label>
 				<div className="form-row">
