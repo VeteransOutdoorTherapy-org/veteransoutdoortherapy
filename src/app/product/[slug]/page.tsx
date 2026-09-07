@@ -6,7 +6,7 @@ import { notFound } from "next/navigation";
 import { AddToCart } from "@/components/add-to-cart";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { JsonLd } from "@/components/json-ld";
-import { products } from "@/lib/data";
+import { products, productInStock } from "@/lib/data";
 import { getProducts } from "@/lib/db";
 import { absoluteUrl, breadcrumbSchema, pageMetadata, SITE_NAME, SITE_URL } from "@/lib/site";
 export function generateStaticParams() {
@@ -43,7 +43,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 			"@type": "Offer",
 			price: product.price,
 			priceCurrency: "USD",
-			availability: product.stock === 0 ? "https://schema.org/OutOfStock" : "https://schema.org/InStock",
+			availability: productInStock(product) ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
 			url: absoluteUrl(path),
 			seller: { "@id": `${SITE_URL}/#organization`, name: SITE_NAME },
 		},
@@ -68,11 +68,20 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 						<h1 className="display">{product.name}</h1>
 						<p className="price">${product.price.toLocaleString()}</p>
 						<p>{product.description}</p>
-						{product.stock && (
+						{product.sizes?.some((entry) => entry.stock != null) ? (
+							<p className="stock">
+								<PackageCheck size={18} />{" "}
+								{product.sizes
+									.filter((entry) => entry.stock != null)
+									.map((entry) => `${entry.size}: ${entry.stock}`)
+									.join(" · ")}
+							</p>
+						) : product.stock != null ? (
 							<p className="stock">
 								<PackageCheck size={18} /> {product.stock} in stock
 							</p>
-						)}
+						) : null}
+						{!productInStock(product) && <p className="stock sold-out">Sold out</p>}
 						<AddToCart product={product} />
 						<div className="product-assurance">
 							<span>

@@ -1,4 +1,5 @@
 import {
+	applyStockForOrder,
 	getOrderByPayPalId,
 	markCustomerNotificationSent,
 	markOrderNotificationSent,
@@ -19,6 +20,8 @@ export async function finalizePaidOrder(
 	const result = await markOrderPaid(paypalOrderId, paypalCaptureId);
 	if (!result.order) throw new Error("Paid order could not be loaded.");
 	await recordOrderEvent(result.order.orderNumber, eventKey, "payment_completed", source, payload);
+	// Only the capture that actually flips the order to paid moves stock, so retries cannot double-deduct.
+	if (result.newlyPaid) await applyStockForOrder(result.order.orderNumber);
 
 	let internalNotificationSent = result.order.internalNotificationSent;
 	if (!internalNotificationSent) {

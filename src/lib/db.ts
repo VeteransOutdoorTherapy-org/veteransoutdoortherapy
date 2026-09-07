@@ -1,6 +1,6 @@
 import { neon } from "@neondatabase/serverless";
 import { randomUUID } from "crypto";
-import { events as seedEvents, fieldStories as seedFieldStories, products as seedProducts, galleryImages as seedGalleryImages, type Event, type EventTemplate, type FieldStory, type GalleryImage, IMAGE_POSITIONS, type ImagePosition, type Product, testimonials as seedTestimonials, type Testimonial } from "./data";
+import { events as seedEvents, fieldStories as seedFieldStories, products as seedProducts, galleryImages as seedGalleryImages, type Event, type EventTemplate, type FieldStory, type GalleryImage, IMAGE_POSITIONS, type ImagePosition, normalizeSizes, type Product, sizeInStock, testimonials as seedTestimonials, type Testimonial } from "./data";
 import { SITE_NAME } from "./site";
 import type { CheckoutCustomer, CheckoutItem, OrderRecord, OrderSummary, PricedOrderItem } from "./shop/types";
 
@@ -162,7 +162,7 @@ export async function getProducts(): Promise<Product[]> {
 		description: String(row.description),
 		image: String(row.image),
 		gallery: row.gallery as string[],
-		sizes: row.sizes as string[] | undefined,
+		sizes: normalizeSizes(row.sizes),
 		stock: row.stock == null ? undefined : Number(row.stock),
 		featured: Boolean(row.featured),
 	}));
@@ -461,6 +461,82 @@ function rowToOrder(rows: Array<Record<string, unknown>>): OrderRecord | null {
 	};
 }
 
+/**
+ * Takes stock for one paid line. Each statement is atomic and refuses to go negative, so two
+ * checkouts racing for the last item cannot both win. Untracked sizes and products are left alone.
+ */
+async function takeStock(db: NonNullable<ReturnType<typeof sql>>, slug: string, size: string | undefined, quantity: number) {
+	if (size) {
+		const updated = await db`
+			UPDATE products SET sizes = (
+				SELECT jsonb_agg(
+					CASE WHEN entry->>'size' = ${size} AND entry->>'stock' IS NOT NULL
+						THEN jsonb_set(entry, '{stock}', to_jsonb(GREATEST((entry->>'stock')::int - ${quantity}, 0)))
+						ELSE entry END
+					ORDER BY position
+				)
+				FROM jsonb_array_elements(sizes) WITH ORDINALITY AS parts(entry, position)
+			), updated_at = now()
+			WHERE slug = ${slug}
+				AND EXISTS (
+					SELECT 1 FROM jsonb_array_elements(sizes) AS entry
+					WHERE entry->>'size' = ${size} AND entry->>'stock' IS NOT NULL AND (entry->>'stock')::int >= ${quantity}
+				)
+			RETURNING slug`;
+		if (updated.length > 0) return true;
+		// An uncounted size has nothing to take, which is success rather than a shortfall.
+		const untracked = await db`SELECT 1 FROM products, jsonb_array_elements(sizes) AS entry WHERE slug = ${slug} AND entry->>'size' = ${size} AND entry->>'stock' IS NULL`;
+		return untracked.length > 0;
+	}
+	const updated = await db`UPDATE products SET stock = stock - ${quantity}, updated_at = now() WHERE slug = ${slug} AND stock IS NOT NULL AND stock >= ${quantity} RETURNING slug`;
+	if (updated.length > 0) return true;
+	const untracked = await db`SELECT 1 FROM products WHERE slug = ${slug} AND stock IS NULL`;
+	return untracked.length > 0;
+}
+
+/** Puts stock back, for refunds. Mirrors takeStock and never fails the caller. */
+async function returnStock(db: NonNullable<ReturnType<typeof sql>>, slug: string, size: string | undefined, quantity: number) {
+	if (size) {
+		await db`
+			UPDATE products SET sizes = (
+				SELECT jsonb_agg(
+					CASE WHEN entry->>'size' = ${size} AND entry->>'stock' IS NOT NULL
+						THEN jsonb_set(entry, '{stock}', to_jsonb((entry->>'stock')::int + ${quantity}))
+						ELSE entry END
+					ORDER BY position
+				)
+				FROM jsonb_array_elements(sizes) WITH ORDINALITY AS parts(entry, position)
+			), updated_at = now()
+			WHERE slug = ${slug}`;
+		return;
+	}
+	await db`UPDATE products SET stock = stock + ${quantity}, updated_at = now() WHERE slug = ${slug} AND stock IS NOT NULL`;
+}
+
+/** Deducts every line of a paid order. Shortfalls are logged, never thrown: the money is already taken. */
+export async function applyStockForOrder(orderNumberValue: string) {
+	const db = await ensureOrders();
+	if (!db) return;
+	const rows = await db`SELECT oi.product_slug, oi.size, oi.quantity FROM order_items oi JOIN orders o ON o.id = oi.order_id WHERE o.order_number = ${orderNumberValue}`;
+	for (const row of rows) {
+		const slug = String(row.product_slug);
+		const size = row.size ? String(row.size) : undefined;
+		const quantity = Number(row.quantity);
+		const taken = await takeStock(db, slug, size, quantity);
+		if (!taken) console.warn("Stock not deducted; check inventory by hand", { orderNumber: orderNumberValue, slug, size, quantity });
+	}
+}
+
+/** Restores stock for a refunded order. */
+export async function restoreStockForOrder(orderNumberValue: string) {
+	const db = await ensureOrders();
+	if (!db) return;
+	const rows = await db`SELECT oi.product_slug, oi.size, oi.quantity FROM order_items oi JOIN orders o ON o.id = oi.order_id WHERE o.order_number = ${orderNumberValue}`;
+	for (const row of rows) {
+		await returnStock(db, String(row.product_slug), row.size ? String(row.size) : undefined, Number(row.quantity));
+	}
+}
+
 export async function createPendingOrder(customer: CheckoutCustomer, requestedItems: CheckoutItem[]) {
 	const db = await ensureOrders();
 	if (!db) throw new Error("DATABASE_URL is required to create orders.");
@@ -471,8 +547,12 @@ export async function createPendingOrder(customer: CheckoutCustomer, requestedIt
 		const product = products.find((entry) => entry.slug === requested.slug);
 		const quantity = Number(requested.quantity);
 		if (!product || !Number.isInteger(quantity) || quantity < 1 || quantity > 20) throw new Error("One or more cart items are invalid.");
-		if (product.sizes?.length && (!requested.size || !product.sizes.includes(requested.size))) {
-			throw new Error(`Please choose a valid size for ${product.shortName}.`);
+		if (product.sizes?.length) {
+			const chosen = requested.size ? product.sizes.find((entry) => entry.size === requested.size) : undefined;
+			if (!chosen) throw new Error(`Please choose a valid size for ${product.shortName}.`);
+			if (!sizeInStock(chosen, quantity)) throw new Error(`${product.shortName} in size ${chosen.size} is sold out.`);
+		} else if (product.stock != null && product.stock < quantity) {
+			throw new Error(`${product.shortName} is sold out.`);
 		}
 		const unitPrice = Number(product.price);
 		return {
@@ -636,8 +716,12 @@ export async function markCustomerNotificationSent(orderNumberValue: string) {
 export async function markOrderRefunded(paypalOrderId: string) {
 	const db = await ensureOrders();
 	if (!db) return null;
+	const existing = await getOrderByPayPalId(paypalOrderId);
 	await db`UPDATE orders SET status = 'refunded', refunded_at = now() WHERE paypal_order_id = ${paypalOrderId}`;
-	return getOrderByPayPalId(paypalOrderId);
+	const order = await getOrderByPayPalId(paypalOrderId);
+	// Put stock back once, on the transition into refunded, so repeated webhooks stay harmless.
+	if (order && existing?.status === "paid") await restoreStockForOrder(order.orderNumber);
+	return order;
 }
 
 export async function saveProduct(product: Product) {

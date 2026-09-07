@@ -70,6 +70,21 @@ function slugify(value: string) {
 		.replace(/(^-|-$)/g, "");
 }
 
+/** Reads the sizes box: one size per line, "S | 4" to count stock, a bare "S" to leave it uncounted. */
+function parseSizes(value: string) {
+	const sizes = value
+		.split(/[\n,]/)
+		.map((line) => line.trim())
+		.filter(Boolean)
+		.map((line) => {
+			const [rawSize, rawStock] = line.split("|").map((part) => part.trim());
+			const stock = rawStock === undefined || rawStock === "" ? null : Number(rawStock);
+			return { size: rawSize, stock: stock == null || Number.isNaN(stock) ? null : Math.max(0, Math.trunc(stock)) };
+		})
+		.filter((entry) => entry.size.length > 0);
+	return sizes.length ? sizes : undefined;
+}
+
 function normalizeCategory(value: string) {
 	const cleaned = value.trim().replace(/\s+/g, " ");
 	if (!cleaned) return "Merchandise";
@@ -145,10 +160,7 @@ export async function saveProductAction(form: FormData) {
 			description: String(form.get("description") || ""),
 			image,
 			gallery: image ? [image] : [],
-			sizes: String(form.get("sizes") || "")
-				.split(",")
-				.map((size) => size.trim())
-				.filter(Boolean),
+			sizes: parseSizes(String(form.get("sizes") || "")),
 			stock: form.get("stock") ? Number(form.get("stock")) : undefined,
 			featured: form.get("featured") === "on",
 		});

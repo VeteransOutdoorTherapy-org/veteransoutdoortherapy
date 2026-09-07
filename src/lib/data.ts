@@ -1,3 +1,6 @@
+/** A size a product comes in. `stock` null means the size is stocked but not counted. */
+export type ProductSize = { size: string; stock: number | null };
+
 export type Product = {
 	slug: string;
 	name: string;
@@ -7,10 +10,38 @@ export type Product = {
 	description: string;
 	image: string;
 	gallery: string[];
-	sizes?: string[];
+	sizes?: ProductSize[];
 	stock?: number;
 	featured?: boolean;
 };
+
+/** Accepts either the legacy ["S","M"] shape or the current one, so old rows keep working. */
+export function normalizeSizes(value: unknown): ProductSize[] | undefined {
+	if (!Array.isArray(value) || !value.length) return undefined;
+	const sizes = value
+		.map((entry) => {
+			if (typeof entry === "string") return { size: entry.trim(), stock: null };
+			if (entry && typeof entry === "object") {
+				const size = String((entry as { size?: unknown }).size ?? "").trim();
+				const rawStock = (entry as { stock?: unknown }).stock;
+				const stock = rawStock == null || rawStock === "" ? null : Number(rawStock);
+				return { size, stock: stock == null || Number.isNaN(stock) ? null : Math.max(0, Math.trunc(stock)) };
+			}
+			return { size: "", stock: null };
+		})
+		.filter((entry) => entry.size.length > 0);
+	return sizes.length ? sizes : undefined;
+}
+
+/** True when the size can still be bought: either uncounted, or counted with enough left. */
+export function sizeInStock(size: ProductSize, quantity = 1) {
+	return size.stock == null || size.stock >= quantity;
+}
+
+export function productInStock(product: Product) {
+	if (product.sizes?.length) return product.sizes.some((size) => sizeInStock(size));
+	return product.stock == null || product.stock > 0;
+}
 
 const uploads = "/wp-content/uploads";
 
@@ -25,7 +56,7 @@ export const products: Product[] = [
 			"A warm, comfortable camouflage hoodie built for those who find clarity, strength, and healing in the wild. Soft midweight fleece, an adjustable hood, and a front kangaroo pocket make it ready for cool mornings and nights by the fire.",
 		image: `${uploads}/products/camo-hoodie.jpg`,
 		gallery: [`${uploads}/products/camo-hoodie.jpg`],
-		sizes: ["S", "M", "L", "XL", "XXL"],
+		sizes: [{ size: "S", stock: null }, { size: "M", stock: null }, { size: "L", stock: null }, { size: "XL", stock: null }, { size: "XXL", stock: null }],
 		featured: true,
 	},
 	{
@@ -38,7 +69,7 @@ export const products: Product[] = [
 			"A lightweight, moisture-wicking performance shirt with a breathable gray body and blaze-orange accents, designed for hikes, workouts, range days, and time in the field.",
 		image: `${uploads}/products/performance-t-shirt.jpg`,
 		gallery: [`${uploads}/products/performance-t-shirt.jpg`],
-		sizes: ["S", "M", "L", "XL", "XXL"],
+		sizes: [{ size: "S", stock: null }, { size: "M", stock: null }, { size: "L", stock: null }, { size: "XL", stock: null }, { size: "XXL", stock: null }],
 		featured: true,
 	},
 	{
@@ -51,7 +82,7 @@ export const products: Product[] = [
 			"A soft gray pullover with an adjustable hood, kangaroo pocket, ribbed cuffs, and the Veteran's Outdoor Therapy mark on the chest.",
 		image: `${uploads}/products/pullover-hoodie-gray.jpg`,
 		gallery: [`${uploads}/products/pullover-hoodie-gray.jpg`],
-		sizes: ["S", "M", "L", "XL", "XXL"],
+		sizes: [{ size: "S", stock: null }, { size: "M", stock: null }, { size: "L", stock: null }, { size: "XL", stock: null }, { size: "XXL", stock: null }],
 	},
 	{
 		slug: "veterans-outdoor-therapy-pullover-hoodie-maroon-hoodie",
@@ -63,7 +94,7 @@ export const products: Product[] = [
 			"A comfortable maroon pullover hoodie made for camp, evenings by the fire, and everyday support of the mission.",
 		image: `${uploads}/products/pullover-hoodie-maroon.jpg`,
 		gallery: [`${uploads}/products/pullover-hoodie-maroon.jpg`],
-		sizes: ["S", "M", "L", "XL", "XXL"],
+		sizes: [{ size: "S", stock: null }, { size: "M", stock: null }, { size: "L", stock: null }, { size: "XL", stock: null }, { size: "XXL", stock: null }],
 	},
 	{
 		slug: "veterans-outdoor-therapy-pullover-hoodie-tan-hoodie",
@@ -75,7 +106,7 @@ export const products: Product[] = [
 			"A comfortable tan pullover hoodie featuring the Veteran's Outdoor Therapy logo, an adjustable hood, and a classic kangaroo pocket.",
 		image: `${uploads}/products/pullover-hoodie-tan.webp`,
 		gallery: [`${uploads}/products/pullover-hoodie-tan.webp`],
-		sizes: ["S", "M", "L", "XL", "XXL"],
+		sizes: [{ size: "S", stock: null }, { size: "M", stock: null }, { size: "L", stock: null }, { size: "XL", stock: null }, { size: "XXL", stock: null }],
 	},
 	{
 		slug: "veterans-outdoor-therapy-t-shirt-nature-inspired-veteran-apparel",
@@ -87,7 +118,7 @@ export const products: Product[] = [
 			"A soft sage-green unisex tee where mountains, wildlife, and open air symbolize healing, resilience, and purpose.",
 		image: `${uploads}/products/t-shirt-sage.webp`,
 		gallery: [`${uploads}/products/t-shirt-sage.webp`],
-		sizes: ["S", "M", "L", "XL", "XXL"],
+		sizes: [{ size: "S", stock: null }, { size: "M", stock: null }, { size: "L", stock: null }, { size: "XL", stock: null }, { size: "XXL", stock: null }],
 	},
 	{
 		slug: "veterans-outdoor-therapy-t-shirt-nature-inspired-veteran-apparel-burnt-orange",
@@ -99,7 +130,7 @@ export const products: Product[] = [
 			"A soft burnt-orange unisex tee with a durable nature-inspired mark, made for the trail, campfire, or everyday wear.",
 		image: `${uploads}/products/t-shirt-orange.webp`,
 		gallery: [`${uploads}/products/t-shirt-orange.webp`],
-		sizes: ["S", "M", "L", "XL", "XXL"],
+		sizes: [{ size: "S", stock: null }, { size: "M", stock: null }, { size: "L", stock: null }, { size: "XL", stock: null }, { size: "XXL", stock: null }],
 	},
 	{
 		slug: "veterans-outdoor-therapy-turkey-mug-ceramic-coffee-mug",
@@ -123,7 +154,7 @@ export const products: Product[] = [
 			"A premium tan hoodie with camouflage sleeves and hood, a relaxed unisex fit, and durable mission artwork.",
 		image: `${uploads}/products/two-tone-camo-hoodie.jpg`,
 		gallery: [`${uploads}/products/two-tone-camo-hoodie.jpg`],
-		sizes: ["S", "M", "L", "XL", "XXL"],
+		sizes: [{ size: "S", stock: null }, { size: "M", stock: null }, { size: "L", stock: null }, { size: "XL", stock: null }, { size: "XXL", stock: null }],
 		featured: true,
 	},
 	...[
@@ -415,7 +446,7 @@ export const events: Event[] = [
 		date: "Spring 2027 (dates TBA)",
 		startDate: "2027-03-01",
 		endDate: "2027-04-30",
-		image: `${uploads}/2026/09/snagging/catch-01.jpg`,
+		image: `${uploads}/2025/09/photo-006.jpg`,
 		type: "Snagging trip",
 		location: "Missouri River, Missouri",
 		summary: "The annual Missouri paddlefish snagging trip returns for 2027, supported by VFW Post 2657 and their Riders Group. Exact dates will be announced soon.",

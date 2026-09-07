@@ -1424,6 +1424,15 @@ img {
 	font-size: 0.74rem;
 	text-align: center;
 }
+.stock.sold-out {
+	color: #9d301f;
+	font-weight: 800;
+}
+.buy-box select:disabled,
+.add-button:disabled {
+	opacity: 0.55;
+	cursor: not-allowed;
+}
 .empty-state {
 	display: grid;
 	justify-items: center;

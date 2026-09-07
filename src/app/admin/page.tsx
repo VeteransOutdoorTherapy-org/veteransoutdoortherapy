@@ -299,14 +299,24 @@ export default async function AdminPage({
 							</label>
 							<div className="form-row">
 								<label>
-									Sizes, comma separated
-									<input className="field" name="sizes" defaultValue={selectedProduct?.sizes?.join(", ")} />
+									Sizes and stock — one per line, as &quot;S | 4&quot;
+									<textarea
+										className="field"
+										name="sizes"
+										rows={5}
+										placeholder={"S | 4\nM | 12\nL | 0"}
+										defaultValue={selectedProduct?.sizes?.map((entry) => (entry.stock == null ? entry.size : `${entry.size} | ${entry.stock}`)).join("\n")}
+									/>
 								</label>
 								<label>
-									Stock
+									Stock (products without sizes)
 									<input className="field" name="stock" type="number" min="0" defaultValue={selectedProduct?.stock} />
 								</label>
 							</div>
+							<p className="admin-hint">
+								A size with a number is counted and drops as orders are paid; a size with no number stays available. Set a
+								size to 0 to show it as sold out without removing it.
+							</p>
 							<label className="consent">
 								<input name="featured" type="checkbox" defaultChecked={selectedProduct?.featured} /> Feature on home page
 							</label>
