@@ -589,6 +589,16 @@ img {
 	border-bottom: 1px solid currentColor;
 	font-weight: 700;
 }
+.link-row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 12px 30px;
+	margin-top: 26px;
+}
+.link-row .text-link {
+	margin-top: 0;
+}
 .impact {
 	background: #dedfd6;
 	padding-block: clamp(70px, 9vw, 110px);
@@ -1339,13 +1349,19 @@ img {
 .cart-items {
 	border-top: 1px solid var(--line);
 }
+.checkout-details {
+	margin-top: 46px;
+}
+.checkout-details h2 {
+	margin-bottom: 6px;
+}
 .cart-items article {
 	display: grid;
 	grid-template-columns: 95px 1fr auto 38px;
 	align-items: center;
 	gap: 16px;
 	border-bottom: 1px solid var(--line);
-	padding: 16px 0;
+	padding: 24px 0;
 }
 .cart-items article > div {
 	position: relative;
@@ -1409,9 +1425,16 @@ img {
 	text-align: center;
 }
 .empty-state {
+	display: grid;
+	justify-items: center;
+	gap: 14px;
+	margin-bottom: 40px;
 	border: 1px solid var(--line);
-	padding: 50px;
+	padding: clamp(44px, 6vw, 70px) 50px;
 	text-align: center;
+}
+.empty-state .button {
+	margin-top: 10px;
 }
 .empty-state h2 {
 	font-size: 3rem;
