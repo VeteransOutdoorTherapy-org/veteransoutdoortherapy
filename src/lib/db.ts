@@ -341,6 +341,15 @@ const dischargeMigration =
 	return db;
 }
 
+/** Postgres `date` columns arrive as Date objects, so format them back to YYYY-MM-DD rather than stringifying. */
+function isoDate(value: unknown) {
+	if (value instanceof Date) {
+		const pad = (part: number) => String(part).padStart(2, "0");
+		return `${value.getFullYear()}-${pad(value.getMonth() + 1)}-${pad(value.getDate())}`;
+	}
+	return String(value).slice(0, 10);
+}
+
 function fieldStoryImagePosition(value: unknown): ImagePosition | undefined {
 	return IMAGE_POSITIONS.includes(String(value ?? "") as ImagePosition) ? (String(value) as ImagePosition) : undefined;
 }
@@ -350,7 +359,7 @@ function rowToFieldStory(row: Record<string, unknown>): FieldStory {
 		slug: String(row.slug),
 		title: String(row.title),
 		date: String(row.date_label),
-		datePublished: String(row.date_published).slice(0, 10),
+		datePublished: isoDate(row.date_published),
 		location: String(row.location),
 		summary: String(row.summary),
 		image: String(row.image),
@@ -642,8 +651,8 @@ function rowToEvent(row: Record<string, unknown>): Event {
 		slug: String(row.slug),
 		title: String(row.title),
 		date: String(row.date_label),
-		startDate: String(row.start_date).slice(0, 10),
-		endDate: String(row.end_date).slice(0, 10),
+		startDate: isoDate(row.start_date),
+		endDate: isoDate(row.end_date),
 		image: String(row.image),
 		type: String(row.event_type),
 		location: String(row.location),
