@@ -29,6 +29,18 @@ npm run build
 npm start
 ```
 
+Checkout diagnostics, both reading `.env.local`:
+
+```bash
+npm run verify:paypal
+node --env-file=.env.local scripts/inspect-orders.mjs
+```
+
+`verify:paypal` confirms the PayPal credentials authenticate, reports whether they are
+sandbox or live, and checks that `PAYPAL_WEBHOOK_ID` exists on the same app.
+`inspect-orders.mjs` prints recent orders, their line items, and their payment events,
+which is how a sandbox purchase gets confirmed end to end.
+
 See `CONTENT-MIGRATION.md` for the source-site inventory and migration status.
 
 ## Content administration
