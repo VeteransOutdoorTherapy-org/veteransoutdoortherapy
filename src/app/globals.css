@@ -1686,8 +1686,11 @@ img {
 }
 .form-error {
 	border-left: 3px solid #9d301f;
+	border-radius: 6px;
 	background: #f5ded9;
-	padding: 10px;
+	/* Set explicitly: this also renders inside the dark order summary, which sets color: #fff. */
+	color: #7d2416;
+	padding: 10px 14px;
 }
 .admin-hint {
 	margin: -6px 0 4px;
