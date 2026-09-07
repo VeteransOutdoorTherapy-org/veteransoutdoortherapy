@@ -121,6 +121,12 @@ async function ensureEvents() {
 		await db`UPDATE events SET image = '/wp-content/uploads/2026/09/mo-turkey/underway-02.jpg', updated_at = now() WHERE image = '/wp-content/uploads/2026/01/turkey.jpg'`;
 		await db`UPDATE events SET image = '/wp-content/uploads/2026/09/flint-hills/recap-01.jpg', updated_at = now() WHERE image = '/wp-content/uploads/2026/01/turkey2.jpg'`;
 	}
+	const turkeyImagePickMigration =
+		await db`INSERT INTO migrations (id) VALUES ('event-turkey-images-pick-2026') ON CONFLICT (id) DO NOTHING RETURNING id`;
+	if (turkeyImagePickMigration.length) {
+		await db`UPDATE events SET image = '/wp-content/uploads/2026/09/mo-turkey/underway-01.jpg', updated_at = now() WHERE image = '/wp-content/uploads/2026/09/mo-turkey/underway-02.jpg'`;
+		await db`UPDATE events SET image = '/wp-content/uploads/2026/09/flint-hills/recap-04.jpg', updated_at = now() WHERE image = '/wp-content/uploads/2026/09/flint-hills/recap-01.jpg'`;
+	}
 	async function seedMissingEvent(db: NonNullable<ReturnType<typeof sql>>, migrationId: string, slug: string) {
 		const migration =
 			await db`INSERT INTO migrations (id) VALUES (${migrationId}) ON CONFLICT (id) DO NOTHING RETURNING id`;

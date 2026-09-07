@@ -40,7 +40,7 @@ export const documentedPastEvents: PastEvent[] = [
 		type: "Fishing",
 		location: "Missouri",
 		summary: "A multi-day Missouri spoonbill fishing experience for Veterans in the field together.",
-		image: `${uploads}/2025/09/photo-023.jpg`,
+		image: `${uploads}/2026/09/snagging/catch-01.jpg`,
 		recapUrl: "https://www.facebook.com/share/p/17xSyoKzX4/",
 	},
 	{
@@ -50,8 +50,8 @@ export const documentedPastEvents: PastEvent[] = [
 		type: "Elk hunt",
 		location: "Arizona",
 		summary: "Larry encountered cow elk at close range while the group searched for a bull; the trip remained a meaningful time among friends despite difficult weather.",
-		image: "/vot-logo-original.png",
-		imageAlt: "Veteran's Outdoor Therapy logo representing Larry's Arizona Elk Hunt",
+		image: `${uploads}/2026/01/photo-146.jpeg`,
+		imageAlt: "Veteran on Larry's Arizona Elk Hunt",
 		recapUrl: "https://www.facebook.com/share/p/19Z3SwTEUq/",
 	},
 	{
@@ -69,8 +69,8 @@ export const documentedPastEvents: PastEvent[] = [
 		sortDate: "2025-06-01",
 		type: "Hiking",
 		summary: "A shared mountain experience honoring service, sacrifice, and Gold Star families.",
-		image: "/vot-logo-original.png",
-		imageAlt: "Veteran's Outdoor Therapy logo representing the Gold Star Peak Hike",
+		image: `${uploads}/2025/09/photo-035.jpg`,
+		imageAlt: "Gold Star Peak Hike",
 	},
 	{
 		title: "Poker Run",
