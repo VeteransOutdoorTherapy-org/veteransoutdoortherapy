@@ -20,9 +20,10 @@ export default async function Home() {
 	const [products, events] = await Promise.all([getProducts(), getEvents()]);
 	const merchandise = products.filter((item) => item.category === "Merchandise" && item.featured);
 	const today = new Date().toISOString().slice(0, 10);
-	const featuredEvents = events
-		.filter((event) => event.published && event.featured && !event.over && event.endDate >= today)
-		.sort((a, b) => a.sortOrder - b.sortOrder)
+	// Whatever is next on the calendar, including TBA placeholders, so this fills itself as events are added.
+	const upcomingEvents = events
+		.filter((event) => event.published && !event.over && event.endDate >= today)
+		.sort((a, b) => a.startDate.localeCompare(b.startDate) || a.sortOrder - b.sortOrder)
 		.slice(0, 3);
 	return (
 		<>
@@ -60,7 +61,7 @@ export default async function Home() {
 					<p className="eyebrow">In the field</p>
 					<h2 className="display section-title">The next trail starts here.</h2>
 					<div className="event-strip">
-						{featuredEvents.map((event, index) => (
+						{upcomingEvents.map((event, index) => (
 							<Link className="event-card" href={`/events/${event.slug}`} key={event.slug}>
 								<Image src={event.image} alt={`${event.type} at ${event.location}`} fill sizes="(max-width: 700px) 100vw, 33vw" />
 								<div className="event-number">0{index + 1}</div>
@@ -72,12 +73,14 @@ export default async function Home() {
 							</Link>
 						))}
 					</div>
-					<Link className="text-link" href="/events">
-						View all adventures <ArrowRight size={17} />
-					</Link>
-					<Link className="text-link" href="/field-stories">
-						Read stories from the field <ArrowRight size={17} />
-					</Link>
+					<div className="link-row">
+						<Link className="text-link" href="/events">
+							View all adventures <ArrowRight size={17} />
+						</Link>
+						<Link className="text-link" href="/field-stories">
+							Read stories from the field <ArrowRight size={17} />
+						</Link>
+					</div>
 				</div>
 			</section>
 			<section className="sponsor-badge-band" aria-labelledby="homepage-sponsors-title">
