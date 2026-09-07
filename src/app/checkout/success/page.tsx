@@ -30,7 +30,7 @@ export default async function CheckoutSuccessPage({
 					</p>
 				)}
 				{notificationDelayed && (
-					<p className="setup-note">
+					<p className="order-notice">
 						Your payment was recorded, but our internal notification is delayed. We will still be able to retrieve the order from our records.
 					</p>
 				)}
