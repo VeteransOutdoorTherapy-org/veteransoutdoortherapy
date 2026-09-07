@@ -115,6 +115,13 @@ async function ensureEvents() {
 		await db`INSERT INTO migrations (id) VALUES ('event-horseback-image-fix') ON CONFLICT (id) DO NOTHING RETURNING id`;
 	if (brokenHorsebackImageMigration.length)
 		await db`UPDATE events SET image = '/wp-content/uploads/2026/09/horseback/horseback-01.jpg', updated_at = now() WHERE image = '/wp-content/uploads/2026/01/horseback.jpg'`;
+	const staleAbsoluteUrlImagesMigration =
+		await db`INSERT INTO migrations (id) VALUES ('event-stale-absolute-url-images-fix') ON CONFLICT (id) DO NOTHING RETURNING id`;
+	if (staleAbsoluteUrlImagesMigration.length) {
+		await db`UPDATE events SET image = '/wp-content/uploads/2026/09/horseback/horseback-01.jpg', updated_at = now() WHERE image = 'https://veteransoutdoortherapy.org/wp-content/uploads/2026/01/horseback.jpg'`;
+		await db`UPDATE events SET image = '/wp-content/uploads/2026/09/mo-turkey/underway-01.jpg', updated_at = now() WHERE image = 'https://veteransoutdoortherapy.org/wp-content/uploads/2026/01/turkey.jpg'`;
+		await db`UPDATE events SET image = '/wp-content/uploads/2026/09/flint-hills/recap-04.jpg', updated_at = now() WHERE image = 'https://veteransoutdoortherapy.org/wp-content/uploads/2026/01/turkey2.jpg'`;
+	}
 	const brokenTurkeyImagesMigration =
 		await db`INSERT INTO migrations (id) VALUES ('event-turkey-images-fix-2026') ON CONFLICT (id) DO NOTHING RETURNING id`;
 	if (brokenTurkeyImagesMigration.length) {
