@@ -1276,13 +1276,34 @@ img {
 	border: 0;
 }
 .embed-fallback {
-	margin: 10px 4px 0;
-	color: var(--moss);
-	font-size: 0.78rem;
+	display: flex;
+	align-items: center;
+	gap: 9px;
+	color: var(--ink);
+	font-size: 0.95rem;
+	font-weight: 600;
+}
+.embed-fallback svg {
+	flex: none;
+	color: var(--orange);
+}
+.embed-fallback.above {
+	margin: 0 0 14px;
+	padding-bottom: 12px;
+	border-bottom: 1px solid var(--line);
+}
+.embed-fallback.below {
+	margin: 14px 0 0;
+	padding-top: 12px;
+	border-top: 1px solid var(--line);
 }
 .embed-fallback a {
-	border-bottom: 1px solid currentColor;
+	color: var(--orange);
+	border-bottom: 2px solid currentColor;
 	font-weight: 800;
+}
+.embed-fallback a:hover {
+	color: var(--ink);
 }
 .intake-form,
 .product-form {
@@ -1691,6 +1712,40 @@ img {
 	/* Set explicitly: this also renders inside the dark order summary, which sets color: #fff. */
 	color: #7d2416;
 	padding: 10px 14px;
+}
+.form-status {
+	display: flex;
+	align-items: flex-start;
+	gap: 10px;
+	margin: 16px 0 0;
+	border-left: 3px solid var(--line);
+	border-radius: 6px;
+	background: var(--white);
+	color: var(--ink);
+	padding: 12px 16px;
+	font-size: 0.95rem;
+}
+.form-status svg {
+	flex: none;
+	margin-top: 2px;
+}
+.form-status.pending {
+	color: var(--moss);
+}
+.form-status.success {
+	border-left-color: #2f6b3a;
+	background: #e6f2e4;
+	color: #1d4427;
+}
+.form-status.warning {
+	border-left-color: #b8791f;
+	background: #f8eeda;
+	color: #6b4409;
+}
+.form-status.error {
+	border-left-color: #9d301f;
+	background: #f5ded9;
+	color: #7d2416;
 }
 .admin-hint {
 	margin: -6px 0 4px;

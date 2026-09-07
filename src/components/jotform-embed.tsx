@@ -1,5 +1,6 @@
 "use client";
 
+import { ExternalLink } from "lucide-react";
 import Script from "next/script";
 import { useRef } from "react";
 
@@ -20,8 +21,21 @@ export function JotformEmbed({ formId, title }: { formId: string; title: string 
 		window.jotformEmbedHandler(`iframe[id='${iframeId}']`, JOTFORM_ORIGIN);
 	};
 
+	const fallback = (position: "above" | "below") => (
+		<p className={`embed-fallback ${position}`}>
+			<ExternalLink size={17} aria-hidden="true" />
+			<span>
+				Having trouble with the embedded form?{" "}
+				<a href={`${JOTFORM_ORIGIN}${formId}`} target="_blank" rel="noreferrer">
+					Open it in a new tab.
+				</a>
+			</span>
+		</p>
+	);
+
 	return (
 		<div className="jotform-shell">
+			{fallback("above")}
 			<iframe
 				id={iframeId}
 				title={title}
@@ -38,12 +52,7 @@ export function JotformEmbed({ formId, title }: { formId: string; title: string 
 				onLoad={initializeResize}
 				onReady={initializeResize}
 			/>
-			<p className="embed-fallback">
-				Having trouble with the embedded form?{" "}
-				<a href={`${JOTFORM_ORIGIN}${formId}`} target="_blank" rel="noreferrer">
-					Open it in a new tab.
-				</a>
-			</p>
+			{fallback("below")}
 		</div>
 	);
 }
