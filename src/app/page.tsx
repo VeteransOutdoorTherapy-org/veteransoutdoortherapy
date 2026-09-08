@@ -2,6 +2,7 @@ import { ArrowRight, Compass, HeartHandshake, ShieldCheck } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { MissionFilm } from "@/components/mission-film";
+import { ParallaxLayer } from "@/components/parallax-layer";
 import { ProductCard } from "@/components/product-card";
 import { contributionCopy, mission } from "@/lib/data";
 import { getEvents, getProducts } from "@/lib/db";
@@ -28,6 +29,7 @@ export default async function Home() {
 	return (
 		<>
 			<section className="hero">
+				<ParallaxLayer image='url("/quote-bg.jpg")' position="center 35%" />
 				<div className="hero-shade" />
 				<div className="container hero-content">
 					<p className="eyebrow">Honoring Our Nation&apos;s Heroes</p>
@@ -190,6 +192,10 @@ export default async function Home() {
 				</div>
 			</section>
 			<section className="quote">
+				<ParallaxLayer
+					image='linear-gradient(90deg, rgba(12, 19, 14, 0.82) 0%, rgba(12, 19, 14, 0.6) 55%, rgba(12, 19, 14, 0.76) 100%), url("/wp-content/uploads/2025/09/photo-130.jpg")'
+					position="center -15%"
+				/>
 				<div className="container">
 					<span>“</span>
 					<blockquote>
