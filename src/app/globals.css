@@ -371,10 +371,7 @@ img {
 }
 .parallax-layer {
 	position: absolute;
-	left: 0;
-	right: 0;
-	top: -20%;
-	bottom: -20%;
+	inset: 0;
 	background-size: cover;
 	background-repeat: no-repeat;
 	will-change: transform;
