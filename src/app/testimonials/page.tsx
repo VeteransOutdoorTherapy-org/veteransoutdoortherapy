@@ -1,8 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Quote, Star, ArrowRight } from "lucide-react";
+import { Star, ArrowRight } from "lucide-react";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { JsonLd } from "@/components/json-ld";
+import { interleaveByLength, TestimonialQuote } from "@/components/testimonial-quote";
 import { publicName } from "@/lib/names";
 import { pageMetadata, breadcrumbSchema } from "@/lib/site";
 import { getPublishedGalleryImages, getPublishedTestimonials } from "@/lib/db";
@@ -85,17 +86,12 @@ export default async function TestimonialsPage({ searchParams }: { searchParams:
 						</div>
 					) : (
 						<div className="testimonials-masonry">
-							{testimonials.map((testimonial) => (
+							{interleaveByLength(testimonials).map((testimonial) => (
 								<article
 									key={testimonial.slug}
-									className={testimonial.quote.length > 500 ? "testimonial-card testimonial-card-wide" : "testimonial-card"}
+									className="testimonial-card"
 								>
-									<div className="testimonial-quote">
-										<Quote size={48} className="quote-icon" aria-hidden="true" />
-										<blockquote>
-											<p>{testimonial.quote}</p>
-										</blockquote>
-									</div>
+									<TestimonialQuote quote={testimonial.quote} />
 									{testimonial.image && (
 										<div
 											className="testimonial-image"

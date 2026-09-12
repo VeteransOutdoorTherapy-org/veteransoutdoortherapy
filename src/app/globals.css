@@ -2520,18 +2520,12 @@ img {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
 		gap: 24px;
 	}
-	.testimonial-card-wide {
-		grid-column: span 2;
-	}
 }
 
 @media (min-width: 1100px) {
 	.testimonials-masonry {
 		grid-template-columns: repeat(3, minmax(0, 1fr));
 		gap: 28px;
-	}
-	.testimonial-card-wide {
-		grid-column: span 2;
 	}
 }
 
@@ -2562,6 +2556,54 @@ img {
 
 .testimonial-quote {
 	min-width: 0;
+}
+
+/* Long quotes collapse to a fixed height so one testimonial cannot stretch
+   its whole grid row. The full text stays in the DOM. */
+.testimonial-quote-collapsible {
+	display: flex;
+	flex-direction: column-reverse;
+	gap: 10px;
+}
+
+.testimonial-quote-collapsible > div p {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 9;
+	line-clamp: 9;
+	overflow: hidden;
+}
+
+.testimonial-quote-collapsible[open] > div p {
+	-webkit-line-clamp: unset;
+	line-clamp: unset;
+	overflow: visible;
+}
+
+.testimonial-quote-collapsible summary {
+	cursor: pointer;
+	list-style: none;
+	color: var(--orange);
+	font-size: 0.8rem;
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+}
+
+.testimonial-quote-collapsible summary::-webkit-details-marker {
+	display: none;
+}
+
+.testimonial-quote-collapsible summary::after {
+	content: "See more";
+}
+
+.testimonial-quote-collapsible[open] summary::after {
+	content: "See less";
+}
+
+.testimonial-quote-collapsible summary:hover::after {
+	text-decoration: underline;
 }
 
 .testimonial-quote blockquote {

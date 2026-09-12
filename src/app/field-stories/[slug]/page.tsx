@@ -1,4 +1,4 @@
-import { ArrowRight, CalendarDays, MapPin, Quote } from "lucide-react";
+import { ArrowRight, CalendarDays, MapPin } from "lucide-react";
 import type { Metadata } from "next";
 import type { CSSProperties } from "react";
 import Image from "next/image";
@@ -6,6 +6,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { JsonLd } from "@/components/json-ld";
+import { interleaveByLength, TestimonialQuote } from "@/components/testimonial-quote";
 import { cssImagePosition, type FieldStory } from "@/lib/data";
 import { getFieldStories, getFieldStory, getPublishedGalleryImages, getPublishedTestimonials } from "@/lib/db";
 import { publicName } from "@/lib/names";
@@ -129,15 +130,12 @@ export default async function FieldStoryPage({ params }: PageProps<"/field-stori
 								<h2>What participants are saying</h2>
 							</div>
 							<div className="testimonials-masonry">
-								{reviews.map((review) => (
+								{interleaveByLength(reviews).map((review) => (
 									<article
 										key={review.slug}
-										className={review.quote.length > 500 ? "testimonial-card testimonial-card-wide" : "testimonial-card"}
+										className="testimonial-card"
 									>
-										<div className="testimonial-quote">
-											<Quote size={40} className="quote-icon" aria-hidden="true" />
-											<blockquote><p>{review.quote}</p></blockquote>
-										</div>
+										<TestimonialQuote quote={review.quote} />
 										<footer className="testimonial-author">
 											<div className="author-info">
 												<cite className="author-name">{publicName(review.author)}</cite>
