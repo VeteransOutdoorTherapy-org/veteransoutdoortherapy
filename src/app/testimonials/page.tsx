@@ -27,6 +27,7 @@ export default async function TestimonialsPage({ searchParams }: { searchParams:
 			<JsonLd
 				data={breadcrumbSchema([
 					{ name: "Home", path: "/" },
+					{ name: "Testimonials", path: "/testimonials" },
 				])}
 			/>
 			<JsonLd
@@ -37,17 +38,9 @@ export default async function TestimonialsPage({ searchParams }: { searchParams:
 						"@type": "ListItem",
 						position: index + 1,
 						item: {
-							"@type": "Review",
-							author: {
-								"@type": "Person",
-								name: testimonial.author,
-							},
-							reviewBody: testimonial.quote,
-							reviewRating: {
-								"@type": "Rating",
-								ratingValue: "5",
-								bestRating: "5",
-							},
+							"@type": "Quotation",
+							text: testimonial.quote,
+							creator: { "@type": "Person", name: testimonial.author },
 						},
 					})),
 				}}

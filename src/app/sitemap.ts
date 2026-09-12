@@ -15,6 +15,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 		"/contact",
 		"/donate",
 		"/gallery",
+		"/testimonials",
+		"/fundraising-application",
 		"/shop",
 		"/sponsorships",
 		"/wilderness-to-wellness",
@@ -36,11 +38,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 			.filter((event) => event.published)
 			.map((event) => ({
 				url: `${SITE_URL}/events/${event.slug}`,
+				lastModified: new Date(event.endDate),
 				changeFrequency: "weekly" as const,
 				priority: 0.7,
 			})),
 		...fieldStories.map((story) => ({
 			url: `${SITE_URL}/field-stories/${story.slug}`,
+			lastModified: new Date(story.datePublished),
 			changeFrequency: "monthly" as const,
 			priority: 0.7,
 		})),

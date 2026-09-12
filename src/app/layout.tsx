@@ -4,7 +4,7 @@ import { CartProvider } from "@/components/cart-provider";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { JsonLd } from "@/components/json-ld";
-import { absoluteUrl, CONTACT_EMAIL, FACEBOOK_URL, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
+import { absoluteUrl, CONTACT_EMAIL, FACEBOOK_URL, OG_IMAGE, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const archivo = Archivo({
@@ -29,13 +29,13 @@ export const metadata: Metadata = {
 		url: "/",
 		siteName: SITE_NAME,
 		type: "website",
-		images: [{ url: "/vot-logo-original.png", alt: SITE_NAME }],
+		images: [{ url: OG_IMAGE, alt: SITE_NAME }],
 	},
 	twitter: {
 		card: "summary_large_image",
 		title: SITE_NAME,
 		description: SITE_DESCRIPTION,
-		images: ["/vot-logo-original.png"],
+		images: [OG_IMAGE],
 	},
 	robots: { index: true, follow: true },
 	icons: {
