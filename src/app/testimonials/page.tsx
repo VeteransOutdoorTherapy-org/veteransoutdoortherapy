@@ -91,7 +91,7 @@ export default async function TestimonialsPage({ searchParams }: { searchParams:
 									key={testimonial.slug}
 									className="testimonial-card"
 								>
-									<TestimonialQuote quote={testimonial.quote} />
+									<TestimonialQuote quote={testimonial.quote} id={testimonial.slug} />
 									{testimonial.image && (
 										<div
 											className="testimonial-image"

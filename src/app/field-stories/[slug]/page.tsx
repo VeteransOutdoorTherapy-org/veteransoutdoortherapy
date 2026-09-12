@@ -135,7 +135,7 @@ export default async function FieldStoryPage({ params }: PageProps<"/field-stori
 										key={review.slug}
 										className="testimonial-card"
 									>
-										<TestimonialQuote quote={review.quote} />
+										<TestimonialQuote quote={review.quote} id={review.slug} iconSize={40} />
 										<footer className="testimonial-author">
 											<div className="author-info">
 												<cite className="author-name">{publicName(review.author)}</cite>

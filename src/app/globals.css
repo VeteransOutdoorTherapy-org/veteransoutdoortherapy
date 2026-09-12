@@ -2507,25 +2507,39 @@ img {
 	}
 }
 
+/* True masonry. CSS Grid stretched every card in a row to the tallest one,
+   so a long quote left dead space beside it. Multi-column lets each card keep
+   its own height and packs the next one directly underneath. */
 .testimonials-masonry {
-	display: grid;
-	grid-auto-flow: dense;
-	grid-template-columns: 1fr;
-	gap: 20px;
+	columns: 1;
+	column-gap: 20px;
 	margin-top: 32px;
+}
+
+.testimonials-masonry > * {
+	break-inside: avoid;
+	margin-bottom: 20px;
 }
 
 @media (min-width: 700px) {
 	.testimonials-masonry {
-		grid-template-columns: repeat(2, minmax(0, 1fr));
-		gap: 24px;
+		columns: 2;
+		column-gap: 24px;
+	}
+
+	.testimonials-masonry > * {
+		margin-bottom: 24px;
 	}
 }
 
 @media (min-width: 1100px) {
 	.testimonials-masonry {
-		grid-template-columns: repeat(3, minmax(0, 1fr));
-		gap: 28px;
+		columns: 3;
+		column-gap: 28px;
+	}
+
+	.testimonials-masonry > * {
+		margin-bottom: 28px;
 	}
 }
 
@@ -2558,31 +2572,40 @@ img {
 	min-width: 0;
 }
 
-/* Long quotes collapse to a fixed height so one testimonial cannot stretch
-   its whole grid row. The full text stays in the DOM. */
+/* Only the rare very long quote collapses. It stays visible as a clamped
+   preview, so the checkbox has to sit outside the clamped box: a closed
+   <details> hides every child except its summary, which hid the whole quote. */
 .testimonial-quote-collapsible {
 	display: flex;
-	flex-direction: column-reverse;
+	flex-direction: column;
 	gap: 10px;
 }
 
-.testimonial-quote-collapsible > div p {
+.quote-toggle {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	opacity: 0;
+	pointer-events: none;
+}
+
+.testimonial-quote-collapsible .testimonial-quote-body p {
 	display: -webkit-box;
 	-webkit-box-orient: vertical;
-	-webkit-line-clamp: 9;
-	line-clamp: 9;
+	-webkit-line-clamp: 16;
+	line-clamp: 16;
 	overflow: hidden;
 }
 
-.testimonial-quote-collapsible[open] > div p {
+.quote-toggle:checked ~ .testimonial-quote-body p {
 	-webkit-line-clamp: unset;
 	line-clamp: unset;
 	overflow: visible;
 }
 
-.testimonial-quote-collapsible summary {
+.quote-toggle-label {
+	align-self: flex-start;
 	cursor: pointer;
-	list-style: none;
 	color: var(--orange);
 	font-size: 0.8rem;
 	font-weight: 700;
@@ -2590,20 +2613,21 @@ img {
 	text-transform: uppercase;
 }
 
-.testimonial-quote-collapsible summary::-webkit-details-marker {
-	display: none;
+.quote-toggle-label::after {
+	content: "Read more";
 }
 
-.testimonial-quote-collapsible summary::after {
-	content: "See more";
+.quote-toggle:checked ~ .quote-toggle-label::after {
+	content: "Read less";
 }
 
-.testimonial-quote-collapsible[open] summary::after {
-	content: "See less";
-}
-
-.testimonial-quote-collapsible summary:hover::after {
+.quote-toggle-label:hover::after {
 	text-decoration: underline;
+}
+
+.quote-toggle:focus-visible ~ .quote-toggle-label {
+	outline: 2px solid var(--orange);
+	outline-offset: 3px;
 }
 
 .testimonial-quote blockquote {
@@ -2711,8 +2735,12 @@ img {
 
 @media (max-width: 560px) {
 	.testimonials-masonry {
-		gap: 16px;
+		column-gap: 16px;
 		margin-top: 24px;
+	}
+
+	.testimonials-masonry > * {
+		margin-bottom: 16px;
 	}
 
 	.testimonial-card {
