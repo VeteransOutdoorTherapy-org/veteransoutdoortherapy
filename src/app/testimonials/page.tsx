@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Quote, Star, ArrowRight } from "lucide-react";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { JsonLd } from "@/components/json-ld";
+import { publicName } from "@/lib/names";
 import { pageMetadata, breadcrumbSchema } from "@/lib/site";
 import { getPublishedGalleryImages, getPublishedTestimonials } from "@/lib/db";
 
@@ -40,7 +41,7 @@ export default async function TestimonialsPage({ searchParams }: { searchParams:
 						item: {
 							"@type": "Quotation",
 							text: testimonial.quote,
-							creator: { "@type": "Person", name: testimonial.author },
+							creator: { "@type": "Person", name: publicName(testimonial.author) },
 						},
 					})),
 				}}
@@ -108,7 +109,7 @@ export default async function TestimonialsPage({ searchParams }: { searchParams:
 												src={testimonial.image}
 												alt={
 													testimonial.imageAlt ||
-													`${testimonial.author} - ${testimonial.service}`
+													`${publicName(testimonial.author)} - ${testimonial.service}`
 												}
 												width={400}
 												height={300}
@@ -118,7 +119,7 @@ export default async function TestimonialsPage({ searchParams }: { searchParams:
 									)}
 									<footer className="testimonial-author">
 										<div className="author-info">
-											<cite className="author-name">{testimonial.author}</cite>
+											<cite className="author-name">{publicName(testimonial.author)}</cite>
 											<span className="author-service">{testimonial.service}</span>
 											{testimonial.category && (
 												<span className="author-category">{testimonial.category}</span>

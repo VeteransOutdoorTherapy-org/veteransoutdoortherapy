@@ -8,6 +8,7 @@ import { Breadcrumbs } from "@/components/breadcrumbs";
 import { JsonLd } from "@/components/json-ld";
 import { cssImagePosition, type FieldStory } from "@/lib/data";
 import { getFieldStories, getFieldStory, getPublishedGalleryImages, getPublishedTestimonials } from "@/lib/db";
+import { publicName } from "@/lib/names";
 import { absoluteUrl, breadcrumbSchema, pageMetadata, SITE_NAME, SITE_URL } from "@/lib/site";
 
 /** Exposes the admin-picked hero crop to CSS, desktop and mobile separately. */
@@ -139,7 +140,7 @@ export default async function FieldStoryPage({ params }: PageProps<"/field-stori
 										</div>
 										<footer className="testimonial-author">
 											<div className="author-info">
-												<cite className="author-name">{review.author}</cite>
+												<cite className="author-name">{publicName(review.author)}</cite>
 												<span className="author-service">{review.service}</span>
 											</div>
 										</footer>
