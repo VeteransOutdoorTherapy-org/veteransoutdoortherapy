@@ -13,7 +13,7 @@ export function Footer() {
 						is outside.
 					</h2>
 					<p>
-						{SITE_NAME} is a nonprofit creating fully funded outdoor experiences for previously deployed Veterans and Gold Star families.
+						{SITE_NAME} is a nonprofit built on a simple belief: the outdoors reaches wounds that deployment leaves behind, seen and unseen.
 					</p>
 				</div>
 				<div>

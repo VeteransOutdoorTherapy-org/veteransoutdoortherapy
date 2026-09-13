@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { MissionFilm } from "@/components/mission-film";
-import { mission } from "@/lib/data";
+import { missionLong } from "@/lib/data";
 import { pageMetadata } from "@/lib/site";
 import { HeroCollage } from "@/components/hero-collage";
 export const metadata = pageMetadata({
@@ -24,7 +24,7 @@ export default function AboutPage() {
 					<div>
 						<p className="eyebrow">Our mission</p>
 						<h2 className="display section-title">Honor in motion.</h2>
-						<p className="prose">{mission}</p>
+						<p className="prose">{missionLong}</p>
 						<div className="hero-actions">
 							<Link className="button orange" href="/application">
 								Take the next step

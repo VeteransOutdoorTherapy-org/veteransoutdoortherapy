@@ -70,7 +70,7 @@ export default function ProgramsPage() {
 				<HeroCollage seed={5} />
 				<div className="container">
 					<Breadcrumbs light items={[{ label: "Home", href: "/" }, { label: "Programs" }]} />
-					<p className="eyebrow">Fully funded time in the field</p>
+					<p className="eyebrow">For previously deployed Veterans and Gold Star families</p>
 					<h1 className="display">Outdoor programs shaped around connection and the field.</h1>
 					<p>
 						Veteran&apos;s Outdoor Therapy creates hunting, fishing, horseback riding, hiking, and conservation

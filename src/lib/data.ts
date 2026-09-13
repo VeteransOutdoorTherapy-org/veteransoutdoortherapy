@@ -464,20 +464,20 @@ export const events: Event[] = [
 		sortOrder: 11,
 	},
 	{
-		slug: "wilderness-to-wellness-benefit-dinner-2027",
-		title: "Wilderness to Wellness Benefit Dinner",
-		date: "Spring 2027 (dates TBA)",
+		slug: "benefit-banquet-dinner-2027",
+		title: "Benefit Banquet Dinner",
+		date: "2027 (date and venue TBA)",
 		startDate: "2027-03-01",
 		endDate: "2027-03-31",
 		image: `${uploads}/2026/09/wilderness-to-wellness/dinner-03.jpg`,
 		type: "Fundraiser",
-		location: "54 Country, Missouri",
-		summary: "The Wilderness to Wellness benefit dinner returns to 54 Country in 2027. Exact date will be announced soon.",
-		heroTitle: "Join us for the next benefit dinner.",
+		location: "Venue to be announced",
+		summary: "Our annual benefit banquet dinner returns in 2027. Date, venue, and theme will be announced closer to the event.",
+		heroTitle: "Join us for the next benefit banquet.",
 		overviewTitle: "An evening that fuels the mission.",
-		overview: "The Wilderness to Wellness benefit dinner returns to 54 Country in 2027, with an exact date to be announced.",
+		overview: "The annual benefit banquet dinner returns in 2027. Date and venue will be announced closer to the event.",
 		detailsTitle: "Every seat supports a Veteran",
-		details: "Proceeds fund the fully funded hunts, fishing trips, horseback rides, and other outdoor experiences that make up the Wilderness to Wellness mission.",
+		details: "Proceeds fund the hunts, fishing trips, horseback rides, and other outdoor experiences we host for previously deployed Veterans and Gold Star families.",
 		ctaLabel: "Support the mission",
 		ctaHref: "/donate",
 		template: "fundraiser",
@@ -962,6 +962,8 @@ export type FieldStory = {
 	imageAlt: string;
 	imagePosition?: ImagePosition;
 	imagePositionMobile?: ImagePosition;
+	/** Tile this story's own photos behind the hero instead of showing the single hero image. */
+	heroCollage?: boolean;
 	body: string[];
 	video?: { url: string; title: string };
 	facebookLinks?: { href: string; label: string }[];
@@ -1290,5 +1292,7 @@ export const fieldStories: FieldStory[] = [
 	},
 ];
 
-export const mission =
-	"At Veteran's Outdoor Therapy, our mission is to provide fully funded outdoor adventures for America's heroes as a way to honor the service of Soldiers who have been deployed, and in some instances, sustained the wounds of war. We also extend our support to Gold Star families and children. These outdoor experiences offer a unique blend of physical activity, camaraderie, and emotional healing, enabling participants to reconnect with themselves and nature.";
+/** Mission statement, rendered on the homepage and the About page. */
+export const missionLong =
+	"At Veteran's Outdoor Therapy, we believe the outdoors reaches places that waiting rooms cannot. Our mission is to honor the service of Soldiers who have been deployed — and who, in some instances, carry the wounds of war, both the ones that are visible and the ones that are not — by bringing them into open country. We extend that same welcome to Gold Star families and their children, whose loss is its own kind of deployment. Hunting, fishing, horseback riding, and hiking offer a blend of physical activity, camaraderie, and emotional healing that no clinic can replicate: hard effort in fresh air, quiet when quiet is needed, and the company of people who understand without being told. Our hope is that what happens out there lasts: a step toward healing, and a community that is still standing beside them long after the trip ends.";
+

@@ -4,14 +4,14 @@ import Link from "next/link";
 import { MissionFilm } from "@/components/mission-film";
 import { ParallaxLayer } from "@/components/parallax-layer";
 import { ProductCard } from "@/components/product-card";
-import { contributionCopy, mission } from "@/lib/data";
+import { contributionCopy, missionLong } from "@/lib/data";
 import { getEvents, getProducts } from "@/lib/db";
 import { pageMetadata } from "@/lib/site";
 import { sponsorLogos } from "@/lib/sponsors";
 
 export const metadata = pageMetadata({
-	title: "Veteran's Outdoor Therapy | Fully Funded Outdoor Experiences",
-	description: "Veteran's Outdoor Therapy creates fully funded hunting, fishing, horseback riding, and outdoor experiences for previously deployed Veterans and Gold Star families.",
+	title: "Veteran's Outdoor Therapy | Outdoor Experiences for Veterans and Gold Star Families",
+	description: "Veteran's Outdoor Therapy creates hunting, fishing, horseback riding, and outdoor experiences for previously deployed Veterans and Gold Star families, at no cost to participants.",
 	path: "/",
 });
 
@@ -32,11 +32,11 @@ export default async function Home() {
 				<ParallaxLayer image='url("/quote-bg.jpg")' position="center 35%" />
 				<div className="hero-shade" />
 				<div className="container hero-content">
-					<p className="eyebrow">Honoring Our Nation&apos;s Heroes</p>
-					<h1 className="display">Fully funded outdoor experiences for Veterans and Gold Star families.</h1>
+					<p className="eyebrow">Previously deployed Veterans · Gold Star families</p>
+					<h1 className="display">Honoring Our Nation&apos;s Heroes with outdoor experiences</h1>
 					<p>
-						Fully funded outdoor adventures where Veterans and Gold Star families can reconnect, recover, and feel the
-						strength of community.
+						Hiking, horseback riding, fishing, and hunting — a blend of physical activity, camaraderie, and emotional
+						healing for Soldiers who have been deployed, and for Gold Star families.
 					</p>
 					<div className="hero-actions">
 						<Link className="button orange" href="/application">
@@ -54,7 +54,7 @@ export default async function Home() {
 						<p className="eyebrow">Our mission</p>
 						<h2 className="display">Service deserves more than thanks.</h2>
 					</div>
-					<p className="mission-copy">{mission}</p>
+					<p className="mission-copy">{missionLong}</p>
 				</div>
 			</section>
 			<MissionFilm />
