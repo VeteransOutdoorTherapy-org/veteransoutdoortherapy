@@ -2,8 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { MissionFilm } from "@/components/mission-film";
 import { missionLong } from "@/lib/data";
-import { pageMetadata } from "@/lib/site";
+import { breadcrumbSchema, pageMetadata } from "@/lib/site";
 import { HeroCollage } from "@/components/hero-collage";
+import { Breadcrumbs } from "@/components/breadcrumbs";
+import { JsonLd } from "@/components/json-ld";
 export const metadata = pageMetadata({
 	title: "About Veteran's Outdoor Therapy",
 	description: "Meet the 501(c)(3) nonprofit creating outdoor experiences where previously deployed Veterans and Gold Star families can reconnect and build community.",
@@ -12,9 +14,11 @@ export const metadata = pageMetadata({
 export default function AboutPage() {
 	return (
 		<>
+			<JsonLd data={breadcrumbSchema([{ name: "Home", path: "/" }, { name: "About", path: "/about" }])} />
 			<section className="page-hero">
 				<HeroCollage seed={1} />
 				<div className="container">
+					<Breadcrumbs light items={[{ label: "Home", href: "/" }, { label: "About" }]} />
 					<p className="eyebrow">Built for those who served</p>
 					<h1 className="display">Our mission is built around service, nature, and shared experience.</h1>
 				</div>

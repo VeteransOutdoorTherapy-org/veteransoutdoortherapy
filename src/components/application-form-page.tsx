@@ -1,3 +1,4 @@
+import { Breadcrumbs } from "./breadcrumbs";
 import { HeroCollage } from "./hero-collage";
 import { JotformEmbed } from "./jotform-embed";
 
@@ -26,6 +27,7 @@ export function ApplicationFormPage({
 			<section className="page-hero compact-hero">
 				<HeroCollage seed={9} />
 				<div className="container">
+					<Breadcrumbs light items={[{ label: "Home", href: "/" }, { label: "Applications", href: "/application" }, { label: title.replace(/\.$/, "") }]} />
 					<p className="eyebrow">{eyebrow}</p>
 					<h1 className="display">{title}</h1>
 					<p>{copy}</p>

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { JsonLd } from "@/components/json-ld";
 import { breadcrumbSchema, CONTACT_EMAIL, pageMetadata, SITE_NAME } from "@/lib/site";
+import { Breadcrumbs } from "@/components/breadcrumbs";
 
 export const metadata = pageMetadata({
 	title: "Privacy Policy",
@@ -14,6 +15,7 @@ export default function PrivacyPage() {
 			<JsonLd data={breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Privacy policy", path: "/privacy" }])} />
 			<section className="page-hero compact-hero">
 				<div className="container">
+					<Breadcrumbs light items={[{ label: "Home", href: "/" }, { label: "Privacy" }]} />
 					<p className="eyebrow">Your information</p>
 					<h1 className="display">Privacy policy.</h1>
 					<p>How information is handled when you contact, apply, donate, or purchase through this website.</p>

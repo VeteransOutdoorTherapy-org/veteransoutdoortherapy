@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { pageMetadata } from "@/lib/site";
+import { Breadcrumbs } from "@/components/breadcrumbs";
 export const metadata = pageMetadata({
 	title: "2026 Benefit Raffle Archive",
 	description: "View the completed 2026 Veteran's Outdoor Therapy benefit raffle and find current outdoor events and ways to support the mission.",
@@ -10,6 +11,7 @@ export default function RafflePage() {
 	return (
 		<section className="page-hero">
 			<div className="container">
+				<Breadcrumbs light items={[{ label: "Home", href: "/" }, { label: "2026 Gun Raffle" }]} />
 				<p className="eyebrow">Annual benefit raffle</p>
 				<h1 className="display">2026 Veteran&apos;s Outdoor Therapy benefit raffle.</h1>
 				<p>

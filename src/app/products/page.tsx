@@ -1,6 +1,7 @@
 import { ProductCatalog } from "@/components/product-catalog";
 import { getProducts } from "@/lib/db";
 import { pageMetadata } from "@/lib/site";
+import { Breadcrumbs } from "@/components/breadcrumbs";
 
 export const metadata = pageMetadata({
 	title: "Mission Gear and Sponsorship Options",
@@ -13,6 +14,7 @@ export default async function ProductsPage() {
 	return (
 		<section className="section">
 			<div className="container">
+				<Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Shop" }]} />
 				<p className="eyebrow">Every order is a donation</p>
 				<h1 className="display section-title">Gear that gives back.</h1>
 				<p className="prose">

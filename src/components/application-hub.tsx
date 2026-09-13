@@ -1,5 +1,6 @@
 import { ArrowRight, FileText, HandHeart, Shield, Star } from "lucide-react";
 import Link from "next/link";
+import { Breadcrumbs } from "./breadcrumbs";
 import { HeroCollage } from "./hero-collage";
 
 const paths = [
@@ -32,6 +33,7 @@ export function ApplicationHub() {
 			<section className="page-hero application-hero">
 				<HeroCollage seed={10} />
 				<div className="container">
+					<Breadcrumbs light items={[{ label: "Home", href: "/" }, { label: "Applications" }]} />
 					<p className="eyebrow">There is a place for you here</p>
 					<h1 className="display">
 						Choose your

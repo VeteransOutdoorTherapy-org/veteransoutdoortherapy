@@ -3,8 +3,10 @@ import Link from "next/link";
 import { MissionFilm } from "@/components/mission-film";
 import { getEvents } from "@/lib/db";
 import { documentedPastEvents, type PastEvent, toPastEvent } from "@/lib/past-events";
-import { pageMetadata } from "@/lib/site";
+import { breadcrumbSchema, pageMetadata } from "@/lib/site";
 import { HeroCollage } from "@/components/hero-collage";
+import { Breadcrumbs } from "@/components/breadcrumbs";
+import { JsonLd } from "@/components/json-ld";
 
 export const metadata = pageMetadata({
 	title: "Veteran Outdoor Events: Upcoming and Past",
@@ -25,9 +27,11 @@ export default async function EventsPage() {
 
 	return (
 		<>
+			<JsonLd data={breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Events", path: "/events" }])} />
 			<section className="page-hero">
 				<HeroCollage seed={2} />
 				<div className="container">
+					<Breadcrumbs light items={[{ label: "Home", href: "/" }, { label: "Events" }]} />
 					<p className="eyebrow">Field calendar and event archive</p>
 					<h1 className="display">Upcoming Veteran hunts and outdoor experiences.</h1>
 					<p>Every trip is built around connection, challenge, and the quiet that only open country can provide.</p>

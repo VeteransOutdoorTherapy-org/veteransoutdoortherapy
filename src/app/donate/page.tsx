@@ -1,6 +1,8 @@
 import { ArrowDown, BedDouble, Fuel, UtensilsCrossed } from "lucide-react";
 import Link from "next/link";
-import { pageMetadata } from "@/lib/site";
+import { breadcrumbSchema, pageMetadata } from "@/lib/site";
+import { Breadcrumbs } from "@/components/breadcrumbs";
+import { JsonLd } from "@/components/json-ld";
 
 export const metadata = pageMetadata({
 	title: "Donate to Veteran Outdoor Programs",
@@ -35,8 +37,10 @@ const impact = [
 export default function DonatePage() {
 	return (
 		<>
+			<JsonLd data={breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Donate", path: "/donate" }])} />
 			<section className="donate-page">
 				<div className="container">
+					<Breadcrumbs light items={[{ label: "Home", href: "/" }, { label: "Donate" }]} />
 					<p className="eyebrow">Every gift moves the mission</p>
 					<h1 className="display">Help carry the next outdoor experience into the field.</h1>
 					<p>
