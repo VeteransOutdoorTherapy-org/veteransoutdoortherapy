@@ -1292,7 +1292,11 @@ export const fieldStories: FieldStory[] = [
 	},
 ];
 
-/** Mission statement, rendered on the homepage and the About page. */
+/** Short mission for the homepage; the About page carries `missionLong`. */
+export const mission =
+	"Hunting, fishing, horseback riding, and hiking give previously deployed Veterans and Gold Star families something no clinic can: hard effort in fresh air, quiet when quiet is needed, and the company of people who understand without being told. Our hope is that it outlasts the trip.";
+
+/** Full mission statement for the About page. */
 export const missionLong =
 	"At Veteran's Outdoor Therapy, we believe the outdoors reaches places that waiting rooms cannot. Our mission is to honor the service of Soldiers who have been deployed — and who, in some instances, carry the wounds of war, both the ones that are visible and the ones that are not — by bringing them into open country. We extend that same welcome to Gold Star families and their children, whose loss is its own kind of deployment. Hunting, fishing, horseback riding, and hiking offer a blend of physical activity, camaraderie, and emotional healing that no clinic can replicate: hard effort in fresh air, quiet when quiet is needed, and the company of people who understand without being told. Our hope is that what happens out there lasts: a step toward healing, and a community that is still standing beside them long after the trip ends.";
 

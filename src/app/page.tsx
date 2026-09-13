@@ -4,7 +4,7 @@ import Link from "next/link";
 import { MissionFilm } from "@/components/mission-film";
 import { ParallaxLayer } from "@/components/parallax-layer";
 import { ProductCard } from "@/components/product-card";
-import { contributionCopy, missionLong } from "@/lib/data";
+import { contributionCopy, mission } from "@/lib/data";
 import { getEvents, getProducts } from "@/lib/db";
 import { pageMetadata } from "@/lib/site";
 import { sponsorLogos } from "@/lib/sponsors";
@@ -54,7 +54,7 @@ export default async function Home() {
 						<p className="eyebrow">Our mission</p>
 						<h2 className="display">Service deserves more than thanks.</h2>
 					</div>
-					<p className="mission-copy">{missionLong}</p>
+					<p className="mission-copy">{mission}</p>
 				</div>
 			</section>
 			<MissionFilm />
