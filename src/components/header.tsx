@@ -42,7 +42,7 @@ export function Header() {
 	return (
 		<>
 			<div className="notice">
-				Fully funded adventures for Veterans and Gold Star families <Link href="/application">Apply now</Link>
+				Outdoor experiences for previously deployed Veterans and Gold Star families <Link href="/application">Apply now</Link>
 			</div>
 			<header className="site-header">
 				<Link className="brand" href="/" aria-label={`${SITE_NAME} home`} onClick={closeNavigation}>

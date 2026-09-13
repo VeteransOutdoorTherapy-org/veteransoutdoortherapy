@@ -12,7 +12,7 @@ import { HeroCollage } from "@/components/hero-collage";
 export const metadata = pageMetadata({
 	title: "Veteran Testimonials — Stories of Healing & Hope",
 	description:
-		"Read powerful testimonials from Veterans who have experienced healing, camaraderie, and renewed purpose through Veteran's Outdoor Therapy's fully funded outdoor adventures.",
+		"Read testimonials from Veterans who found healing, camaraderie, and renewed purpose in the field with Veteran's Outdoor Therapy.",
 	path: "/testimonials",
 });
 
@@ -59,8 +59,8 @@ export default async function TestimonialsPage({ searchParams }: { searchParams:
 					<p className="eyebrow">Voices from the field</p>
 					<h1 className="display">What Veterans say about their experience.</h1>
 					<p>
-						Real stories from Veterans who found healing, purpose, and brotherhood through
-						fully funded outdoor adventures.
+						Real stories from Veterans who found healing, purpose, and brotherhood in the field, alongside
+						others who understand.
 					</p>
 				</div>
 			</section>

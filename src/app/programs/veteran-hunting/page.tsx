@@ -8,7 +8,7 @@ import { HeroCollage } from "@/components/hero-collage";
 export const metadata = pageMetadata({
 	title: "Veteran Hunting Trips and Outdoor Adventures",
 	description:
-		"Learn how previously deployed Veterans can apply for fully funded turkey, antelope, and other ethical hunting experiences with Veteran's Outdoor Therapy.",
+		"Learn how previously deployed Veterans can apply for turkey, antelope, and other ethical hunting experiences with Veteran's Outdoor Therapy, at no cost to participants.",
 	path: "/programs/veteran-hunting",
 });
 
@@ -19,7 +19,7 @@ const faqs = [
 			"Previously deployed Veterans may submit the Veteran application. Each hunt has its own capacity, location, dates, licensing needs, and physical considerations, so selection is made for the specific experience.",
 	},
 	{
-		question: "What does a fully funded hunt include?",
+		question: "What does a hunt include?",
 		answer:
 			"Selected participants attend at no cost. Support may include core travel, lodging, meals, field access, shared equipment, and activity expenses. The team confirms exactly what is included before each hunt.",
 	},

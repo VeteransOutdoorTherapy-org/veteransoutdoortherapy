@@ -5,7 +5,7 @@ const paths = [
 	{
 		icon: Shield,
 		title: "Veteran application",
-		copy: "Apply for a fully funded outdoor experience built around connection, challenge, and time outside.",
+		copy: "Apply for an outdoor experience built around connection, challenge, and time outside.",
 		href: "/veteran-application",
 		action: "Apply as a Veteran",
 	},
@@ -56,7 +56,7 @@ export function ApplicationHub() {
 			</section>
 			<section className="application-note">
 				<div className="container">
-					<strong>Participation is fully funded for selected applicants.</strong>
+					<strong>Selected applicants pay nothing. Travel, lodging, meals, and gear are covered.</strong>
 					<p>
 						Our team reviews each application personally and contacts applicants directly about fit, availability,
 						accessibility, and next steps.

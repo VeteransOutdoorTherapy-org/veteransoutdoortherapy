@@ -9,7 +9,7 @@ import { HeroCollage } from "@/components/hero-collage";
 export const metadata = pageMetadata({
 	title: "Outdoor Programs for Veterans and Gold Star Families",
 	description:
-		"Explore fully funded hunting, fishing, horseback riding, hiking, and conservation experiences for previously deployed Veterans and Gold Star families.",
+		"Explore hunting, fishing, horseback riding, hiking, and conservation experiences for previously deployed Veterans and Gold Star families, at no cost to participants.",
 	path: "/programs",
 });
 

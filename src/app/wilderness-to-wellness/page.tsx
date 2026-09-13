@@ -29,8 +29,8 @@ export default function WellnessPage() {
 					<h2 className="display section-title">From Wilderness to Wellness.</h2>
 					<p className="prose">
 						Together, we honor the service and sacrifice of our nation&apos;s heroes while sharing the transformative
-						peace that comes from the great outdoors. The 2026 event is sold out, but the mission and the path forward
-						continue.
+						peace that comes from the great outdoors. The 2026 event sold out, and our next Benefit Banquet Dinner
+						is being planned for 2027.
 					</p>
 					<Link className="text-link" href="/sponsorships">
 						Join us in making a difference
