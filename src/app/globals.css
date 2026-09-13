@@ -2274,6 +2274,14 @@ img {
 	background: var(--ink);
 	color: #fff;
 }
+.field-story-image.collage {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	grid-template-rows: repeat(2, 1fr);
+}
+.field-story-image.collage > div {
+	position: relative;
+}
 .field-story-image {
 	position: absolute;
 	inset: 0;

@@ -66,6 +66,11 @@ export default async function FieldStoryPage({ params }: PageProps<"/field-stori
 			});
 		if (taggedPhotos.length > 0) photoGalleries.push({ title: "More from the gallery", photos: taggedPhotos });
 	}
+	// Opt-in per story: tile the story's own photos behind the hero instead of the single image.
+	const collageImages = story.heroCollage
+		? [story.image, ...photoGalleries.flatMap((gallery) => gallery.photos.map((photo) => photo.src))].slice(0, 8)
+		: [];
+
 	const articleSchema = {
 		"@context": "https://schema.org",
 		"@type": "Article",
@@ -90,7 +95,17 @@ export default async function FieldStoryPage({ params }: PageProps<"/field-stori
 			]} />
 			<article className="field-story">
 				<header className="field-story-hero">
-					<div className="field-story-image" style={heroFocusStyle(story)}><Image src={story.image} alt={story.imageAlt} fill priority sizes="100vw" /></div>
+					{collageImages.length > 1 ? (
+						<div className="field-story-image collage" aria-hidden="true">
+							{collageImages.map((src, index) => (
+								<div key={`${src}-${index}`}>
+									<Image src={src} alt="" fill priority={index === 0} sizes="25vw" />
+								</div>
+							))}
+						</div>
+					) : (
+						<div className="field-story-image" style={heroFocusStyle(story)}><Image src={story.image} alt={story.imageAlt} fill priority sizes="100vw" /></div>
+					)}
 					<div className="container field-story-heading">
 						<Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Field stories", href: "/field-stories" }, { label: story.title }]} />
 						<p className="eyebrow">Story from the field</p>
