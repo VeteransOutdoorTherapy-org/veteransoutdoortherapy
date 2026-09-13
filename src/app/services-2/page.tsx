@@ -1,64 +1,7 @@
-import { Binoculars, Fish, Footprints, Trees } from "lucide-react";
-import Link from "next/link";
-const programs = [
-	{
-		icon: Fish,
-		title: "Fishing",
-		copy: "Time on the water creates a steady rhythm for conversation, reflection, and connection.",
-	},
-	{
-		icon: Binoculars,
-		title: "Hunting",
-		copy: "Supported field experiences bring shared purpose, skilled hosts, and meaningful challenge.",
-	},
-	{
-		icon: Footprints,
-		title: "Hiking & horseback",
-		copy: "Trails and ranch experiences offer movement, perspective, and room to breathe.",
-	},
-	{
-		icon: Trees,
-		title: "Conservation",
-		copy: "Service-oriented outdoor days strengthen community while caring for the places that restore us.",
-	},
-];
-export default function ServicesPage() {
-	return (
-		<>
-			<section className="page-hero">
-				<div className="container">
-					<p className="eyebrow">Outdoor therapy in action</p>
-					<h1 className="display">
-						Many paths.
-						<br />
-						One mission.
-					</h1>
-					<p>
-						Our programs use outdoor activity and shared experience to support camaraderie, confidence, reflection, and
-						emotional healing.
-					</p>
-				</div>
-			</section>
-			<section className="section">
-				<div className="container program-grid">
-					{programs.map(({ icon: Icon, title, copy }) => (
-						<article key={title}>
-							<Icon />
-							<h2 className="display">{title}</h2>
-							<p>{copy}</p>
-						</article>
-					))}
-				</div>
-			</section>
-			<section className="application-note">
-				<div className="container">
-					<strong>Every selected participant attends at no cost.</strong>
-					<p>Donors and sponsors help cover core travel, meals, gear, lodging, and activity expenses.</p>
-					<Link className="button orange" href="/application">
-						Find your path
-					</Link>
-				</div>
-			</section>
-		</>
-	);
+import { permanentRedirect } from "next/navigation";
+
+// Legacy WordPress path. It duplicated /programs with no metadata of its own, so it competed
+// with the real page in search results.
+export default function LegacyServicesPage() {
+	permanentRedirect("/programs");
 }

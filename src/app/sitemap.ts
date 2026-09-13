@@ -22,12 +22,25 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 		"/wilderness-to-wellness",
 		"/privacy",
 	];
-	const hubs = new Set(["/programs", "/programs/veteran-hunting", "/gold-star-families", "/events", "/field-stories", "/sponsorships"]);
+	// The pages worth showing as sitelinks under the homepage result: the ones a visitor is
+	// most often looking for, ranked above the rest so crawlers see the intended hierarchy.
+	const hubs = new Set([
+		"/application",
+		"/programs",
+		"/events",
+		"/field-stories",
+		"/gold-star-families",
+		"/about",
+		"/donate",
+		"/sponsorships",
+	]);
+	const updated = new Date();
 	return [
 		...routes.map((route) => ({
 			url: `${SITE_URL}${route}`,
+			lastModified: updated,
 			changeFrequency: route === "/shop" ? ("weekly" as const) : ("monthly" as const),
-			priority: route === "" ? 1 : hubs.has(route) ? 0.85 : 0.7,
+			priority: route === "" ? 1 : hubs.has(route) ? 0.9 : 0.6,
 		})),
 		...products.filter((product) => product.category !== "Sponsorships").map((product) => ({
 			url: `${SITE_URL}/product/${product.slug}`,
