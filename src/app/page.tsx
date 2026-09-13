@@ -194,7 +194,7 @@ export default async function Home() {
 			<section className="quote">
 				<ParallaxLayer
 					image='linear-gradient(90deg, rgba(12, 19, 14, 0.82) 0%, rgba(12, 19, 14, 0.6) 55%, rgba(12, 19, 14, 0.76) 100%), url("/wp-content/uploads/2025/09/photo-130.jpg")'
-					position="center -15%"
+					position="center 30%"
 				/>
 				<div className="container">
 					<span>“</span>
