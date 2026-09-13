@@ -346,7 +346,10 @@ export async function saveGalleryMetadataAction(form: FormData) {
 		sortOrder: Number(form.get("sortOrder") || existing.sortOrder),
 	});
 	revalidatePath("/gallery");
-	redirect("/admin?view=gallery&saved=1");
+	// No redirect: navigating would send the admin back to the top of a list that can run to
+	// hundreds of images. Revalidating updates the card in place and keeps their scroll position.
+	revalidatePath("/admin");
+	revalidatePath("/admin/gallery");
 }
 
 export async function uploadGalleryImagesAction(form: FormData) {
