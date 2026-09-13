@@ -13,6 +13,23 @@ export type PastEvent = {
 	recapUrl?: string;
 };
 
+import type { Event } from "./data";
+
+/** A finished event, rendered the same way as the hand-written archive entries below. */
+export function toPastEvent(event: Event): PastEvent {
+	return {
+		title: event.title,
+		date: event.date,
+		sortDate: event.endDate,
+		type: event.type,
+		location: event.location,
+		summary: event.summary,
+		image: event.image,
+		href: `/events/${event.slug}`,
+		recapUrl: event.recapUrl,
+	};
+}
+
 export const documentedPastEvents: PastEvent[] = [
 	{
 		title: "Wilderness to Wellness Dinner Banquet",

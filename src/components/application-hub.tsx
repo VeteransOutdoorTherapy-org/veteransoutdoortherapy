@@ -1,11 +1,12 @@
-import { ArrowRight, HandHeart, Shield, Star } from "lucide-react";
+import { ArrowRight, FileText, HandHeart, Shield, Star } from "lucide-react";
 import Link from "next/link";
+import { HeroCollage } from "./hero-collage";
 
 const paths = [
 	{
 		icon: Shield,
 		title: "Veteran application",
-		copy: "Apply for an outdoor experience built around connection, challenge, and time outside.",
+		copy: "For previously deployed Veterans. The application asks about your deployment history, and a DD214 is required before a trip is confirmed.",
 		href: "/veteran-application",
 		action: "Apply as a Veteran",
 	},
@@ -29,6 +30,7 @@ export function ApplicationHub() {
 	return (
 		<>
 			<section className="page-hero application-hero">
+				<HeroCollage seed={10} />
 				<div className="container">
 					<p className="eyebrow">There is a place for you here</p>
 					<h1 className="display">
@@ -52,6 +54,46 @@ export function ApplicationHub() {
 							</Link>
 						</article>
 					))}
+				</div>
+			</section>
+			<section className="section eligibility-section">
+				<div className="container eligibility-grid">
+					<div>
+						<p className="eyebrow">Before you apply</p>
+						<h2 className="display section-title">Who these programs are for.</h2>
+						<p className="prose">
+							Our outdoor programs exist for Veterans who deployed, and for Gold Star families and their children. That
+							focus is deliberate: the experiences are built around what deployment leaves behind, and around the company
+							of others who carry the same thing.
+						</p>
+					</div>
+					<div className="eligibility-points">
+						<div>
+							<Shield size={26} />
+							<h3>Deployment history</h3>
+							<p>
+								The Veteran application asks where and when you deployed. Combat service is not required, but a
+								deployment is, and we ask you to describe it in your own words.
+							</p>
+						</div>
+						<div>
+							<FileText size={26} />
+							<h3>DD214 or service records</h3>
+							<p>
+								Selected applicants provide a DD214 (member copy 4, or any copy showing character of service and
+								deployment) before a trip is confirmed. Do not send it with your application; our team will ask for it
+								directly when your application moves forward.
+							</p>
+						</div>
+						<div>
+							<Star size={26} />
+							<h3>Gold Star families</h3>
+							<p>
+								Gold Star family members and children apply through the family application instead. No DD214 is needed;
+								we will ask about your service member and how your family would like to be honored.
+							</p>
+						</div>
+					</div>
 				</div>
 			</section>
 			<section className="application-note">

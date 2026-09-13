@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { MissionFilm } from "@/components/mission-film";
 import { getEvents } from "@/lib/db";
-import { documentedPastEvents, type PastEvent } from "@/lib/past-events";
+import { documentedPastEvents, type PastEvent, toPastEvent } from "@/lib/past-events";
 import { pageMetadata } from "@/lib/site";
 import { HeroCollage } from "@/components/hero-collage";
 
@@ -20,17 +20,7 @@ export default async function EventsPage() {
 	const upcomingEvents = events.filter((event) => !event.over && event.endDate >= today);
 	const completedEvents: PastEvent[] = events
 		.filter((event) => event.over || event.endDate < today)
-		.map((event) => ({
-			title: event.title,
-			date: event.date,
-			sortDate: event.endDate,
-			type: event.type,
-			location: event.location,
-			summary: event.summary,
-			image: event.image,
-			href: `/events/${event.slug}`,
-			recapUrl: event.recapUrl,
-		}));
+		.map(toPastEvent);
 	const pastEvents = [...completedEvents, ...documentedPastEvents].sort((a, b) => b.sortDate.localeCompare(a.sortDate));
 
 	return (

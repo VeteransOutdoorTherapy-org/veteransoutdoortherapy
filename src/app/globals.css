@@ -2092,6 +2092,91 @@ img {
 	color: var(--moss);
 	font: 700 1.2rem var(--font-display);
 }
+.eligibility-grid {
+	display: grid;
+	grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+	gap: clamp(30px, 5vw, 70px);
+	align-items: start;
+}
+.eligibility-points {
+	display: grid;
+	gap: 26px;
+}
+.eligibility-points > div {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	gap: 4px 16px;
+	border-top: 1px solid var(--line);
+	padding-top: 20px;
+}
+.eligibility-points svg {
+	grid-row: span 2;
+	color: var(--orange);
+}
+.eligibility-points h3 {
+	margin: 0;
+	font-size: 1.15rem;
+}
+.eligibility-points p {
+	margin: 0;
+	color: var(--moss);
+}
+.voices-band {
+	background: var(--ink);
+	color: #fff;
+	padding-block: clamp(60px, 8vw, 96px);
+}
+.voices-head {
+	max-width: 720px;
+	margin-bottom: clamp(28px, 4vw, 44px);
+}
+.voices-band .section-title {
+	margin: 8px 0 0;
+}
+.voices-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+	gap: 22px;
+	margin-bottom: 30px;
+}
+.voices-grid figure {
+	display: grid;
+	gap: 14px;
+	align-content: start;
+	margin: 0;
+	border: 1px solid rgba(255, 255, 255, 0.16);
+	border-radius: 14px;
+	background: rgba(255, 255, 255, 0.05);
+	padding: 26px;
+}
+.voices-grid svg {
+	color: var(--orange);
+}
+.voices-grid blockquote {
+	margin: 0;
+	font-size: 1.02rem;
+	line-height: 1.6;
+}
+.voices-grid figcaption {
+	display: grid;
+	gap: 2px;
+	font-weight: 800;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	font-size: 0.78rem;
+}
+.voices-grid figcaption span {
+	color: #bec4bd;
+	font-weight: 600;
+	text-transform: none;
+	letter-spacing: 0;
+	font-size: 0.86rem;
+}
+@media (max-width: 860px) {
+	.eligibility-grid {
+		grid-template-columns: 1fr;
+	}
+}
 .application-note {
 	background: #dfe2d9;
 	padding: 42px 0;
