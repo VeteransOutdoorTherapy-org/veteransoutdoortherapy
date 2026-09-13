@@ -598,6 +598,7 @@ export async function saveFieldStoryAction(form: FormData) {
 				imageAlt,
 				imagePosition: parseImagePosition(form.get("imagePosition")),
 				imagePositionMobile: parseImagePosition(form.get("imagePositionMobile")),
+				heroCollage: form.get("heroCollage") === "on",
 				body: parseLines(String(form.get("body") || "")),
 				video: videoUrl ? { url: videoUrl, title: videoTitle || title } : undefined,
 				facebookLinks: parseFacebookLinks(String(form.get("facebookLinks") || "")),

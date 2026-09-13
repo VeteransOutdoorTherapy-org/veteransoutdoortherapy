@@ -98,6 +98,10 @@ export function FieldStoryAdmin({
 						</select>
 					</label>
 				</div>
+				<label className="consent">
+					<input name="heroCollage" type="checkbox" defaultChecked={selected?.heroCollage ?? false} /> Tile this story&apos;s
+					photos behind the hero instead of showing one image
+				</label>
 				<p className="admin-hint">
 					Hero focus picks the part of the photo that stays in frame when the hero and story card crop it — use Top or
 					Top left when a face sits high in the photo. The mobile setting takes over at 900px wide and below.

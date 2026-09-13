@@ -1,3 +1,4 @@
+import { HeroCollage } from "./hero-collage";
 import { JotformEmbed } from "./jotform-embed";
 
 const jotforms = {
@@ -23,6 +24,7 @@ export function ApplicationFormPage({
 	return (
 		<>
 			<section className="page-hero compact-hero">
+				<HeroCollage seed={9} />
 				<div className="container">
 					<p className="eyebrow">{eyebrow}</p>
 					<h1 className="display">{title}</h1>
