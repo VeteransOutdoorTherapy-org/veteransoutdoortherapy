@@ -13,11 +13,11 @@ export default async function ProductsPage() {
 	return (
 		<section className="section">
 			<div className="container">
-				<p className="eyebrow">Every purchase supports the mission</p>
+				<p className="eyebrow">Every order is a donation</p>
 				<h1 className="display section-title">Gear that gives back.</h1>
 				<p className="prose">
-					Shop our collection of Veteran&apos;s Outdoor Therapy apparel and gear. Every order helps fund outdoor experiences
-					for Veterans and Gold Star families.
+					Every order is a donation to the mission. What you spend pays for the lodging, meals, and gear behind
+					a Veteran or Gold Star family’s time outdoors.
 				</p>
 				<ProductCatalog products={items} />
 			</div>
