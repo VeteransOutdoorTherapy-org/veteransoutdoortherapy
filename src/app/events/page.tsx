@@ -4,6 +4,7 @@ import { MissionFilm } from "@/components/mission-film";
 import { getEvents } from "@/lib/db";
 import { documentedPastEvents, type PastEvent } from "@/lib/past-events";
 import { pageMetadata } from "@/lib/site";
+import { HeroCollage } from "@/components/hero-collage";
 
 export const metadata = pageMetadata({
 	title: "Veteran Outdoor Events: Upcoming and Past",
@@ -35,6 +36,7 @@ export default async function EventsPage() {
 	return (
 		<>
 			<section className="page-hero">
+				<HeroCollage seed={2} />
 				<div className="container">
 					<p className="eyebrow">Field calendar and event archive</p>
 					<h1 className="display">Upcoming Veteran hunts and outdoor experiences.</h1>

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { pageMetadata } from "@/lib/site";
+import { HeroCollage } from "@/components/hero-collage";
 export const metadata = pageMetadata({
 	title: "Wilderness to Wellness Benefit",
 	description: "Learn about the Wilderness to Wellness benefit supporting outdoor experiences for previously deployed Veterans and Gold Star families.",
@@ -9,6 +10,7 @@ export default function WellnessPage() {
 	return (
 		<>
 			<section className="page-hero">
+				<HeroCollage seed={7} />
 				<div className="container">
 					<p className="eyebrow">Wilderness to Wellness</p>
 					<h1 className="display">Wilderness to Wellness.</h1>

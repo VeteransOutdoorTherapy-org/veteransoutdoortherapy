@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { JsonLd } from "@/components/json-ld";
 import { breadcrumbSchema, faqSchema, pageMetadata } from "@/lib/site";
+import { HeroCollage } from "@/components/hero-collage";
 
 export const metadata = pageMetadata({
 	title: "Veteran Hunting Trips and Outdoor Adventures",
@@ -46,6 +47,7 @@ export default function VeteranHuntingPage() {
 				faqSchema(faqs),
 			]} />
 			<section className="page-hero">
+				<HeroCollage seed={6} />
 				<div className="container">
 					<Breadcrumbs light items={[{ label: "Home", href: "/" }, { label: "Programs", href: "/programs" }, { label: "Veteran hunting" }]} />
 					<p className="eyebrow">Purpose, preparation, and open country</p>

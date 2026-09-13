@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { JsonLd } from "@/components/json-ld";
 import { breadcrumbSchema, faqSchema, pageMetadata } from "@/lib/site";
+import { HeroCollage } from "@/components/hero-collage";
 
 export const metadata = pageMetadata({
 	title: "Outdoor Support for Gold Star Families",
@@ -42,6 +43,7 @@ export default function GoldStarFamiliesPage() {
 				faqSchema(faqs),
 			]} />
 			<section className="page-hero">
+				<HeroCollage seed={4} />
 				<div className="container">
 					<Breadcrumbs light items={[{ label: "Home", href: "/" }, { label: "Gold Star families" }]} />
 					<p className="eyebrow">Remembrance, connection, and open air</p>

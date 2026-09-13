@@ -3,6 +3,7 @@ import Link from "next/link";
 import { MissionFilm } from "@/components/mission-film";
 import { mission } from "@/lib/data";
 import { pageMetadata } from "@/lib/site";
+import { HeroCollage } from "@/components/hero-collage";
 export const metadata = pageMetadata({
 	title: "About Veteran's Outdoor Therapy",
 	description: "Meet the 501(c)(3) nonprofit creating outdoor experiences where previously deployed Veterans and Gold Star families can reconnect and build community.",
@@ -12,6 +13,7 @@ export default function AboutPage() {
 	return (
 		<>
 			<section className="page-hero">
+				<HeroCollage seed={1} />
 				<div className="container">
 					<p className="eyebrow">Built for those who served</p>
 					<h1 className="display">Our mission is built around service, nature, and shared experience.</h1>
