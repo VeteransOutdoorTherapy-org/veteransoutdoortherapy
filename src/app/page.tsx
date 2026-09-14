@@ -4,7 +4,7 @@ import Link from "next/link";
 import { MissionFilm } from "@/components/mission-film";
 import { SectionEdge } from "@/components/section-edge";
 import { ProductCard } from "@/components/product-card";
-import { contributionCopy, mission } from "@/lib/data";
+import { contributionCopy, imageFocusStyle, mission } from "@/lib/data";
 import { getEvents, getProducts } from "@/lib/db";
 import { pageMetadata } from "@/lib/site";
 import { sponsorLogos } from "@/lib/sponsors";
@@ -65,7 +65,7 @@ export default async function Home() {
 					<h2 className="display section-title">The next trail starts here.</h2>
 					<div className="event-strip">
 						{upcomingEvents.map((event, index) => (
-							<Link className="event-card" href={`/events/${event.slug}`} key={event.slug}>
+							<Link className="event-card" href={`/events/${event.slug}`} key={event.slug} style={imageFocusStyle(event)}>
 								<Image src={event.image} alt={`${event.type} at ${event.location}`} fill sizes="(max-width: 700px) 100vw, 33vw" />
 								<div className="event-number">0{index + 1}</div>
 								<div className="event-copy">

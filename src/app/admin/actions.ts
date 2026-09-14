@@ -242,6 +242,8 @@ export async function saveEventAction(form: FormData) {
 				startDate: String(form.get("startDate") || ""),
 				endDate: String(form.get("endDate") || ""),
 				image,
+				imagePosition: parseImagePosition(form.get("imagePosition")),
+				imagePositionMobile: parseImagePosition(form.get("imagePositionMobile")),
 				type: String(form.get("type") || "").trim(),
 				location: String(form.get("location") || "").trim(),
 				summary: String(form.get("summary") || "").trim(),

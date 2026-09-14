@@ -9,6 +9,8 @@ export type Product = {
 	category: string;
 	description: string;
 	image: string;
+	imagePosition?: ImagePosition;
+	imagePositionMobile?: ImagePosition;
 	gallery: string[];
 	sizes?: ProductSize[];
 	stock?: number;
@@ -184,6 +186,8 @@ export type Event = {
 	startDate: string;
 	endDate: string;
 	image: string;
+	imagePosition?: ImagePosition;
+	imagePositionMobile?: ImagePosition;
 	type: string;
 	location: string;
 	summary: string;
@@ -690,6 +694,17 @@ export const IMAGE_POSITIONS = [
 	"bottom-right",
 ] as const;
 export type ImagePosition = (typeof IMAGE_POSITIONS)[number];
+
+/**
+ * The CSS custom properties that drive object-position for a record's image. Spread into a style
+ * prop; the stylesheet reads --focus and, below 900px, --focus-mobile.
+ */
+export function imageFocusStyle(record: { imagePosition?: ImagePosition; imagePositionMobile?: ImagePosition }) {
+	return {
+		"--focus": cssImagePosition(record.imagePosition),
+		"--focus-mobile": cssImagePosition(record.imagePositionMobile, cssImagePosition(record.imagePosition)),
+	} as Record<string, string>;
+}
 
 /** Turns a stored image position into a CSS object-position value. */
 export function cssImagePosition(position?: string, fallback = "center") {

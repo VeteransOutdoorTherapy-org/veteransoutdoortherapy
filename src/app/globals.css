@@ -759,6 +759,23 @@ body:has(.section-edge-top) .site-header {
 	height: 100%;
 	border: 0;
 }
+/* Any image whose record carries a focus setting: the admin choice wins over the default crop. */
+.event-card img,
+.past-event-image img,
+.event-page-image img,
+.product-image img,
+.product-gallery img {
+	object-position: var(--focus, center);
+}
+@media (max-width: 900px) {
+	.event-card img,
+	.past-event-image img,
+	.event-page-image img,
+	.product-image img,
+	.product-gallery img {
+		object-position: var(--focus-mobile, var(--focus, center));
+	}
+}
 .product-card {
 	display: flex;
 	flex-direction: column;

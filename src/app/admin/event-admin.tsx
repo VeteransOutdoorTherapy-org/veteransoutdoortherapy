@@ -1,6 +1,7 @@
 import { ArrowSquareOut, CalendarPlus, Copy, PencilSimple } from "@phosphor-icons/react/dist/ssr";
 import type { Event } from "@/lib/data";
 import { deleteEventAction, duplicateEventAction, saveEventAction } from "./actions";
+import { ImageFocusFields } from "@/components/admin/image-focus-fields";
 
 export function EventAdmin({ events, selected }: { events: Event[]; selected?: Event }) {
 	return (
@@ -106,6 +107,7 @@ export function EventAdmin({ events, selected }: { events: Event[]; selected?: E
 					Or upload a new image
 					<input className="field" name="imageFile" type="file" accept="image/png,image/jpeg,image/webp" />
 				</label>
+				<ImageFocusFields desktop={selected?.imagePosition} mobile={selected?.imagePositionMobile} />
 				<div className="admin-checks">
 					<label className="consent">
 						<input name="published" type="checkbox" defaultChecked={selected?.published ?? true} /> Published

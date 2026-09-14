@@ -8,6 +8,7 @@ import { JsonLd } from "@/components/json-ld";
 import { events as seedEvents } from "@/lib/data";
 import { getEvent } from "@/lib/db";
 import { absoluteUrl, breadcrumbSchema, pageMetadata, SITE_NAME, SITE_URL } from "@/lib/site";
+import { imageFocusStyle } from "@/lib/data";
 
 export function generateStaticParams() {
 	return seedEvents.map(({ slug }) => ({ slug }));
@@ -80,7 +81,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
 							</Link>
 						)}
 					</div>
-					<div className="event-page-image">
+					<div className="event-page-image" style={imageFocusStyle(event)}>
 						<Image src={event.image} alt={event.title} fill priority sizes="(max-width: 800px) 100vw, 48vw" />
 					</div>
 				</div>

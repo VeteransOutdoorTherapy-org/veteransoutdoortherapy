@@ -35,6 +35,8 @@ async function ensureProducts() {
 	const db = sql();
 	if (!db) return null;
 	await db`CREATE TABLE IF NOT EXISTS products (slug text PRIMARY KEY, name text NOT NULL, short_name text NOT NULL, price numeric NOT NULL, category text NOT NULL, description text NOT NULL, image text NOT NULL, gallery jsonb NOT NULL DEFAULT '[]', sizes jsonb, stock integer, featured boolean NOT NULL DEFAULT false, updated_at timestamptz NOT NULL DEFAULT now())`;
+	await db`ALTER TABLE products ADD COLUMN IF NOT EXISTS image_position text`;
+	await db`ALTER TABLE products ADD COLUMN IF NOT EXISTS image_position_mobile text`;
 	await db`CREATE TABLE IF NOT EXISTS migrations (id text PRIMARY KEY, applied_at timestamptz NOT NULL DEFAULT now())`;
 	const migration =
 		await db`INSERT INTO migrations (id) VALUES ('bronze-price-1000') ON CONFLICT (id) DO NOTHING RETURNING id`;
@@ -99,6 +101,8 @@ async function ensureEvents() {
 	await db`CREATE TABLE IF NOT EXISTS events (slug text PRIMARY KEY, title text NOT NULL, date_label text NOT NULL, start_date date NOT NULL, end_date date NOT NULL, image text NOT NULL, event_type text NOT NULL, location text NOT NULL, summary text NOT NULL, hero_title text NOT NULL, overview_title text NOT NULL, overview text NOT NULL, details_title text NOT NULL, details text NOT NULL, cta_label text NOT NULL, cta_href text NOT NULL, template text NOT NULL DEFAULT 'adventure', published boolean NOT NULL DEFAULT true, featured boolean NOT NULL DEFAULT false, sort_order integer NOT NULL DEFAULT 0, updated_at timestamptz NOT NULL DEFAULT now())`;
 	await db`ALTER TABLE events ADD COLUMN IF NOT EXISTS is_over boolean NOT NULL DEFAULT false`;
 	await db`ALTER TABLE events ADD COLUMN IF NOT EXISTS recap_url text`;
+	await db`ALTER TABLE events ADD COLUMN IF NOT EXISTS image_position text`;
+	await db`ALTER TABLE events ADD COLUMN IF NOT EXISTS image_position_mobile text`;
 	await db`CREATE TABLE IF NOT EXISTS migrations (id text PRIMARY KEY, applied_at timestamptz NOT NULL DEFAULT now())`;
 	const officialNameMigration =
 		await db`INSERT INTO migrations (id) VALUES ('event-official-name-veterans-to-veteran') ON CONFLICT (id) DO NOTHING RETURNING id`;
@@ -140,7 +144,7 @@ async function ensureEvents() {
 		if (!migration.length) return;
 		const event = seedEvents.find((e) => e.slug === slug);
 		if (!event) return;
-		await db`INSERT INTO events (slug, title, date_label, start_date, end_date, image, event_type, location, summary, hero_title, overview_title, overview, details_title, details, cta_label, cta_href, template, published, featured, is_over, recap_url, sort_order) VALUES (${event.slug}, ${event.title}, ${event.date}, ${event.startDate}, ${event.endDate}, ${event.image}, ${event.type}, ${event.location}, ${event.summary}, ${event.heroTitle}, ${event.overviewTitle}, ${event.overview}, ${event.detailsTitle}, ${event.details}, ${event.ctaLabel}, ${event.ctaHref}, ${event.template}, ${event.published}, ${event.featured}, ${event.over}, ${event.recapUrl ?? null}, ${event.sortOrder}) ON CONFLICT (slug) DO NOTHING`;
+		await db`INSERT INTO events (slug, title, date_label, start_date, end_date, image, image_position, image_position_mobile, event_type, location, summary, hero_title, overview_title, overview, details_title, details, cta_label, cta_href, template, published, featured, is_over, recap_url, sort_order) VALUES (${event.slug}, ${event.title}, ${event.date}, ${event.startDate}, ${event.endDate}, ${event.image}, ${event.imagePosition ?? null}, ${event.imagePositionMobile ?? null}, ${event.type}, ${event.location}, ${event.summary}, ${event.heroTitle}, ${event.overviewTitle}, ${event.overview}, ${event.detailsTitle}, ${event.details}, ${event.ctaLabel}, ${event.ctaHref}, ${event.template}, ${event.published}, ${event.featured}, ${event.over}, ${event.recapUrl ?? null}, ${event.sortOrder}) ON CONFLICT (slug) DO NOTHING`;
 	}
 	await seedMissingEvent(db, "seed-tba-missouri-turkey-2027", "missouri-turkey-hunt-2027");
 	await seedMissingEvent(db, "seed-tba-flint-hills-2027", "flint-hills-kansas-turkey-hunt-2027");
@@ -168,6 +172,8 @@ export async function getProducts(): Promise<Product[]> {
 		category: String(row.category),
 		description: String(row.description),
 		image: String(row.image),
+		imagePosition: imagePositionFrom(row.image_position),
+		imagePositionMobile: imagePositionFrom(row.image_position_mobile),
 		gallery: row.gallery as string[],
 		sizes: normalizeSizes(row.sizes),
 		stock: row.stock == null ? undefined : Number(row.stock),
@@ -364,7 +370,7 @@ function isoDate(value: unknown) {
 	return String(value).slice(0, 10);
 }
 
-function fieldStoryImagePosition(value: unknown): ImagePosition | undefined {
+function imagePositionFrom(value: unknown): ImagePosition | undefined {
 	return IMAGE_POSITIONS.includes(String(value ?? "") as ImagePosition) ? (String(value) as ImagePosition) : undefined;
 }
 
@@ -378,8 +384,8 @@ function rowToFieldStory(row: Record<string, unknown>): FieldStory {
 		summary: String(row.summary),
 		image: String(row.image),
 		imageAlt: String(row.image_alt),
-		imagePosition: fieldStoryImagePosition(row.image_position),
-		imagePositionMobile: fieldStoryImagePosition(row.image_position_mobile),
+		imagePosition: imagePositionFrom(row.image_position),
+		imagePositionMobile: imagePositionFrom(row.image_position_mobile),
 		heroCollage: Boolean(row.hero_collage),
 		body: Array.isArray(row.body) ? row.body.map(String) : [],
 		video: row.video ? (row.video as { url: string; title: string }) : undefined,
@@ -736,7 +742,7 @@ export async function markOrderRefunded(paypalOrderId: string) {
 export async function saveProduct(product: Product) {
 	const db = await ensureProducts();
 	if (!db) throw new Error("DATABASE_URL is required to save products.");
-	await db`INSERT INTO products (slug, name, short_name, price, category, description, image, gallery, sizes, stock, featured) VALUES (${product.slug}, ${product.name}, ${product.shortName}, ${product.price}, ${product.category}, ${product.description}, ${product.image}, ${JSON.stringify(product.gallery)}, ${product.sizes ? JSON.stringify(product.sizes) : null}, ${product.stock ?? null}, ${product.featured ?? false}) ON CONFLICT (slug) DO UPDATE SET name = EXCLUDED.name, short_name = EXCLUDED.short_name, price = EXCLUDED.price, category = EXCLUDED.category, description = EXCLUDED.description, image = EXCLUDED.image, gallery = EXCLUDED.gallery, sizes = EXCLUDED.sizes, stock = EXCLUDED.stock, featured = EXCLUDED.featured, updated_at = now()`;
+	await db`INSERT INTO products (slug, name, short_name, price, category, description, image, image_position, image_position_mobile, gallery, sizes, stock, featured) VALUES (${product.slug}, ${product.name}, ${product.shortName}, ${product.price}, ${product.category}, ${product.description}, ${product.image}, ${product.imagePosition ?? null}, ${product.imagePositionMobile ?? null}, ${JSON.stringify(product.gallery)}, ${product.sizes ? JSON.stringify(product.sizes) : null}, ${product.stock ?? null}, ${product.featured ?? false}) ON CONFLICT (slug) DO UPDATE SET name = EXCLUDED.name, short_name = EXCLUDED.short_name, price = EXCLUDED.price, category = EXCLUDED.category, description = EXCLUDED.description, image = EXCLUDED.image, image_position = EXCLUDED.image_position, image_position_mobile = EXCLUDED.image_position_mobile, gallery = EXCLUDED.gallery, sizes = EXCLUDED.sizes, stock = EXCLUDED.stock, featured = EXCLUDED.featured, updated_at = now()`;
 }
 
 export async function deleteProduct(slug: string) {
@@ -753,6 +759,8 @@ function rowToEvent(row: Record<string, unknown>): Event {
 		startDate: isoDate(row.start_date),
 		endDate: isoDate(row.end_date),
 		image: String(row.image),
+		imagePosition: imagePositionFrom(row.image_position),
+		imagePositionMobile: imagePositionFrom(row.image_position_mobile),
 		type: String(row.event_type),
 		location: String(row.location),
 		summary: String(row.summary),
@@ -791,7 +799,7 @@ export async function saveEvent(event: Event, previousSlug = event.slug) {
 	const db = await ensureEvents();
 	if (!db) throw new Error("DATABASE_URL is required to save events.");
 	if (previousSlug && previousSlug !== event.slug) await db`DELETE FROM events WHERE slug = ${previousSlug}`;
-	await db`INSERT INTO events (slug, title, date_label, start_date, end_date, image, event_type, location, summary, hero_title, overview_title, overview, details_title, details, cta_label, cta_href, template, published, featured, is_over, recap_url, sort_order) VALUES (${event.slug}, ${event.title}, ${event.date}, ${event.startDate}, ${event.endDate}, ${event.image}, ${event.type}, ${event.location}, ${event.summary}, ${event.heroTitle}, ${event.overviewTitle}, ${event.overview}, ${event.detailsTitle}, ${event.details}, ${event.ctaLabel}, ${event.ctaHref}, ${event.template}, ${event.published}, ${event.featured}, ${event.over}, ${event.recapUrl ?? null}, ${event.sortOrder}) ON CONFLICT (slug) DO UPDATE SET title = EXCLUDED.title, date_label = EXCLUDED.date_label, start_date = EXCLUDED.start_date, end_date = EXCLUDED.end_date, image = EXCLUDED.image, event_type = EXCLUDED.event_type, location = EXCLUDED.location, summary = EXCLUDED.summary, hero_title = EXCLUDED.hero_title, overview_title = EXCLUDED.overview_title, overview = EXCLUDED.overview, details_title = EXCLUDED.details_title, details = EXCLUDED.details, cta_label = EXCLUDED.cta_label, cta_href = EXCLUDED.cta_href, template = EXCLUDED.template, published = EXCLUDED.published, featured = EXCLUDED.featured, is_over = EXCLUDED.is_over, recap_url = EXCLUDED.recap_url, sort_order = EXCLUDED.sort_order, updated_at = now()`;
+	await db`INSERT INTO events (slug, title, date_label, start_date, end_date, image, image_position, image_position_mobile, event_type, location, summary, hero_title, overview_title, overview, details_title, details, cta_label, cta_href, template, published, featured, is_over, recap_url, sort_order) VALUES (${event.slug}, ${event.title}, ${event.date}, ${event.startDate}, ${event.endDate}, ${event.image}, ${event.imagePosition ?? null}, ${event.imagePositionMobile ?? null}, ${event.type}, ${event.location}, ${event.summary}, ${event.heroTitle}, ${event.overviewTitle}, ${event.overview}, ${event.detailsTitle}, ${event.details}, ${event.ctaLabel}, ${event.ctaHref}, ${event.template}, ${event.published}, ${event.featured}, ${event.over}, ${event.recapUrl ?? null}, ${event.sortOrder}) ON CONFLICT (slug) DO UPDATE SET title = EXCLUDED.title, date_label = EXCLUDED.date_label, start_date = EXCLUDED.start_date, end_date = EXCLUDED.end_date, image = EXCLUDED.image, image_position = EXCLUDED.image_position, image_position_mobile = EXCLUDED.image_position_mobile, event_type = EXCLUDED.event_type, location = EXCLUDED.location, summary = EXCLUDED.summary, hero_title = EXCLUDED.hero_title, overview_title = EXCLUDED.overview_title, overview = EXCLUDED.overview, details_title = EXCLUDED.details_title, details = EXCLUDED.details, cta_label = EXCLUDED.cta_label, cta_href = EXCLUDED.cta_href, template = EXCLUDED.template, published = EXCLUDED.published, featured = EXCLUDED.featured, is_over = EXCLUDED.is_over, recap_url = EXCLUDED.recap_url, sort_order = EXCLUDED.sort_order, updated_at = now()`;
 }
 
 export async function deleteEvent(slug: string) {

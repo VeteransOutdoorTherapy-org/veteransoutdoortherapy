@@ -70,7 +70,7 @@ export default async function EventsPage() {
 					<div className="past-events-grid">
 						{pastEvents.map((event) => (
 							<article key={`${event.title}-${event.sortDate}`}>
-								<div className="past-event-image"><Image src={event.image} alt={event.imageAlt ?? `${event.title}, ${event.date}`} fill sizes="(max-width: 700px) 100vw, 33vw" /></div>
+								<div className="past-event-image" style={event.focus}><Image src={event.image} alt={event.imageAlt ?? `${event.title}, ${event.date}`} fill sizes="(max-width: 700px) 100vw, 33vw" /></div>
 								<p className="eyebrow">{event.type}</p>
 								<h3 className="display">{event.title}</h3>
 								<strong>{event.date}{event.location ? ` | ${event.location}` : ""}</strong>
