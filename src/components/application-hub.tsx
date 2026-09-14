@@ -72,7 +72,7 @@ export function ApplicationHub() {
 					<div className="eligibility-points">
 						<div>
 							<Shield size={26} />
-							<h3>Deployment history</h3>
+							<h3 className="display">Deployment history</h3>
 							<p>
 								The Veteran application asks where and when you deployed. Combat service is not required, but a
 								deployment is, and we ask you to describe it in your own words.
@@ -80,7 +80,7 @@ export function ApplicationHub() {
 						</div>
 						<div>
 							<FileText size={26} />
-							<h3>DD214 or service records</h3>
+							<h3 className="display">DD214 or service records</h3>
 							<p>
 								Selected applicants provide a DD214 (member copy 4, or any copy showing character of service and
 								deployment) before a trip is confirmed. Do not send it with your application; our team will ask for it
@@ -89,7 +89,7 @@ export function ApplicationHub() {
 						</div>
 						<div>
 							<Star size={26} />
-							<h3>Gold Star families</h3>
+							<h3 className="display">Gold Star families</h3>
 							<p>
 								Gold Star family members and children apply through the family application instead. No DD214 is needed;
 								we will ask about your service member and how your family would like to be honored.
