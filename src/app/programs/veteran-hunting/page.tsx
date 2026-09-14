@@ -1,4 +1,4 @@
-import { Check, Compass, ShieldCheck } from "lucide-react";
+import { Check, Compass, ShieldCheck } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { JsonLd } from "@/components/json-ld";
@@ -60,9 +60,9 @@ export default function VeteranHuntingPage() {
 			</section>
 			<section className="section">
 				<div className="container value-grid">
-					<div><Compass /><h2>Shared purpose</h2><p>Scouting, preparation, time in the field, and shared meals give each group a natural reason to work and talk together.</p></div>
-					<div><ShieldCheck /><h2>Responsible field practice</h2><p>Hosts set expectations around local regulations, safety, equipment, wildlife, and respect for the land.</p></div>
-					<div><Check /><h2>Costs covered</h2><p>Selected participants attend at no cost, with event-specific travel, lodging, meals, gear, and activity details confirmed in advance.</p></div>
+					<div><Compass size={30} /><h2>Shared purpose</h2><p>Scouting, preparation, time in the field, and shared meals give each group a natural reason to work and talk together.</p></div>
+					<div><ShieldCheck size={30} /><h2>Responsible field practice</h2><p>Hosts set expectations around local regulations, safety, equipment, wildlife, and respect for the land.</p></div>
+					<div><Check size={30} /><h2>Costs covered</h2><p>Selected participants attend at no cost, with event-specific travel, lodging, meals, gear, and activity details confirmed in advance.</p></div>
 				</div>
 			</section>
 			<section className="section faq-section">

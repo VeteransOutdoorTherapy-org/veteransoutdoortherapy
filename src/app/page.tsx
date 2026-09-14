@@ -1,4 +1,4 @@
-import { ArrowRight, Compass, HeartHandshake, ShieldCheck } from "lucide-react";
+import { ArrowRight, Compass, Handshake, ShieldCheck } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
 import Link from "next/link";
 import { MissionFilm } from "@/components/mission-film";
@@ -112,17 +112,17 @@ export default async function Home() {
 					</div>
 					<div className="impact-points">
 						<div>
-							<Compass />
+							<Compass size={30} />
 							<h3>Shared direction</h3>
 							<p>Purposeful days outside create room to reset and move forward.</p>
 						</div>
 						<div>
-							<HeartHandshake />
+							<Handshake size={30} />
 							<h3>Real camaraderie</h3>
 							<p>Connect with people who understand the road you have traveled.</p>
 						</div>
 						<div>
-							<ShieldCheck />
+							<ShieldCheck size={30} />
 							<h3>Fully funded</h3>
 							<p>Travel, meals, gear, and activities are covered for participants.</p>
 						</div>

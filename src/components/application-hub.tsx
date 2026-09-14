@@ -1,4 +1,4 @@
-import { ArrowRight, FileText, HandHeart, Shield, Star } from "lucide-react";
+import { ArrowRight, FileText, HandHeart, Shield, Star } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 import { Breadcrumbs } from "./breadcrumbs";
 import { HeroCollage } from "./hero-collage";

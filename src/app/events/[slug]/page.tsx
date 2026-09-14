@@ -1,4 +1,4 @@
-import { CalendarDays, MapPin } from "lucide-react";
+import { CalendarDots, MapPin } from "@phosphor-icons/react/dist/ssr";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -66,7 +66,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
 						<p>{event.summary}</p>
 						<div className="event-meta">
 							<span>
-								<CalendarDays size={18} /> {event.date}
+								<CalendarDots size={18} /> {event.date}
 							</span>
 							<span>
 								<MapPin size={18} /> {event.location}

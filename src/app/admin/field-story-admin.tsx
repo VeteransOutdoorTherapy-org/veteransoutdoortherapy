@@ -1,4 +1,4 @@
-import { Copy, ExternalLink, Newspaper, Pencil } from "lucide-react";
+import { ArrowSquareOut, Copy, Newspaper, PencilSimple } from "@phosphor-icons/react/dist/ssr";
 import { type FieldStory, IMAGE_POSITIONS } from "@/lib/data";
 import { deleteFieldStoryAction, duplicateFieldStoryAction, saveFieldStoryAction } from "./actions";
 
@@ -182,10 +182,10 @@ export function FieldStoryAdmin({
 							</span>
 						</div>
 						<a className="icon-button" href={`/field-stories/${story.slug}`} aria-label={`View ${story.title}`} target="_blank" rel="noreferrer">
-							<ExternalLink size={16} />
+							<ArrowSquareOut size={16} />
 						</a>
 						<a className="icon-button" href={`/admin?view=field-stories&edit=${story.slug}`} aria-label={`Edit ${story.title}`}>
-							<Pencil size={17} />
+							<PencilSimple size={17} />
 						</a>
 						<form action={duplicateFieldStoryAction}>
 							<input type="hidden" name="slug" value={story.slug} />

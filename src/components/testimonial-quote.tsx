@@ -1,4 +1,4 @@
-import { Quote } from "lucide-react";
+import { Quotes } from "@phosphor-icons/react/dist/ssr";
 
 // Masonry lets a card run as tall as its quote needs, so only the rare outlier
 // gets collapsed. Most testimonials run 220-820 characters and show in full;
@@ -26,7 +26,7 @@ export function interleaveByLength<T extends { quote: string }>(items: T[]) {
 export function TestimonialQuote({ quote, id, iconSize = 48 }: { quote: string; id: string; iconSize?: number }) {
 	const body = (
 		<div className="testimonial-quote-body">
-			<Quote size={iconSize} className="quote-icon" aria-hidden="true" />
+			<Quotes size={iconSize} className="quote-icon" aria-hidden="true" />
 			<blockquote>
 				<p>{quote}</p>
 			</blockquote>

@@ -1,5 +1,5 @@
 "use client";
-import { ChevronDown, Menu, ShoppingBag, UserRound, X } from "lucide-react";
+import { CaretDown, List, ShoppingBag, User, X } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -76,7 +76,7 @@ export function Header() {
 								}}
 							>
 								{group.label}
-								<ChevronDown size={15} />
+								<CaretDown size={15} />
 							</summary>
 							<div className="nav-dropdown">
 								<div className="nav-dropdown-panel">
@@ -107,7 +107,7 @@ export function Header() {
 				</nav>
 				<div className="header-tools">
 					<Link className="account-link" href="/my-account" aria-label="My account" title="My account" onClick={closeNavigation}>
-						<UserRound size={20} />
+						<User size={20} />
 					</Link>
 					<Link className="cart-link" href="/cart" aria-label={`Cart with ${count} items`} title="Cart" onClick={closeNavigation}>
 						<ShoppingBag size={21} />
@@ -119,7 +119,7 @@ export function Header() {
 						aria-label="Toggle navigation"
 						aria-expanded={open}
 					>
-						{open ? <X /> : <Menu />}
+						{open ? <X /> : <List size={30} />}
 					</button>
 				</div>
 			</header>

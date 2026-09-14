@@ -1,4 +1,4 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { GalleryLightbox } from "@/components/gallery-lightbox";
 import Link from "next/link";
 import { getPublishedGalleryImages } from "@/lib/db";

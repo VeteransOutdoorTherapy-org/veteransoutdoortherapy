@@ -1,4 +1,4 @@
-import { Copy, LockKeyhole, LogOut, PackagePlus, Pencil, Plus, Trash2 } from "lucide-react";
+import { Copy, LockKey, Package, PencilSimple, Plus, SignOut, Trash } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 import { isAdmin } from "@/lib/auth";
 import { getEvents, getProducts, getTestimonials, getGalleryImages, getFieldStories, type Testimonial } from "@/lib/db";
@@ -103,7 +103,7 @@ function TestimonialAdmin({ testimonials, selected, categoryFilter, yearFilter }
 							<p style={{ marginTop: 8, color: "var(--moss)", fontSize: "0.9rem" }}>{testimonial.quote.slice(0, 100)}…</p>
 						</div>
 						<a className="icon-button" href={`/admin?view=testimonials&edit=${testimonial.slug}`} aria-label={`Edit ${testimonial.author}`}>
-							<Pencil size={17} />
+							<PencilSimple size={17} />
 						</a>
 						<form action={duplicateTestimonialAction}>
 							<input type="hidden" name="slug" value={testimonial.slug} />
@@ -114,7 +114,7 @@ function TestimonialAdmin({ testimonials, selected, categoryFilter, yearFilter }
 						<form action={deleteTestimonialAction}>
 							<input type="hidden" name="slug" value={testimonial.slug} />
 							<button className="icon-button danger" aria-label={`Delete ${testimonial.author}`} type="submit">
-								<Trash2 size={16} />
+								<Trash size={16} />
 							</button>
 						</form>
 					</article>
@@ -135,7 +135,7 @@ export default async function AdminPage({
 		return (
 			<section className="admin-login">
 				<form action={loginAction}>
-					<LockKeyhole size={30} />
+					<LockKey size={30} />
 					<p className="eyebrow">Authorized access</p>
 					<h1 className="display">Admin login</h1>
 					{query.error && <p className="form-error">That username or password is incorrect.</p>}
@@ -186,7 +186,7 @@ export default async function AdminPage({
 					</div>
 					<form action={logoutAction}>
 						<button className="button secondary">
-							<LogOut size={17} /> Sign out
+							<SignOut size={17} /> Sign out
 						</button>
 					</form>
 				</header>
@@ -239,7 +239,7 @@ export default async function AdminPage({
 					<div className="admin-grid">
 						<form className="product-form" action={saveProductAction}>
 							<h2>
-								<PackagePlus size={20} /> {selectedProduct ? "Edit product" : "Add product"}
+								<Package size={20} /> {selectedProduct ? "Edit product" : "Add product"}
 							</h2>
 							<label>
 								Product name
@@ -333,7 +333,7 @@ export default async function AdminPage({
 										<span>{product.category} · ${product.price.toLocaleString()}</span>
 									</div>
 									<a className="icon-button" href={`/admin?edit=${product.slug}`} aria-label={`Edit ${product.name}`}>
-										<Pencil size={17} />
+										<PencilSimple size={17} />
 									</a>
 									<form action={duplicateProductAction}>
 										<input type="hidden" name="slug" value={product.slug} />

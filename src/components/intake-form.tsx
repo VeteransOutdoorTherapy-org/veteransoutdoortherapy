@@ -1,11 +1,11 @@
 "use client";
-import { CheckCircle2, CircleAlert, TriangleAlert } from "lucide-react";
+import { CheckCircle, Warning, WarningCircle } from "@phosphor-icons/react/dist/ssr";
 import { FormEvent, useState } from "react";
 
 type StatusTone = "pending" | "success" | "warning" | "error";
 type Status = { tone: StatusTone; text: string } | null;
 
-const statusIcon: Record<StatusTone, typeof CheckCircle2 | null> = { pending: null, success: CheckCircle2, warning: TriangleAlert, error: CircleAlert };
+const statusIcon: Record<StatusTone, typeof CheckCircle | null> = { pending: null, success: CheckCircle, warning: Warning, error: WarningCircle };
 
 export function IntakeForm({ kind = "application", includeType = true }: { kind?: string; includeType?: boolean }) {
 	const [status, setStatus] = useState<Status>(null);

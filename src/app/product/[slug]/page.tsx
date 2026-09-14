@@ -1,4 +1,4 @@
-import { ArrowLeft, PackageCheck, ShieldCheck, Truck } from "lucide-react";
+import { ArrowLeft, Package, ShieldCheck, Truck } from "@phosphor-icons/react/dist/ssr";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -70,7 +70,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 						<p>{product.description}</p>
 						{product.sizes?.some((entry) => entry.stock != null) ? (
 							<p className="stock">
-								<PackageCheck size={18} />{" "}
+								<Package size={18} />{" "}
 								{product.sizes
 									.filter((entry) => entry.stock != null)
 									.map((entry) => `${entry.size}: ${entry.stock}`)
@@ -78,17 +78,17 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 							</p>
 						) : product.stock != null ? (
 							<p className="stock">
-								<PackageCheck size={18} /> {product.stock} in stock
+								<Package size={18} /> {product.stock} in stock
 							</p>
 						) : null}
 						{!productInStock(product) && <p className="stock sold-out">Sold out</p>}
 						<AddToCart product={product} />
 						<div className="product-assurance">
 							<span>
-								<ShieldCheck /> Secure PayPal checkout
+								<ShieldCheck size={30} /> Secure PayPal checkout
 							</span>
 							<span>
-								<Truck /> Purpose-driven purchase
+								<Truck size={30} /> Purpose-driven purchase
 							</span>
 						</div>
 					</div>

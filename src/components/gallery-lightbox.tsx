@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { CaretLeft, CaretRight, X } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import type { GalleryImage } from "@/lib/data";
@@ -101,11 +101,11 @@ export function GalleryLightbox({ images }: { images: GalleryImage[] }) {
 							<span className="sr-only">Close image</span>
 						</button>
 						<button className="gallery-lightbox-previous" type="button" onClick={showPrevious} title="Previous image">
-							<ChevronLeft size={30} />
+							<CaretLeft size={30} />
 							<span className="sr-only">Previous image</span>
 						</button>
 						<button className="gallery-lightbox-next" type="button" onClick={showNext} title="Next image">
-							<ChevronRight size={30} />
+							<CaretRight size={30} />
 							<span className="sr-only">Next image</span>
 						</button>
 					</>

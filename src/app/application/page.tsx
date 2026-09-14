@@ -1,4 +1,4 @@
-import { ArrowRight, Quote } from "lucide-react";
+import { ArrowRight, Quotes } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
 import Link from "next/link";
 import { ApplicationHub } from "@/components/application-hub";
@@ -68,7 +68,7 @@ export default async function ApplicationPage() {
 						<div className="voices-grid">
 							{voices.map((testimonial) => (
 								<figure key={testimonial.slug}>
-									<Quote size={30} aria-hidden="true" />
+									<Quotes size={30} aria-hidden="true" />
 									<blockquote>{testimonial.quote}</blockquote>
 									<figcaption>
 										{publicName(testimonial.author)}

@@ -1,6 +1,6 @@
 "use client";
 
-import { ExternalLink } from "lucide-react";
+import { ArrowSquareOut } from "@phosphor-icons/react/dist/ssr";
 import Script from "next/script";
 import { useRef } from "react";
 
@@ -23,7 +23,7 @@ export function JotformEmbed({ formId, title }: { formId: string; title: string 
 
 	const fallback = (position: "above" | "below") => (
 		<p className={`embed-fallback ${position}`}>
-			<ExternalLink size={17} aria-hidden="true" />
+			<ArrowSquareOut size={17} aria-hidden="true" />
 			<span>
 				Having trouble with the embedded form?{" "}
 				<a href={`${JOTFORM_ORIGIN}${formId}`} target="_blank" rel="noreferrer">

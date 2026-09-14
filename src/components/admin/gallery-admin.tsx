@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Trash2 } from "lucide-react";
+import { Trash } from "@phosphor-icons/react/dist/ssr";
 import type { GalleryImage } from "@/lib/data";
 import { addGalleryImagesByUrlAction, deleteGalleryImageAction, saveGalleryMetadataAction, uploadGalleryImagesAction } from "@/app/admin/actions";
 
@@ -34,7 +34,7 @@ export function GalleryAdmin({ images }: { images: GalleryImage[] }) {
 					<div className="button-row"><label className="consent"><input name="published" type="checkbox" defaultChecked={image.published} onChange={(event) => event.currentTarget.form?.requestSubmit()} /> Published</label><button className="button secondary" type="submit">Save metadata</button></div>
 					<small className="admin-help">Visibility saves immediately when changed. Use Save metadata for alt text, captions, tags, year, or sort order.</small>
 				</form>
-				<form action={deleteGalleryImageAction}><input type="hidden" name="id" value={image.id} /><button className="icon-button danger" type="submit" aria-label={`Delete ${image.alt}`}><Trash2 size={17} /></button></form>
+				<form action={deleteGalleryImageAction}><input type="hidden" name="id" value={image.id} /><button className="icon-button danger" type="submit" aria-label={`Delete ${image.alt}`}><Trash size={17} /></button></form>
 			</article>)}
 		</div>
 	</div>;

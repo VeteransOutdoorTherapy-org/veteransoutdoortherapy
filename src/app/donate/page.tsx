@@ -1,4 +1,4 @@
-import { ArrowDown, BedDouble, Fuel, UtensilsCrossed } from "lucide-react";
+import { ArrowDown, Bed, ForkKnife, GasPump } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 import { breadcrumbSchema, pageMetadata } from "@/lib/site";
 import { Breadcrumbs } from "@/components/breadcrumbs";
@@ -15,19 +15,19 @@ const zeffyFormUrl =
 
 const impact = [
 	{
-		icon: Fuel,
+		icon: GasPump,
 		amount: "$25",
-		title: "Fuel the route",
+		title: "GasPump the route",
 		copy: "Helps move Veterans from the meeting point to open country.",
 	},
 	{
-		icon: UtensilsCrossed,
+		icon: ForkKnife,
 		amount: "$100",
 		title: "Share a meal",
 		copy: "Provides meals and supplies during a fully funded adventure.",
 	},
 	{
-		icon: BedDouble,
+		icon: Bed,
 		amount: "$250",
 		title: "Make camp possible",
 		copy: "Supports lodging, field gear, and a participant's trip costs.",
@@ -95,7 +95,7 @@ export default function DonatePage() {
 					<div className="donation-impact">
 						{impact.map(({ icon: Icon, amount, title, copy }) => (
 							<article key={title}>
-								<Icon />
+								<Icon size={30} />
 								<strong>{amount}</strong>
 								<h3 className="display">{title}</h3>
 								<p>{copy}</p>

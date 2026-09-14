@@ -4,7 +4,7 @@ import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Trash2 } from "lucide-react";
+import { Trash } from "@phosphor-icons/react/dist/ssr";
 import { FormEvent, useRef, useState } from "react";
 import { formatPhone, phoneDigits } from "@/lib/phone";
 import { useCart } from "./cart-provider";
@@ -81,7 +81,7 @@ export function Checkout() {
 							</span>
 							<b>${(item.price * item.quantity).toFixed(2)}</b>
 							<button type="button" onClick={() => remove(item.slug, item.size)} aria-label={`Remove ${item.name}`}>
-								<Trash2 size={18} />
+								<Trash size={18} />
 							</button>
 						</article>
 					))}

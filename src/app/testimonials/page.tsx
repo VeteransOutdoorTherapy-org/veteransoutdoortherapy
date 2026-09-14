@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Star, ArrowRight } from "lucide-react";
+import { ArrowRight, Star } from "@phosphor-icons/react/dist/ssr";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { JsonLd } from "@/components/json-ld";
 import { interleaveByLength, TestimonialQuote } from "@/components/testimonial-quote";

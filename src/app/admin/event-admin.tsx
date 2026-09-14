@@ -1,4 +1,4 @@
-import { CalendarPlus, Copy, ExternalLink, Pencil } from "lucide-react";
+import { ArrowSquareOut, CalendarPlus, Copy, PencilSimple } from "@phosphor-icons/react/dist/ssr";
 import type { Event } from "@/lib/data";
 import { deleteEventAction, duplicateEventAction, saveEventAction } from "./actions";
 
@@ -134,10 +134,10 @@ export function EventAdmin({ events, selected }: { events: Event[]; selected?: E
 							</span>
 						</div>
 						<a className="icon-button" href={`/events/${event.slug}`} aria-label={`View ${event.title}`} target="_blank" rel="noreferrer">
-							<ExternalLink size={16} />
+							<ArrowSquareOut size={16} />
 						</a>
 						<a className="icon-button" href={`/admin?view=events&edit=${event.slug}`} aria-label={`Edit ${event.title}`}>
-							<Pencil size={17} />
+							<PencilSimple size={17} />
 						</a>
 						<form action={duplicateEventAction}>
 							<input type="hidden" name="slug" value={event.slug} />

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { ClipboardList } from "lucide-react";
+import { ClipboardText } from "@phosphor-icons/react/dist/ssr";
 import { isAdmin } from "@/lib/auth";
 import { getOrderSummaries } from "@/lib/db";
 import { pageMetadata } from "@/lib/site";
@@ -28,7 +28,7 @@ export default async function OrdersAdminPage({
 				<header>
 					<div>
 						<p className="eyebrow">Site operations</p>
-						<h1 className="display"><ClipboardList size={30} /> Orders</h1>
+						<h1 className="display"><ClipboardText size={30} /> Orders</h1>
 					</div>
 					<Link className="text-link" href="/admin">Back to content admin</Link>
 				</header>

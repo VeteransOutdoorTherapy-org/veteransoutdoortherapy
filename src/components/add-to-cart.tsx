@@ -1,5 +1,5 @@
 "use client";
-import { Check, ShoppingBag } from "lucide-react";
+import { Check, ShoppingBag } from "@phosphor-icons/react/dist/ssr";
 import { useEffect, useRef, useState } from "react";
 import { type Product, sizeInStock } from "@/lib/data";
 import { useCart } from "./cart-provider";

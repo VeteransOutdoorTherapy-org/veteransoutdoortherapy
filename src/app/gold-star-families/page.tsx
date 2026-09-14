@@ -1,4 +1,4 @@
-import { HeartHandshake, Mountain, UsersRound } from "lucide-react";
+import { Handshake, Mountains, Users } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { JsonLd } from "@/components/json-ld";
@@ -56,9 +56,9 @@ export default function GoldStarFamiliesPage() {
 			</section>
 			<section className="section">
 				<div className="container value-grid">
-					<div><Mountain /><h2>Time outside</h2><p>Fishing, trails, ranch settings, and other outdoor activities provide a shared focus without asking families to tell their story publicly.</p></div>
-					<div><UsersRound /><h2>Thoughtful hosting</h2><p>The team works with families and hosts to discuss the specific experience, participation needs, and practical preparation.</p></div>
-					<div><HeartHandshake /><h2>Costs covered</h2><p>Selected families attend at no cost, with event-specific travel, lodging, meals, gear, and activity support confirmed in advance.</p></div>
+					<div><Mountains size={30} /><h2>Time outside</h2><p>Fishing, trails, ranch settings, and other outdoor activities provide a shared focus without asking families to tell their story publicly.</p></div>
+					<div><Users size={30} /><h2>Thoughtful hosting</h2><p>The team works with families and hosts to discuss the specific experience, participation needs, and practical preparation.</p></div>
+					<div><Handshake size={30} /><h2>Costs covered</h2><p>Selected families attend at no cost, with event-specific travel, lodging, meals, gear, and activity support confirmed in advance.</p></div>
 				</div>
 			</section>
 			<section className="section faq-section">

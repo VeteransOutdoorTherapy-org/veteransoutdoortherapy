@@ -1,4 +1,4 @@
-import { ArrowRight, MapPin } from "lucide-react";
+import { ArrowRight, MapPin } from "@phosphor-icons/react/dist/ssr";
 import type { CSSProperties } from "react";
 import Image from "next/image";
 import Link from "next/link";

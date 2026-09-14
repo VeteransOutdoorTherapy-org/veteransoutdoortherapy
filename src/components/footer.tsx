@@ -1,4 +1,4 @@
-import { ExternalLink, Mail, Mountain } from "lucide-react";
+import { ArrowSquareOut, Envelope, Mountains } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 import { FACEBOOK_URL, SITE_NAME } from "@/lib/site";
 export function Footer() {
@@ -6,7 +6,7 @@ export function Footer() {
 		<footer className="footer">
 			<div className="container footer-grid">
 				<div>
-					<Mountain size={34} />
+					<Mountains size={34} />
 					<h2 className="display">
 						The best therapy
 						<br />
@@ -33,13 +33,13 @@ export function Footer() {
 				<div>
 					<h3>Connect</h3>
 					<a href="mailto:contact@veteransoutdoortherapy.org">
-						<Mail size={16} /> Email Us
+						<Envelope size={16} /> Email Us
 					</a>
 					<a
 						href={FACEBOOK_URL}
 						target="_blank"
 						rel="noreferrer">
-						<ExternalLink size={16} /> Facebook
+						<ArrowSquareOut size={16} /> Facebook
 					</a>
 					<Link href="/contact">Contact</Link>
 					<Link href="/privacy">Privacy</Link>

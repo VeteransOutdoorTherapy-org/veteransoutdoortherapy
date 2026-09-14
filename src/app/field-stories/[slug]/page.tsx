@@ -1,4 +1,4 @@
-import { ArrowRight, CalendarDays, MapPin } from "lucide-react";
+import { ArrowRight, CalendarDots, MapPin } from "@phosphor-icons/react/dist/ssr";
 import type { Metadata } from "next";
 import type { CSSProperties } from "react";
 import Image from "next/image";
@@ -110,7 +110,7 @@ export default async function FieldStoryPage({ params }: PageProps<"/field-stori
 						<Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Field stories", href: "/field-stories" }, { label: story.title }]} />
 						<p className="eyebrow">Story from the field</p>
 						<h1 className="display">{story.title}</h1>
-						<div className="field-story-meta"><span><CalendarDays size={18} /> {story.date}</span><span><MapPin size={18} /> {story.location}</span></div>
+						<div className="field-story-meta"><span><CalendarDots size={18} /> {story.date}</span><span><MapPin size={18} /> {story.location}</span></div>
 					</div>
 				</header>
 				<div className="container field-story-body">
