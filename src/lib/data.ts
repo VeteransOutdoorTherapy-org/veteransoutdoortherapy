@@ -978,7 +978,7 @@ export type FieldStory = {
 export const fieldStories: FieldStory[] = [
 	{
 		slug: "coulter-lake-female-veteran-horseback-adventure-2026",
-		title: "Female Veterans Gather at Coulter Lake Guest Ranch",
+		title: "Healing on Horseback at Coulter Lake, Colorado",
 		date: "July 8-12, 2026",
 		datePublished: "2026-07-12",
 		location: "Coulter Lake Guest Ranch, Rifle, Colorado",
@@ -1023,7 +1023,7 @@ export const fieldStories: FieldStory[] = [
 	},
 	{
 		slug: "second-annual-poker-run-2026",
-		title: "Riders Rally for the Second Annual Poker Run",
+		title: "Kickstands Up for the Second Annual Poker Run",
 		date: "June 20, 2026",
 		datePublished: "2026-06-20",
 		location: "Head's Blacktop Harley-Davidson, Columbia, Missouri",
@@ -1058,7 +1058,7 @@ export const fieldStories: FieldStory[] = [
 	},
 	{
 		slug: "white-river-fly-fishing-2026",
-		title: "Veterans Learn to Fly Fish on the White River",
+		title: "First Casts on the White River, Arkansas",
 		date: "August 28-31, 2026",
 		datePublished: "2026-08-31",
 		location: "Rainbow Drive Resort, White River, Arkansas",
@@ -1109,7 +1109,7 @@ export const fieldStories: FieldStory[] = [
 	},
 	{
 		slug: "flint-hills-kansas-turkey-hunt-2026",
-		title: "Veterans Chase Turkeys in the Flint Hills",
+		title: "Dawn in the Flint Hills: A Kansas Turkey Hunt",
 		date: "May 14-17, 2026",
 		datePublished: "2026-05-17",
 		location: "Flint Hills, Kansas",
@@ -1163,7 +1163,7 @@ export const fieldStories: FieldStory[] = [
 	},
 	{
 		slug: "missouri-turkey-hunt-2026",
-		title: "Veterans Tag Toms on the Inaugural Missouri Turkey Hunt",
+		title: "Four Birds on Missouri’s First Turkey Hunt",
 		date: "April 30 - May 4, 2026",
 		datePublished: "2026-05-04",
 		location: "Missouri",
@@ -1210,7 +1210,7 @@ export const fieldStories: FieldStory[] = [
 	},
 	{
 		slug: "missouri-paddlefish-snagging-2026",
-		title: "Veterans Snag Paddlefish on the Missouri River",
+		title: "Spoonbill and Campfires on the Missouri River",
 		date: "March 20-22, 2026",
 		datePublished: "2026-03-22",
 		location: "Missouri River, Missouri",
@@ -1251,7 +1251,7 @@ export const fieldStories: FieldStory[] = [
 	},
 	{
 		slug: "wilderness-to-wellness-benefit-dinner-2026",
-		title: "Wilderness to Wellness: The Inaugural Benefit Dinner",
+		title: "A Full House at the First Wilderness to Wellness Dinner",
 		date: "March 13, 2026",
 		datePublished: "2026-03-13",
 		location: "54 Country, Missouri",
