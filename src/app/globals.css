@@ -12,7 +12,7 @@
 
 @theme inline {
 	--font-sans: var(--font-body);
-	--font-display: var(--font-display);
+	--font-display: var(--font-body);
 }
 * {
 	box-sizing: border-box;
@@ -49,14 +49,15 @@ img {
 	margin-inline: auto;
 }
 .display {
-	font-family: var(--font-display), sans-serif;
-	letter-spacing: 0;
+	font-family: var(--font-body), sans-serif;
+	font-weight: 700;
+	letter-spacing: -0.015em;
 	text-transform: uppercase;
-	line-height: 0.92;
+	line-height: 1.02;
 }
 .eyebrow {
 	color: var(--orange);
-	font-family: var(--font-display), sans-serif;
+	font-family: var(--font-accent), sans-serif;
 	font-size: clamp(1rem, 0.35vw + 0.92rem, 1.15rem);
 	font-weight: 700;
 	letter-spacing: 0.08em;
@@ -102,7 +103,7 @@ img {
 .section-title {
 	max-width: 740px;
 	margin: 8px 0 30px;
-	font-size: clamp(2.5rem, 6vw, 5rem);
+	font-size: clamp(1.85rem, 4.8vw, 3.7rem);
 }
 .field {
 	width: 100%;
@@ -249,7 +250,7 @@ img {
 
 .footer h2 {
 	margin: 15px 0;
-	font-size: clamp(2.2rem, 4vw, 3.8rem);
+	font-size: clamp(1.63rem, 3.2vw, 2.81rem);
 }
 
 .footer h3 {
@@ -396,7 +397,7 @@ img {
 .hero h1 {
 	max-width: 850px;
 	margin: 14px 0 24px;
-	font-size: clamp(4rem, 8vw, 6rem);
+	font-size: clamp(2.96rem, 6.4vw, 4.44rem);
 }
 .hero-content > p:not(.eyebrow) {
 	max-width: 42rem;
@@ -426,7 +427,7 @@ img {
 }
 .mission-grid h2 {
 	margin: 8px 0 0;
-	font-size: clamp(2.5rem, 5vw, 3.7rem);
+	font-size: clamp(1.85rem, 4.0vw, 2.74rem);
 }
 .mission-grid .eyebrow {
 	margin: 0;
@@ -519,7 +520,7 @@ img {
 	margin: 18px;
 	background: var(--orange);
 	color: #fff;
-	font-family: var(--font-display);
+	font-family: var(--font-accent);
 	font-size: 1.2rem;
 }
 .event-copy {
@@ -788,7 +789,7 @@ img {
 	z-index: 1;
 }
 .quote span {
-	font: 5.4rem/0 var(--font-display);
+	font: 5.4rem/0 var(--font-accent);
 	opacity: 0.5;
 }
 .quote blockquote {
@@ -821,7 +822,7 @@ img {
 }
 @media (min-width: 921px) and (max-height: 700px) {
 	.hero h1 {
-		font-size: clamp(3.5rem, 7vw, 6rem);
+		font-size: clamp(2.59rem, 5.6vw, 4.44rem);
 	}
 	.hero-content {
 		padding-top: 52px;
@@ -842,7 +843,7 @@ img {
 .page-hero h1 {
 	max-width: 850px;
 	margin: 12px 0 22px;
-	font-size: clamp(4.4rem, 8vw, 6rem);
+	font-size: clamp(3.26rem, 6.4vw, 4.44rem);
 }
 .hero-collage {
 	position: absolute;
@@ -913,7 +914,7 @@ img {
 }
 .adventure-list h2 {
 	margin: 8px 0 16px;
-	font-size: clamp(2.6rem, 5vw, 4.5rem);
+	font-size: clamp(1.92rem, 4.0vw, 3.33rem);
 }
 .adventure-list .event-number {
 	float: right;
@@ -1089,11 +1090,11 @@ img {
 	padding-top: 30px;
 }
 .product-copy h1 {
-	font-size: clamp(3rem, 6vw, 5.2rem);
+	font-size: clamp(2.22rem, 4.8vw, 3.85rem);
 	margin: 10px 0 18px;
 }
 .price {
-	font: 700 1.6rem var(--font-display);
+	font: 700 1.6rem var(--font-accent);
 	color: var(--orange);
 }
 .stock,
@@ -1170,7 +1171,7 @@ img {
 }
 .past-events-grid h3 {
 	margin: 6px 0 10px;
-	font-size: clamp(2rem, 3vw, 3rem);
+	font-size: clamp(1.48rem, 2.4vw, 2.22rem);
 	line-height: 0.98;
 }
 .past-events-grid strong {
@@ -1467,7 +1468,7 @@ img {
 }
 .donate-page h1 {
 	margin: 12px 0 24px;
-	font-size: clamp(5rem, 8vw, 6rem);
+	font-size: clamp(3.7rem, 6.4vw, 4.44rem);
 }
 .donate-page p:not(.eyebrow) {
 	max-width: 630px;
@@ -1520,7 +1521,7 @@ img {
 	display: block;
 	margin-top: 28px;
 	color: var(--orange);
-	font: 700 1.1rem var(--font-display);
+	font: 700 1.1rem var(--font-accent);
 }
 .donation-impact h3 {
 	margin: 5px 0 8px;
@@ -1542,7 +1543,7 @@ img {
 .giving-band h2,
 .sponsor-proof h2 {
 	margin: 5px 0 0;
-	font-size: clamp(2.8rem, 5vw, 4.5rem);
+	font-size: clamp(2.07rem, 4.0vw, 3.33rem);
 }
 .giving-band-video {
 	grid-column: 1 / -1;
@@ -1634,7 +1635,7 @@ img {
 }
 .sponsor-events article > span {
 	color: var(--orange);
-	font: 700 1rem var(--font-display);
+	font: 700 1rem var(--font-accent);
 	text-transform: uppercase;
 }
 .sponsor-events h3 {
@@ -1677,7 +1678,7 @@ img {
 }
 .event-page-hero h1 {
 	margin: 12px 0 22px;
-	font-size: clamp(4rem, 7vw, 6rem);
+	font-size: clamp(2.96rem, 5.6vw, 4.44rem);
 	line-height: 0.86;
 }
 .event-page-hero p:not(.eyebrow) {
@@ -1716,7 +1717,7 @@ img {
 }
 .event-page-sections h2 {
 	margin: 10px 0 20px;
-	font-size: clamp(2.8rem, 5vw, 4.8rem);
+	font-size: clamp(2.07rem, 4.0vw, 3.55rem);
 }
 .event-page-sections article > p:last-child {
 	white-space: pre-line;
@@ -1899,7 +1900,7 @@ img {
 .wiki-section:first-child { padding-top: 52px; }
 .wiki-section:last-child { border-bottom: 0; }
 .wiki-section-heading { max-width: 720px; margin-bottom: 28px; }
-.wiki-section-heading h2 { margin: 0 0 8px; font-size: clamp(1.8rem, 3vw, 2.65rem); }
+.wiki-section-heading h2 { margin: 0 0 8px; font-size: clamp(1.33rem, 2.4vw, 1.96rem); }
 .wiki-section-heading p { margin: 0; color: var(--moss); font-size: 1.02rem; line-height: 1.65; }
 .wiki-quick-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
 .wiki-quick-card { display: grid; gap: 8px; min-height: 135px; padding: 20px; border: 1px solid var(--line); background: white; color: var(--ink); transition: transform .2s, box-shadow .2s; }
@@ -2025,7 +2026,7 @@ img {
 	gap: 25px;
 }
 .invoice-heading h1 {
-	font-size: clamp(2rem, 5vw, 3.4rem);
+	font-size: clamp(1.48rem, 4.0vw, 2.52rem);
 }
 .invoice-heading > strong {
 	color: var(--forest);
@@ -2082,7 +2083,7 @@ img {
 }
 .compact-hero h1 {
 	max-width: 1000px;
-	font-size: clamp(3.5rem, 7vw, 6rem);
+	font-size: clamp(2.59rem, 5.6vw, 4.44rem);
 }
 .application-grid {
 	display: grid;
@@ -2112,7 +2113,7 @@ img {
 .path-number {
 	align-self: flex-end;
 	color: var(--moss);
-	font: 700 1.2rem var(--font-display);
+	font: 700 1.2rem var(--font-accent);
 }
 .eligibility-grid {
 	display: grid;
@@ -2210,14 +2211,14 @@ img {
 	gap: 30px;
 }
 .application-note strong {
-	font: 700 1.7rem/1.1 var(--font-display);
+	font: 700 1.7rem/1.1 var(--font-accent);
 	text-transform: uppercase;
 }
 .sponsor-hero {
 	background: #253d2c;
 }
 .sponsor-hero h1 {
-	font-size: clamp(2.75rem, 5vw, 4.75rem);
+	font-size: clamp(2.04rem, 4.0vw, 3.52rem);
 }
 .sponsor-hero .button {
 	margin-top: 24px;
@@ -2302,11 +2303,11 @@ img {
 	border-radius: 999px;
 	background: var(--orange);
 	color: var(--white);
-	font: 700 1.05rem var(--font-display);
+	font: 700 1.05rem var(--font-accent);
 }
 .faq-grid h3 {
 	margin: 0 0 12px;
-	font: 700 1.35rem/1.25 var(--font-display);
+	font: 700 1.35rem/1.25 var(--font-accent);
 	color: var(--ink);
 }
 .faq-grid p {
@@ -2364,7 +2365,7 @@ img {
 }
 .story-list h2 {
 	margin: 8px 0 14px;
-	font-size: clamp(2.6rem, 5vw, 4.8rem);
+	font-size: clamp(1.92rem, 4.0vw, 3.55rem);
 }
 .story-location,
 .field-story-meta,
@@ -2407,7 +2408,7 @@ img {
 .field-story-heading h1 {
 	max-width: 960px;
 	margin: 12px 0 22px;
-	font-size: clamp(4rem, 7vw, 6rem);
+	font-size: clamp(2.96rem, 5.6vw, 4.44rem);
 	line-height: 0.9;
 }
 .field-story-meta {
@@ -2458,7 +2459,7 @@ img {
 }
 .field-story-section-head h2 {
 	margin: 0;
-	font-size: clamp(1.7rem, 3vw, 2.3rem);
+	font-size: clamp(1.26rem, 2.4vw, 1.7rem);
 	color: var(--ink);
 }
 .field-story-gallery {
@@ -2523,7 +2524,7 @@ img {
 }
 .policy-copy h2 {
 	margin: 38px 0 10px;
-	font: 700 2rem/1 var(--font-display);
+	font: 700 2rem/1 var(--font-accent);
 	text-transform: uppercase;
 }
 .policy-copy a {

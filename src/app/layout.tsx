@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Archivo, Barlow_Condensed } from "next/font/google";
+import { Barlow_Condensed, Poppins } from "next/font/google";
 import { CartProvider } from "@/components/cart-provider";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
@@ -7,13 +7,16 @@ import { JsonLd } from "@/components/json-ld";
 import { absoluteUrl, CONTACT_EMAIL, FACEBOOK_URL, OG_IMAGE, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
-const archivo = Archivo({
+// Poppins carries the site: body copy and headings alike.
+const poppins = Poppins({
 	variable: "--font-body",
 	subsets: ["latin"],
+	weight: ["400", "500", "600", "700", "800"],
 });
 
+// Barlow Condensed is kept for the small accents only: eyebrows, tags, and captions.
 const barlow = Barlow_Condensed({
-	variable: "--font-display",
+	variable: "--font-accent",
 	subsets: ["latin"],
 	weight: ["500", "600", "700", "800"],
 });
@@ -71,7 +74,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
 		publisher: { "@id": `${SITE_URL}/#organization` },
 	};
 	return (
-		<html lang="en" className={`${archivo.variable} ${barlow.variable}`}>
+		<html lang="en" className={`${poppins.variable} ${barlow.variable}`}>
 			<body>
 				<JsonLd data={[organizationSchema, websiteSchema]} />
 				<CartProvider>
