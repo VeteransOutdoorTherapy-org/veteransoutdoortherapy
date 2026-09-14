@@ -2,7 +2,6 @@ import { ArrowRight, Compass, Handshake, ShieldCheck } from "@phosphor-icons/rea
 import Image from "next/image";
 import Link from "next/link";
 import { MissionFilm } from "@/components/mission-film";
-import { ParallaxLayer } from "@/components/parallax-layer";
 import { SectionEdge } from "@/components/section-edge";
 import { ProductCard } from "@/components/product-card";
 import { contributionCopy, mission } from "@/lib/data";
@@ -29,8 +28,7 @@ export default async function Home() {
 		.slice(0, 3);
 	return (
 		<>
-			<section className="hero">
-				<ParallaxLayer image='url("/quote-bg.jpg")' position="center 35%" />
+			<section className="hero has-edge">
 				<div className="hero-shade" />
 				<div className="container hero-content">
 					<p className="eyebrow">Previously deployed Veterans · Gold Star families</p>
@@ -48,8 +46,9 @@ export default async function Home() {
 						</Link>
 					</div>
 				</div>
+				<SectionEdge color="#292927" />
 			</section>
-			<section className="mission-band has-edge">
+			<section className="mission-band">
 				<div className="container mission-grid">
 					<div className="mission-heading">
 						<p className="eyebrow">Our mission</p>
@@ -57,7 +56,6 @@ export default async function Home() {
 					</div>
 					<p className="mission-copy">{mission}</p>
 				</div>
-				<SectionEdge color="#e4e6df" />
 			</section>
 			<MissionFilm />
 			<section className="section">
@@ -174,7 +172,7 @@ export default async function Home() {
 					</div>
 				</div>
 			</section>
-			<section className="contribution has-edge">
+			<section className="contribution">
 				<div className="container contribution-grid">
 					<div>
 						<p className="eyebrow">Every contribution makes a difference</p>
@@ -192,13 +190,9 @@ export default async function Home() {
 						</div>
 					</div>
 				</div>
-				<SectionEdge color="#0c130e" variant="b" />
 			</section>
-			<section className="quote">
-				<ParallaxLayer
-					image='linear-gradient(90deg, rgba(12, 19, 14, 0.82) 0%, rgba(12, 19, 14, 0.6) 55%, rgba(12, 19, 14, 0.76) 100%), url("/wp-content/uploads/2025/09/photo-130.jpg")'
-					position="center 30%"
-				/>
+			<section className="quote has-edge">
+				<SectionEdge color="#d4d9ce" flip />
 				<div className="container">
 					<span>“</span>
 					<blockquote>

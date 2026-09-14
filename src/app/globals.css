@@ -369,14 +369,18 @@ img {
 	align-items: flex-end;
 	overflow: hidden;
 	color: #fff;
-}
-.parallax-layer {
-	position: absolute;
-	inset: 0;
-	background-size: cover;
+	background-image: url("/quote-bg.jpg");
+	background-position: center 35%;
 	background-repeat: no-repeat;
-	will-change: transform;
-	z-index: 0;
+	background-size: cover;
+	background-attachment: fixed;
+}
+/* Mobile browsers either ignore fixed attachment or scroll it badly, so pin it there. */
+@media (max-width: 1024px), (prefers-reduced-motion: reduce) {
+	.hero,
+	.quote {
+		background-attachment: scroll;
+	}
 }
 .hero-shade {
 	position: absolute;
@@ -420,10 +424,10 @@ img {
 	left: 0;
 	right: 0;
 	bottom: -1px;
-	z-index: 2;
+	z-index: 3;
 	display: block;
 	width: 100%;
-	height: clamp(22px, 3.2vw, 46px);
+	height: clamp(30px, 4.5vw, 62px);
 	pointer-events: none;
 }
 .section-edge-top {
@@ -804,7 +808,14 @@ img {
 	position: relative;
 	overflow: hidden;
 	color: #fff;
-	padding: 80px 0;
+	padding: 110px 0 90px;
+	background-image:
+		linear-gradient(90deg, rgba(12, 19, 14, 0.82) 0%, rgba(12, 19, 14, 0.6) 55%, rgba(12, 19, 14, 0.76) 100%),
+		url("/wp-content/uploads/2025/09/photo-130.jpg");
+	background-position: center 30%;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
 }
 .quote > .container {
 	position: relative;
