@@ -127,7 +127,9 @@ export default async function Home() {
 					</div>
 				</div>
 			</section>
-			<section className="section field-film" aria-labelledby="field-film-title">
+			<section className="section field-film has-edge" aria-labelledby="field-film-title">
+				<SectionEdge color="#dedfd6" variant="a" flip />
+				<SectionEdge color="#f5f2e8" variant="b" />
 				<div className="container">
 					<div className="field-film-heading">
 						<div>
