@@ -9,6 +9,7 @@ import { events as seedEvents } from "@/lib/data";
 import { getEvent } from "@/lib/db";
 import { absoluteUrl, breadcrumbSchema, pageMetadata, SITE_NAME, SITE_URL } from "@/lib/site";
 import { imageFocusStyle } from "@/lib/data";
+import { SectionEdge } from "@/components/section-edge";
 
 export function generateStaticParams() {
 	return seedEvents.map(({ slug }) => ({ slug }));
@@ -57,7 +58,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
 				breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Events", path: "/events" }, { name: event.title, path }]),
 				eventSchema,
 			]} />
-			<section className={`event-page-hero ${event.template}`}>
+			<section className={`event-page-hero has-edge ${event.template}`}>
 				<div className="container event-page-hero-grid">
 					<div>
 						<Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Events", href: "/events" }, { label: event.title }]} />
@@ -85,6 +86,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
 						<Image src={event.image} alt={event.title} fill priority sizes="(max-width: 800px) 100vw, 48vw" />
 					</div>
 				</div>
+				<SectionEdge color="var(--paper)" variant="b" />
 			</section>
 			<section className="section event-page-content">
 				<div className="container event-page-sections">

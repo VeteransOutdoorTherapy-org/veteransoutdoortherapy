@@ -48,7 +48,6 @@ export default function VeteranHuntingPage() {
 				faqSchema(faqs),
 			]} />
 			<section className="page-hero">
-				<SectionEdge color="var(--paper)" variant="b" flip />
 				<HeroCollage seed={6} />
 				<div className="container">
 					<Breadcrumbs light items={[{ label: "Home", href: "/" }, { label: "Programs", href: "/programs" }, { label: "Veteran hunting" }]} />

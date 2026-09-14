@@ -23,7 +23,6 @@ export default async function FieldStoriesPage() {
 		<>
 			<JsonLd data={breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Field stories", path: "/field-stories" }])} />
 			<section className="page-hero">
-				<SectionEdge color="var(--paper)" variant="b" flip />
 				<HeroCollage seed={3} />
 				<div className="container">
 					<Breadcrumbs light items={[{ label: "Home", href: "/" }, { label: "Field stories" }]} />

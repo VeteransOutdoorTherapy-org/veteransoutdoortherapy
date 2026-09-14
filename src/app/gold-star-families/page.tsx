@@ -44,7 +44,6 @@ export default function GoldStarFamiliesPage() {
 				faqSchema(faqs),
 			]} />
 			<section className="page-hero">
-				<SectionEdge color="var(--paper)" variant="a" flip />
 				<HeroCollage seed={4} />
 				<div className="container">
 					<Breadcrumbs light items={[{ label: "Home", href: "/" }, { label: "Gold Star families" }]} />

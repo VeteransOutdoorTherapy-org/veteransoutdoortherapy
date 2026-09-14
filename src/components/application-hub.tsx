@@ -32,7 +32,6 @@ export function ApplicationHub() {
 	return (
 		<>
 			<section className="page-hero application-hero">
-				<SectionEdge color="var(--paper)" variant="a" flip />
 				<HeroCollage seed={10} />
 				<div className="container">
 					<Breadcrumbs light items={[{ label: "Home", href: "/" }, { label: "Applications" }]} />

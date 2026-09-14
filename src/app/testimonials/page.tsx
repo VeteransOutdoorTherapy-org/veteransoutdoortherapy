@@ -48,7 +48,6 @@ export default async function TestimonialsPage({ searchParams }: { searchParams:
 				}}
 			/>
 			<section className="page-hero">
-				<SectionEdge color="var(--paper)" variant="b" flip />
 				<HeroCollage />
 				<div className="container">
 					<Breadcrumbs

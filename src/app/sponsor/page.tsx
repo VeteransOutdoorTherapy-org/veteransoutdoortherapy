@@ -88,7 +88,6 @@ export default async function SponsorPage() {
 				faqSchema(sponsorFaqs),
 			]} />
 			<section className="page-hero sponsor-hero">
-				<SectionEdge color="var(--paper)" variant="a" flip />
 				<HeroCollage seed={8} />
 				<div className="container">
 					<Breadcrumbs light items={[{ label: "Home", href: "/" }, { label: "Sponsorships" }]} />

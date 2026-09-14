@@ -16,14 +16,23 @@ export function SectionEdge({
 	variant = "a",
 	flip = false,
 	above = false,
+	below = false,
 }: {
 	color: string;
 	variant?: EdgeVariant;
 	flip?: boolean;
 	/** Sit wholly above the parent, so the parent's own colour paints up over whatever precedes it. */
 	above?: boolean;
+	/** Sit wholly below the parent, so the parent's own colour paints down over whatever follows. */
+	below?: boolean;
 }) {
-	const placement = above ? "section-edge section-edge-above" : flip ? "section-edge section-edge-top" : "section-edge";
+	const placement = below
+		? "section-edge section-edge-below"
+		: above
+			? "section-edge section-edge-above"
+			: flip
+				? "section-edge section-edge-top"
+				: "section-edge";
 	return (
 		<svg
 			className={placement}

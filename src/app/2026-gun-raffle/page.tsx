@@ -11,7 +11,6 @@ export const metadata = pageMetadata({
 export default function RafflePage() {
 	return (
 		<section className="page-hero">
-			<SectionEdge color="var(--paper)" variant="a" flip />
 			<div className="container">
 				<Breadcrumbs light items={[{ label: "Home", href: "/" }, { label: "2026 Gun Raffle" }]} />
 				<p className="eyebrow">Annual benefit raffle</p>

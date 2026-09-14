@@ -68,7 +68,6 @@ export default function ProgramsPage() {
 		<>
 			<JsonLd data={[breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Programs", path: "/programs" }]), faqSchema(faqs)]} />
 			<section className="page-hero">
-				<SectionEdge color="var(--paper)" variant="a" flip />
 				<HeroCollage seed={5} />
 				<div className="container">
 					<Breadcrumbs light items={[{ label: "Home", href: "/" }, { label: "Programs" }]} />

@@ -497,6 +497,11 @@ body:has(.section-edge-top) .site-header {
 	/* Overlap by a pixel: at fractional layout positions a flush edge leaves a hairline gap. */
 	bottom: calc(100% - 1px);
 }
+.section-edge-below {
+	top: calc(100% - 1px);
+	bottom: auto;
+	transform: scaleY(-1);
+}
 .has-edge {
 	position: relative;
 }

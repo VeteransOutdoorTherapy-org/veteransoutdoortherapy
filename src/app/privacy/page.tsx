@@ -15,7 +15,6 @@ export default function PrivacyPage() {
 		<>
 			<JsonLd data={breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Privacy policy", path: "/privacy" }])} />
 			<section className="page-hero compact-hero">
-				<SectionEdge color="var(--paper)" variant="b" flip />
 				<div className="container">
 					<Breadcrumbs light items={[{ label: "Home", href: "/" }, { label: "Privacy" }]} />
 					<p className="eyebrow">Your information</p>

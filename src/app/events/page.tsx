@@ -30,7 +30,6 @@ export default async function EventsPage() {
 		<>
 			<JsonLd data={breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Events", path: "/events" }])} />
 			<section className="page-hero">
-				<SectionEdge color="var(--paper)" variant="a" flip />
 				<HeroCollage seed={2} />
 				<div className="container">
 					<Breadcrumbs light items={[{ label: "Home", href: "/" }, { label: "Events" }]} />

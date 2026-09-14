@@ -14,7 +14,6 @@ export default function WellnessPage() {
 		<>
 			<JsonLd data={breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Wilderness to Wellness", path: "/wilderness-to-wellness" }])} />
 			<section className="page-hero">
-				<SectionEdge color="var(--paper)" variant="a" flip />
 				<HeroCollage seed={7} />
 				<div className="container">
 					<Breadcrumbs light items={[{ label: "Home", href: "/" }, { label: "Wilderness to Wellness" }]} />

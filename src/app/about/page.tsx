@@ -17,7 +17,6 @@ export default function AboutPage() {
 		<>
 			<JsonLd data={breadcrumbSchema([{ name: "Home", path: "/" }, { name: "About", path: "/about" }])} />
 			<section className="page-hero">
-				<SectionEdge color="var(--paper)" variant="b" flip />
 				<HeroCollage seed={1} />
 				<div className="container">
 					<Breadcrumbs light items={[{ label: "Home", href: "/" }, { label: "About" }]} />

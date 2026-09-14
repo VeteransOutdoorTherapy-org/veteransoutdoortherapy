@@ -26,7 +26,6 @@ export function ApplicationFormPage({
 	return (
 		<>
 			<section className="page-hero compact-hero">
-				<SectionEdge color="var(--paper)" variant="b" flip />
 				<HeroCollage seed={9} />
 				<div className="container">
 					<Breadcrumbs light items={[{ label: "Home", href: "/" }, { label: "Applications", href: "/application" }, { label: title.replace(/\.$/, "") }]} />

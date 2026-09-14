@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { SITE_NAME } from "@/lib/site";
 import { useCart } from "./cart-provider";
+import { SectionEdge } from "./section-edge";
 
 const groups = [
 	{
@@ -45,6 +46,7 @@ export function Header() {
 				Outdoor experiences for previously deployed Veterans and Gold Star families <Link href="/application">Apply now</Link>
 			</div>
 			<header className="site-header">
+				<SectionEdge color="var(--paper)" variant="a" below />
 				<Link className="brand" href="/" aria-label={`${SITE_NAME} home`} onClick={closeNavigation}>
 					<Image
 						className="brand-logo"
