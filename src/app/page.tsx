@@ -192,7 +192,7 @@ export default async function Home() {
 				</div>
 			</section>
 			<section className="quote has-edge">
-				<SectionEdge color="#d4d9ce" flip />
+				<SectionEdge color="#d4d9ce" variant="b" flip />
 				<div className="container">
 					<span>“</span>
 					<blockquote>
