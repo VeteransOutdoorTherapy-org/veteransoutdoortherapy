@@ -848,21 +848,43 @@ img {
 	position: absolute;
 	inset: 0;
 	display: grid;
-	grid-template-columns: repeat(4, 1fr);
-	grid-template-rows: repeat(2, 1fr);
+	grid-template-columns: repeat(6, 1fr);
+	grid-template-rows: repeat(4, 1fr);
+	gap: 6px;
+	padding: 6px;
 }
 .hero-collage > div {
 	position: relative;
+	overflow: hidden;
+	border-radius: 4px;
+	grid-column: var(--col);
+	grid-row: var(--row);
 }
 .hero-collage img {
 	object-fit: cover;
-	filter: grayscale(35%);
+	filter: grayscale(20%);
+}
+@media (max-width: 860px) {
+	.hero-collage {
+		grid-template-columns: repeat(3, 1fr);
+		grid-template-rows: repeat(3, 1fr);
+	}
+	/* The 6-column arrangement has no room to breathe on a phone, so the tiles flow instead. */
+	.hero-collage > div {
+		grid-column: auto;
+		grid-row: auto;
+	}
+	.hero-collage > div:nth-child(n + 10) {
+		display: none;
+	}
 }
 .hero-collage::after {
 	content: "";
 	position: absolute;
 	inset: 0;
-	background: linear-gradient(180deg, rgba(23, 32, 25, 0.9) 0%, rgba(23, 32, 25, 0.78) 45%, rgba(23, 32, 25, 0.94) 100%);
+	background:
+		linear-gradient(100deg, rgba(23, 32, 25, 0.94) 0%, rgba(23, 32, 25, 0.82) 42%, rgba(23, 32, 25, 0.5) 100%),
+		linear-gradient(180deg, rgba(23, 32, 25, 0.55) 0%, rgba(23, 32, 25, 0.35) 40%, rgba(23, 32, 25, 0.8) 100%);
 }
 .page-hero > .container > p:not(.eyebrow) {
 	max-width: 42rem;
@@ -2115,7 +2137,7 @@ img {
 }
 .eligibility-points h3 {
 	margin: 0;
-	font-size: 1.15rem;
+	font-size: 1.7rem;
 }
 .eligibility-points p {
 	margin: 0;
