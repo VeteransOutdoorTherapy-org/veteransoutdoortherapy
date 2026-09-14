@@ -101,7 +101,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
 					</article>
 				</div>
 			</section>
-			<section className="giving-band">
+			<section className="giving-band light">
 				<div className="container">
 					<div>
 						<h2 className="display">{event.title}</h2>

@@ -1680,6 +1680,14 @@ body:has(.section-edge-top) .site-header {
 	align-items: center;
 	gap: 45px;
 }
+/* A light closing band, so an event page does not run dark hero into dark band into dark footer. */
+.giving-band.light {
+	background: #e4e6df;
+	color: var(--ink);
+}
+.giving-band.light p {
+	color: #46503f;
+}
 .giving-band h2,
 .sponsor-proof h2 {
 	margin: 5px 0 0;

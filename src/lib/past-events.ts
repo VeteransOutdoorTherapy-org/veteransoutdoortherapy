@@ -94,8 +94,8 @@ export const documentedPastEvents: PastEvent[] = [
 	},
 	{
 		title: "Poker Run",
-		date: "May-June 2025",
-		sortDate: "2025-05-01",
+		date: "June 2025",
+		sortDate: "2025-06-01",
 		type: "Fundraiser",
 		summary: "Riders and community supporters gathered to help fund outdoor experiences for Veterans and Gold Star families.",
 		image: `${uploads}/events/poker-run.webp`,
