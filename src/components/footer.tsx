@@ -1,9 +1,11 @@
 import { ArrowSquareOut, Envelope, Mountains } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 import { FACEBOOK_URL, SITE_NAME } from "@/lib/site";
+import { SectionEdge } from "./section-edge";
 export function Footer() {
 	return (
 		<footer className="footer">
+			<SectionEdge color="var(--ink)" variant="b" above />
 			<div className="container footer-grid">
 				<div>
 					<Mountains size={34} />

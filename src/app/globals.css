@@ -242,6 +242,7 @@ body:has(.section-edge-top) .site-header {
 	background: transparent;
 }
 .footer {
+	position: relative;
 	background: var(--ink);
 	color: #f6f2e5;
 	padding: 72px 0 24px;
@@ -489,6 +490,11 @@ body:has(.section-edge-top) .site-header {
 	top: -1px;
 	bottom: auto;
 	transform: scaleY(-1);
+}
+/* Sits entirely above its parent: the mass stays against the parent, the brush edge faces up. */
+.section-edge-above {
+	top: auto;
+	bottom: 100%;
 }
 .has-edge {
 	position: relative;

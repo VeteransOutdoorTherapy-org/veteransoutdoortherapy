@@ -11,10 +11,22 @@ const PATHS = {
  * An edge painted in the colour of the neighbouring section, overlapping the join so one section
  * appears torn over the other. Put it at the foot of a section, or `flip` it onto the top.
  */
-export function SectionEdge({ color, variant = "a", flip = false }: { color: string; variant?: EdgeVariant; flip?: boolean }) {
+export function SectionEdge({
+	color,
+	variant = "a",
+	flip = false,
+	above = false,
+}: {
+	color: string;
+	variant?: EdgeVariant;
+	flip?: boolean;
+	/** Sit wholly above the parent, so the parent's own colour paints up over whatever precedes it. */
+	above?: boolean;
+}) {
+	const placement = above ? "section-edge section-edge-above" : flip ? "section-edge section-edge-top" : "section-edge";
 	return (
 		<svg
-			className={flip ? "section-edge section-edge-top" : "section-edge"}
+			className={placement}
 			viewBox="0 0 1440 40"
 			preserveAspectRatio="none"
 			aria-hidden="true"
