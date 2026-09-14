@@ -65,6 +65,7 @@ export default async function TestimonialsPage({ searchParams }: { searchParams:
 						others who understand.
 					</p>
 				</div>
+				<SectionEdge color="var(--paper)" variant="a" />
 			</section>
 
 			<section className="section">

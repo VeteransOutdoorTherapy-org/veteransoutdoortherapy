@@ -22,6 +22,7 @@ export default function PrivacyPage() {
 					<h1 className="display">Privacy policy.</h1>
 					<p>How information is handled when you contact, apply, donate, or purchase through this website.</p>
 				</div>
+				<SectionEdge color="var(--paper)" variant="a" />
 			</section>
 			<section className="section">
 				<div className="container policy-copy">

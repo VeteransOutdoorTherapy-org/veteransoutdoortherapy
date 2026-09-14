@@ -55,6 +55,7 @@ export default function GoldStarFamiliesPage() {
 						with a community that respects the meaning of their loss.
 					</p>
 				</div>
+				<SectionEdge color="var(--paper)" variant="b" />
 			</section>
 			<section className="section">
 				<div className="container value-grid">

@@ -34,6 +34,7 @@ export function ApplicationFormPage({
 					<h1 className="display">{title}</h1>
 					<p>{copy}</p>
 				</div>
+				<SectionEdge color="#e4e6df" variant="a" />
 			</section>
 			<section className="section application-embed-section">
 				<div className="container application-embed-layout">

@@ -79,6 +79,7 @@ export default function ProgramsPage() {
 						experiences for previously deployed Veterans and Gold Star families.
 					</p>
 				</div>
+				<SectionEdge color="var(--paper)" variant="b" />
 			</section>
 			<section className="section">
 				<div className="container program-grid">

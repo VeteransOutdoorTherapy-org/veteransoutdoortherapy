@@ -28,6 +28,7 @@ export default function WellnessPage() {
 						Ask about the next event
 					</Link>
 				</div>
+				<SectionEdge color="var(--paper)" variant="b" />
 			</section>
 			<section className="section">
 				<div className="container story-copy">

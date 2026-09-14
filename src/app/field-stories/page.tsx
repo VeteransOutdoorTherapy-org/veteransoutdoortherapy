@@ -34,6 +34,7 @@ export default async function FieldStoriesPage() {
 						the field.
 					</p>
 				</div>
+				<SectionEdge color="var(--paper)" variant="a" />
 			</section>
 			<section className="section">
 				<div className="container story-list">

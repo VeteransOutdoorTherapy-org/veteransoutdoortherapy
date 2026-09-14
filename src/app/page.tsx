@@ -29,6 +29,7 @@ export default async function Home() {
 	return (
 		<>
 			<section className="hero has-edge">
+				<SectionEdge color="var(--paper)" variant="b" flip />
 				<div className="hero-shade" />
 				<div className="container hero-content">
 					<p className="eyebrow">Previously deployed Veterans · Gold Star families</p>

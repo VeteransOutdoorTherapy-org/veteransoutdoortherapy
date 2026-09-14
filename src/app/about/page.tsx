@@ -24,6 +24,7 @@ export default function AboutPage() {
 					<p className="eyebrow">Built for those who served</p>
 					<h1 className="display">Our mission is built around service, nature, and shared experience.</h1>
 				</div>
+				<SectionEdge color="var(--paper)" variant="a" />
 			</section>
 			<section className="section">
 				<div className="container story-grid">

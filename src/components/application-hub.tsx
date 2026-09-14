@@ -44,6 +44,7 @@ export function ApplicationHub() {
 					</h1>
 					<p>Whether you are seeking an outdoor experience or helping create one, start with the path that fits you.</p>
 				</div>
+				<SectionEdge color="var(--paper)" variant="b" />
 			</section>
 			<section className="section">
 				<div className="container application-grid">

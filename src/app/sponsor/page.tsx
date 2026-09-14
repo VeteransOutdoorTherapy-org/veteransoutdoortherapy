@@ -102,6 +102,7 @@ export default async function SponsorPage() {
 						Explore sponsorships
 					</Link>
 				</div>
+				<SectionEdge color="var(--paper)" variant="b" />
 			</section>
 			<section className="section" id="tiers">
 				<div className="container">

@@ -24,6 +24,7 @@ export default function RafflePage() {
 					See upcoming events
 				</Link>
 			</div>
+			<SectionEdge color="#172019" variant="b" />
 		</section>
 	);
 }

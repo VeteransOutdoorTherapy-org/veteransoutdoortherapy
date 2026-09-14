@@ -38,6 +38,7 @@ export default async function EventsPage() {
 					<h1 className="display">Upcoming Veteran hunts and outdoor experiences.</h1>
 					<p>Every trip is built around connection, challenge, and the quiet that only open country can provide.</p>
 				</div>
+				<SectionEdge color="var(--paper)" variant="b" />
 			</section>
 			<section className="section">
 				<div className="container adventure-list">

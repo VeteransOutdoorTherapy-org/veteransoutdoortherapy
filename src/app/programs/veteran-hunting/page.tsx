@@ -59,6 +59,7 @@ export default function VeteranHuntingPage() {
 						experiences grounded in connection, conservation, and shared effort.
 					</p>
 				</div>
+				<SectionEdge color="var(--paper)" variant="a" />
 			</section>
 			<section className="section">
 				<div className="container value-grid">
