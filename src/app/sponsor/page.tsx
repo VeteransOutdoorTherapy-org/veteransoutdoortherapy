@@ -8,6 +8,7 @@ import { getProducts } from "@/lib/db";
 import { breadcrumbSchema, faqSchema, pageMetadata } from "@/lib/site";
 import { sponsorLogos } from "@/lib/sponsors";
 import { HeroCollage } from "@/components/hero-collage";
+import { SectionEdge } from "@/components/section-edge";
 export const metadata = pageMetadata({
 	title: "Sponsor Outdoor Programs for Veterans",
 	description: "Fund travel, lodging, meals, gear, guides, and field access for Veteran and Gold Star family outdoor experiences through a nonprofit sponsorship.",
@@ -87,6 +88,7 @@ export default async function SponsorPage() {
 				faqSchema(sponsorFaqs),
 			]} />
 			<section className="page-hero sponsor-hero">
+				<SectionEdge color="var(--paper)" variant="a" flip />
 				<HeroCollage seed={8} />
 				<div className="container">
 					<Breadcrumbs light items={[{ label: "Home", href: "/" }, { label: "Sponsorships" }]} />

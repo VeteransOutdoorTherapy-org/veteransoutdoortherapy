@@ -8,6 +8,7 @@ import { cssImagePosition } from "@/lib/data";
 import { getPublishedFieldStories } from "@/lib/db";
 import { breadcrumbSchema, pageMetadata } from "@/lib/site";
 import { HeroCollage } from "@/components/hero-collage";
+import { SectionEdge } from "@/components/section-edge";
 
 export const metadata = pageMetadata({
 	title: "Stories from Veteran Outdoor Adventures",
@@ -22,6 +23,7 @@ export default async function FieldStoriesPage() {
 		<>
 			<JsonLd data={breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Field stories", path: "/field-stories" }])} />
 			<section className="page-hero">
+				<SectionEdge color="var(--paper)" variant="b" flip />
 				<HeroCollage seed={3} />
 				<div className="container">
 					<Breadcrumbs light items={[{ label: "Home", href: "/" }, { label: "Field stories" }]} />

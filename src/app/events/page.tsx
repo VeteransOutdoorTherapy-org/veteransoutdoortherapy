@@ -7,6 +7,7 @@ import { breadcrumbSchema, pageMetadata } from "@/lib/site";
 import { HeroCollage } from "@/components/hero-collage";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { JsonLd } from "@/components/json-ld";
+import { SectionEdge } from "@/components/section-edge";
 
 export const metadata = pageMetadata({
 	title: "Veteran Outdoor Events: Upcoming and Past",
@@ -29,6 +30,7 @@ export default async function EventsPage() {
 		<>
 			<JsonLd data={breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Events", path: "/events" }])} />
 			<section className="page-hero">
+				<SectionEdge color="var(--paper)" variant="a" flip />
 				<HeroCollage seed={2} />
 				<div className="container">
 					<Breadcrumbs light items={[{ label: "Home", href: "/" }, { label: "Events" }]} />

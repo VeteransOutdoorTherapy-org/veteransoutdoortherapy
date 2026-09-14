@@ -8,6 +8,7 @@ import { publicName } from "@/lib/names";
 import { pageMetadata, breadcrumbSchema } from "@/lib/site";
 import { getPublishedTestimonials } from "@/lib/db";
 import { HeroCollage } from "@/components/hero-collage";
+import { SectionEdge } from "@/components/section-edge";
 
 export const metadata = pageMetadata({
 	title: "Veteran Testimonials — Stories of Healing & Hope",
@@ -47,6 +48,7 @@ export default async function TestimonialsPage({ searchParams }: { searchParams:
 				}}
 			/>
 			<section className="page-hero">
+				<SectionEdge color="var(--paper)" variant="b" flip />
 				<HeroCollage />
 				<div className="container">
 					<Breadcrumbs

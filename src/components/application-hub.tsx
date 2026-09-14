@@ -2,6 +2,7 @@ import { ArrowRight, FileText, HandHeart, Shield, Star } from "@phosphor-icons/r
 import Link from "next/link";
 import { Breadcrumbs } from "./breadcrumbs";
 import { HeroCollage } from "./hero-collage";
+import { SectionEdge } from "./section-edge";
 
 const paths = [
 	{
@@ -31,6 +32,7 @@ export function ApplicationHub() {
 	return (
 		<>
 			<section className="page-hero application-hero">
+				<SectionEdge color="var(--paper)" variant="a" flip />
 				<HeroCollage seed={10} />
 				<div className="container">
 					<Breadcrumbs light items={[{ label: "Home", href: "/" }, { label: "Applications" }]} />

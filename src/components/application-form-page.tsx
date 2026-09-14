@@ -1,6 +1,7 @@
 import { Breadcrumbs } from "./breadcrumbs";
 import { HeroCollage } from "./hero-collage";
 import { JotformEmbed } from "./jotform-embed";
+import { SectionEdge } from "./section-edge";
 
 const jotforms = {
 	"veteran-application": { id: "250862137733054", title: "Combat Veteran Application" },
@@ -25,6 +26,7 @@ export function ApplicationFormPage({
 	return (
 		<>
 			<section className="page-hero compact-hero">
+				<SectionEdge color="var(--paper)" variant="b" flip />
 				<HeroCollage seed={9} />
 				<div className="container">
 					<Breadcrumbs light items={[{ label: "Home", href: "/" }, { label: "Applications", href: "/application" }, { label: title.replace(/\.$/, "") }]} />

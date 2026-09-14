@@ -5,6 +5,7 @@ import { JsonLd } from "@/components/json-ld";
 import { MissionFilm } from "@/components/mission-film";
 import { breadcrumbSchema, faqSchema, pageMetadata } from "@/lib/site";
 import { HeroCollage } from "@/components/hero-collage";
+import { SectionEdge } from "@/components/section-edge";
 
 export const metadata = pageMetadata({
 	title: "Outdoor Programs for Veterans and Gold Star Families",
@@ -67,6 +68,7 @@ export default function ProgramsPage() {
 		<>
 			<JsonLd data={[breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Programs", path: "/programs" }]), faqSchema(faqs)]} />
 			<section className="page-hero">
+				<SectionEdge color="var(--paper)" variant="a" flip />
 				<HeroCollage seed={5} />
 				<div className="container">
 					<Breadcrumbs light items={[{ label: "Home", href: "/" }, { label: "Programs" }]} />

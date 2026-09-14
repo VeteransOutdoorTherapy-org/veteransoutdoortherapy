@@ -3,6 +3,7 @@ import { breadcrumbSchema, pageMetadata } from "@/lib/site";
 import { HeroCollage } from "@/components/hero-collage";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { JsonLd } from "@/components/json-ld";
+import { SectionEdge } from "@/components/section-edge";
 export const metadata = pageMetadata({
 	title: "Wilderness to Wellness Benefit",
 	description: "Learn about the Wilderness to Wellness benefit supporting outdoor experiences for previously deployed Veterans and Gold Star families.",
@@ -13,6 +14,7 @@ export default function WellnessPage() {
 		<>
 			<JsonLd data={breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Wilderness to Wellness", path: "/wilderness-to-wellness" }])} />
 			<section className="page-hero">
+				<SectionEdge color="var(--paper)" variant="a" flip />
 				<HeroCollage seed={7} />
 				<div className="container">
 					<Breadcrumbs light items={[{ label: "Home", href: "/" }, { label: "Wilderness to Wellness" }]} />

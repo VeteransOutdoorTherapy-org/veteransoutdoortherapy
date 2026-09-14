@@ -2,6 +2,7 @@ import Link from "next/link";
 import { JsonLd } from "@/components/json-ld";
 import { breadcrumbSchema, CONTACT_EMAIL, pageMetadata, SITE_NAME } from "@/lib/site";
 import { Breadcrumbs } from "@/components/breadcrumbs";
+import { SectionEdge } from "@/components/section-edge";
 
 export const metadata = pageMetadata({
 	title: "Privacy Policy",
@@ -14,6 +15,7 @@ export default function PrivacyPage() {
 		<>
 			<JsonLd data={breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Privacy policy", path: "/privacy" }])} />
 			<section className="page-hero compact-hero">
+				<SectionEdge color="var(--paper)" variant="b" flip />
 				<div className="container">
 					<Breadcrumbs light items={[{ label: "Home", href: "/" }, { label: "Privacy" }]} />
 					<p className="eyebrow">Your information</p>
