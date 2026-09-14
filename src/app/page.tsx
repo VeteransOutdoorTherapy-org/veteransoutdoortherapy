@@ -165,6 +165,10 @@ export default async function Home() {
 				<div className="container">
 					<p className="eyebrow">Mission gear</p>
 					<h2 className="display section-title">Wear your support.</h2>
+					<p className="prose donation-note">
+						Every order is a donation. What you spend on a hoodie or a mug pays for a night of lodging, a meal
+						around the table, or the gear that gets a previously deployed Veteran or a Gold Star family outdoors.
+					</p>
 					<div className="product-grid">
 						{merchandise.map((product) => (
 							<ProductCard key={product.slug} product={product} />

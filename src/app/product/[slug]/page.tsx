@@ -1,4 +1,4 @@
-import { ArrowLeft, Package, ShieldCheck, Truck } from "@phosphor-icons/react/dist/ssr";
+import { ArrowLeft, HandHeart, Package, ShieldCheck } from "@phosphor-icons/react/dist/ssr";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -83,12 +83,16 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 						) : null}
 						{!productInStock(product) && <p className="stock sold-out">Sold out</p>}
 						<AddToCart product={product} />
+						<p className="donation-note">
+							This purchase is a donation. Every dollar goes back into the lodging, meals, and gear behind an
+							outdoor experience for a previously deployed Veteran or a Gold Star family.
+						</p>
 						<div className="product-assurance">
 							<span>
 								<ShieldCheck size={30} /> Secure PayPal checkout
 							</span>
 							<span>
-								<Truck size={30} /> Purpose-driven purchase
+								<HandHeart size={30} /> Funds a Veteran&apos;s time outdoors
 							</span>
 						</div>
 					</div>

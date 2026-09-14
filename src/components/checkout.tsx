@@ -214,6 +214,9 @@ export function Checkout() {
 				)}
 				{error && <p className="form-error" role="alert">{error}</p>}
 				{message && <p role="status">{message}</p>}
+				<p className="secure-note">
+					Your order is a donation: it funds lodging, meals, and gear for Veterans and Gold Star families.
+				</p>
 				<p className="secure-note">Payments are securely processed by PayPal.</p>
 			</aside>
 		</div>

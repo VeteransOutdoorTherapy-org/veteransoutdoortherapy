@@ -746,42 +746,92 @@ img {
 	border: 0;
 }
 .product-card {
+	display: flex;
+	flex-direction: column;
 	min-width: 0;
-	background: var(--white);
+	overflow: hidden;
 	border: 1px solid var(--line);
+	border-radius: 14px;
+	background: var(--white);
+	box-shadow: 0 8px 20px rgba(10, 16, 12, 0.06);
+	transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.product-card:hover {
+	transform: translateY(-4px);
+	border-color: #c2c0b2;
+	box-shadow: 0 18px 38px rgba(10, 16, 12, 0.14);
 }
 .product-image {
 	position: relative;
-	aspect-ratio: 1 / 1.05;
+	aspect-ratio: 1 / 1;
 	overflow: hidden;
-	background: #e5e3da;
+	/* Garments are shot on white; contain keeps them whole and the pad hides the seam. */
+	background: #f1efe6;
 }
 .product-image img {
-	object-fit: cover;
-	transition: transform 0.4s;
+	object-fit: contain;
+	padding: 14px;
+	transition: transform 0.4s ease;
 }
 .product-card:hover .product-image img {
-	transform: scale(1.04);
+	transform: scale(1.05);
 }
 .product-info {
-	padding: 17px;
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	gap: 4px;
+	border-top: 1px solid var(--line);
+	padding: 18px 18px 16px;
 }
 .product-info > span {
-	color: var(--moss);
-	font-size: 0.73rem;
+	color: var(--orange);
+	font-family: var(--font-accent), sans-serif;
+	font-size: 0.82rem;
 	font-weight: 700;
+	letter-spacing: 0.07em;
 	text-transform: uppercase;
 }
 .product-info h3 {
-	min-height: 52px;
-	margin: 4px 0 12px;
-	font-size: 1.08rem;
-	line-height: 1.35;
+	margin: 0 0 14px;
+	font-size: 1.16rem;
+	line-height: 1.3;
 }
+/* Prices line up across the row however tall each name runs. */
 .product-info > div {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	margin-top: auto;
+	border-top: 1px solid #eceadf;
+	padding-top: 14px;
+}
+.product-info strong {
+	font-size: 1.35rem;
+}
+.product-info > div svg {
+	color: var(--orange);
+	transition: transform 0.25s ease;
+}
+.product-card:hover .product-info > div svg {
+	transform: translate(3px, -3px);
+}
+/* Says what the money does, wherever someone is deciding whether to spend it. */
+.donation-note {
+	display: flex;
+	gap: 12px;
+	max-width: 60rem;
+	margin: 14px 0 0;
+	border-left: 3px solid var(--orange);
+	border-radius: 6px;
+	background: #f7e9dd;
+	color: var(--ink);
+	padding: 14px 18px;
+	font-size: 0.97rem;
+	line-height: 1.55;
+}
+.product-copy .donation-note {
+	margin: 22px 0 0;
 }
 .shop-grid {
 	margin-top: 45px;
