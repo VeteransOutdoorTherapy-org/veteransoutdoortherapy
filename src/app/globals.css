@@ -382,6 +382,39 @@ img {
 		background-attachment: scroll;
 	}
 }
+
+/*
+ * Scroll-speed parallax: the photograph drifts at roughly a third of the page's speed rather than
+ * standing still, which is the effect most WordPress themes ship. Browsers with scroll-driven
+ * animations get the drift; the rest keep the fixed background above, which is a fair fallback.
+ */
+@supports (animation-timeline: view()) {
+	@media (min-width: 1025px) and (prefers-reduced-motion: no-preference) {
+		.hero,
+		.quote {
+			background-attachment: scroll;
+			background-position: center 50%;
+			background-size: cover;
+			/* Longhands only: the animation shorthand would set duration to 0s, which leaves a
+			   scroll-driven animation inert, and can reset the timeline. */
+			animation-name: parallax-drift;
+			animation-duration: auto;
+			animation-timing-function: linear;
+			animation-fill-mode: both;
+			animation-timeline: view();
+			animation-range: cover 0% cover 100%;
+		}
+	}
+}
+
+@keyframes parallax-drift {
+	from {
+		background-position-y: 18%;
+	}
+	to {
+		background-position-y: 82%;
+	}
+}
 .hero-shade {
 	position: absolute;
 	inset: 0;
