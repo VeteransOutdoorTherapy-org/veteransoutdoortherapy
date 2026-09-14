@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { MissionFilm } from "@/components/mission-film";
 import { ParallaxLayer } from "@/components/parallax-layer";
+import { SectionEdge } from "@/components/section-edge";
 import { ProductCard } from "@/components/product-card";
 import { contributionCopy, mission } from "@/lib/data";
 import { getEvents, getProducts } from "@/lib/db";
@@ -48,7 +49,7 @@ export default async function Home() {
 					</div>
 				</div>
 			</section>
-			<section className="mission-band">
+			<section className="mission-band has-edge">
 				<div className="container mission-grid">
 					<div className="mission-heading">
 						<p className="eyebrow">Our mission</p>
@@ -56,6 +57,7 @@ export default async function Home() {
 					</div>
 					<p className="mission-copy">{mission}</p>
 				</div>
+				<SectionEdge color="#e4e6df" />
 			</section>
 			<MissionFilm />
 			<section className="section">
@@ -172,7 +174,7 @@ export default async function Home() {
 					</div>
 				</div>
 			</section>
-			<section className="contribution">
+			<section className="contribution has-edge">
 				<div className="container contribution-grid">
 					<div>
 						<p className="eyebrow">Every contribution makes a difference</p>
@@ -190,6 +192,7 @@ export default async function Home() {
 						</div>
 					</div>
 				</div>
+				<SectionEdge color="#0c130e" variant="b" />
 			</section>
 			<section className="quote">
 				<ParallaxLayer
