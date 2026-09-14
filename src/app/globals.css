@@ -145,6 +145,11 @@ img {
 	top: 0;
 	z-index: 30;
 }
+/* Where a hero paints over the join, the header's own rule would cut across it. */
+body:has(.section-edge-top) .site-header {
+	border-bottom-color: transparent;
+	box-shadow: none;
+}
 .brand {
 	display: flex;
 	align-items: center;
@@ -474,7 +479,7 @@ img {
 	z-index: 3;
 	display: block;
 	width: 100%;
-	height: clamp(30px, 4.5vw, 62px);
+	height: clamp(14px, 1.9vw, 26px);
 	pointer-events: none;
 }
 .section-edge-top {
