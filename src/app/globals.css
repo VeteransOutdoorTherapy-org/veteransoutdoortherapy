@@ -404,6 +404,10 @@ img {
 			animation-timeline: view();
 			animation-range: cover 0% cover 100%;
 		}
+
+		.quote {
+			animation-name: parallax-drift-high;
+		}
 	}
 }
 
@@ -413,6 +417,16 @@ img {
 	}
 	to {
 		background-position-y: 82%;
+	}
+}
+
+/* The quote photograph has its subject high in the frame, so it drifts across the top of the image. */
+@keyframes parallax-drift-high {
+	from {
+		background-position-y: 0%;
+	}
+	to {
+		background-position-y: 42%;
 	}
 }
 .hero-shade {
@@ -845,7 +859,7 @@ img {
 	background-image:
 		linear-gradient(90deg, rgba(12, 19, 14, 0.82) 0%, rgba(12, 19, 14, 0.6) 55%, rgba(12, 19, 14, 0.76) 100%),
 		url("/wp-content/uploads/2025/09/photo-130.jpg");
-	background-position: center 30%;
+	background-position: center 12%;
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-attachment: fixed;
