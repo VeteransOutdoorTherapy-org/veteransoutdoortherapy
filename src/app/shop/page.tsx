@@ -19,9 +19,7 @@ export default async function ShopPage() {
 					<p className="eyebrow">Every order is a donation</p>
 					<h1 className="display section-title">Veteran&apos;s Outdoor Therapy apparel and mission gear.</h1>
 					<p className="prose">
-						Buying a shirt here is less a transaction than a contribution. What you spend goes back into the field:
-						a night of lodging, a meal around the table, the gear that lets a previously deployed Veteran or a Gold Star
-						family spend a few days outdoors at no cost to them.
+						Every order is a donation: it pays for the lodging, meals, and gear behind a Veteran&apos;s time outdoors.
 					</p>
 					<div className="product-grid shop-grid">
 						{items.map((product) => (

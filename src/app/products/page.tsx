@@ -18,8 +18,7 @@ export default async function ProductsPage() {
 				<p className="eyebrow">Every order is a donation</p>
 				<h1 className="display section-title">Gear that gives back.</h1>
 				<p className="prose">
-					Every order is a donation to the mission. What you spend pays for the lodging, meals, and gear behind
-					a Veteran or Gold Star family’s time outdoors.
+					Every order is a donation: it pays for the lodging, meals, and gear behind a Veteran&apos;s time outdoors.
 				</p>
 				<ProductCatalog products={items} />
 			</div>
