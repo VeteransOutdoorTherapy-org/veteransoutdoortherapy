@@ -1,4 +1,4 @@
-import { Binoculars, Fish, Footprints, Trees } from "lucide-react";
+import { Binoculars, Fish, Horse, Tree } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { JsonLd } from "@/components/json-ld";
@@ -27,13 +27,13 @@ const programs = [
 		href: "/programs/veteran-hunting",
 	},
 	{
-		icon: Footprints,
-		title: "Horseback riding and hiking",
+		icon: Horse,
+		title: "Horseback riding",
 		copy: "Trails and ranch experiences offer movement, new perspective, and unhurried time with a community built around mutual respect.",
 		href: "/field-stories/coulter-lake-female-veteran-horseback-adventure-2026",
 	},
 	{
-		icon: Trees,
+		icon: Tree,
 		title: "Conservation",
 		copy: "Service-oriented outdoor days care for natural places while giving participants and partners a practical way to work side by side.",
 	},
@@ -82,10 +82,14 @@ export default function ProgramsPage() {
 				<div className="container program-grid">
 					{programs.map(({ icon: Icon, title, copy, href }) => (
 						<article key={title}>
-							<Icon />
+							<Icon size={34} weight="duotone" />
 							<h2 className="display">{title}</h2>
 							<p>{copy}</p>
-							{href && <Link className="text-link" href={href}>Explore {title}</Link>}
+							{href && (
+								<Link className="text-link" href={href}>
+									Explore {title.toLowerCase()}
+								</Link>
+							)}
 						</article>
 					))}
 				</div>
