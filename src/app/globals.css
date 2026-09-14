@@ -1599,12 +1599,18 @@ body:has(.section-edge-top) .site-header {
 	margin: 0;
 }
 .donate-page {
+	position: relative;
+	overflow: hidden;
 	min-height: 700px;
 	display: flex;
 	align-items: center;
 	padding: 80px 0;
 	background: var(--forest);
 	color: #fff;
+}
+.donate-page > .container {
+	position: relative;
+	z-index: 1;
 }
 .donate-page h1 {
 	margin: 12px 0 24px;
@@ -2408,6 +2414,8 @@ body:has(.section-edge-top) .site-header {
 	background: #e4e6df;
 }
 .breadcrumbs {
+	/* Some containers are grids; a trail must span the row rather than take the first cell. */
+	grid-column: 1 / -1;
 	margin-bottom: 1.25rem;
 	font-size: 0.78rem;
 	font-weight: 700;

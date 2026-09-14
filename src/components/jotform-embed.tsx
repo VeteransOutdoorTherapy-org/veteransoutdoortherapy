@@ -1,8 +1,8 @@
 "use client";
 
-import { ArrowSquareOut } from "@phosphor-icons/react/dist/ssr";
 import Script from "next/script";
 import { useRef } from "react";
+import { EmbedFallback } from "./embed-fallback";
 
 const JOTFORM_ORIGIN = "https://form.jotform.com/";
 
@@ -21,21 +21,9 @@ export function JotformEmbed({ formId, title }: { formId: string; title: string 
 		window.jotformEmbedHandler(`iframe[id='${iframeId}']`, JOTFORM_ORIGIN);
 	};
 
-	const fallback = (position: "above" | "below") => (
-		<p className={`embed-fallback ${position}`}>
-			<ArrowSquareOut size={17} aria-hidden="true" />
-			<span>
-				Having trouble with the embedded form?{" "}
-				<a href={`${JOTFORM_ORIGIN}${formId}`} target="_blank" rel="noreferrer">
-					Open it in a new tab.
-				</a>
-			</span>
-		</p>
-	);
-
 	return (
 		<div className="jotform-shell">
-			{fallback("above")}
+			<EmbedFallback href={`${JOTFORM_ORIGIN}${formId}`} label="Open it in a new tab." position="above" />
 			<iframe
 				id={iframeId}
 				title={title}
@@ -52,7 +40,7 @@ export function JotformEmbed({ formId, title }: { formId: string; title: string 
 				onLoad={initializeResize}
 				onReady={initializeResize}
 			/>
-			{fallback("below")}
+			<EmbedFallback href={`${JOTFORM_ORIGIN}${formId}`} label="Open it in a new tab." position="below" />
 		</div>
 	);
 }

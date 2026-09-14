@@ -11,6 +11,7 @@ import { cssImagePosition, type FieldStory } from "@/lib/data";
 import { getFieldStories, getFieldStory, getPublishedGalleryImages, getPublishedTestimonials } from "@/lib/db";
 import { publicName } from "@/lib/names";
 import { absoluteUrl, breadcrumbSchema, pageMetadata, SITE_NAME, SITE_URL } from "@/lib/site";
+import { SectionEdge } from "@/components/section-edge";
 
 /** Exposes the admin-picked hero crop to CSS, desktop and mobile separately. */
 function heroFocusStyle(story: FieldStory) {
@@ -112,6 +113,7 @@ export default async function FieldStoryPage({ params }: PageProps<"/field-stori
 						<h1 className="display">{story.title}</h1>
 						<div className="field-story-meta"><span><CalendarDots size={18} /> {story.date}</span><span><MapPin size={18} /> {story.location}</span></div>
 					</div>
+					<SectionEdge color="var(--paper)" variant="b" />
 				</header>
 				<div className="container field-story-body">
 					<p className="field-story-lead">{story.summary}</p>

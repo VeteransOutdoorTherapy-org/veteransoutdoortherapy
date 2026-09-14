@@ -3,6 +3,9 @@ import Link from "next/link";
 import { breadcrumbSchema, pageMetadata } from "@/lib/site";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { JsonLd } from "@/components/json-ld";
+import { HeroCollage } from "@/components/hero-collage";
+import { SectionEdge } from "@/components/section-edge";
+import { EmbedFallback } from "@/components/embed-fallback";
 
 export const metadata = pageMetadata({
 	title: "Donate to Veteran Outdoor Programs",
@@ -39,6 +42,7 @@ export default function DonatePage() {
 		<>
 			<JsonLd data={breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Donate", path: "/donate" }])} />
 			<section className="donate-page">
+				<HeroCollage seed={11} />
 				<div className="container">
 					<Breadcrumbs light items={[{ label: "Home", href: "/" }, { label: "Donate" }]} />
 					<p className="eyebrow">Every gift moves the mission</p>
@@ -56,6 +60,7 @@ export default function DonatePage() {
 						</Link>
 					</div>
 				</div>
+				<SectionEdge color="var(--paper)" variant="a" />
 			</section>
 			<section className="section donation-form-section" id="donation-form">
 				<div className="container donation-form-layout">
@@ -68,6 +73,7 @@ export default function DonatePage() {
 						</p>
 					</div>
 					<div className="zeffy-shell">
+						<EmbedFallback href={zeffyFormUrl} label="Open Zeffy in a new tab." position="above" />
 						<iframe
 							title="Donation form powered by Zeffy"
 							src={zeffyFormUrl}
@@ -75,12 +81,7 @@ export default function DonatePage() {
 							loading="eager"
 							referrerPolicy="strict-origin-when-cross-origin"
 						/>
-						<p className="embed-fallback">
-							Having trouble with the embedded form?{" "}
-							<a href={zeffyFormUrl} target="_blank" rel="noreferrer">
-								Open Zeffy in a new tab.
-							</a>
-						</p>
+						<EmbedFallback href={zeffyFormUrl} label="Open Zeffy in a new tab." position="below" />
 					</div>
 				</div>
 			</section>
