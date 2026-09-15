@@ -1,4 +1,4 @@
-import { ArrowRight, FileText, HandHeart, Shield, Star } from "@phosphor-icons/react/dist/ssr";
+import { FileText, HandHeart, Medal, ShieldChevron, Star } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 import { Breadcrumbs } from "./breadcrumbs";
 import { HeroCollage } from "./hero-collage";
@@ -6,7 +6,8 @@ import { SectionEdge } from "./section-edge";
 
 const paths = [
 	{
-		icon: Shield,
+		icon: ShieldChevron,
+		ribbon: "For those who deployed",
 		title: "Veteran application",
 		copy: "For previously deployed Veterans. The application asks about your deployment history, and a DD214 is required before a trip is confirmed.",
 		href: "/veteran-application",
@@ -14,15 +15,17 @@ const paths = [
 	},
 	{
 		icon: Star,
-		title: "Gold Star family",
-		copy: "Request support and outdoor opportunities for Gold Star family members and children.",
+		ribbon: "For the families of the fallen",
+		title: "Gold Star family member",
+		copy: "For anyone who lost a service member — a spouse, parent, child, or sibling. You apply as yourself, not on behalf of a household.",
 		href: "/gold-star-family-application",
-		action: "Apply as a family",
+		action: "Apply as a Gold Star family member",
 	},
 	{
 		icon: HandHeart,
+		ribbon: "For those who make it possible",
 		title: "Volunteer, host, or fundraiser",
-		copy: "Offer your time, property, expertise, or fundraising support to help make an adventure possible.",
+		copy: "Offer your time, property, expertise, or fundraising support to help make an outdoor experience possible.",
 		href: "/fundraising-application",
 		action: "Join the mission",
 	},
@@ -47,16 +50,16 @@ export function ApplicationHub() {
 			</section>
 			<section className="section">
 				<div className="container application-grid">
-					{paths.map(({ icon: Icon, title, copy, href, action }, index) => (
-						<article key={href}>
-							<span className="path-number">0{index + 1}</span>
-							<Icon size={34} />
+					{paths.map(({ icon: Icon, ribbon, title, copy, href, action }) => (
+						<Link className="path-card" key={href} href={href}>
+							<span className="path-ribbon">{ribbon}</span>
+							<span className="path-medallion">
+								<Icon size={30} weight="duotone" />
+							</span>
 							<h2 className="display">{title}</h2>
 							<p>{copy}</p>
-							<Link className="text-link" href={href}>
-								{action} <ArrowRight size={17} />
-							</Link>
-						</article>
+							<span className="path-action">{action}</span>
+						</Link>
 					))}
 				</div>
 			</section>
@@ -66,14 +69,14 @@ export function ApplicationHub() {
 						<p className="eyebrow">Before you apply</p>
 						<h2 className="display section-title">Who these programs are for.</h2>
 						<p className="prose">
-							Our outdoor programs exist for Veterans who deployed, and for Gold Star families and their children. That
-							focus is deliberate: the experiences are built around what deployment leaves behind, and around the company
-							of others who carry the same thing.
+							Our outdoor programs exist for Veterans who deployed, and for Gold Star family members. That focus is
+							deliberate: the experiences are built around what deployment leaves behind, and around the company of
+							others who carry the same thing.
 						</p>
 					</div>
 					<div className="eligibility-points">
 						<div>
-							<Shield size={26} />
+							<ShieldChevron size={26} />
 							<h3 className="display">Deployment history</h3>
 							<p>
 								The Veteran application asks where and when you deployed. Combat service is not required, but a
@@ -90,11 +93,12 @@ export function ApplicationHub() {
 							</p>
 						</div>
 						<div>
-							<Star size={26} />
-							<h3 className="display">Gold Star families</h3>
+							<Medal size={26} />
+							<h3 className="display">Gold Star family members</h3>
 							<p>
-								Gold Star family members and children apply through the family application instead. No DD214 is needed;
-								we will ask about your service member and how your family would like to be honored.
+								A Gold Star family member &mdash; a spouse, parent, child, or sibling of a service member who died &mdash;
+								applies through the Gold Star application instead. No DD214 is needed; we will ask about your service
+								member and how you would like them honored.
 							</p>
 						</div>
 					</div>
@@ -102,7 +106,7 @@ export function ApplicationHub() {
 			</section>
 			<section className="application-note">
 				<div className="container">
-					<strong>Selected applicants pay nothing. Travel, lodging, meals, and gear are covered.</strong>
+					<strong>Every application is read by a person, not a form.</strong>
 					<p>
 						Our team reviews each application personally and contacts applicants directly about fit, availability,
 						accessibility, and next steps.

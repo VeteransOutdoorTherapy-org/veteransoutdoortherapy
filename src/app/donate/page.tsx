@@ -98,7 +98,7 @@ export default function DonatePage() {
 							Veteran&apos;s Outdoor Therapy runs on donations. Landowners open their ground and our guides give their
 							time, but an experience still has to be paid for long before anyone reaches the trailhead &mdash; and once
 							it is committed, it is committed. Your gift is what holds that place in the field open for a previously
-							deployed Veteran or a Gold Star family.
+							deployed Veteran or a Gold Star family member.
 						</p>
 					</div>
 					<div className="donation-impact">

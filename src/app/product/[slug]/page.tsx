@@ -116,7 +116,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 						<AddToCart product={product} />
 						<p className="donation-note">
 							This purchase is a donation. Every dollar goes back into the lodging, meals, and gear behind an
-							outdoor experience for a previously deployed Veteran or a Gold Star family.
+							outdoor experience for a previously deployed Veteran or a Gold Star family member.
 						</p>
 						<div className="product-assurance">
 							<span>

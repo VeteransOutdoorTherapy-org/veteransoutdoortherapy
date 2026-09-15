@@ -11,7 +11,7 @@ import { HeroCollage } from "@/components/hero-collage";
 import { SectionEdge } from "@/components/section-edge";
 export const metadata = pageMetadata({
 	title: "Sponsor Outdoor Programs for Veterans",
-	description: "Fund travel, lodging, meals, gear, guides, and field access for Veteran and Gold Star family outdoor experiences through a nonprofit sponsorship.",
+	description: "Fund travel, lodging, meals, gear, guides, and field access for Veteran and Gold Star family member outdoor experiences through a nonprofit sponsorship.",
 	path: "/sponsorships",
 });
 const tierDetails: Record<string, { tagline: string; benefits: string[] }> = {
@@ -62,7 +62,7 @@ const customTier = {
 const sponsorFaqs = [
 	{
 		question: "What does a nonprofit sponsorship fund?",
-		answer: "Sponsorships help cover practical program costs such as travel, lodging, meals, field access, guides, equipment, and activity expenses for selected Veterans and Gold Star family participants.",
+		answer: "Sponsorships help cover practical program costs such as travel, lodging, meals, field access, guides, equipment, and activity expenses for selected Veterans and Gold Star family members.",
 	},
 	{
 		question: "Can a business sponsor a specific hunt or event?",

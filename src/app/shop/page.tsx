@@ -22,7 +22,7 @@ export default async function ShopPage() {
 					<p className="eyebrow">Wear the mission</p>
 					<h1 className="display">Veteran&apos;s Outdoor Therapy apparel and mission gear.</h1>
 					<p>
-						Every order is a donation toward putting a previously deployed Veteran or Gold Star family in the
+						Every order is a donation toward putting a previously deployed Veteran or Gold Star family member in the
 						field, covering the lodging, meals, and gear behind their time outdoors.
 					</p>
 				</div>

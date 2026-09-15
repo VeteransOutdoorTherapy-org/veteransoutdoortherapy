@@ -2,7 +2,7 @@ import { ApplicationFormPage } from "@/components/application-form-page";
 import { JsonLd } from "@/components/json-ld";
 import { breadcrumbSchema, pageMetadata } from "@/lib/site";
 export const metadata = pageMetadata({
-	title: "Gold Star Family Outdoor Program Application",
+	title: "Gold Star Family Member Outdoor Program Application",
 	description: "Gold Star family members can apply for thoughtfully hosted outdoor experiences with Veteran's Outdoor Therapy.",
 	path: "/gold-star-family-application",
 	noIndex: true,
