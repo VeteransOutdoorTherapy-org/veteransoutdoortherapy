@@ -2493,9 +2493,11 @@ img {
 	color: var(--moss);
 }
 /* Light on purpose: this closes the page, and a dark band here ran straight
-   into the dark footer with no seam. */
+   into the dark footer with no seam. Warm, because the band above it is the
+   cool grey #e4e6df and the two were indistinguishable. */
 .voices-band {
-	background: #e4e6df;
+	position: relative;
+	background: #efece1;
 	color: var(--ink);
 	padding-block: clamp(60px, 8vw, 96px);
 }

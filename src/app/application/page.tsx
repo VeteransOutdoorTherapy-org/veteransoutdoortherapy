@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ApplicationHub } from "@/components/application-hub";
 import { JsonLd } from "@/components/json-ld";
+import { SectionEdge } from "@/components/section-edge";
 import { getEvents, getPublishedTestimonials } from "@/lib/db";
 import { publicName } from "@/lib/names";
 import { documentedPastEvents, toPastEvent } from "@/lib/past-events";
@@ -32,7 +33,7 @@ export default async function ApplicationPage() {
 			<ApplicationHub />
 
 			{pastEvents.length > 0 && (
-				<section className="section past-events-section">
+				<section className="section past-events-section has-edge">
 					<div className="container">
 						<p className="eyebrow">What you are applying to join</p>
 						<h2 className="display section-title">Recent time in the field.</h2>
@@ -58,11 +59,12 @@ export default async function ApplicationPage() {
 							</div>
 						</div>
 					</div>
+					<SectionEdge color="#efece1" variant="b" />
 				</section>
 			)}
 
 			{voices.length > 0 && (
-				<section className="voices-band">
+				<section className="voices-band has-edge">
 					<div className="container">
 						<div className="voices-head">
 							<p className="eyebrow">From Veterans who went</p>

@@ -104,7 +104,7 @@ export function ApplicationHub() {
 					</div>
 				</div>
 			</section>
-			<section className="application-note">
+			<section className="application-note has-edge">
 				<div className="container">
 					<strong>Every application is read by a person, not a form.</strong>
 					<p>
@@ -112,6 +112,7 @@ export function ApplicationHub() {
 						accessibility, and next steps.
 					</p>
 				</div>
+				<SectionEdge color="#e4e6df" variant="a" />
 			</section>
 		</>
 	);
