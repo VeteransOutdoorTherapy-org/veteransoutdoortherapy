@@ -51,8 +51,11 @@ export default async function ApplicationPage() {
 							))}
 						</div>
 						<div className="link-row">
-							<Link className="text-link" href="/events">See every event <ArrowRight size={17} /></Link>
-							<Link className="text-link" href="/field-stories">Read stories from the field <ArrowRight size={17} /></Link>
+							<p>Three recent trips, out of many. The calendar and the write-ups go back further.</p>
+							<div className="link-row-actions">
+								<Link className="button secondary" href="/events">See the events</Link>
+								<Link className="button secondary" href="/field-stories">Read stories from the field</Link>
+							</div>
 						</div>
 					</div>
 				</section>
@@ -77,7 +80,7 @@ export default async function ApplicationPage() {
 								</figure>
 							))}
 						</div>
-						<Link className="text-link" href="/testimonials">Read every testimonial <ArrowRight size={17} /></Link>
+						<Link className="text-link" href="/testimonials">Read more testimonials <ArrowRight size={17} /></Link>
 					</div>
 				</section>
 			)}

@@ -762,15 +762,34 @@ img {
 	outline: 2px solid var(--orange);
 	outline-offset: 4px;
 }
+/* Closes a card grid. Sitting loose under the grid, these read as a stray
+   fourth item in the first column, so they get a rule and the full width. */
 .link-row {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
-	gap: 12px 30px;
-	margin-top: 26px;
+	justify-content: space-between;
+	gap: 20px 40px;
+	margin-top: 52px;
+	border-top: 1px solid var(--line);
+	padding-top: 30px;
 }
-.link-row .text-link {
-	margin-top: 0;
+.link-row > p {
+	max-width: 30rem;
+	margin: 0;
+	color: #46503f;
+	font-size: 1.02rem;
+}
+.link-row-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px;
+}
+@media (max-width: 620px) {
+	.link-row-actions,
+	.link-row-actions .button {
+		width: 100%;
+	}
 }
 .impact {
 	background: #dedfd6;
@@ -2473,9 +2492,11 @@ img {
 	margin: 0;
 	color: var(--moss);
 }
+/* Light on purpose: this closes the page, and a dark band here ran straight
+   into the dark footer with no seam. */
 .voices-band {
-	background: var(--ink);
-	color: #fff;
+	background: #e4e6df;
+	color: var(--ink);
 	padding-block: clamp(60px, 8vw, 96px);
 }
 .voices-head {
@@ -2496,9 +2517,9 @@ img {
 	gap: 14px;
 	align-content: start;
 	margin: 0;
-	border: 1px solid rgba(255, 255, 255, 0.16);
+	border: 1px solid var(--line);
 	border-radius: 14px;
-	background: rgba(255, 255, 255, 0.05);
+	background: var(--white);
 	padding: 26px;
 }
 .voices-grid svg {
@@ -2518,7 +2539,7 @@ img {
 	font-size: 0.78rem;
 }
 .voices-grid figcaption span {
-	color: #bec4bd;
+	color: #46503f;
 	font-weight: 600;
 	text-transform: none;
 	letter-spacing: 0;

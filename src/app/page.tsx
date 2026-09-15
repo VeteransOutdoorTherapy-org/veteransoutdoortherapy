@@ -76,12 +76,11 @@ export default async function Home() {
 						))}
 					</div>
 					<div className="link-row">
-						<Link className="text-link" href="/events">
-							View all adventures <ArrowRight size={17} />
-						</Link>
-						<Link className="text-link" href="/field-stories">
-							Read stories from the field <ArrowRight size={17} />
-						</Link>
+						<p>There is more on the calendar, and more behind the trips already run.</p>
+						<div className="link-row-actions">
+							<Link className="button secondary" href="/events">View all adventures</Link>
+							<Link className="button secondary" href="/field-stories">Read stories from the field</Link>
+						</div>
 					</div>
 				</div>
 			</section>
