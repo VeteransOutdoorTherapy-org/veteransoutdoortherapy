@@ -46,7 +46,7 @@ export default async function Home() {
 						</Link>
 					</div>
 				</div>
-				<SectionEdge color="#292927" />
+				<SectionEdge color="#efece1" />
 			</section>
 			<section className="mission-band">
 				<div className="container mission-grid">

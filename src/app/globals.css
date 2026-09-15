@@ -144,11 +144,31 @@ img {
 	position: sticky;
 	top: 0;
 	z-index: 30;
+	transition: transform 0.28s ease, border-color 0.28s ease;
 }
-/* Where a hero paints over the join, the header's own rule would cut across it. */
-body:has(.section-edge-top) .site-header {
+/* At the top of the page the header paints into the hero, so its own rule would cut
+   across the brush. Away from the top it is a plain bar and keeps a clean line. */
+.site-header.at-top {
 	border-bottom-color: transparent;
 	box-shadow: none;
+}
+.site-header .section-edge {
+	transition: opacity 0.2s ease;
+}
+.site-header:not(.at-top) .section-edge {
+	opacity: 0;
+}
+/* Scrolling down takes the header with it; scrolling up brings it straight back. */
+.site-header.header-away {
+	transform: translateY(-100%);
+}
+@media (prefers-reduced-motion: reduce) {
+	.site-header {
+		transition: none;
+	}
+	.site-header.header-away {
+		transform: none;
+	}
 }
 .brand {
 	display: flex;
@@ -171,6 +191,8 @@ body:has(.section-edge-top) .site-header {
 }
 .nav-group {
 	position: relative;
+	/* Above the header's painted edge, which hangs into the space the dropdown opens into. */
+	z-index: 4;
 }
 .nav-group summary {
 	display: flex;
@@ -506,8 +528,8 @@ body:has(.section-edge-top) .site-header {
 	position: relative;
 }
 .mission-band {
-	background: #292927;
-	color: #f4f1e8;
+	background: #efece1;
+	color: var(--ink);
 	padding: 60px 0;
 }
 .mission-grid {
@@ -1279,6 +1301,7 @@ body:has(.section-edge-top) .site-header {
 .product-assurance {
 	display: grid;
 	gap: 8px;
+	margin-top: 28px;
 	border-top: 1px solid var(--line);
 	padding-top: 20px;
 	font-size: 0.85rem;

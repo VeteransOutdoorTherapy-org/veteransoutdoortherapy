@@ -3,7 +3,7 @@ import { CaretDown, List, ShoppingBag, User, X } from "@phosphor-icons/react/dis
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SITE_NAME } from "@/lib/site";
 import { useCart } from "./cart-provider";
 import { SectionEdge } from "./section-edge";
@@ -33,7 +33,25 @@ export function Header() {
 	const pathname = usePathname();
 	const [openPath, setOpenPath] = useState<string | null>(null);
 	const [openGroup, setOpenGroup] = useState<string | null>(null);
+	const [atTop, setAtTop] = useState(true);
+	const [pinned, setPinned] = useState(true);
 	const open = openPath === pathname;
+
+	// The painted edge belongs to the top of the page. Once the header is stuck to the
+	// viewport it becomes a plain bar: it slides away on the way down, back on the way up.
+	useEffect(() => {
+		let previous = window.scrollY;
+		const onScroll = () => {
+			const y = window.scrollY;
+			setAtTop(y < 40);
+			if (Math.abs(y - previous) < 6) return;
+			setPinned(y < previous || y < 140);
+			previous = y;
+		};
+		onScroll();
+		window.addEventListener("scroll", onScroll, { passive: true });
+		return () => window.removeEventListener("scroll", onScroll);
+	}, []);
 	const closeNavigation = () => {
 		setOpenPath(null);
 		setOpenGroup(null);
@@ -45,7 +63,7 @@ export function Header() {
 			<div className="notice">
 				Outdoor experiences for previously deployed Veterans and Gold Star families <Link href="/application">Apply now</Link>
 			</div>
-			<header className="site-header">
+			<header className={`site-header${atTop ? " at-top" : ""}${pinned || open ? "" : " header-away"}`}>
 				<SectionEdge color="var(--paper)" variant="a" below />
 				<Link className="brand" href="/" aria-label={`${SITE_NAME} home`} onClick={closeNavigation}>
 					<Image
