@@ -76,7 +76,6 @@ export default async function Home() {
 						))}
 					</div>
 					<div className="link-row">
-						<p>There is more on the calendar, and more behind the trips already run.</p>
 						<div className="link-row-actions">
 							<Link className="button secondary" href="/events">View all adventures</Link>
 							<Link className="button secondary" href="/field-stories">Read stories from the field</Link>

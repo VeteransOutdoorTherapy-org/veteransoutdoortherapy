@@ -52,7 +52,6 @@ export default async function ApplicationPage() {
 							))}
 						</div>
 						<div className="link-row">
-							<p>Three recent trips, out of many. The calendar and the write-ups go back further.</p>
 							<div className="link-row-actions">
 								<Link className="button secondary" href="/events">See the events</Link>
 								<Link className="button secondary" href="/field-stories">Read stories from the field</Link>
