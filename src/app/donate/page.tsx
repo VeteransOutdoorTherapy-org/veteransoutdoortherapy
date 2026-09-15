@@ -1,4 +1,4 @@
-import { ArrowDown, Bed, ForkKnife, GasPump } from "@phosphor-icons/react/dist/ssr";
+import { ArrowDown, ForkKnife, GasPump, Tent } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 import { breadcrumbSchema, pageMetadata } from "@/lib/site";
 import { Breadcrumbs } from "@/components/breadcrumbs";
@@ -20,20 +20,20 @@ const impact = [
 	{
 		icon: GasPump,
 		amount: "$25",
-		title: "GasPump the route",
-		copy: "Helps move Veterans from the meeting point to open country.",
+		title: "Fuel the route",
+		copy: "Covers the drive from the meeting point out to open country.",
 	},
 	{
 		icon: ForkKnife,
 		amount: "$100",
 		title: "Share a meal",
-		copy: "Provides meals and supplies during a fully funded adventure.",
+		copy: "Feeds a Veteran and the crew through a full day in the field.",
 	},
 	{
-		icon: Bed,
+		icon: Tent,
 		amount: "$250",
 		title: "Make camp possible",
-		copy: "Supports lodging, field gear, and a participant's trip costs.",
+		copy: "Covers lodging, field gear, and a participant's trip costs.",
 	},
 ];
 
@@ -85,24 +85,40 @@ export default function DonatePage() {
 					</div>
 				</div>
 			</section>
-			<section className="section">
+			<section className="section impact-section">
 				<div className="container">
-					<p className="eyebrow">Your impact in the field</p>
-					<h2 className="display section-title">
-						A gift becomes
-						<br />
-						an experience.
-					</h2>
+					<div className="impact-head">
+						<p className="eyebrow">Where your gift goes</p>
+						<h2 className="display section-title">
+							Every dollar puts a
+							<br />
+							Veteran in the field.
+						</h2>
+						<p className="prose">
+							Veteran&apos;s Outdoor Therapy runs on donations. Nobody who comes with us pays a trip fee, so the fuel, the
+							meals, the lodging, and the gear are carried entirely by people who give. These gifts are not extras &mdash;
+							they are what makes the next hunt, float, or camp possible for a previously deployed Veteran or a Gold Star
+							family.
+						</p>
+					</div>
 					<div className="donation-impact">
 						{impact.map(({ icon: Icon, amount, title, copy }) => (
 							<article key={title}>
-								<Icon size={30} />
+								<span className="impact-icon">
+									<Icon size={28} weight="duotone" />
+								</span>
 								<strong>{amount}</strong>
 								<h3 className="display">{title}</h3>
 								<p>{copy}</p>
 							</article>
 						))}
 					</div>
+					<p className="impact-footnote">
+						Give what you can &mdash; every amount is put straight into the next experience.{" "}
+						<Link className="text-link" href="#donation-form">
+							Donate now
+						</Link>
+					</p>
 				</div>
 			</section>
 		</>
