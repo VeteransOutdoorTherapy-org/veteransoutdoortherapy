@@ -9,7 +9,7 @@ import { SectionEdge } from "@/components/section-edge";
 export const metadata = pageMetadata({
 	title: "Veteran Hunting Trips and Outdoor Adventures",
 	description:
-		"Learn how previously deployed Veterans can apply for turkey, antelope, and other ethical hunting experiences with Veteran's Outdoor Therapy, at no cost to participants.",
+		"Learn how previously deployed Veterans can apply for turkey, antelope, and other ethical hunting experiences with Veteran's Outdoor Therapy, hosted on private land across the country.",
 	path: "/programs/veteran-hunting",
 });
 
@@ -22,7 +22,7 @@ const faqs = [
 	{
 		question: "What does a hunt include?",
 		answer:
-			"Selected participants attend at no cost. Support may include core travel, lodging, meals, field access, shared equipment, and activity expenses. The team confirms exactly what is included before each hunt.",
+			"Each hunt is built around its host and location, with field access, licensing, lodging, meals, and shared equipment arranged ahead of time. What the hunt carries varies by event, and the team confirms exactly what is included, and anything you are responsible for, before you travel.",
 	},
 	{
 		question: "Do I need hunting experience or my own equipment?",
@@ -64,7 +64,7 @@ export default function VeteranHuntingPage() {
 				<div className="container value-grid">
 					<div><Compass size={30} /><h2>Shared purpose</h2><p>Scouting, preparation, time in the field, and shared meals give each group a natural reason to work and talk together.</p></div>
 					<div><ShieldCheck size={30} /><h2>Responsible field practice</h2><p>Hosts set expectations around local regulations, safety, equipment, wildlife, and respect for the land.</p></div>
-					<div><Check size={30} /><h2>Costs covered</h2><p>Selected participants attend at no cost, with event-specific travel, lodging, meals, gear, and activity details confirmed in advance.</p></div>
+					<div><Check size={30} /><h2>Arranged in advance</h2><p>Field access, licensing, lodging, meals, and shared equipment are organized with the host and confirmed before each hunt.</p></div>
 				</div>
 			</section>
 			<section className="section faq-section">

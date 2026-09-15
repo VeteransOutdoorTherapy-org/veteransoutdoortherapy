@@ -25,9 +25,9 @@ const faqs = [
 			"Programs may include fishing, hiking, horseback riding, hunting, conservation, and other hosted time outdoors. Availability changes with the event calendar, host capacity, and the needs of each group.",
 	},
 	{
-		question: "What costs are covered?",
+		question: "What is arranged for selected families?",
 		answer:
-			"Selected participants attend at no cost. Depending on the experience, support may include core travel, lodging, meals, gear, and activity expenses. Details are confirmed before participation.",
+			"Each experience is coordinated with its host ahead of time, including the activity, lodging, and meals. What the program carries varies by event, and the team confirms the details, including anything a family is responsible for, before participation.",
 	},
 	{
 		question: "Can I ask questions before applying?",
@@ -60,7 +60,7 @@ export default function GoldStarFamiliesPage() {
 				<div className="container value-grid">
 					<div><Mountains size={30} /><h2>Time outside</h2><p>Fishing, trails, ranch settings, and other outdoor activities provide a shared focus without asking families to tell their story publicly.</p></div>
 					<div><Users size={30} /><h2>Thoughtful hosting</h2><p>The team works with families and hosts to discuss the specific experience, participation needs, and practical preparation.</p></div>
-					<div><Handshake size={30} /><h2>Costs covered</h2><p>Selected families attend at no cost, with event-specific travel, lodging, meals, gear, and activity support confirmed in advance.</p></div>
+					<div><Handshake size={30} /><h2>Arranged in advance</h2><p>Hosting, lodging, meals, and activities are coordinated with the host, and the details are confirmed with each family before the event.</p></div>
 				</div>
 			</section>
 			<section className="section faq-section">

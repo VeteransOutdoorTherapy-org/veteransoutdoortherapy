@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const SITE_NAME = "Veteran's Outdoor Therapy";
 export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://veteransoutdoortherapy.org";
 export const SITE_DESCRIPTION =
-	"Hunting, fishing, horseback riding, and outdoor experiences for previously deployed Veterans and Gold Star families, at no cost to participants.";
+	"Hunting, fishing, horseback riding, and outdoor experiences for previously deployed Veterans and Gold Star families, built around healing, camaraderie, and time outdoors.";
 export const OG_IMAGE = "/og-image.png";
 export const FACEBOOK_URL = "https://www.facebook.com/p/Veterans-Outdoor-Therapy-61573994307519/";
 export const CONTACT_EMAIL = "contact@veteransoutdoortherapy.org";

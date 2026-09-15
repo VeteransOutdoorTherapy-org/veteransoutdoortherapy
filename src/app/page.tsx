@@ -11,7 +11,7 @@ import { sponsorLogos } from "@/lib/sponsors";
 
 export const metadata = pageMetadata({
 	title: "Veteran's Outdoor Therapy | Outdoor Experiences for Veterans and Gold Star Families",
-	description: "Veteran's Outdoor Therapy creates hunting, fishing, horseback riding, and outdoor experiences for previously deployed Veterans and Gold Star families, at no cost to participants.",
+	description: "Veteran's Outdoor Therapy creates hunting, fishing, horseback riding, and outdoor experiences for previously deployed Veterans and Gold Star families, built around healing and camaraderie outdoors.",
 	path: "/",
 });
 
@@ -121,8 +121,8 @@ export default async function Home() {
 						</div>
 						<div>
 							<ShieldCheck size={30} />
-							<h3>Fully funded</h3>
-							<p>Travel, meals, gear, and activities are covered for participants.</p>
+							<h3>Planned end to end</h3>
+							<p>Hosts, field access, licensing, and lodging are arranged before you arrive.</p>
 						</div>
 					</div>
 				</div>

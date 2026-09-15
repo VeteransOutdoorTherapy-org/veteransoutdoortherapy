@@ -9,7 +9,7 @@ import { EmbedFallback } from "@/components/embed-fallback";
 
 export const metadata = pageMetadata({
 	title: "Donate to Veteran Outdoor Programs",
-	description: "Support fully funded outdoor experiences for previously deployed Veterans and Gold Star families through a secure donation to Veteran's Outdoor Therapy.",
+	description: "Donate to Veteran's Outdoor Therapy and help cover the tags, lodging, meals, and gear behind outdoor experiences for previously deployed Veterans and Gold Star families.",
 	path: "/donate",
 });
 
@@ -21,7 +21,7 @@ const impact = [
 		icon: GasPump,
 		amount: "$25",
 		title: "Fuel the route",
-		copy: "Covers the drive from the meeting point out to open country.",
+		copy: "Keeps the trucks and boats running through a day in the field.",
 	},
 	{
 		icon: ForkKnife,
@@ -33,7 +33,7 @@ const impact = [
 		icon: Tent,
 		amount: "$250",
 		title: "Make camp possible",
-		copy: "Covers lodging, field gear, and a participant's trip costs.",
+		copy: "Covers lodging and the tags and licences a hunt is built on.",
 	},
 ];
 
@@ -68,8 +68,8 @@ export default function DonatePage() {
 						<p className="eyebrow">Secure online giving</p>
 						<h2 className="display section-title">Make an impact today.</h2>
 						<p className="prose">
-							Choose an amount and complete your donation securely through Zeffy. Your contribution directly supports
-							fully funded outdoor experiences for Veterans and Gold Star families.
+							Choose an amount and complete your donation securely through Zeffy. Every contribution goes directly
+							into the experiences we put together for Veterans and Gold Star families.
 						</p>
 					</div>
 					<div className="zeffy-shell">
@@ -95,10 +95,10 @@ export default function DonatePage() {
 							Veteran in the field.
 						</h2>
 						<p className="prose">
-							Veteran&apos;s Outdoor Therapy runs on donations. Nobody who comes with us pays a trip fee, so the fuel, the
-							meals, the lodging, and the gear are carried entirely by people who give. These gifts are not extras &mdash;
-							they are what makes the next hunt, float, or camp possible for a previously deployed Veteran or a Gold Star
-							family.
+							Veteran&apos;s Outdoor Therapy runs on donations. Landowners give us access and our guides give their time,
+							but tags, licences, lodging, meals, and field gear all carry a real cost, and most of it is committed months
+							before anyone reaches the trailhead. Donations are what let us hold a place in the field for a previously
+							deployed Veteran or a Gold Star family.
 						</p>
 					</div>
 					<div className="donation-impact">
@@ -114,7 +114,7 @@ export default function DonatePage() {
 						))}
 					</div>
 					<p className="impact-footnote">
-						Give what you can &mdash; every amount is put straight into the next experience.{" "}
+						Give what you can &mdash; every amount goes straight into the next experience.{" "}
 						<Link className="text-link" href="#donation-form">
 							Donate now
 						</Link>

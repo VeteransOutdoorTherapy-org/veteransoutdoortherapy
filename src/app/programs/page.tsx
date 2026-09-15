@@ -10,7 +10,7 @@ import { SectionEdge } from "@/components/section-edge";
 export const metadata = pageMetadata({
 	title: "Outdoor Programs for Veterans and Gold Star Families",
 	description:
-		"Explore hunting, fishing, horseback riding, hiking, and conservation experiences for previously deployed Veterans and Gold Star families, at no cost to participants.",
+		"Explore hunting, fishing, horseback riding, hiking, and conservation experiences for previously deployed Veterans and Gold Star families, hosted across the country.",
 	path: "/programs",
 });
 
@@ -47,9 +47,9 @@ const faqs = [
 			"Veteran's Outdoor Therapy invites previously deployed Veterans and Gold Star family members to apply. The team reviews applications for each experience and follows up about eligibility, availability, and fit.",
 	},
 	{
-		question: "What costs are covered for selected participants?",
+		question: "What is arranged for selected participants?",
 		answer:
-			"Selected participants attend at no cost. Depending on the experience, program support may include core travel, lodging, meals, gear, and activity expenses. Event-specific details are confirmed before the trip.",
+			"Each experience is organized end to end, with hosts, field access, licensing, lodging, and meals arranged in advance. What the program carries varies by event, and the team confirms the specifics, including anything a participant is responsible for, before the trip.",
 	},
 	{
 		question: "Do applicants need outdoor experience?",

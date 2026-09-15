@@ -7,7 +7,7 @@ import { Breadcrumbs } from "@/components/breadcrumbs";
 import { JsonLd } from "@/components/json-ld";
 export const metadata = pageMetadata({
 	title: "Veteran Outdoor Adventure Photo Gallery",
-	description: "See Veteran's Outdoor Therapy in the field through photos from hunting, horseback riding, community events, and fully funded outdoor experiences.",
+	description: "See Veteran's Outdoor Therapy in the field through photos from hunting, horseback riding, community events, and time outdoors with Veterans and Gold Star families.",
 	path: "/gallery",
 });
 export default async function GalleryPage() {

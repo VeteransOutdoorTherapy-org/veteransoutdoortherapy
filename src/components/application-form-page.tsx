@@ -41,8 +41,8 @@ export function ApplicationFormPage({
 						<p className="eyebrow">Confidential application</p>
 						<h2 className="display section-title">Tell us about you.</h2>
 						<p>
-							There is no cost to participate in selected programs. Your information is used only to review and
-							coordinate this request.
+							Your information is used only to review and coordinate this request. The team follows up about the
+							experience itself, what it involves, and what to expect.
 						</p>
 					</div>
 					<JotformEmbed formId={form.id} title={form.title} />
