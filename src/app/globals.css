@@ -1621,28 +1621,6 @@ img {
 	font-size: 3rem;
 	margin: 0;
 }
-.donate-page {
-	position: relative;
-	overflow: hidden;
-	min-height: 700px;
-	display: flex;
-	align-items: center;
-	padding: 80px 0;
-	background: var(--forest);
-	color: #fff;
-}
-.donate-page > .container {
-	position: relative;
-	z-index: 1;
-}
-.donate-page h1 {
-	margin: 12px 0 24px;
-	font-size: clamp(3.7rem, 6.4vw, 4.44rem);
-}
-.donate-page p:not(.eyebrow) {
-	max-width: 630px;
-	font-size: 1.15rem;
-}
 .donation-form-section {
 	scroll-margin-top: 76px;
 	background: #e4e6df;
@@ -1685,7 +1663,7 @@ img {
 	gap: 18px;
 	margin-top: 38px;
 }
-.donation-impact article {
+.impact-card {
 	position: relative;
 	overflow: hidden;
 	border: 1px solid var(--line);
@@ -1695,7 +1673,7 @@ img {
 	transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 /* A ruled band across the top, so the three tiers read as steps in a ladder. */
-.donation-impact article::before {
+.impact-card::before {
 	content: "";
 	position: absolute;
 	top: 0;
@@ -1705,16 +1683,39 @@ img {
 	background: var(--orange);
 	opacity: 0.35;
 }
-.donation-impact article:nth-child(2)::before {
+.impact-card:nth-child(2)::before {
 	opacity: 0.65;
 }
-.donation-impact article:nth-child(3)::before {
+.impact-card:nth-child(3)::before {
 	opacity: 1;
 }
-.donation-impact article:hover {
+.impact-card {
+	display: block;
+	color: inherit;
+}
+.impact-card:hover {
 	transform: translateY(-4px);
 	border-color: var(--orange);
 	box-shadow: 0 16px 34px rgba(23, 32, 25, 0.1);
+}
+.impact-card:focus-visible {
+	outline: 2px solid var(--orange);
+	outline-offset: 3px;
+}
+.impact-cta {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	margin-top: 18px;
+	color: var(--orange);
+	font-size: 0.82rem;
+	font-weight: 800;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+}
+.impact-card:hover .impact-cta {
+	text-decoration: underline;
+	text-underline-offset: 4px;
 }
 .impact-icon {
 	display: grid;

@@ -19,7 +19,7 @@ const zeffyFormUrl =
 const impact = [
 	{
 		icon: GasPump,
-		amount: "$25",
+		amount: "$35",
 		title: "Fuel the route",
 		copy: "Keeps the trucks and boats running through a day in the field.",
 	},
@@ -41,7 +41,7 @@ export default function DonatePage() {
 	return (
 		<>
 			<JsonLd data={breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Donate", path: "/donate" }])} />
-			<section className="donate-page">
+			<section className="page-hero donate-hero">
 				<HeroCollage seed={11} />
 				<div className="container">
 					<Breadcrumbs light items={[{ label: "Home", href: "/" }, { label: "Donate" }]} />
@@ -95,22 +95,25 @@ export default function DonatePage() {
 							Veteran in the field.
 						</h2>
 						<p className="prose">
-							Veteran&apos;s Outdoor Therapy runs on donations. Landowners give us access and our guides give their time,
-							but tags, licences, lodging, meals, and field gear all carry a real cost, and most of it is committed months
-							before anyone reaches the trailhead. Donations are what let us hold a place in the field for a previously
+							Veteran&apos;s Outdoor Therapy runs on donations. Landowners open their ground and our guides give their
+							time, but an experience still has to be paid for long before anyone reaches the trailhead &mdash; and once
+							it is committed, it is committed. Your gift is what holds that place in the field open for a previously
 							deployed Veteran or a Gold Star family.
 						</p>
 					</div>
 					<div className="donation-impact">
 						{impact.map(({ icon: Icon, amount, title, copy }) => (
-							<article key={title}>
+							<Link className="impact-card" key={title} href="#donation-form">
 								<span className="impact-icon">
 									<Icon size={28} weight="duotone" />
 								</span>
 								<strong>{amount}</strong>
 								<h3 className="display">{title}</h3>
 								<p>{copy}</p>
-							</article>
+								<span className="impact-cta">
+									Give {amount} <ArrowDown size={15} />
+								</span>
+							</Link>
 						))}
 					</div>
 					<p className="impact-footnote">

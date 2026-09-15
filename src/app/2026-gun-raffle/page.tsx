@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { pageMetadata } from "@/lib/site";
 import { Breadcrumbs } from "@/components/breadcrumbs";
+import { HeroCollage } from "@/components/hero-collage";
 import { SectionEdge } from "@/components/section-edge";
 export const metadata = pageMetadata({
 	title: "2026 Benefit Raffle Archive",
@@ -11,6 +12,7 @@ export const metadata = pageMetadata({
 export default function RafflePage() {
 	return (
 		<section className="page-hero">
+			<HeroCollage seed={15} />
 			<div className="container">
 				<Breadcrumbs light items={[{ label: "Home", href: "/" }, { label: "2026 Gun Raffle" }]} />
 				<p className="eyebrow">Annual benefit raffle</p>
