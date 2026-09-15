@@ -109,18 +109,18 @@ export default async function Home() {
 					<div className="impact-points">
 						<div>
 							<Compass size={30} />
-							<h3>Shared direction</h3>
-							<p>Purposeful days outside create room to reset and move forward.</p>
+							<h3>Open country</h3>
+							<p>Long days outside, hard effort, and quiet when quiet is the thing that helps.</p>
 						</div>
 						<div>
 							<Handshake size={30} />
-							<h3>Real camaraderie</h3>
-							<p>Connect with people who understand the road you have traveled.</p>
+							<h3>People who get it</h3>
+							<p>You go out with Veterans who carry the same thing, so nothing needs explaining.</p>
 						</div>
 						<div>
 							<ShieldCheck size={30} />
-							<h3>Planned end to end</h3>
-							<p>Hosts, field access, licensing, and lodging are arranged before you arrive.</p>
+							<h3>Sorted before you arrive</h3>
+							<p>Hosts, field access, licensing, and lodging are arranged well ahead of the dates.</p>
 						</div>
 					</div>
 				</div>

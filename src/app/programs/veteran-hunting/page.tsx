@@ -62,9 +62,9 @@ export default function VeteranHuntingPage() {
 			</section>
 			<section className="section">
 				<div className="container value-grid">
-					<div><Compass size={30} /><h2>Shared purpose</h2><p>Scouting, preparation, time in the field, and shared meals give each group a natural reason to work and talk together.</p></div>
-					<div><ShieldCheck size={30} /><h2>Responsible field practice</h2><p>Hosts set expectations around local regulations, safety, equipment, wildlife, and respect for the land.</p></div>
-					<div><Check size={30} /><h2>Arranged in advance</h2><p>Field access, licensing, lodging, meals, and shared equipment are organized with the host and confirmed before each hunt.</p></div>
+					<div><Compass size={30} /><h2>A reason to work together</h2><p>Scouting, preparation, long days in the field, and meals at the end of them give a group something to do side by side.</p></div>
+					<div><ShieldCheck size={30} /><h2>Ethics in the field</h2><p>Hosts set clear expectations on regulations, safety, equipment, and respect for the animal and the ground it lives on.</p></div>
+					<div><Check size={30} /><h2>Settled before you travel</h2><p>Field access, licensing, lodging, and shared equipment are organized with the host and confirmed with you first.</p></div>
 				</div>
 			</section>
 			<section className="section faq-section">

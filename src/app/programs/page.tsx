@@ -96,7 +96,7 @@ export default function ProgramsPage() {
 					))}
 				</div>
 			</section>
-			<MissionFilm />
+			<MissionFilm dark above="var(--paper)" below="#e4e6df" />
 			<section className="section faq-section">
 				<div className="container">
 					<p className="eyebrow">Program questions</p>

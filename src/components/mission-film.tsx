@@ -1,6 +1,19 @@
-export function MissionFilm() {
+import { SectionEdge } from "./section-edge";
+
+/**
+ * `dark` flips the band to ink with painted edges; `above` and `below` take the
+ * colour of the neighbouring sections, since an edge is painted in the colour of
+ * the section it hands off to.
+ */
+export function MissionFilm({ dark = false, above = "var(--paper)", below = "var(--paper)" }: { dark?: boolean; above?: string; below?: string }) {
 	return (
-		<section className="section mission-film">
+		<section className={dark ? "section mission-film dark has-edge" : "section mission-film"}>
+			{dark && (
+				<>
+					<SectionEdge color={above} variant="a" flip />
+					<SectionEdge color={below} variant="b" />
+				</>
+			)}
 			<div className="container healing-grid">
 				<div className="healing-video">
 					<iframe
