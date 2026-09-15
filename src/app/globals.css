@@ -698,16 +698,69 @@ img {
 	align-items: flex-start;
 	gap: 4px;
 }
+/* text-decoration on an inline-flex draws the rule under the gap and the arrow
+   as well as the text, which reads as a broken line. The rule is drawn instead
+   as two pseudo-elements spanning the whole link: a faint track in currentColor
+   (so it works on light and dark alike) and an orange fill that wipes across. */
 .text-link,
 .back-link {
+	position: relative;
 	display: inline-flex;
 	align-items: center;
-	gap: 8px;
+	gap: 7px;
 	margin-top: 26px;
-	font-weight: 700;
-	text-decoration: underline;
-	text-decoration-thickness: 1px;
-	text-underline-offset: 6px;
+	padding-bottom: 6px;
+	font-size: 0.92rem;
+	font-weight: 800;
+	letter-spacing: 0.01em;
+	text-decoration: none;
+}
+.text-link::before,
+.back-link::before,
+.text-link::after,
+.back-link::after {
+	content: "";
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	height: 2px;
+	pointer-events: none;
+}
+.text-link::before,
+.back-link::before {
+	right: 0;
+	background: currentColor;
+	opacity: 0.22;
+}
+.text-link::after,
+.back-link::after {
+	width: 0;
+	background: var(--orange);
+	transition: width 0.28s ease;
+}
+.text-link:hover::after,
+.text-link:focus-visible::after,
+.back-link:hover::after,
+.back-link:focus-visible::after {
+	width: 100%;
+}
+.text-link svg,
+.back-link svg {
+	flex: none;
+	transition: transform 0.25s ease;
+}
+.text-link:hover svg,
+.text-link:focus-visible svg {
+	transform: translateX(4px);
+}
+.back-link:hover svg,
+.back-link:focus-visible svg {
+	transform: translateX(-4px);
+}
+.text-link:focus-visible,
+.back-link:focus-visible {
+	outline: 2px solid var(--orange);
+	outline-offset: 4px;
 }
 .link-row {
 	display: flex;
