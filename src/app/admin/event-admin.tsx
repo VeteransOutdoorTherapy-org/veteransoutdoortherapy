@@ -71,6 +71,10 @@ export function EventAdmin({ events, selected }: { events: Event[]; selected?: E
 					Details text
 					<textarea className="field" name="details" rows={5} defaultValue={selected?.details} required />
 				</label>
+				<p className="admin-hint">
+					Name the hosts only on an event that has already happened. Leave them out of anything upcoming or TBA &mdash;
+					plans change, and a named host on a future trip is a commitment on their behalf.
+				</p>
 				<div className="form-row">
 					<label>
 						Button label
