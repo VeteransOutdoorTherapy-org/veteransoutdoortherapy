@@ -1,10 +1,13 @@
-import { Check, Compass, ShieldCheck } from "@phosphor-icons/react/dist/ssr";
+import { ArrowRight, Check, Compass, ShieldCheck } from "@phosphor-icons/react/dist/ssr";
+import Image from "next/image";
 import Link from "next/link";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { JsonLd } from "@/components/json-ld";
 import { breadcrumbSchema, faqSchema, pageMetadata } from "@/lib/site";
 import { HeroCollage } from "@/components/hero-collage";
 import { SectionEdge } from "@/components/section-edge";
+import { getEvents } from "@/lib/db";
+import { imageFocusStyle } from "@/lib/data";
 
 export const metadata = pageMetadata({
 	title: "Veteran Hunting Trips and Outdoor Adventures",
@@ -36,7 +39,21 @@ const faqs = [
 	},
 ];
 
-export default function VeteranHuntingPage() {
+/** Hunts only, soonest first, with finished ones filling in behind the upcoming. */
+async function huntingExperiences() {
+	const today = new Date().toISOString().slice(0, 10);
+	const hunts = (await getEvents()).filter((event) => event.published && /hunt/i.test(event.type));
+	const upcoming = hunts
+		.filter((event) => !event.over && event.endDate >= today)
+		.sort((a, b) => a.startDate.localeCompare(b.startDate));
+	const finished = hunts
+		.filter((event) => event.over || event.endDate < today)
+		.sort((a, b) => b.endDate.localeCompare(a.endDate));
+	return [...upcoming, ...finished].slice(0, 3);
+}
+
+export default async function VeteranHuntingPage() {
+	const hunts = await huntingExperiences();
 	return (
 		<>
 			<JsonLd data={[
@@ -67,6 +84,32 @@ export default function VeteranHuntingPage() {
 					<div><Check size={30} /><h2>Settled before you travel</h2><p>Field access, licensing, lodging, and shared equipment are organized with the host and confirmed with you first.</p></div>
 				</div>
 			</section>
+			{hunts.length > 0 && (
+				<section className="section">
+					<div className="container">
+						<p className="eyebrow">Hunts on the calendar</p>
+						<h2 className="display section-title">Three hunts Veterans apply for.</h2>
+						<div className="past-events-grid">
+							{hunts.map((event) => (
+								<article key={event.slug}>
+									<div className="past-event-image" style={imageFocusStyle(event)}>
+										<Image src={event.image} alt={event.title} fill sizes="(max-width: 700px) 100vw, 33vw" />
+									</div>
+									<p className="eyebrow">{event.type}</p>
+									<h3 className="display">{event.title}</h3>
+									<strong>{event.date}{event.location ? ` | ${event.location}` : ""}</strong>
+									<p>{event.summary}</p>
+									<div className="card-actions">
+										<Link className="text-link" href={`/events/${event.slug}`}>
+											View event details <ArrowRight size={17} />
+										</Link>
+									</div>
+								</article>
+							))}
+						</div>
+					</div>
+				</section>
+			)}
 			<section className="section faq-section">
 				<div className="container">
 					<p className="eyebrow">Veteran hunting questions</p>
