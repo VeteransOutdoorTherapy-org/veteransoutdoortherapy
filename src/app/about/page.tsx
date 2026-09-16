@@ -1,3 +1,4 @@
+import { Campfire, ClipboardText, Mountains, PawPrint, ShieldChevron, UsersThree } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
 import Link from "next/link";
 import { MissionFilm } from "@/components/mission-film";
@@ -52,21 +53,55 @@ export default function AboutPage() {
 			<section className="values">
 				<div className="container">
 					<p className="eyebrow">Our compass</p>
+					<h2 className="display section-title">What we hold to.</h2>
 					<div className="value-grid">
 						<div>
-							<b>01</b>
-							<h3 className="display">Dignity</h3>
-							<p>People are never reduced to a diagnosis, injury, or chapter of service.</p>
+							<ShieldChevron size={30} />
+							<h3 className="display">Deployment is the door</h3>
+							<p>
+								This is for Veterans who deployed, and for the families of those who did not come home. Narrow on
+								purpose: the whole thing works because everyone in the truck has something in common.
+							</p>
 						</div>
 						<div>
-							<b>02</b>
-							<h3 className="display">Camaraderie</h3>
-							<p>Shared experience and honest connection are central to every outing.</p>
+							<Mountains size={30} />
+							<h3 className="display">The outdoors does the work</h3>
+							<p>
+								No clinic, no folding chairs in a circle, nobody made to talk. Hard effort, long days, cold mornings,
+								and the quiet that comes with them.
+							</p>
 						</div>
 						<div>
-							<b>03</b>
-							<h3 className="display">Access</h3>
-							<p>Funding removes the practical barriers between participants and the outdoors.</p>
+							<Campfire size={30} />
+							<h3 className="display">Nothing needs explaining</h3>
+							<p>
+								You go out with people who carry the same weight. What gets said around the fire stays at the fire,
+								and what never gets said is fine too.
+							</p>
+						</div>
+						<div>
+							<PawPrint size={30} />
+							<h3 className="display">Fair chase, or not at all</h3>
+							<p>
+								Every trip is held to local regulation, safe handling, and respect for the animal and the ground it
+								lives on. A hunt that cannot be done right does not happen.
+							</p>
+						</div>
+						<div>
+							<ClipboardText size={30} />
+							<h3 className="display">Straight answers first</h3>
+							<p>
+								Dates, terrain, physical demands, licensing, and what you are responsible for are settled before you
+								commit &mdash; not discovered when you arrive.
+							</p>
+						</div>
+						<div>
+							<UsersThree size={30} />
+							<h3 className="display">The trip is not the point</h3>
+							<p>
+								A week outside is the beginning. What matters is who is still picking up the phone months after the
+								trucks are unloaded.
+							</p>
 						</div>
 					</div>
 				</div>

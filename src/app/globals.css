@@ -1249,11 +1249,6 @@ img {
 	background: var(--white);
 	padding: 30px 28px 32px;
 }
-.value-grid b {
-	font: 800 0.86rem/1 var(--font-accent);
-	letter-spacing: 0.08em;
-	color: var(--orange);
-}
 .value-grid h2,
 .value-grid h3 {
 	margin: 0;
