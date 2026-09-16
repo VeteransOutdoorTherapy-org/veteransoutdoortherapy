@@ -4,6 +4,7 @@ import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { FACEBOOK_URL } from "@/lib/site";
 
 const uploads = "/wp-content/uploads";
 
@@ -24,6 +25,8 @@ const opportunities: Opportunity[] = [
 		monthLabel: "March",
 		image: `${uploads}/2025/09/photo-049.jpg`,
 		copy: "Help underwrite the annual community gathering that introduces supporters to the mission and funds a new season outdoors.",
+		recapHref: "/field-stories/wilderness-to-wellness-benefit-dinner-2026",
+		recapLabel: "See last year's dinner",
 	},
 	{
 		title: "Missouri Spoonbill Fishing",
@@ -31,6 +34,8 @@ const opportunities: Opportunity[] = [
 		monthLabel: "March",
 		image: `${uploads}/2025/09/photo-023.jpg`,
 		copy: "Fund boats, lodging, meals, equipment, and time on the water for a recurring spring fishing experience with Veterans.",
+		recapHref: "/field-stories/missouri-paddlefish-snagging-2026",
+		recapLabel: "See last year's trip",
 	},
 	{
 		title: "Spring Turkey Hunts",
@@ -38,6 +43,8 @@ const opportunities: Opportunity[] = [
 		monthLabel: "April",
 		image: `${uploads}/2026/09/mo-turkey/underway-02.jpg`,
 		copy: "Support annual turkey hunts with travel, field access, guides, lodging, meals, and the gear participants need.",
+		recapHref: "/field-stories/missouri-turkey-hunt-2026",
+		recapLabel: "See last year's hunt",
 	},
 	{
 		title: "Veteran's Outdoor Therapy Poker Run",
@@ -45,6 +52,8 @@ const opportunities: Opportunity[] = [
 		monthLabel: "June",
 		image: `${uploads}/events/poker-run.webp`,
 		copy: "Put your organization behind the annual community ride that raises awareness and funding for outdoor programs.",
+		recapHref: "/field-stories/second-annual-poker-run-2026",
+		recapLabel: "See last year's ride",
 	},
 	{
 		title: "Female Veteran Horseback Adventure",
@@ -61,6 +70,8 @@ const opportunities: Opportunity[] = [
 		monthLabel: "September",
 		image: `${uploads}/2025/09/photo-130.jpg`,
 		copy: "Sponsor a recurring fall hunt built around ethical field practice, challenge, reflection, and connection in open country.",
+		recapHref: FACEBOOK_URL,
+		recapLabel: "See photos on Facebook",
 	},
 ];
 
@@ -100,11 +111,16 @@ export function SponsorOpportunities() {
 						<Link className="text-link" href="/contact">
 							Sponsor this cause <ArrowRight size={17} />
 						</Link>
-						{opportunity.recapHref && (
-							<Link className="text-link" href={opportunity.recapHref}>
-								{opportunity.recapLabel} <ArrowRight size={17} />
-							</Link>
-						)}
+						{opportunity.recapHref &&
+							(opportunity.recapHref.startsWith("http") ? (
+								<a className="text-link" href={opportunity.recapHref} target="_blank" rel="noreferrer">
+									{opportunity.recapLabel} <ArrowRight size={17} />
+								</a>
+							) : (
+								<Link className="text-link" href={opportunity.recapHref}>
+									{opportunity.recapLabel} <ArrowRight size={17} />
+								</Link>
+							))}
 					</div>
 				</article>
 			))}
