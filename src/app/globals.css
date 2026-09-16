@@ -106,7 +106,7 @@ img {
 	flex: none;
 }
 .section {
-	padding-block: clamp(64px, 9vw, 112px);
+	padding-block: clamp(52px, 9vw, 112px);
 }
 .section-title {
 	max-width: 740px;
@@ -254,8 +254,8 @@ img {
 }
 .account-link,
 .cart-link {
-	min-width: 34px;
-	min-height: 34px;
+	min-width: 44px;
+	min-height: 44px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -268,8 +268,13 @@ img {
 }
 .menu {
 	display: none;
+	min-width: 44px;
+	min-height: 44px;
+	align-items: center;
+	justify-content: center;
 	border: 0;
 	background: transparent;
+	cursor: pointer;
 }
 .footer {
 	position: relative;
@@ -386,7 +391,14 @@ img {
 }
 @media (max-width: 720px) {
 	.container {
-		width: min(100% - 28px, 1160px);
+		width: min(100% - 40px, 1160px);
+	}
+	/* Footer links sit in dense columns; at 26px tall they are an easy mis-tap. */
+	.footer-grid > div {
+		gap: 2px;
+	}
+	.footer-grid a {
+		min-height: 40px;
 	}
 }
 @media (prefers-reduced-motion: reduce) {
@@ -715,6 +727,11 @@ img {
 .back-link {
 	position: relative;
 	display: inline-flex;
+	/* An inline-flex box sizes to max-content, so a long link like an email
+	   address overflows unless it is allowed to wrap and to shrink. */
+	max-width: 100%;
+	flex-wrap: wrap;
+	overflow-wrap: anywhere;
 	align-items: center;
 	gap: 7px;
 	margin-top: 26px;
@@ -1558,6 +1575,16 @@ img {
 	grid-template-columns: 0.8fr 1.2fr;
 	gap: clamp(35px, 8vw, 100px);
 	align-items: start;
+}
+/* It had no mobile fallback at all, so two columns and the form's intrinsic
+   widths pushed the contact page sideways on a phone. */
+@media (max-width: 860px) {
+	.form-layout {
+		grid-template-columns: 1fr;
+	}
+	.form-layout > * {
+		min-width: 0;
+	}
 }
 .application-embed-section {
 	background: #e4e6df;
@@ -3467,5 +3494,25 @@ img {
 	}
 	.invoice-card table {
 		font-size: 0.78rem;
+	}
+}
+
+/* Cards give back some side padding on a phone so the copy is not squeezed into
+   a column. Placed last: these selectors are defined further up, and an equal
+   specificity override only wins if it comes after them. */
+@media (max-width: 720px) {
+	.path-card,
+	.impact-card,
+	.value-grid > div,
+	.voices-grid figure,
+	.sponsor-events article {
+		padding-left: 22px;
+		padding-right: 22px;
+	}
+	.sponsor-event-image {
+		margin-inline: -22px;
+	}
+	.path-ribbon {
+		margin-inline: -23px;
 	}
 }

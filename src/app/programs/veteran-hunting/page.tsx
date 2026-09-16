@@ -1,4 +1,4 @@
-import { ArrowRight, Check, Compass, ShieldCheck } from "@phosphor-icons/react/dist/ssr";
+import { ArrowRight, Check, Compass, Quotes, ShieldCheck } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
 import Link from "next/link";
 import { Breadcrumbs } from "@/components/breadcrumbs";
@@ -6,7 +6,8 @@ import { JsonLd } from "@/components/json-ld";
 import { breadcrumbSchema, faqSchema, pageMetadata } from "@/lib/site";
 import { HeroCollage } from "@/components/hero-collage";
 import { SectionEdge } from "@/components/section-edge";
-import { getEvents } from "@/lib/db";
+import { getEvents, getPublishedTestimonials } from "@/lib/db";
+import { publicName } from "@/lib/names";
 import { imageFocusStyle } from "@/lib/data";
 
 export const metadata = pageMetadata({
@@ -42,9 +43,13 @@ const faqs = [
 /** Hunts only, soonest first, with finished ones filling in behind the upcoming. */
 async function huntingExperiences() {
 	const today = new Date().toISOString().slice(0, 10);
+	// A hunt stops taking applications three months out, so it drops off once it is that close.
+	const closing = new Date(`${today}T00:00:00Z`);
+	closing.setUTCMonth(closing.getUTCMonth() + 3);
+	const closes = closing.toISOString().slice(0, 10);
 	const hunts = (await getEvents()).filter((event) => event.published && /hunt/i.test(event.type));
 	const upcoming = hunts
-		.filter((event) => !event.over && event.endDate >= today)
+		.filter((event) => !event.over && event.startDate > closes)
 		.sort((a, b) => a.startDate.localeCompare(b.startDate));
 	const finished = hunts
 		.filter((event) => event.over || event.endDate < today)
@@ -53,7 +58,13 @@ async function huntingExperiences() {
 }
 
 export default async function VeteranHuntingPage() {
-	const hunts = await huntingExperiences();
+	const [hunts, testimonials] = await Promise.all([huntingExperiences(), getPublishedTestimonials()]);
+	// Short quotes only: these sit three across, so a long one would tower over its neighbours.
+	const short = testimonials.filter((testimonial) => testimonial.quote.length <= 320);
+	const voices = [
+		...short.filter((testimonial) => /hunt/i.test(testimonial.category ?? "")),
+		...short.filter((testimonial) => !/hunt/i.test(testimonial.category ?? "")),
+	].slice(0, 3);
 	return (
 		<>
 			<JsonLd data={[
@@ -77,37 +88,36 @@ export default async function VeteranHuntingPage() {
 				</div>
 				<SectionEdge color="var(--paper)" variant="a" />
 			</section>
-			<section className="section">
+			<section className="section has-edge">
 				<div className="container value-grid">
 					<div><Compass size={30} /><h2>A reason to work together</h2><p>Scouting, preparation, long days in the field, and meals at the end of them give a group something to do side by side.</p></div>
 					<div><ShieldCheck size={30} /><h2>Ethics in the field</h2><p>Hosts set clear expectations on regulations, safety, equipment, and respect for the animal and the ground it lives on.</p></div>
 					<div><Check size={30} /><h2>Settled before you travel</h2><p>Field access, licensing, lodging, and shared equipment are organized with the host and confirmed with you first.</p></div>
 				</div>
+				{voices.length > 0 && <SectionEdge color="#efece1" variant="b" />}
 			</section>
-			{hunts.length > 0 && (
-				<section className="section">
+			{voices.length > 0 && (
+				<section className="voices-band has-edge">
 					<div className="container">
-						<p className="eyebrow">Hunts on the calendar</p>
-						<h2 className="display section-title">Three hunts Veterans apply for.</h2>
-						<div className="past-events-grid">
-							{hunts.map((event) => (
-								<article key={event.slug}>
-									<div className="past-event-image" style={imageFocusStyle(event)}>
-										<Image src={event.image} alt={event.title} fill sizes="(max-width: 700px) 100vw, 33vw" />
-									</div>
-									<p className="eyebrow">{event.type}</p>
-									<h3 className="display">{event.title}</h3>
-									<strong>{event.date}{event.location ? ` | ${event.location}` : ""}</strong>
-									<p>{event.summary}</p>
-									<div className="card-actions">
-										<Link className="text-link" href={`/events/${event.slug}`}>
-											View event details <ArrowRight size={17} />
-										</Link>
-									</div>
-								</article>
+						<div className="voices-head">
+							<p className="eyebrow">Veterans who have hunted</p>
+							<h2 className="display section-title">What they took from the field.</h2>
+						</div>
+						<div className="voices-grid">
+							{voices.map((testimonial) => (
+								<figure key={testimonial.slug}>
+									<Quotes size={30} aria-hidden="true" />
+									<blockquote>{testimonial.quote}</blockquote>
+									<figcaption>
+										{publicName(testimonial.author)}
+										<span>{testimonial.service}</span>
+									</figcaption>
+								</figure>
 							))}
 						</div>
+						<Link className="text-link" href="/testimonials">Read more testimonials <ArrowRight size={17} /></Link>
 					</div>
+					<SectionEdge color="#e4e6df" variant="a" />
 				</section>
 			)}
 			<section className="section faq-section">
@@ -131,6 +141,33 @@ export default async function VeteranHuntingPage() {
 					</div>
 				</div>
 			</section>
+			{hunts.length > 0 && (
+				<section className="section has-edge">
+					<SectionEdge color="var(--paper)" variant="b" above />
+					<div className="container">
+						<p className="eyebrow">On the calendar</p>
+						<h2 className="display section-title">Apply for what is open.</h2>
+						<div className="past-events-grid">
+							{hunts.map((event) => (
+								<article key={event.slug}>
+									<div className="past-event-image" style={imageFocusStyle(event)}>
+										<Image src={event.image} alt={event.title} fill sizes="(max-width: 700px) 100vw, 33vw" />
+									</div>
+									<p className="eyebrow">{event.type}</p>
+									<h3 className="display">{event.title}</h3>
+									<strong>{event.date}{event.location ? ` | ${event.location}` : ""}</strong>
+									<p>{event.summary}</p>
+									<div className="card-actions">
+										<Link className="text-link" href={`/events/${event.slug}`}>
+											View event details <ArrowRight size={17} />
+										</Link>
+									</div>
+								</article>
+							))}
+						</div>
+					</div>
+				</section>
+			)}
 		</>
 	);
 }
