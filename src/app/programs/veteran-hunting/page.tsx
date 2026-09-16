@@ -48,13 +48,13 @@ async function huntingExperiences() {
 	closing.setUTCMonth(closing.getUTCMonth() + 3);
 	const closes = closing.toISOString().slice(0, 10);
 	const hunts = (await getEvents()).filter((event) => event.published && /hunt/i.test(event.type));
-	const upcoming = hunts
-		.filter((event) => !event.over && event.startDate > closes)
+	const open = hunts
+		.filter((event) => !event.over && event.endDate >= today && event.startDate > closes)
 		.sort((a, b) => a.startDate.localeCompare(b.startDate));
-	const finished = hunts
-		.filter((event) => event.over || event.endDate < today)
-		.sort((a, b) => b.endDate.localeCompare(a.endDate));
-	return [...upcoming, ...finished].slice(0, 3);
+	// One card per hunt. The same hunt runs every year, so without this the next
+	// edition and the last one sit side by side under the same title.
+	const seen = new Set<string>();
+	return open.filter((event) => !seen.has(event.title) && seen.add(event.title)).slice(0, 3);
 }
 
 export default async function VeteranHuntingPage() {

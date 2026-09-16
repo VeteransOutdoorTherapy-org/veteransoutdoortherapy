@@ -1446,6 +1446,11 @@ img {
 .past-events-section {
 	background: #e4e6df;
 }
+/* On an event page this sits directly above the closing band, which is also
+   #e4e6df, so it takes the warm tone instead and paints into it. */
+.past-events-section.event-past {
+	background: #efece1;
+}
 .past-events-intro {
 	max-width: 720px;
 	margin-bottom: 42px;
@@ -1908,6 +1913,10 @@ img {
 .giving-band.light {
 	background: #e4e6df;
 	color: var(--ink);
+}
+/* Heading and button only, so the three-column band would leave a hole. */
+.event-cta-band > .container {
+	grid-template-columns: 1fr auto;
 }
 .giving-band.light p {
 	color: #46503f;
