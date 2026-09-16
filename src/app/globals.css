@@ -26,6 +26,9 @@ body {
 	color: var(--ink);
 	font-family: var(--font-body), sans-serif;
 	line-height: 1.6;
+	/* An email address or URL is one unbreakable word and is wider than a 320px
+	   phone; without this it pushes the whole page sideways. */
+	overflow-wrap: break-word;
 }
 a {
 	color: inherit;
@@ -50,6 +53,7 @@ img {
 }
 .display {
 	font-family: var(--font-body), sans-serif;
+	overflow-wrap: break-word;
 	font-weight: 700;
 	letter-spacing: -0.015em;
 	text-transform: uppercase;
@@ -107,7 +111,7 @@ img {
 .section-title {
 	max-width: 740px;
 	margin: 8px 0 30px;
-	font-size: clamp(1.85rem, 4.8vw, 3.7rem);
+	font-size: clamp(1.62rem, 4.8vw, 3.7rem);
 }
 .field {
 	width: 100%;
@@ -282,7 +286,7 @@ img {
 
 .footer h2 {
 	margin: 15px 0;
-	font-size: clamp(1.63rem, 3.2vw, 2.81rem);
+	font-size: clamp(1.45rem, 3.2vw, 2.81rem);
 }
 
 .footer h3 {
@@ -483,7 +487,7 @@ img {
 .hero h1 {
 	max-width: 850px;
 	margin: 14px 0 24px;
-	font-size: clamp(2.96rem, 6.4vw, 4.44rem);
+	font-size: clamp(2.15rem, 6.4vw, 4.44rem);
 }
 .hero-content > p:not(.eyebrow) {
 	max-width: 42rem;
@@ -544,7 +548,7 @@ img {
 }
 .mission-grid h2 {
 	margin: 8px 0 0;
-	font-size: clamp(1.85rem, 4.0vw, 2.74rem);
+	font-size: clamp(1.6rem, 4.0vw, 2.74rem);
 }
 .mission-grid .eyebrow {
 	margin: 0;
@@ -658,7 +662,7 @@ img {
 }
 .event-copy h3 {
 	margin: 5px 0;
-	font-size: 2.2rem;
+	font-size: clamp(1.55rem, 3.6vw, 2.2rem);
 }
 .event-copy p {
 	margin: 0;
@@ -961,7 +965,7 @@ img {
 }
 .product-copy-overlay h3 {
 	margin: 6px 0 0;
-	font-size: 1.7rem;
+	font-size: clamp(1.32rem, 3.0vw, 1.7rem);
 	line-height: 1.05;
 }
 @media (max-width: 900px) {
@@ -1055,7 +1059,7 @@ img {
 	z-index: 1;
 }
 .quote span {
-	font: 5.4rem/0 var(--font-accent);
+	font: clamp(3.2rem, 9vw, 5.4rem)/0 var(--font-accent);
 	opacity: 0.5;
 }
 .quote blockquote {
@@ -1088,7 +1092,7 @@ img {
 }
 @media (min-width: 921px) and (max-height: 700px) {
 	.hero h1 {
-		font-size: clamp(2.59rem, 5.6vw, 4.44rem);
+		font-size: clamp(2.05rem, 5.6vw, 4.44rem);
 	}
 	.hero-content {
 		padding-top: 52px;
@@ -1109,7 +1113,7 @@ img {
 .page-hero h1 {
 	max-width: 850px;
 	margin: 12px 0 22px;
-	font-size: clamp(3.26rem, 6.4vw, 4.44rem);
+	font-size: clamp(2.15rem, 6.4vw, 4.44rem);
 }
 .hero-collage {
 	position: absolute;
@@ -1180,7 +1184,7 @@ img {
 }
 .adventure-list h2 {
 	margin: 8px 0 16px;
-	font-size: clamp(1.92rem, 4.0vw, 3.33rem);
+	font-size: clamp(1.62rem, 4.0vw, 3.33rem);
 }
 .adventure-list .event-number {
 	float: right;
@@ -1373,11 +1377,11 @@ img {
 	padding-top: 30px;
 }
 .product-copy h1 {
-	font-size: clamp(2.22rem, 4.8vw, 3.85rem);
+	font-size: clamp(1.78rem, 4.8vw, 3.85rem);
 	margin: 10px 0 18px;
 }
 .price {
-	font: 700 1.6rem var(--font-accent);
+	font: 700 clamp(1.3rem, 2.8vw, 1.6rem) var(--font-accent);
 	color: var(--orange);
 }
 .stock,
@@ -1508,7 +1512,7 @@ img {
 		background: linear-gradient(0deg, rgba(12, 19, 14, 0.9), rgba(12, 19, 14, 0.24));
 	}
 	.hero h1 {
-		font-size: 4.2rem;
+		font-size: clamp(2.15rem, 9.2vw, 2.9rem);
 	}
 	.event-strip,
 	.product-grid,
@@ -1688,7 +1692,7 @@ img {
 }
 .order-summary h2 {
 	margin: 0 0 20px;
-	font-size: 2rem;
+	font-size: clamp(1.55rem, 3.4vw, 2rem);
 }
 .order-summary > div {
 	display: flex;
@@ -1739,7 +1743,7 @@ img {
 	margin-top: 10px;
 }
 .empty-state h2 {
-	font-size: 3rem;
+	font-size: clamp(1.9rem, 5vw, 3rem);
 	margin: 0;
 }
 .donation-form-section {
@@ -1851,7 +1855,7 @@ img {
 	display: block;
 	margin-top: 24px;
 	color: var(--orange);
-	font: 700 2rem/1 var(--font-accent);
+	font: 700 clamp(1.62rem, 3.4vw, 2rem)/1 var(--font-accent);
 	letter-spacing: -0.01em;
 }
 .donation-impact h3 {
@@ -1889,7 +1893,7 @@ img {
 .giving-band h2,
 .sponsor-proof h2 {
 	margin: 5px 0 0;
-	font-size: clamp(2.07rem, 4.0vw, 3.33rem);
+	font-size: clamp(1.66rem, 4.0vw, 3.33rem);
 }
 .giving-band-video {
 	grid-column: 1 / -1;
@@ -1928,7 +1932,7 @@ img {
 }
 .sponsor-grid h2 {
 	margin: 0 0 12px;
-	font-size: 3.5rem;
+	font-size: clamp(1.95rem, 5.4vw, 3.5rem);
 }
 .sponsor-grid span {
 	display: flex;
@@ -1996,7 +2000,7 @@ img {
 }
 .sponsor-events h3 {
 	margin: 7px 0 10px;
-	font-size: 2.4rem;
+	font-size: clamp(1.7rem, 3.6vw, 2.4rem);
 }
 .sponsor-events p {
 	margin-bottom: 0;
@@ -2013,7 +2017,7 @@ img {
 }
 .event-detail-grid h2 {
 	margin: 28px 0 14px;
-	font-size: 2.6rem;
+	font-size: clamp(1.7rem, 4vw, 2.6rem);
 }
 .event-detail-grid li {
 	margin-bottom: 10px;
@@ -2034,7 +2038,7 @@ img {
 }
 .event-page-hero h1 {
 	margin: 12px 0 22px;
-	font-size: clamp(2.96rem, 5.6vw, 4.44rem);
+	font-size: clamp(2.05rem, 5.6vw, 4.44rem);
 	line-height: 0.86;
 }
 .event-page-hero p:not(.eyebrow) {
@@ -2073,7 +2077,7 @@ img {
 }
 .event-page-sections h2 {
 	margin: 10px 0 20px;
-	font-size: clamp(2.07rem, 4.0vw, 3.55rem);
+	font-size: clamp(1.66rem, 4.0vw, 3.55rem);
 }
 .event-page-sections article > p:last-child {
 	white-space: pre-line;
@@ -2382,7 +2386,7 @@ img {
 	gap: 25px;
 }
 .invoice-heading h1 {
-	font-size: clamp(1.48rem, 4.0vw, 2.52rem);
+	font-size: clamp(1.35rem, 4.0vw, 2.52rem);
 }
 .invoice-heading > strong {
 	color: var(--forest);
@@ -2439,7 +2443,7 @@ img {
 }
 .compact-hero h1 {
 	max-width: 1000px;
-	font-size: clamp(2.59rem, 5.6vw, 4.44rem);
+	font-size: clamp(2.05rem, 5.6vw, 4.44rem);
 }
 .application-grid {
 	display: grid;
@@ -2489,7 +2493,7 @@ img {
 }
 .path-card h2 {
 	margin: 20px 0 10px;
-	font-size: 2.2rem;
+	font-size: clamp(1.62rem, 3.4vw, 2.2rem);
 }
 .path-card p {
 	color: #46503f;
@@ -2621,14 +2625,14 @@ img {
 	gap: 30px;
 }
 .application-note strong {
-	font: 700 1.7rem/1.1 var(--font-accent);
+	font: 700 clamp(1.25rem, 3.4vw, 1.7rem)/1.1 var(--font-accent);
 	text-transform: uppercase;
 }
 .sponsor-hero {
 	background: #253d2c;
 }
 .sponsor-hero h1 {
-	font-size: clamp(2.04rem, 4.0vw, 3.52rem);
+	font-size: clamp(1.66rem, 4.0vw, 3.52rem);
 }
 .sponsor-hero .button {
 	margin-top: 24px;
@@ -2658,7 +2662,7 @@ img {
 }
 .program-grid h2 {
 	margin: 22px 0 10px;
-	font-size: 1.9rem;
+	font-size: clamp(1.5rem, 3.2vw, 1.9rem);
 }
 /* Pushes the link to the card's floor so every card's link sits on one line. */
 .program-grid .text-link {
@@ -2791,7 +2795,7 @@ img {
 }
 .story-list h2 {
 	margin: 8px 0 14px;
-	font-size: clamp(1.92rem, 4.0vw, 3.55rem);
+	font-size: clamp(1.62rem, 4.0vw, 3.55rem);
 }
 .story-location,
 .field-story-meta,
@@ -2834,7 +2838,7 @@ img {
 .field-story-heading h1 {
 	max-width: 960px;
 	margin: 12px 0 22px;
-	font-size: clamp(2.96rem, 5.6vw, 4.44rem);
+	font-size: clamp(2.05rem, 5.6vw, 4.44rem);
 	line-height: 0.9;
 }
 .field-story-meta {
@@ -2950,7 +2954,7 @@ img {
 }
 .policy-copy h2 {
 	margin: 38px 0 10px;
-	font: 700 2rem/1 var(--font-accent);
+	font: 700 clamp(1.5rem, 3.4vw, 2rem)/1 var(--font-accent);
 	text-transform: uppercase;
 }
 .policy-copy a {
@@ -3355,7 +3359,7 @@ img {
 		min-height: 560px;
 	}
 	.field-story-heading h1 {
-		font-size: 3.8rem;
+		font-size: clamp(2rem, 8.6vw, 2.7rem);
 	}
 	.sponsor-badge-heading {
 		align-items: flex-start;
@@ -3397,7 +3401,7 @@ img {
 		height: 1100px;
 	}
 	.event-page-hero h1 {
-		font-size: 3.8rem;
+		font-size: clamp(2rem, 8.6vw, 2.7rem);
 	}
 	.event-page-image {
 		min-height: 300px;
