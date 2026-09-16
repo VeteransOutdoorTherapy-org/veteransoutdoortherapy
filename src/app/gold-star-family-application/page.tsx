@@ -9,10 +9,10 @@ export const metadata = pageMetadata({
 });
 export default function GoldStarApplicationPage() {
 	return (
-		<><JsonLd data={breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Gold Star families", path: "/gold-star-families" }, { name: "Application", path: "/gold-star-family-application" }])} /><ApplicationFormPage
-			eyebrow="For Gold Star families"
+		<><JsonLd data={breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Gold Star family members", path: "/gold-star-families" }, { name: "Application", path: "/gold-star-family-application" }])} /><ApplicationFormPage
+			eyebrow="For Gold Star family members"
 			title="Connection, remembrance, and open air."
-			copy="Share how an outdoor experience could support you, your family, or a Gold Star child."
+			copy="Tell us about your service member and how time outdoors could support you."
 			type="gold-star-family-application"
 		/></>
 	);

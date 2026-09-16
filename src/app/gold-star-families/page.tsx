@@ -7,9 +7,9 @@ import { HeroCollage } from "@/components/hero-collage";
 import { SectionEdge } from "@/components/section-edge";
 
 export const metadata = pageMetadata({
-	title: "Outdoor Support for Gold Star Families",
+	title: "Outdoor Experiences for Gold Star Family Members",
 	description:
-		"Veteran's Outdoor Therapy welcomes Gold Star family members — spouses, parents, children, and siblings of the fallen — into thoughtfully hosted outdoor experiences centered on remembrance and connection.",
+		"Veteran's Outdoor Therapy hosts the spouses, parents, children, and siblings of fallen service members on hunting, fishing, and horseback experiences built around remembrance and connection.",
 	path: "/gold-star-families",
 });
 
@@ -17,22 +17,22 @@ const faqs = [
 	{
 		question: "Who should use the Gold Star application?",
 		answer:
-			"Any Gold Star family member — the spouse, parent, child, or sibling of a service member who died — can submit the dedicated application as an individual. The team follows up directly to answer questions and discuss available opportunities.",
+			"Any Gold Star family member: the spouse, parent, child, or sibling of a service member who died. You apply as an individual, and the team follows up with you directly to answer questions and talk through what is available.",
 	},
 	{
 		question: "What kinds of experiences may be available?",
 		answer:
-			"Programs may include fishing, hiking, horseback riding, hunting, conservation, and other hosted time outdoors. Availability changes with the event calendar, host capacity, and the needs of each group.",
+			"Fishing, hiking, horseback riding, hunting, conservation, and other hosted time outdoors. Availability changes with the event calendar and with what each host can take on.",
 	},
 	{
-		question: "What is arranged for selected families?",
+		question: "What is arranged if I am selected?",
 		answer:
-			"Each experience is coordinated with its host ahead of time, including the activity, lodging, and meals. What the program carries varies by event, and the team confirms the details, including anything a family is responsible for, before participation.",
+			"Each experience is coordinated with its host ahead of time, including the activity, lodging, and meals. What the program carries varies by event, and the team confirms the details with you, including anything you are responsible for, before you take part.",
 	},
 	{
 		question: "Can I ask questions before applying?",
 		answer:
-			"Yes. Families can contact Veteran's Outdoor Therapy before submitting an application to discuss participation, children or family considerations, accessibility needs, and privacy questions.",
+			"Yes. Contact Veteran's Outdoor Therapy before you submit anything, to talk through participation, accessibility needs, and how your information is handled.",
 	},
 ];
 
@@ -40,27 +40,27 @@ export default function GoldStarFamiliesPage() {
 	return (
 		<>
 			<JsonLd data={[
-				breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Gold Star families", path: "/gold-star-families" }]),
+				breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Gold Star family members", path: "/gold-star-families" }]),
 				faqSchema(faqs),
 			]} />
 			<section className="page-hero">
 				<HeroCollage seed={4} />
 				<div className="container">
-					<Breadcrumbs light items={[{ label: "Home", href: "/" }, { label: "Gold Star families" }]} />
+					<Breadcrumbs light items={[{ label: "Home", href: "/" }, { label: "Gold Star family members" }]} />
 					<p className="eyebrow">Remembrance, connection, and open air</p>
 					<h1 className="display">Outdoor experiences for Gold Star family members.</h1>
 					<p>
-						Thoughtfully hosted time outside creates room for families to honor service, share experience, and connect
-						with a community that respects the meaning of their loss.
+						Whether you are a spouse, a parent, a child, or a sibling, you apply as yourself rather than on behalf of a
+						household, and the team works with you directly from there.
 					</p>
 				</div>
 				<SectionEdge color="var(--paper)" variant="b" />
 			</section>
 			<section className="section">
 				<div className="container value-grid">
-					<div><Mountains size={30} /><h2>Time outside</h2><p>Fishing, trails, ranch settings, and other outdoor activities provide a shared focus without asking anyone to tell their story publicly.</p></div>
-					<div><Users size={30} /><h2>Thoughtful hosting</h2><p>The team works with each person and the host to discuss the specific experience, participation needs, and practical preparation.</p></div>
-					<div><Handshake size={30} /><h2>Arranged in advance</h2><p>Hosting, lodging, meals, and activities are coordinated with the host, and the details are confirmed with each participant before the event.</p></div>
+					<div><Mountains size={30} /><h2>Time outside</h2><p>Fishing, trails, and ranch settings give the day a shared focus, with no expectation that you tell your story to anyone.</p></div>
+					<div><Users size={30} /><h2>Hosted around you</h2><p>The team talks through the experience, what you need in order to take part, and how to prepare, with you and with the host.</p></div>
+					<div><Handshake size={30} /><h2>Settled in advance</h2><p>The activity, lodging, and meals are coordinated with the host, and the details are confirmed with you before the event.</p></div>
 				</div>
 			</section>
 			<section className="section faq-section">

@@ -14,7 +14,7 @@ const groups = [
 		links: [
 			["All Programs", "/programs"],
 			["Veteran Hunting", "/programs/veteran-hunting"],
-			["Gold Star Families", "/gold-star-families"],
+			["Gold Star Family Members", "/gold-star-families"],
 		],
 	},
 	{

@@ -22,7 +22,7 @@ export function Footer() {
 					<h3>Explore</h3>
 					<Link href="/about">Our Mission</Link>
 					<Link href="/programs">Programs</Link>
-					<Link href="/gold-star-families">Gold Star Families</Link>
+					<Link href="/gold-star-families">Gold Star Family Members</Link>
 					<Link href="/field-stories">Field Notes</Link>
 				</div>
 				<div>
