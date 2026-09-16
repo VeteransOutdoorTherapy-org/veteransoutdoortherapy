@@ -19,19 +19,19 @@ const zeffyFormUrl =
 const impact = [
 	{
 		icon: GasPump,
-		amount: "$35",
+		amount: "$30",
 		title: "Fuel the route",
 		copy: "Keeps the trucks and boats running through a day in the field.",
 	},
 	{
 		icon: ForkKnife,
-		amount: "$100",
+		amount: "$125",
 		title: "Share a meal",
 		copy: "Feeds a Veteran and the crew through a full day in the field.",
 	},
 	{
 		icon: Tent,
-		amount: "$250",
+		amount: "$750",
 		title: "Make camp possible",
 		copy: "Covers lodging and the tags and licences a hunt is built on.",
 	},
