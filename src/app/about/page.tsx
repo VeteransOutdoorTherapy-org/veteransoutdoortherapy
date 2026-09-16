@@ -1,4 +1,4 @@
-import { Campfire, ClipboardText, Mountains, PawPrint, ShieldChevron, UsersThree } from "@phosphor-icons/react/dist/ssr";
+import { Binoculars, Campfire, Handshake, Mountains, Path, UsersThree } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
 import Link from "next/link";
 import { MissionFilm } from "@/components/mission-film";
@@ -56,48 +56,48 @@ export default function AboutPage() {
 					<h2 className="display section-title">What we hold to.</h2>
 					<div className="value-grid">
 						<div>
-							<ShieldChevron size={30} />
-							<h3 className="display">Deployment is the door</h3>
+							<UsersThree size={30} />
+							<h3 className="display">Camaraderie first</h3>
 							<p>
-								This is for Veterans who deployed, and for the families of those who did not come home. Narrow on
-								purpose: the whole thing works because everyone in the truck has something in common.
+								The company of people who have carried the same things. Most of what helps happens between the truck
+								and the treeline, and none of it has to be arranged.
 							</p>
 						</div>
 						<div>
 							<Mountains size={30} />
-							<h3 className="display">The outdoors does the work</h3>
+							<h3 className="display">Nature does the therapy</h3>
 							<p>
-								No clinic, no folding chairs in a circle, nobody made to talk. Hard effort, long days, cold mornings,
-								and the quiet that comes with them.
+								Open country, hard effort, and long stretches of quiet. It is in our name because it is the whole
+								idea &mdash; the outdoors reaches places a waiting room cannot.
+							</p>
+						</div>
+						<div>
+							<Binoculars size={30} />
+							<h3 className="display">Hands busy, not sat down</h3>
+							<p>
+								Scouting a ridge, working a paddle, tending a horse, cooking for eight. Doing something together beats
+								being asked how you are doing.
 							</p>
 						</div>
 						<div>
 							<Campfire size={30} />
-							<h3 className="display">Nothing needs explaining</h3>
+							<h3 className="display">The fire is the meeting</h3>
 							<p>
-								You go out with people who carry the same weight. What gets said around the fire stays at the fire,
-								and what never gets said is fine too.
+								Coffee before light and a meal after dark are not extras on the schedule. They are where the week
+								actually happens.
 							</p>
 						</div>
 						<div>
-							<PawPrint size={30} />
-							<h3 className="display">Fair chase, or not at all</h3>
+							<Handshake size={30} />
+							<h3 className="display">Hosts who open their ground</h3>
 							<p>
-								Every trip is held to local regulation, safe handling, and respect for the animal and the ground it
-								lives on. A hunt that cannot be done right does not happen.
+								Landowners, guides, and volunteers give their land, their time, and their know-how. Every trip exists
+								because somebody offered something of their own.
 							</p>
 						</div>
 						<div>
-							<ClipboardText size={30} />
-							<h3 className="display">Straight answers first</h3>
-							<p>
-								Dates, terrain, physical demands, licensing, and what you are responsible for are settled before you
-								commit &mdash; not discovered when you arrive.
-							</p>
-						</div>
-						<div>
-							<UsersThree size={30} />
-							<h3 className="display">The trip is not the point</h3>
+							<Path size={30} />
+							<h3 className="display">It carries past the last day</h3>
 							<p>
 								A week outside is the beginning. What matters is who is still picking up the phone months after the
 								trucks are unloaded.
