@@ -1,4 +1,4 @@
-import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
+import { FacebookLogo } from "@phosphor-icons/react/dist/ssr";
 import { GalleryLightbox } from "@/components/gallery-lightbox";
 import Link from "next/link";
 import { getPublishedGalleryImages } from "@/lib/db";
@@ -32,11 +32,15 @@ export default async function GalleryPage() {
 			</section>
 			<section className="section">
 				<div className="container">
-					<div className="gallery-links">
-						<Link className="text-link" href="/field-stories">Read the stories behind recent experiences <ArrowRight size={17} /></Link>
-						<Link className="text-link" href={FACEBOOK_URL} target="_blank" rel="noreferrer">Follow along on Facebook for more photos <ArrowRight size={17} /></Link>
-					</div>
 					<GalleryLightbox images={galleryImages} />
+					<div className="link-row">
+						<div className="link-row-actions">
+							<Link className="button secondary" href="/field-stories">Read the field stories</Link>
+							<a className="button secondary" href={FACEBOOK_URL} target="_blank" rel="noreferrer">
+								<FacebookLogo size={19} weight="fill" /> More photos on Facebook
+							</a>
+						</div>
+					</div>
 				</div>
 			</section>
 		</>
