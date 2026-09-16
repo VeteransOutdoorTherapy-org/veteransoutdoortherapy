@@ -114,9 +114,9 @@ export default async function TestimonialsPage({ searchParams }: { searchParams:
 												<span className="author-category">{testimonial.category}</span>
 											)}
 										</div>
-										<div className="testimonial-rating" aria-label="5 out of 5 stars" data-horizontal={true}>
+										<div className="testimonial-rating" aria-label="5 out of 5 stars">
 											{[1, 2, 3, 4, 5].map((star) => (
-												<Star key={star} size={18} fill="currentColor" />
+												<Star key={star} size={18} weight="fill" />
 											))}
 										</div>
 									</footer>
