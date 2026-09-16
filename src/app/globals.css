@@ -1967,8 +1967,18 @@ img {
 	gap: 14px;
 }
 .sponsor-events article {
+	display: flex;
+	min-width: 0;
+	flex-direction: column;
 	background: var(--white);
 	padding: 0 24px 28px;
+}
+/* Pins a card's links to its bottom edge, so a row of cards lines them up
+   however much copy sits above them. */
+.card-actions {
+	display: grid;
+	justify-items: start;
+	margin-top: auto;
 }
 .sponsor-event-image {
 	position: relative;
@@ -1989,7 +1999,7 @@ img {
 	font-size: 2.4rem;
 }
 .sponsor-events p {
-	min-height: 72px;
+	margin-bottom: 0;
 }
 .event-detail-grid {
 	display: grid;

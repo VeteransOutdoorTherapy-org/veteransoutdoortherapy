@@ -96,14 +96,16 @@ export function SponsorOpportunities() {
 					<span>{nextCycle(opportunity.month, opportunity.monthLabel, currentDate)}</span>
 					<h3 className="display">{opportunity.title}</h3>
 					<p>{opportunity.copy}</p>
-					<Link className="text-link" href="/contact">
-						Sponsor this cause <ArrowRight size={17} />
-					</Link>
-					{opportunity.recapHref && (
-						<Link className="text-link" href={opportunity.recapHref}>
-							{opportunity.recapLabel} <ArrowRight size={17} />
+					<div className="card-actions">
+						<Link className="text-link" href="/contact">
+							Sponsor this cause <ArrowRight size={17} />
 						</Link>
-					)}
+						{opportunity.recapHref && (
+							<Link className="text-link" href={opportunity.recapHref}>
+								{opportunity.recapLabel} <ArrowRight size={17} />
+							</Link>
+						)}
+					</div>
 				</article>
 			))}
 		</div>
