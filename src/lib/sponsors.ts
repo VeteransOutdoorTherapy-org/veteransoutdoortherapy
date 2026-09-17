@@ -20,7 +20,8 @@ export const sponsorLogos = [
 	{
 		name: "South Dakota Parks & Wildlife Foundation",
 		image: `${sponsorUploads}/south-dakota-parks-wildlife.webp`,
-		featured: true,
+		/* Off the homepage bar, which shows featured only; still on /sponsor. */
+		featured: false,
 	},
 	{
 		name: "VFW Riders Missouri",
@@ -30,7 +31,8 @@ export const sponsorLogos = [
 	{
 		name: "Blacktop Harley-Davidson",
 		image: `${sponsorUploads}/blacktop-harley-davidson.png`,
-		featured: true,
+		/* Off the homepage bar, which shows featured only; still on /sponsor. */
+		featured: false,
 	},
 	{
 		name: "Parker County Gold Star Families",

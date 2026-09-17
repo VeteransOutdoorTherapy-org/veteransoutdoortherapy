@@ -704,14 +704,18 @@ img {
 	margin: 0;
 	font-size: 0.78rem;
 }
+/* Centred flex rather than a fixed six-column grid: the list changes, and empty
+   grid cells left the logos hanging to one side. */
 .sponsor-badge-grid {
-	display: grid;
-	grid-template-columns: repeat(6, minmax(0, 1fr));
+	display: flex;
+	flex-wrap: wrap;
 	align-items: center;
+	justify-content: center;
 	gap: clamp(22px, 3vw, 44px);
 }
 .sponsor-badge-grid figure {
 	position: relative;
+	flex: 0 1 clamp(112px, 13vw, 168px);
 	height: 78px;
 	margin: 0;
 }
@@ -3098,7 +3102,6 @@ img {
 		object-position: var(--story-image-position-mobile, var(--story-image-position, center));
 	}
 	.sponsor-badge-grid {
-		grid-template-columns: repeat(3, minmax(0, 1fr));
 		row-gap: 20px;
 	}
 	.giving-band > .container,
@@ -3465,10 +3468,8 @@ img {
 	.sponsor-badge-heading .text-link {
 		margin: 0;
 	}
-	.sponsor-badge-grid {
-		grid-template-columns: repeat(2, minmax(0, 1fr));
-	}
 	.sponsor-badge-grid figure {
+		flex-basis: clamp(104px, 38vw, 140px);
 		height: 72px;
 	}
 	.gallery-lightbox {
