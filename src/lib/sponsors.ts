@@ -9,7 +9,8 @@ export const sponsorLogos = [
 	{
 		name: "Veterans United Foundation",
 		image: `${sponsorUploads}/veterans-united-foundation.webp`,
-		featured: true,
+		/* Off the homepage bar, which shows featured only; still on /sponsor. */
+		featured: false,
 	},
 	{
 		name: "Coulter Lake Guest Ranch & Outfitters",
