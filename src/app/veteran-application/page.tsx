@@ -3,7 +3,7 @@ import { JsonLd } from "@/components/json-ld";
 import { breadcrumbSchema, pageMetadata } from "@/lib/site";
 export const metadata = pageMetadata({
 	title: "Veteran Outdoor Program Application",
-	description: "Previously deployed Veterans can apply for upcoming hunting, fishing, horseback riding, hiking, and conservation experiences.",
+	description: "Previously deployed Veterans can apply for upcoming hunting, fishing, horseback riding, hiking, camping, and conservation experiences.",
 	path: "/veteran-application",
 	noIndex: true,
 });

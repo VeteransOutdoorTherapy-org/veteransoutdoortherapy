@@ -11,7 +11,7 @@ import { sponsorLogos } from "@/lib/sponsors";
 
 export const metadata = pageMetadata({
 	title: "Veteran's Outdoor Therapy | Outdoor Experiences for Veterans and Gold Star Families",
-	description: "Veteran's Outdoor Therapy creates hunting, fishing, horseback riding, and outdoor experiences for previously deployed Veterans and Gold Star families, built around healing and camaraderie outdoors.",
+	description: "Veteran's Outdoor Therapy creates hunting, fishing, horseback riding, hiking, and camping experiences for previously deployed Veterans and Gold Star families, built around healing and camaraderie outdoors.",
 	path: "/",
 });
 

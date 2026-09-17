@@ -72,7 +72,7 @@ export default async function ApplicationPage() {
 						<div className="voices-grid">
 							{voices.map((testimonial) => (
 								<figure key={testimonial.slug}>
-									<Quotes size={30} aria-hidden="true" />
+									<Quotes size={30} weight="fill" className="quote-icon" aria-hidden="true" />
 									<blockquote>{testimonial.quote}</blockquote>
 									<figcaption>
 										{publicName(testimonial.author)}

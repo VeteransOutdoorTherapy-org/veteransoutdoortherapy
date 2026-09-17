@@ -26,7 +26,7 @@ export function interleaveByLength<T extends { quote: string }>(items: T[]) {
 export function TestimonialQuote({ quote, id, iconSize = 48 }: { quote: string; id: string; iconSize?: number }) {
 	const body = (
 		<div className="testimonial-quote-body">
-			<Quotes size={iconSize} className="quote-icon" aria-hidden="true" />
+			<Quotes size={iconSize} weight="fill" className="quote-icon" aria-hidden="true" />
 			<blockquote>
 				<p>{quote}</p>
 			</blockquote>

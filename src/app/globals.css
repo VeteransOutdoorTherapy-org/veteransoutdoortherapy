@@ -3154,11 +3154,19 @@ img {
 	box-shadow: 0 10px 28px rgba(10, 16, 12, 0.1);
 }
 
+/* Phosphor draws Quotes as the CLOSING mark, which reads as a pair of nines at
+   the head of a quotation. Rotating it gives the opening mark. */
 .quote-icon {
 	width: clamp(32px, 10vw, 48px);
 	height: clamp(32px, 10vw, 48px);
 	color: var(--orange);
 	margin-bottom: 10px;
+	transform: rotate(180deg);
+}
+.voices-grid .quote-icon {
+	width: 30px;
+	height: 30px;
+	margin-bottom: 0;
 }
 
 .testimonial-quote {

@@ -492,9 +492,6 @@ export const events: Event[] = [
 	},
 ];
 
-export const healingPowerCopy =
-	"Engaging in activities such as hiking, horseback riding, fishing, and hunting offers a refreshing escape from daily life while creating opportunities for reflection and bonding with fellow Veterans who understand similar experiences and challenges. These adventures can alleviate stress and support the well-being of Soldiers and Gold Star family members. We love the outdoors, have witnessed the value of time outside, and are proud to share that passion with others.";
-
 export const contributionCopy =
 	"Not everyone can sponsor at the Gold, Silver, or Bronze level — and that’s okay. Every donation, big or small, helps us give Veterans a chance to heal through the peace of the outdoors. Whether your gift helps provide a warm meal on a hunt, fuel for a fishing trip, or gear for an adventure, you’re directly impacting the lives of those who’ve served our nation. Join us in showing our Veterans that they are never alone on their journey to healing.";
 
@@ -1309,9 +1306,9 @@ export const fieldStories: FieldStory[] = [
 
 /** Short mission for the homepage; the About page carries `missionLong`. */
 export const mission =
-	"Hunting, fishing, horseback riding, and hiking give previously deployed Veterans and Gold Star families something no clinic can: hard effort in fresh air, quiet when quiet is needed, and the company of people who understand without being told. Our hope is that it outlasts the trip.";
+	"Hunting, fishing, horseback riding, hiking, and camping give previously deployed Veterans and Gold Star families room to reconnect with open country and with themselves: hard effort in fresh air, quiet when quiet is needed, and the company of people who understand without being told. Our hope is that it outlasts the trip.";
 
 /** Full mission statement for the About page. */
 export const missionLong =
-	"At Veteran's Outdoor Therapy, we believe the outdoors reaches places that waiting rooms cannot. Our mission is to honor the service of Soldiers who have been deployed — and who, in some instances, carry the wounds of war, both the ones that are visible and the ones that are not — by bringing them into open country. We extend that same welcome to Gold Star families and their children, whose loss is its own kind of deployment. Hunting, fishing, horseback riding, and hiking offer a blend of physical activity, camaraderie, and emotional healing that no clinic can replicate: hard effort in fresh air, quiet when quiet is needed, and the company of people who understand without being told. Our hope is that what happens out there lasts: a step toward healing, and a community that is still standing beside them long after the trip ends.";
+	"At Veteran's Outdoor Therapy, we believe the outdoors reaches places that waiting rooms cannot. Our mission is to honor the service of Soldiers who have been deployed — and who, in some instances, carry the wounds of war, both the ones that are visible and the ones that are not — by bringing them into open country. We extend that same welcome to Gold Star families and their children, whose loss is its own kind of deployment. Hunting, fishing, horseback riding, hiking, and camping offer a blend of physical activity, camaraderie, and emotional healing that no clinic can replicate: hard effort in fresh air, quiet when quiet is needed, and the company of people who understand without being told, and room to reconnect with open country and with themselves. Time out there takes the edge off the stress a person is carrying, steadies mental well-being, and builds the resilience that makes the transition back to civilian life easier to walk. Our hope is that what happens out there lasts: a step toward healing, and a community that is still standing beside them long after the trip ends.";
 

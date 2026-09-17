@@ -10,7 +10,7 @@ import { SectionEdge } from "@/components/section-edge";
 export const metadata = pageMetadata({
 	title: "Outdoor Programs for Veterans and Gold Star Families",
 	description:
-		"Explore hunting, fishing, horseback riding, hiking, and conservation experiences for previously deployed Veterans and Gold Star families, hosted across the country.",
+		"Explore hunting, fishing, horseback riding, hiking, camping, and conservation experiences for previously deployed Veterans and Gold Star families, hosted across the country.",
 	path: "/programs",
 });
 
@@ -74,7 +74,7 @@ export default function ProgramsPage() {
 					<p className="eyebrow">Time in the field, together</p>
 					<h1 className="display">Outdoor programs shaped around connection and the field.</h1>
 					<p>
-						Hunting, fishing, horseback riding, hiking, and conservation, hosted across the country by people who give
+						Hunting, fishing, horseback riding, hiking, camping, and conservation, hosted across the country by people who give
 						their own ground and their own time.
 					</p>
 				</div>
