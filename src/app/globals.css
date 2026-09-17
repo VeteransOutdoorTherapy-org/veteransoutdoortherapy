@@ -1918,6 +1918,13 @@ img {
 .event-cta-band > .container {
 	grid-template-columns: 1fr auto;
 }
+/* The section above paints its torn edge in this band's colour, so the band already
+   reads ~24px taller at the top, while the footer's edge eats the same off the bottom.
+   Equal padding therefore looks lopsided; take that height back off the top only.
+   Two classes so this beats the earlier .giving-band padding on document order alone. */
+.giving-band.event-cta-band {
+	padding-top: 40px;
+}
 .giving-band.light p {
 	color: #46503f;
 }
@@ -2067,10 +2074,21 @@ img {
 	align-items: center;
 	gap: clamp(38px, 7vw, 96px);
 }
+/* The title sits in a column far narrower than the viewport, so sizing it in vw
+   grew the type past its own column and broke words mid-way ("RECREATION AL").
+   cqi measures the column, so a long word scales itself down to fit. */
+.event-page-hero-grid > div {
+	container-type: inline-size;
+}
 .event-page-hero h1 {
 	margin: 12px 0 22px;
-	font-size: clamp(2.05rem, 5.6vw, 4.44rem);
+	font-size: clamp(2.05rem, 12cqi, 4.44rem);
 	line-height: 0.86;
+}
+@supports not (font-size: 1cqi) {
+	.event-page-hero h1 {
+		font-size: clamp(2.05rem, 4vw, 3.2rem);
+	}
 }
 .event-page-hero p:not(.eyebrow) {
 	max-width: 42rem;

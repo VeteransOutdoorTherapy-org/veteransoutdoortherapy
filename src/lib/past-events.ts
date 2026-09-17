@@ -109,3 +109,24 @@ export const documentedPastEvents: PastEvent[] = [
 		image: `${uploads}/2025/09/photo-012.jpg`,
 	},
 ];
+
+/**
+ * The field note written up after an event, where one exists.
+ *
+ * Events and stories are separate records with no foreign key, and their slugs
+ * only sometimes agree (poker-run-2026 was written up as
+ * second-annual-poker-run-2026). A story is published within a few days of the
+ * trip it covers, so the date window is what reliably ties the two together.
+ */
+export function storyForEvent(
+	event: { slug: string; startDate: string; endDate: string },
+	stories: { slug: string; datePublished: string }[],
+) {
+	const exact = stories.find((story) => story.slug === event.slug);
+	if (exact) return exact;
+	const opens = event.startDate;
+	const closes = new Date(`${event.endDate}T00:00:00Z`);
+	closes.setUTCDate(closes.getUTCDate() + 14);
+	const shuts = closes.toISOString().slice(0, 10);
+	return stories.find((story) => story.datePublished >= opens && story.datePublished <= shuts);
+}
