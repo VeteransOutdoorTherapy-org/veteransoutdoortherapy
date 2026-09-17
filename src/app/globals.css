@@ -3546,3 +3546,27 @@ img {
 		margin-inline: -23px;
 	}
 }
+
+/*
+ * The quote band sets its own background-attachment further down the file than the
+ * shared mobile reset does, so on document order it won and fixed attachment
+ * survived onto phones. A fixed background is sized against the VIEWPORT rather
+ * than its element, so the photo was cropped to a sliver — the "broken" look.
+ * Placed last so the reset actually applies, with its own framing for a portrait
+ * crop: the photo is landscape with the hunter upper-right, and the shared
+ * "center 8%" put a phone screen on empty sky.
+ */
+@media (max-width: 1024px) {
+	.quote {
+		background-attachment: scroll;
+		background-position: 68% 20%;
+	}
+}
+@media (max-width: 620px) {
+	.quote {
+		padding: 64px 0 56px;
+	}
+	.quote blockquote {
+		font-size: 1.16rem;
+	}
+}
