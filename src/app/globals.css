@@ -1230,9 +1230,48 @@ img {
 .story-image img {
 	object-fit: cover;
 }
-.values {
-	background: #dfe2d9;
-	padding: 80px 0;
+/* The compass reads as a ribbon across the page rather than six cards: each point
+   is a statement on its own, so there is nothing to explain and nothing to pad. */
+.compass-ribbon {
+	position: relative;
+	background: var(--forest);
+	color: #fff;
+	padding: clamp(40px, 5vw, 58px) 0;
+}
+.compass-ribbon > .container {
+	position: relative;
+	z-index: 1;
+	text-align: center;
+}
+.compass-ribbon ul {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	/* Narrower than the container so the six points break into even rows instead
+	   of packing five onto the first and leaving one stranded. */
+	max-width: 780px;
+	gap: 14px clamp(20px, 3vw, 38px);
+	margin: 16px auto 0;
+	padding: 0;
+	list-style: none;
+}
+.compass-ribbon li {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	font: 800 clamp(0.92rem, 1.4vw, 1.14rem)/1.2 var(--font-accent);
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+}
+/* A marker before every item, first included, so a wrapped line never starts
+   with a dangling separator. */
+.compass-ribbon li::before {
+	content: "";
+	width: 6px;
+	height: 6px;
+	flex: none;
+	border-radius: 50%;
+	background: var(--orange);
 }
 .value-grid {
 	display: grid;

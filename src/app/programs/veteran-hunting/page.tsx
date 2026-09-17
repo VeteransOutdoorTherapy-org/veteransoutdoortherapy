@@ -41,24 +41,25 @@ const faqs = [
 ];
 
 /** Hunts only, soonest first, with finished ones filling in behind the upcoming. */
-async function huntingExperiences() {
-	const today = new Date().toISOString().slice(0, 10);
-	// A hunt stops taking applications three months out, so it drops off once it is that close.
-	const closing = new Date(`${today}T00:00:00Z`);
-	closing.setUTCMonth(closing.getUTCMonth() + 3);
-	const closes = closing.toISOString().slice(0, 10);
-	const hunts = (await getEvents()).filter((event) => event.published && /hunt/i.test(event.type));
-	const open = hunts
-		.filter((event) => !event.over && event.endDate >= today && event.startDate > closes)
-		.sort((a, b) => a.startDate.localeCompare(b.startDate));
-	// One card per hunt. The same hunt runs every year, so without this the next
-	// edition and the last one sit side by side under the same title.
+/**
+ * A few of the experiences we run, as examples of the kind of thing a Veteran
+ * might be placed on. Nobody applies to a particular trip, so this is not an
+ * availability list: hunts lead because this is the hunting page, and other
+ * activities fill the row behind them.
+ */
+async function outdoorExperiences() {
+	const published = (await getEvents()).filter((event) => event.published);
+	const recent = [...published].sort((a, b) => b.endDate.localeCompare(a.endDate));
+	const hunts = recent.filter((event) => /hunt/i.test(event.type));
+	const rest = recent.filter((event) => !/hunt/i.test(event.type));
+	// One card per experience: these repeat each year, and two editions of the
+	// same trip side by side read as a duplicate.
 	const seen = new Set<string>();
-	return open.filter((event) => !seen.has(event.title) && seen.add(event.title)).slice(0, 3);
+	return [...hunts, ...rest].filter((event) => !seen.has(event.title) && seen.add(event.title)).slice(0, 3);
 }
 
 export default async function VeteranHuntingPage() {
-	const [hunts, testimonials] = await Promise.all([huntingExperiences(), getPublishedTestimonials()]);
+	const [experiences, testimonials] = await Promise.all([outdoorExperiences(), getPublishedTestimonials()]);
 	// Short quotes only: these sit three across, so a long one would tower over its neighbours.
 	const short = testimonials.filter((testimonial) => testimonial.quote.length <= 320);
 	const voices = [
@@ -141,14 +142,14 @@ export default async function VeteranHuntingPage() {
 					</div>
 				</div>
 			</section>
-			{hunts.length > 0 && (
+			{experiences.length > 0 && (
 				<section className="section has-edge">
 					<SectionEdge color="var(--paper)" variant="b" above />
 					<div className="container">
-						<p className="eyebrow">On the calendar</p>
-						<h2 className="display section-title">Apply for what is open.</h2>
+						<p className="eyebrow">What these trips look like</p>
+						<h2 className="display section-title">Apply for a place on an outdoor adventure.</h2>
 						<div className="past-events-grid">
-							{hunts.map((event) => (
+							{experiences.map((event) => (
 								<article key={event.slug}>
 									<div className="past-event-image" style={imageFocusStyle(event)}>
 										<Image src={event.image} alt={event.title} fill sizes="(max-width: 700px) 100vw, 33vw" />
