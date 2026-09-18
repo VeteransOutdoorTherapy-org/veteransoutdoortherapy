@@ -3610,3 +3610,127 @@ img {
 		font-size: 1.16rem;
 	}
 }
+
+/*
+ * Sponsor globe. Tiles are absolutely centred and moved by the script's
+ * transforms; before the script runs (or under reduced motion) the same markup
+ * stays a plain centred grid, so the logos are always visible.
+ */
+.sponsor-globe ul {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 16px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.sponsor-globe li {
+	width: clamp(84px, 9vw, 116px);
+	overflow: hidden;
+	border: 1px solid var(--line);
+	border-radius: 12px;
+	background: #fff;
+}
+.sponsor-globe img {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+.sponsor-globe.spinning {
+	position: relative;
+	height: clamp(420px, 52vw, 620px);
+	touch-action: none;
+	cursor: grab;
+}
+.sponsor-globe.spinning:active {
+	cursor: grabbing;
+}
+.sponsor-globe.spinning ul {
+	position: absolute;
+	inset: 0;
+	display: block;
+	gap: 0;
+}
+.sponsor-globe.spinning li {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: clamp(74px, 8.5vw, 104px);
+	/* The script sets transform; this keeps the tile centred on its own point. */
+	margin: calc(clamp(74px, 8.5vw, 104px) / -2);
+	box-shadow: 0 6px 18px rgba(23, 32, 25, 0.12);
+	will-change: transform, opacity;
+}
+.sponsor-roll-section {
+	position: relative;
+	background: var(--paper);
+}
+/* Warm, so the older roll separates from the paper section holding the globe
+   above it and from the grey opportunities band below. */
+.sponsor-roll-2025 {
+	background: #efece1;
+	padding-block: clamp(38px, 5vw, 56px);
+}
+/* Full-bleed marquee. The track holds three copies of the list and shifts by a
+   third, which is exactly one copy, so the seam never shows. */
+.sponsor-ribbon {
+	overflow: hidden;
+	margin-top: 22px;
+	/* Fade the ends rather than cutting logos off hard at the edge. */
+	mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+}
+.sponsor-ribbon-track {
+	display: flex;
+	width: max-content;
+	animation-name: sponsor-marquee;
+	animation-duration: 42s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+}
+.sponsor-ribbon ul {
+	display: flex;
+	align-items: center;
+	gap: clamp(26px, 4vw, 58px);
+	margin: 0;
+	padding: 0 clamp(13px, 2vw, 29px);
+	list-style: none;
+}
+.sponsor-ribbon li {
+	flex: none;
+	width: clamp(106px, 12vw, 152px);
+}
+.sponsor-ribbon img {
+	display: block;
+	width: 100%;
+	height: auto;
+	object-fit: contain;
+}
+.sponsor-ribbon:hover .sponsor-ribbon-track {
+	animation-play-state: paused;
+}
+@keyframes sponsor-marquee {
+	to {
+		transform: translateX(-33.3333%);
+	}
+}
+@media (prefers-reduced-motion: reduce) {
+	.sponsor-ribbon-track {
+		animation: none;
+		flex-wrap: wrap;
+		width: auto;
+		justify-content: center;
+	}
+	.sponsor-ribbon {
+		mask-image: none;
+	}
+	/* Nothing is scrolling, so the duplicate copies would just repeat logos. */
+	.sponsor-ribbon ul[aria-hidden="true"] {
+		display: none;
+	}
+}
+.sponsor-roll-head {
+	max-width: 620px;
+	margin: 0 auto 10px;
+	text-align: center;
+}
