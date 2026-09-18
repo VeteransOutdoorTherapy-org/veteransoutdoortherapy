@@ -7,15 +7,14 @@ import { ProductCard } from "@/components/product-card";
 import { contributionCopy, imageFocusStyle, mission } from "@/lib/data";
 import { getEvents, getProducts } from "@/lib/db";
 import { pageMetadata } from "@/lib/site";
-import { sponsorLogos } from "@/lib/sponsors";
+import { sponsors2026 } from "@/lib/sponsors";
+import { SponsorRibbon } from "@/components/sponsor-ribbon";
 
 export const metadata = pageMetadata({
 	title: "Veteran's Outdoor Therapy | Outdoor Experiences for Veterans and Gold Star Families",
 	description: "Veteran's Outdoor Therapy creates hunting, fishing, horseback riding, hiking, and camping experiences for previously deployed Veterans and Gold Star families, built around healing and camaraderie outdoors.",
 	path: "/",
 });
-
-const homepageSponsors = sponsorLogos.filter((sponsor) => sponsor.featured);
 
 export default async function Home() {
 	const [products, events] = await Promise.all([getProducts(), getEvents()]);
@@ -91,13 +90,7 @@ export default async function Home() {
 							Partner with us <ArrowRight size={17} />
 						</Link>
 					</div>
-					<div className="sponsor-badge-grid">
-						{homepageSponsors.map((sponsor) => (
-							<figure key={sponsor.image}>
-								<Image src={sponsor.image} alt={sponsor.name} fill sizes="(max-width: 560px) 50vw, 17vw" />
-							</figure>
-						))}
-					</div>
+					<SponsorRibbon logos={sponsors2026} />
 				</div>
 			</section>
 			<section className="impact">

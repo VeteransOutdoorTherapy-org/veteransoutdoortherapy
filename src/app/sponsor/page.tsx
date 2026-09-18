@@ -154,37 +154,20 @@ export default async function SponsorPage() {
 					</div>
 					<SponsorGlobe logos={sponsors2026} />
 				</div>
-				<SectionEdge color="#efece1" variant="b" />
 			</section>
 			<section className="sponsor-roll-2025">
-				<div className="container sponsor-roll-head">
-					<p className="eyebrow">Previously</p>
-					<h2 className="display">2025 Sponsors</h2>
-				</div>
-				{/* Three copies of the list, shifted by exactly one copy, so the loop
-				    closes with no gap however wide the screen is. Only the first copy
-				    is read out; the rest are duplicates for the eye. */}
-				<div className="sponsor-ribbon">
-					<div className="sponsor-ribbon-track">
-						{[0, 1, 2].map((copy) => (
-							<ul key={copy} aria-hidden={copy > 0}>
-								{sponsorLogos.map((sponsor) => (
-									<li key={sponsor.image}>
-										<Image
-											src={sponsor.image}
-											alt={copy === 0 ? sponsor.name : ""}
-											width={220}
-											height={120}
-											// The duplicate copies start off to the right, so lazy loading would
-											// pop them in mid-scroll. They are the same seven files as the first
-											// copy, so eager costs nothing beyond the decode.
-											loading="eager"
-										/>
-									</li>
-								))}
-							</ul>
-						))}
+				<div className="container">
+					<div className="sponsor-roll-head">
+						<p className="eyebrow">Previous</p>
+						<h2 className="display">2025 Sponsors</h2>
 					</div>
+					<ul className="sponsor-row">
+						{sponsorLogos.map((sponsor) => (
+							<li key={sponsor.image}>
+								<Image src={sponsor.image} alt={sponsor.name} width={180} height={100} />
+							</li>
+						))}
+					</ul>
 				</div>
 			</section>
 			<section className="section sponsor-events-section">

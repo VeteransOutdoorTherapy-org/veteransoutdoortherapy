@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Barlow_Condensed, Poppins } from "next/font/google";
+import { ImageGuard } from "@/components/image-guard";
 import { CartProvider } from "@/components/cart-provider";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
@@ -78,6 +79,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
 			<body>
 				<JsonLd data={[organizationSchema, websiteSchema]} />
 				<CartProvider>
+					<ImageGuard />
 					<Header />
 					<main>{children}</main>
 					<Footer />

@@ -45,6 +45,8 @@ a {
 	-webkit-tap-highlight-color: transparent;
 }
 img {
+	-webkit-user-drag: none;
+	user-select: none;
 	max-width: 100%;
 }
 .container {
@@ -3639,7 +3641,14 @@ img {
 }
 .sponsor-globe.spinning {
 	position: relative;
-	height: clamp(420px, 52vw, 620px);
+	/* The script gives frontmost tiles a high z-index; isolating the globe keeps
+	   those values inside it so a logo cannot ride over the sticky header. */
+	isolation: isolate;
+	z-index: 0;
+	/* One measurement for the tile, so the negative margin that centres a tile on
+	   its own point can never drift out of step with its width. */
+	--globe-tile: clamp(78px, 10vw, 140px);
+	height: clamp(430px, 60vw, 780px);
 	touch-action: none;
 	cursor: grab;
 }
@@ -3656,11 +3665,15 @@ img {
 	position: absolute;
 	top: 50%;
 	left: 50%;
-	width: clamp(74px, 8.5vw, 104px);
+	width: var(--globe-tile);
 	/* The script sets transform; this keeps the tile centred on its own point. */
-	margin: calc(clamp(74px, 8.5vw, 104px) / -2);
+	margin: calc(var(--globe-tile) / -2);
 	box-shadow: 0 6px 18px rgba(23, 32, 25, 0.12);
+	cursor: pointer;
 	will-change: transform, opacity;
+}
+.sponsor-globe.spinning.focused {
+	cursor: zoom-out;
 }
 .sponsor-roll-section {
 	position: relative;
@@ -3670,62 +3683,81 @@ img {
    above it and from the grey opportunities band below. */
 .sponsor-roll-2025 {
 	background: #efece1;
-	padding-block: clamp(38px, 5vw, 56px);
+	padding-block: clamp(26px, 3vw, 38px);
 }
-/* Full-bleed marquee. The track holds three copies of the list and shifts by a
-   third, which is exactly one copy, so the seam never shows. */
-.sponsor-ribbon {
-	overflow: hidden;
-	margin-top: 22px;
-	/* Fade the ends rather than cutting logos off hard at the edge. */
-	mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
-}
-.sponsor-ribbon-track {
+/* All seven on one line, sized to fit rather than scrolled. */
+.sponsor-row {
 	display: flex;
-	width: max-content;
-	animation-name: sponsor-marquee;
-	animation-duration: 42s;
-	animation-timing-function: linear;
-	animation-iteration-count: infinite;
-}
-.sponsor-ribbon ul {
-	display: flex;
+	flex-wrap: wrap;
 	align-items: center;
-	gap: clamp(26px, 4vw, 58px);
-	margin: 0;
-	padding: 0 clamp(13px, 2vw, 29px);
+	justify-content: center;
+	gap: 10px clamp(14px, 2.2vw, 34px);
+	margin: 14px 0 0;
+	padding: 0;
 	list-style: none;
 }
-.sponsor-ribbon li {
-	flex: none;
-	width: clamp(106px, 12vw, 152px);
+.sponsor-row li {
+	flex: 0 1 clamp(78px, 9.5vw, 128px);
 }
-.sponsor-ribbon img {
+.sponsor-row img {
 	display: block;
 	width: 100%;
 	height: auto;
 	object-fit: contain;
 }
-.sponsor-ribbon:hover .sponsor-ribbon-track {
+/*
+ * Sponsor marquee. Two copies of the list shifted by exactly half, so the seam
+ * never shows. It stays a single line at every width — thirty-one logos stacked
+ * on a phone would be a wall — and pauses under the pointer.
+ */
+.sponsor-marquee {
+	overflow: hidden;
+	/* Fade the ends rather than cutting a logo off hard at the edge. */
+	mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+.sponsor-marquee-track {
+	display: flex;
+	width: max-content;
+	animation-name: sponsor-marquee;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+}
+.sponsor-marquee ul {
+	display: flex;
+	align-items: center;
+	gap: clamp(22px, 2.6vw, 40px);
+	margin: 0;
+	padding: 0 clamp(11px, 1.3vw, 20px);
+	list-style: none;
+}
+.sponsor-marquee li {
+	flex: none;
+	width: clamp(64px, 7vw, 96px);
+}
+.sponsor-marquee img {
+	display: block;
+	width: 100%;
+	height: auto;
+	object-fit: contain;
+}
+.sponsor-marquee:hover .sponsor-marquee-track {
 	animation-play-state: paused;
 }
 @keyframes sponsor-marquee {
 	to {
-		transform: translateX(-33.3333%);
+		transform: translateX(-50%);
 	}
 }
 @media (prefers-reduced-motion: reduce) {
-	.sponsor-ribbon-track {
+	.sponsor-marquee-track {
 		animation: none;
-		flex-wrap: wrap;
-		width: auto;
-		justify-content: center;
 	}
-	.sponsor-ribbon {
+	/* Nothing moves, so make it swipeable and drop the duplicate copy. */
+	.sponsor-marquee {
+		overflow-x: auto;
 		mask-image: none;
 	}
-	/* Nothing is scrolling, so the duplicate copies would just repeat logos. */
-	.sponsor-ribbon ul[aria-hidden="true"] {
+	.sponsor-marquee ul[aria-hidden="true"] {
 		display: none;
 	}
 }
