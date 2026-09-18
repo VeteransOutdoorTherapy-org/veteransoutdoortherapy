@@ -3687,6 +3687,8 @@ img {
 }
 /* All seven on one line, sized to fit rather than scrolled. */
 .sponsor-row {
+	/* One measurement, so the tile width and the height cap below stay in step. */
+	--row-tile: clamp(78px, 9.5vw, 128px);
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
@@ -3697,7 +3699,17 @@ img {
 	list-style: none;
 }
 .sponsor-row li {
-	flex: 0 1 clamp(78px, 9.5vw, 128px);
+	flex: 0 1 var(--row-tile);
+}
+/*
+ * Two of these logos are portrait, so contain fits them to the full tile height
+ * and they tower over the landscape ones. Cap them just above the height the
+ * Coulter Lake mark draws at — its artwork is 2.31:1, so it fills the tile
+ * width and lands at tile/2.31 — plus the five pixels asked for.
+ */
+.sponsor-row li[data-logo="vfw-riders-missouri"] img,
+.sponsor-row li[data-logo="parker-county-gold-star-families"] img {
+	max-height: calc(var(--row-tile) / 2.31 + 5px);
 }
 .sponsor-row img {
 	display: block;

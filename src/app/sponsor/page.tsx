@@ -163,7 +163,7 @@ export default async function SponsorPage() {
 					</div>
 					<ul className="sponsor-row">
 						{sponsorLogos.map((sponsor) => (
-							<li key={sponsor.image}>
+							<li key={sponsor.image} data-logo={sponsor.image.split("/").pop()?.replace(/\.\w+$/, "")}>
 								<Image src={sponsor.image} alt={sponsor.name} width={180} height={100} />
 							</li>
 						))}
