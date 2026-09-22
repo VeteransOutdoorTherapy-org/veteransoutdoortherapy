@@ -10,6 +10,14 @@ import { pageMetadata } from "@/lib/site";
 import { sponsors2026 } from "@/lib/sponsors";
 import { SponsorRibbon } from "@/components/sponsor-ribbon";
 
+/**
+ * Every page that reads the database regenerates on this interval. The admin's
+ * save actions still call revalidatePath for an immediate refresh; this is the
+ * floor, so a change made any other way — a direct edit, a seed correction —
+ * appears without waiting for a deploy.
+ */
+export const revalidate = 600;
+
 export const metadata = pageMetadata({
 	title: "Veteran's Outdoor Therapy | Outdoor Experiences for Veterans and Gold Star Families",
 	description: "Veteran's Outdoor Therapy creates hunting, fishing, horseback riding, hiking, and camping experiences for previously deployed Veterans and Gold Star families, built around healing and camaraderie outdoors.",

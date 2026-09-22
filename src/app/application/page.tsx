@@ -9,6 +9,14 @@ import { publicName } from "@/lib/names";
 import { documentedPastEvents, toPastEvent } from "@/lib/past-events";
 import { breadcrumbSchema, pageMetadata } from "@/lib/site";
 
+/**
+ * Every page that reads the database regenerates on this interval. The admin's
+ * save actions still call revalidatePath for an immediate refresh; this is the
+ * floor, so a change made any other way — a direct edit, a seed correction —
+ * appears without waiting for a deploy.
+ */
+export const revalidate = 600;
+
 export const metadata = pageMetadata({
 	title: "Apply for a Veteran or Gold Star Outdoor Program",
 	description: "Choose the Veteran's Outdoor Therapy application for previously deployed Veterans, Gold Star families, volunteers, hosts, or fundraisers.",

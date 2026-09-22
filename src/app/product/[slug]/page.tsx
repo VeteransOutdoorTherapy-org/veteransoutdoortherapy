@@ -11,6 +11,14 @@ import { products, productInStock, type Product } from "@/lib/data";
 import { getProducts } from "@/lib/db";
 import { absoluteUrl, breadcrumbSchema, pageMetadata, SITE_NAME, SITE_URL } from "@/lib/site";
 
+/**
+ * Every page that reads the database regenerates on this interval. The admin's
+ * save actions still call revalidatePath for an immediate refresh; this is the
+ * floor, so a change made any other way — a direct edit, a seed correction —
+ * appears without waiting for a deploy.
+ */
+export const revalidate = 600;
+
 /** Deterministic PRNG: a static page gets a stable shuffle without calling Math.random() at render. */
 function seededRandom(seed: number) {
 	let state = seed * 1831565813 + 1;

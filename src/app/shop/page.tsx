@@ -5,6 +5,14 @@ import { Breadcrumbs } from "@/components/breadcrumbs";
 import { JsonLd } from "@/components/json-ld";
 import { HeroCollage } from "@/components/hero-collage";
 import { SectionEdge } from "@/components/section-edge";
+
+/**
+ * Every page that reads the database regenerates on this interval. The admin's
+ * save actions still call revalidatePath for an immediate refresh; this is the
+ * floor, so a change made any other way — a direct edit, a seed correction —
+ * appears without waiting for a deploy.
+ */
+export const revalidate = 600;
 export const metadata = pageMetadata({
 	title: "Veteran's Outdoor Therapy Apparel and Gear",
 	description: "Shop Veteran's Outdoor Therapy shirts, hoodies, mugs, and field gear. Merchandise proceeds help support outdoor programs for Veterans and Gold Star families.",

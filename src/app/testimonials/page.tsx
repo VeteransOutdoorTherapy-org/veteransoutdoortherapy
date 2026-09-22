@@ -10,6 +10,14 @@ import { getPublishedTestimonials } from "@/lib/db";
 import { HeroCollage } from "@/components/hero-collage";
 import { SectionEdge } from "@/components/section-edge";
 
+/**
+ * Every page that reads the database regenerates on this interval. The admin's
+ * save actions still call revalidatePath for an immediate refresh; this is the
+ * floor, so a change made any other way — a direct edit, a seed correction —
+ * appears without waiting for a deploy.
+ */
+export const revalidate = 600;
+
 export const metadata = pageMetadata({
 	title: "Veteran Testimonials — Stories of Healing & Hope",
 	description:

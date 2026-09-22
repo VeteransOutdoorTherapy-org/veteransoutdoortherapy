@@ -9,6 +9,14 @@ import { Breadcrumbs } from "@/components/breadcrumbs";
 import { JsonLd } from "@/components/json-ld";
 import { SectionEdge } from "@/components/section-edge";
 
+/**
+ * Every page that reads the database regenerates on this interval. The admin's
+ * save actions still call revalidatePath for an immediate refresh; this is the
+ * floor, so a change made any other way — a direct edit, a seed correction —
+ * appears without waiting for a deploy.
+ */
+export const revalidate = 600;
+
 export const metadata = pageMetadata({
 	title: "Veteran Outdoor Events: Upcoming and Past",
 	description: "View upcoming Veteran hunts and outdoor experiences, plus a growing archive of past trips, fundraisers, camps, hikes, and community events.",
