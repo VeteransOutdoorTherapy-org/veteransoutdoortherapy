@@ -49,6 +49,7 @@ export const sponsors2026 = [
 	{ name: "247 Grit Fitness", image: `${sponsorUploads}/2026/247-grit-fitness.webp` },
 	{ name: "Ameren Missouri Callaway Energy Center", image: `${sponsorUploads}/2026/ameren-missouri.webp` },
 	{ name: "Arbor Aquatic Pros", image: `${sponsorUploads}/2026/arbor-aquatic-pros.webp` },
+	{ name: "Bass Pro Shops", image: `${sponsorUploads}/2026/bass-pro.webp` },
 	{ name: "Banded Rooster Bar & Grill", image: `${sponsorUploads}/2026/banded-rooster.webp` },
 	{ name: "Callaway Montgomery Cattlemen's Association", image: `${sponsorUploads}/2026/cattlemens-association.webp` },
 	{ name: "COIL", image: `${sponsorUploads}/2026/coil.webp` },
