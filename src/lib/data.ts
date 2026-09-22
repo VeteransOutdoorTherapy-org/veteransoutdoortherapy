@@ -1050,6 +1050,8 @@ export const fieldStories: FieldStory[] = [
 			"Volunteers, sponsors, and participants gathered at Head's Blacktop Harley-Davidson for the second annual Poker Run, raising money to support Veterans and Gold Star families.",
 		image: `${uploads}/2026/09/pokerrun/pokerrun-05.jpg`,
 		imageAlt: "Veteran's Outdoor Therapy volunteers and riders at the second annual Poker Run",
+		imagePosition: "top",
+		imagePositionMobile: "top",
 		body: [
 			"Volunteers, sponsors, and participants gathered at Head's Blacktop Harley-Davidson in Columbia, Missouri, for the second annual Poker Run on June 20, 2026.",
 			"The community fundraiser supported the outdoor program work behind Veteran hunts, fishing trips, horseback riding experiences, and other time in the field, all while everyone had a great time together. Win-win.",
