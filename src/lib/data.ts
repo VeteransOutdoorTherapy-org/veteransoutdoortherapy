@@ -1049,7 +1049,7 @@ export const fieldStories: FieldStory[] = [
 		summary:
 			"Volunteers, sponsors, and participants gathered at Head's Blacktop Harley-Davidson for the second annual Poker Run, raising money to support Veterans and Gold Star families.",
 		image: `${uploads}/2026/09/pokerrun/pokerrun-05.jpg`,
-		imageAlt: "Veteran's Outdoor Therapy volunteers and riders at the second annual Poker Run",
+		imageAlt: "Images from the 2026 Poker Run",
 		imagePosition: "top",
 		imagePositionMobile: "top",
 		body: [
@@ -1065,11 +1065,11 @@ export const fieldStories: FieldStory[] = [
 			{
 				title: "Photos from the day",
 				photos: [
-					{ src: `${uploads}/2026/09/pokerrun/pokerrun-01.jpg`, alt: "Riders gathered around the table at Head's Blacktop Harley-Davidson" },
-					{ src: `${uploads}/2026/09/pokerrun/pokerrun-02.jpg`, alt: "Riders gathered at the bar at Head's Blacktop Harley-Davidson" },
-					{ src: `${uploads}/2026/09/pokerrun/pokerrun-03.jpg`, alt: "Riders gathered around the table at Head's Blacktop Harley-Davidson" },
-					{ src: `${uploads}/2026/09/pokerrun/pokerrun-04.jpg`, alt: "Riders at Head's Blacktop Harley-Davidson" },
-					{ src: `${uploads}/2026/09/pokerrun/pokerrun-05.jpg`, alt: "Veteran's Outdoor Therapy volunteers and riders at the second annual Poker Run" },
+					{ src: `${uploads}/2026/09/pokerrun/pokerrun-01.jpg`, alt: "Images from the 2026 Poker Run" },
+					{ src: `${uploads}/2026/09/pokerrun/pokerrun-02.jpg`, alt: "Images from the 2026 Poker Run" },
+					{ src: `${uploads}/2026/09/pokerrun/pokerrun-03.jpg`, alt: "Images from the 2026 Poker Run" },
+					{ src: `${uploads}/2026/09/pokerrun/pokerrun-04.jpg`, alt: "Images from the 2026 Poker Run" },
+					{ src: `${uploads}/2026/09/pokerrun/pokerrun-05.jpg`, alt: "Images from the 2026 Poker Run" },
 				],
 			},
 		],
@@ -1137,7 +1137,7 @@ export const fieldStories: FieldStory[] = [
 		summary:
 			"Veterans from Texas and Kansas gathered in the Flint Hills for the first inaugural Kansas Turkey Hunt, hosted by Forest, Jardine, and Dru.",
 		image: `${uploads}/2026/09/flint-hills/sunset-02.jpg`,
-		imageAlt: "Veteran carrying a harvested turkey at sunset in the Flint Hills",
+		imageAlt: "Images from the 2026 Flint Hills, KS Turkey Hunt",
 		body: [
 			"Veterans from Texas and Kansas joined together in the Flint Hills for the first inaugural Kansas Turkey Hunt in May 2026.",
 			"Forest, Jardine, and Dru generously hosted the group, opening up their home for a weekend of chasing birds together.",
@@ -1153,28 +1153,28 @@ export const fieldStories: FieldStory[] = [
 			{
 				title: "Arrival in the Flint Hills",
 				photos: [
-					{ src: `${uploads}/2026/09/flint-hills/arrival-01.jpg`, alt: "Experience the Flint Hills road sign in Kansas" },
-					{ src: `${uploads}/2026/09/flint-hills/arrival-02.jpg`, alt: "Veterans watching the sunset in the Flint Hills" },
-					{ src: `${uploads}/2026/09/flint-hills/arrival-03.jpg`, alt: "Veterans with a harvested turkey at sunset in the Flint Hills" },
-					{ src: `${uploads}/2026/09/flint-hills/arrival-04.jpg`, alt: "Veterans gathered with a Veteran's Outdoor Therapy banner in the Flint Hills" },
-					{ src: `${uploads}/2026/09/flint-hills/arrival-05.jpg`, alt: "Veterans walking with a harvested turkey at dusk in the Flint Hills" },
+					{ src: `${uploads}/2026/09/flint-hills/arrival-01.jpg`, alt: "Images from the 2026 Flint Hills, KS Turkey Hunt" },
+					{ src: `${uploads}/2026/09/flint-hills/arrival-02.jpg`, alt: "Images from the 2026 Flint Hills, KS Turkey Hunt" },
+					{ src: `${uploads}/2026/09/flint-hills/arrival-03.jpg`, alt: "Images from the 2026 Flint Hills, KS Turkey Hunt" },
+					{ src: `${uploads}/2026/09/flint-hills/arrival-04.jpg`, alt: "Images from the 2026 Flint Hills, KS Turkey Hunt" },
+					{ src: `${uploads}/2026/09/flint-hills/arrival-05.jpg`, alt: "Images from the 2026 Flint Hills, KS Turkey Hunt" },
 				],
 			},
 			{
 				title: "Out at first light",
 				photos: [
-					{ src: `${uploads}/2026/09/flint-hills/sunset-01.jpg`, alt: "Veteran carrying a harvested turkey at sunset in the Flint Hills" },
-					{ src: `${uploads}/2026/09/flint-hills/sunset-02.jpg`, alt: "Veteran carrying a harvested turkey at sunset in the Flint Hills" },
+					{ src: `${uploads}/2026/09/flint-hills/sunset-01.jpg`, alt: "Images from the 2026 Flint Hills, KS Turkey Hunt" },
+					{ src: `${uploads}/2026/09/flint-hills/sunset-02.jpg`, alt: "Images from the 2026 Flint Hills, KS Turkey Hunt" },
 				],
 			},
 			{
 				title: "Tags filled",
 				photos: [
-					{ src: `${uploads}/2026/09/flint-hills/recap-01.jpg`, alt: "Veteran with a harvested turkey in the Flint Hills" },
-					{ src: `${uploads}/2026/09/flint-hills/recap-02.jpg`, alt: "Wild turkeys in a field in the Flint Hills" },
-					{ src: `${uploads}/2026/09/flint-hills/recap-03.jpg`, alt: "Veterans with harvested turkeys in the Flint Hills" },
-					{ src: `${uploads}/2026/09/flint-hills/recap-04.jpg`, alt: "Veteran with a harvested turkey along a fence line in the Flint Hills" },
-					{ src: `${uploads}/2026/09/flint-hills/recap-05.jpg`, alt: "Veteran with a harvested turkey along a creek in the Flint Hills" },
+					{ src: `${uploads}/2026/09/flint-hills/recap-01.jpg`, alt: "Images from the 2026 Flint Hills, KS Turkey Hunt" },
+					{ src: `${uploads}/2026/09/flint-hills/recap-02.jpg`, alt: "Images from the 2026 Flint Hills, KS Turkey Hunt" },
+					{ src: `${uploads}/2026/09/flint-hills/recap-03.jpg`, alt: "Images from the 2026 Flint Hills, KS Turkey Hunt" },
+					{ src: `${uploads}/2026/09/flint-hills/recap-04.jpg`, alt: "Images from the 2026 Flint Hills, KS Turkey Hunt" },
+					{ src: `${uploads}/2026/09/flint-hills/recap-05.jpg`, alt: "Images from the 2026 Flint Hills, KS Turkey Hunt" },
 				],
 			},
 		],
@@ -1191,7 +1191,7 @@ export const fieldStories: FieldStory[] = [
 		summary:
 			"Veterans from Ohio, Nebraska, and Missouri gathered for the inaugural Missouri Turkey Hunt, tagging four birds and spending a day catfishing on the river.",
 		image: `${uploads}/2026/09/mo-turkey/underway-01.jpg`,
-		imageAlt: "Veteran with a harvested turkey in a Missouri field",
+		imageAlt: "Images from the 2026 Missouri Turkey Hunt",
 		body: [
 			"Veterans from Ohio, Nebraska, and Missouri gathered for the inaugural Missouri Turkey Hunt in early May 2026, combining turkey hunting with a day of catfishing on the river.",
 			"Huge thanks to Conservation Federation of Missouri for their support and to all the volunteers who helped make the hunt possible.",
@@ -1207,21 +1207,21 @@ export const fieldStories: FieldStory[] = [
 			{
 				title: "The hunt is underway",
 				photos: [
-					{ src: `${uploads}/2026/09/mo-turkey/underway-01.jpg`, alt: "Veterans with harvested turkeys and a Veteran's Outdoor Therapy banner" },
-					{ src: `${uploads}/2026/09/mo-turkey/underway-02.jpg`, alt: "Veteran with a harvested turkey in a Missouri field" },
-					{ src: `${uploads}/2026/09/mo-turkey/underway-03.jpg`, alt: "Veteran with a harvested turkey on a fallen log" },
-					{ src: `${uploads}/2026/09/mo-turkey/underway-04.jpg`, alt: "Veteran with a harvested turkey at sunset in Missouri" },
-					{ src: `${uploads}/2026/09/mo-turkey/underway-05.jpg`, alt: "Camp gear and a Veteran's Outdoor Therapy banner at night" },
+					{ src: `${uploads}/2026/09/mo-turkey/underway-01.jpg`, alt: "Images from the 2026 Missouri Turkey Hunt" },
+					{ src: `${uploads}/2026/09/mo-turkey/underway-02.jpg`, alt: "Images from the 2026 Missouri Turkey Hunt" },
+					{ src: `${uploads}/2026/09/mo-turkey/underway-03.jpg`, alt: "Images from the 2026 Missouri Turkey Hunt" },
+					{ src: `${uploads}/2026/09/mo-turkey/underway-04.jpg`, alt: "Images from the 2026 Missouri Turkey Hunt" },
+					{ src: `${uploads}/2026/09/mo-turkey/underway-05.jpg`, alt: "Images from the 2026 Missouri Turkey Hunt" },
 				],
 			},
 			{
 				title: "Tags filled, and time on the water",
 				photos: [
-					{ src: `${uploads}/2026/09/mo-turkey/recap-01.jpg`, alt: "Veteran with a harvested turkey in the Missouri woods" },
-					{ src: `${uploads}/2026/09/mo-turkey/recap-02.jpg`, alt: "Veteran holding a catfish on the river" },
-					{ src: `${uploads}/2026/09/mo-turkey/recap-03.jpg`, alt: "Veteran holding a catfish on the river" },
-					{ src: `${uploads}/2026/09/mo-turkey/recap-04.jpg`, alt: "Veterans holding a large catfish on the river" },
-					{ src: `${uploads}/2026/09/mo-turkey/recap-05.jpg`, alt: "Veterans gathered for a cookout on the porch" },
+					{ src: `${uploads}/2026/09/mo-turkey/recap-01.jpg`, alt: "Images from the 2026 Missouri Turkey Hunt" },
+					{ src: `${uploads}/2026/09/mo-turkey/recap-02.jpg`, alt: "Images from the 2026 Missouri Turkey Hunt" },
+					{ src: `${uploads}/2026/09/mo-turkey/recap-03.jpg`, alt: "Images from the 2026 Missouri Turkey Hunt" },
+					{ src: `${uploads}/2026/09/mo-turkey/recap-04.jpg`, alt: "Images from the 2026 Missouri Turkey Hunt" },
+					{ src: `${uploads}/2026/09/mo-turkey/recap-05.jpg`, alt: "Images from the 2026 Missouri Turkey Hunt" },
 				],
 			},
 		],

@@ -44,17 +44,19 @@ export function GalleryLightbox({ images }: { images: GalleryImage[] }) {
 	return (
 		<>
 			<div className="gallery-grid">
+				{/* Deliberately no title attribute on these tiles. title, not alt, is what
+				    draws the browser's hover tooltip; the alt below still reaches crawlers
+				    and screen readers, and aria-label carries it to the button itself. */}
 				{images.map((image, index) => (
 					<button
 						className={`gallery-item${index % 5 === 0 ? " wide" : ""}`}
-					key={image.id}
+						key={image.id}
 						type="button"
 						onClick={(event) => {
 							triggerRef.current = event.currentTarget;
 							setSelectedIndex(index);
 						}}
 						aria-label={`Open ${image.alt}, photo ${index + 1} of ${images.length}`}
-						title={image.caption || image.alt}
 					>
 						<Image
 							src={image.src}

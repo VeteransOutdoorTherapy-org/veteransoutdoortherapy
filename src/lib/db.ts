@@ -291,11 +291,11 @@ const dischargeMigration =
 			{
 				title: "Photos from the day",
 				photos: [
-					{ src: "/wp-content/uploads/2026/09/pokerrun/pokerrun-01.jpg", alt: "Riders gathered around the table at Head's Blacktop Harley-Davidson" },
-					{ src: "/wp-content/uploads/2026/09/pokerrun/pokerrun-02.jpg", alt: "Riders gathered at the bar at Head's Blacktop Harley-Davidson" },
-					{ src: "/wp-content/uploads/2026/09/pokerrun/pokerrun-03.jpg", alt: "Riders gathered around the table at Head's Blacktop Harley-Davidson" },
-					{ src: "/wp-content/uploads/2026/09/pokerrun/pokerrun-04.jpg", alt: "Riders at Head's Blacktop Harley-Davidson" },
-					{ src: "/wp-content/uploads/2026/09/pokerrun/pokerrun-05.jpg", alt: "Veteran's Outdoor Therapy volunteers and riders at the second annual Poker Run" },
+					{ src: "/wp-content/uploads/2026/09/pokerrun/pokerrun-01.jpg", alt: "Images from the 2026 Poker Run" },
+					{ src: "/wp-content/uploads/2026/09/pokerrun/pokerrun-02.jpg", alt: "Images from the 2026 Poker Run" },
+					{ src: "/wp-content/uploads/2026/09/pokerrun/pokerrun-03.jpg", alt: "Images from the 2026 Poker Run" },
+					{ src: "/wp-content/uploads/2026/09/pokerrun/pokerrun-04.jpg", alt: "Images from the 2026 Poker Run" },
+					{ src: "/wp-content/uploads/2026/09/pokerrun/pokerrun-05.jpg", alt: "Images from the 2026 Poker Run" },
 				],
 			},
 		]);
