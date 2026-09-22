@@ -33,7 +33,7 @@ const impact = [
 		icon: Tent,
 		amount: "$750",
 		title: "Make camp possible",
-		copy: "Covers lodging and the tags and licences a hunt is built on.",
+		copy: "Covers lodging and the tags and licenses a hunt is built on.",
 	},
 ];
 

@@ -272,7 +272,7 @@ export const events: Event[] = [
 		heroTitle: "Welcomed into Belle Fourche.",
 		overviewTitle: "How the weekend went.",
 		overview:
-			"Five Soldiers travelled in from Nebraska, Missouri, South Dakota, and Oklahoma, and the little town of Belle Fourche took them in with open arms and huge hearts. Days were spent glassing and stalking antelope on horseback and on foot.",
+			"Five Soldiers traveled in from Nebraska, Missouri, South Dakota, and Oklahoma, and the little town of Belle Fourche took them in with open arms and huge hearts. Days were spent glassing and stalking antelope on horseback and on foot.",
 		detailsTitle: "Who made it possible",
 		details:
 			"South Dakota Game, Fish and Parks and Bass Pro Shops in Rapid City supported the hunt, along with the volunteers whose hospitality carried the weekend.",
