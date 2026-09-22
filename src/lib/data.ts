@@ -315,7 +315,10 @@ export const events: Event[] = [
 		date: "June 20, 2026",
 		startDate: "2026-06-20",
 		endDate: "2026-06-20",
-		image: `${uploads}/events/poker-run.webp`,
+		image: `${uploads}/2026/09/pokerrun/pokerrun-2026-hero.jpg`,
+		// Portrait photo in a 4:3 card: hold the frame on the rider, not the tarmac.
+		imagePosition: "top",
+		imagePositionMobile: "top",
 		type: "Fundraiser",
 		location: "Columbia, Missouri",
 		summary: "Volunteers, sponsors, participants, and riders gathered for the second annual Poker Run, raising support for Veterans and Gold Star families.",
@@ -330,7 +333,7 @@ export const events: Event[] = [
 		published: true,
 		featured: false,
 		over: true,
-		recapUrl: "https://www.facebook.com/share/p/1LZEGfVeTT/",
+		recapUrl: "https://www.facebook.com/share/p/184v81Y8s5/",
 		sortOrder: 5,
 	},
 	{
