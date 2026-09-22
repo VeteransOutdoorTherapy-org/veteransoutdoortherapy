@@ -1,6 +1,7 @@
 import "server-only";
 import nodemailer from "nodemailer";
 import { displayPhone } from "./phone";
+import { SITE_NAME } from "./site";
 
 export type ContactNotification = {
 	firstName: string;
@@ -74,7 +75,7 @@ export async function sendContactNotification(contact: ContactNotification) {
 
 	const name = `${contact.firstName} ${contact.lastName}`.trim();
 	await transporter.sendMail({
-		from: `Veterans Outdoor Therapy Website <${user}>`,
+		from: `${SITE_NAME} Website <${user}>`,
 		to: requiredEnvironment("CONTACT_EMAIL_TO"),
 		replyTo: contact.email,
 		subject: `New website contact from ${name}`,
@@ -100,7 +101,7 @@ export async function sendOrderNotification(order: OrderNotification) {
 			`- ${item.name}${item.size ? ` (Size ${item.size})` : ""} × ${item.quantity} at $${item.unitPrice.toFixed(2)} = $${item.lineTotal.toFixed(2)}`,
 	);
 	await transporter.sendMail({
-		from: `Veterans Outdoor Therapy Website <${user}>`,
+		from: `${SITE_NAME} Website <${user}>`,
 		to: requiredEnvironment("CONTACT_EMAIL_TO"),
 		replyTo: order.customerEmail,
 		subject: `Paid merchandise order ${order.orderNumber}`,
@@ -139,7 +140,7 @@ export async function sendCustomerOrderConfirmation(order: OrderNotification) {
 			`- ${item.name}${item.size ? ` (Size ${item.size})` : ""} × ${item.quantity} at $${item.unitPrice.toFixed(2)} = $${item.lineTotal.toFixed(2)}`,
 	);
 	await transporter.sendMail({
-		from: `Veterans Outdoor Therapy <${user}>`,
+		from: `${SITE_NAME} <${user}>`,
 		to: order.customerEmail,
 		replyTo: requiredEnvironment("CONTACT_EMAIL_TO"),
 		subject: `Your Veteran's Outdoor Therapy order ${order.orderNumber}`,
@@ -168,7 +169,7 @@ export async function sendCustomerOrderConfirmation(order: OrderNotification) {
 export async function sendShipmentNotification(shipment: ShipmentNotification) {
 	const { user, transporter } = createTransporter();
 	await transporter.sendMail({
-		from: `Veteran's Outdoor Therapy <${user}>`,
+		from: `${SITE_NAME} <${user}>`,
 		to: shipment.customerEmail,
 		replyTo: requiredEnvironment("CONTACT_EMAIL_TO"),
 		subject: `Your order ${shipment.orderNumber} has shipped`,

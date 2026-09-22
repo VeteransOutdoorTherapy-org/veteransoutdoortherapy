@@ -358,6 +358,12 @@ const dischargeMigration =
 			WHERE slug = 'wilderness-to-wellness-benefit-dinner-2026'`;
 		}
 	}
+	// The earlier official-name migration covered products and events but not
+	// testimonials, so two quotes kept the apostrophe-less spelling of the name.
+	const testimonialNameMigration =
+		await db`INSERT INTO migrations (id) VALUES ('official-name-in-testimonials') ON CONFLICT (id) DO NOTHING RETURNING id`;
+	if (testimonialNameMigration.length)
+		await db`UPDATE testimonials SET quote = replace(quote, 'Veterans Outdoor Therapy', ${SITE_NAME}), updated_at = now() WHERE quote LIKE '%Veterans Outdoor Therapy%'`;
 	return db;
 }
 
