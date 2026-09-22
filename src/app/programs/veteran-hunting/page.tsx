@@ -68,7 +68,7 @@ async function outdoorExperiences() {
 
 export default async function VeteranHuntingPage() {
 	const [experiences, testimonials] = await Promise.all([outdoorExperiences(), getPublishedTestimonials()]);
-	// Short quotes only: these sit three across, so a long one would tower over its neighbours.
+	// Short quotes only: these sit three across, so a long one would tower over its neighbors.
 	const short = testimonials.filter((testimonial) => testimonial.quote.length <= 320);
 	const voices = [
 		...short.filter((testimonial) => /hunt/i.test(testimonial.category ?? "")),

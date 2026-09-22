@@ -518,7 +518,7 @@ img {
 	border-color: rgba(255, 255, 255, 0.7);
 	background: rgba(0, 0, 0, 0.2);
 }
-/* Torn edges sit over the join between two sections, painted in the next section's colour. */
+/* Torn edges sit over the join between two sections, painted in the next section's color. */
 .section-edge {
 	position: absolute;
 	left: 0;
@@ -1963,7 +1963,7 @@ img {
 .event-cta-band > .container {
 	grid-template-columns: 1fr auto;
 }
-/* The section above paints its torn edge in this band's colour, so the band already
+/* The section above paints its torn edge in this band's color, so the band already
    reads ~24px taller at the top, while the footer's edge eats the same off the bottom.
    Equal padding therefore looks lopsided; take that height back off the top only.
    Two classes so this beats the earlier .giving-band padding on document order alone. */

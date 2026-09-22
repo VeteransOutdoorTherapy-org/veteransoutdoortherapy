@@ -8,7 +8,7 @@ const PATHS = {
 } as const;
 
 /**
- * An edge painted in the colour of the neighbouring section, overlapping the join so one section
+ * An edge painted in the color of the neighboring section, overlapping the join so one section
  * appears torn over the other. Put it at the foot of a section, or `flip` it onto the top.
  */
 export function SectionEdge({
@@ -21,9 +21,9 @@ export function SectionEdge({
 	color: string;
 	variant?: EdgeVariant;
 	flip?: boolean;
-	/** Sit wholly above the parent, so the parent's own colour paints up over whatever precedes it. */
+	/** Sit wholly above the parent, so the parent's own color paints up over whatever precedes it. */
 	above?: boolean;
-	/** Sit wholly below the parent, so the parent's own colour paints down over whatever follows. */
+	/** Sit wholly below the parent, so the parent's own color paints down over whatever follows. */
 	below?: boolean;
 }) {
 	const placement = below

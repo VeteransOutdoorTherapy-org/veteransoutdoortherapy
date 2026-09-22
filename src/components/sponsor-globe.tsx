@@ -74,7 +74,7 @@ export function SponsorGlobe({ logos }: { logos: readonly Logo[] }) {
 		let pitch = 0;
 		let ease = 1; // 1 at full speed, lower while a logo is hovered
 		let dragging = false;
-		let travelled = 0;
+		let traveled = 0;
 		let lastX = 0;
 		let lastY = 0;
 		let dragYaw = 0; // carries the throw out of a drag
@@ -92,7 +92,7 @@ export function SponsorGlobe({ logos }: { logos: readonly Logo[] }) {
 		let featured: number[] = [];
 		const pickFeatured = () => {
 			// Uniform choice across every tile, excluding whatever is featured right
-			// now: no logo is favoured, and none repeats back to back.
+			// now: no logo is favored, and none repeats back to back.
 			const pool: number[] = [];
 			for (let i = 0; i < count; i += 1) if (!featured.includes(i)) pool.push(i);
 			const wanted = Math.random() < 0.45 ? 2 : 1;
@@ -162,7 +162,7 @@ export function SponsorGlobe({ logos }: { logos: readonly Logo[] }) {
 			}
 
 			if (focused >= 0) {
-				// Glide the chosen logo to the centre and hold it there.
+				// Glide the chosen logo to the center and hold it there.
 				yaw += (aimYaw - yaw) * 0.08;
 				pitch += (aimPitch - pitch) * 0.08;
 			} else if (dragging) {
@@ -196,7 +196,7 @@ export function SponsorGlobe({ logos }: { logos: readonly Logo[] }) {
 
 		const down = (event: PointerEvent) => {
 			dragging = true;
-			travelled = 0;
+			traveled = 0;
 			lastX = event.clientX;
 			lastY = event.clientY;
 			dragYaw = 0;
@@ -207,7 +207,7 @@ export function SponsorGlobe({ logos }: { logos: readonly Logo[] }) {
 			if (!dragging) return;
 			const dx = event.clientX - lastX;
 			const dy = event.clientY - lastY;
-			travelled += Math.abs(dx) + Math.abs(dy);
+			traveled += Math.abs(dx) + Math.abs(dy);
 			// Feed the drag through the same momentum the idle drift uses, so the
 			// globe tracks the mouse and keeps turning when it is let go.
 			dragYaw = dx * 0.0075;
@@ -218,7 +218,7 @@ export function SponsorGlobe({ logos }: { logos: readonly Logo[] }) {
 		const up = (event: PointerEvent) => {
 			const wasDragging = dragging;
 			dragging = false;
-			if (!wasDragging || travelled > DRAG_SLOP) return;
+			if (!wasDragging || traveled > DRAG_SLOP) return;
 			// A tap, not a drag: focus the logo under it, or let the current one go.
 			const tile = (event.target as HTMLElement | null)?.closest("[data-tile]");
 			const index = tile ? nodes.indexOf(tile as HTMLElement) : -1;

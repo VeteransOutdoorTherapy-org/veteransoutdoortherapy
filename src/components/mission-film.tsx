@@ -2,7 +2,7 @@ import { SectionEdge } from "./section-edge";
 
 /**
  * `dark` flips the band to ink with painted edges; `above` and `below` take the
- * colour of the neighbouring sections, since an edge is painted in the colour of
+ * color of the neighboring sections, since an edge is painted in the color of
  * the section it hands off to.
  */
 export function MissionFilm({ dark = false, above = "var(--paper)", below = "var(--paper)" }: { dark?: boolean; above?: string; below?: string }) {

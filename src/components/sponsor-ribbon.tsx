@@ -23,7 +23,7 @@ export function SponsorRibbon({ logos, seconds = 64 }: { logos: readonly Logo[];
 		if (!lists.length) return;
 
 		// One order, applied to every copy, so the two halves stay identical and the
-		// loop still closes. Fisher-Yates, so no logo is favoured.
+		// loop still closes. Fisher-Yates, so no logo is favored.
 		const order = logos.map((_, i) => i);
 		for (let i = order.length - 1; i > 0; i -= 1) {
 			const j = Math.floor(Math.random() * (i + 1));

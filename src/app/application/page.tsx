@@ -32,7 +32,7 @@ export default async function ApplicationPage() {
 	]
 		.sort((a, b) => b.sortDate.localeCompare(a.sortDate))
 		.slice(0, 3);
-	// Short quotes only: these sit three across, so a long one would tower over its neighbours.
+	// Short quotes only: these sit three across, so a long one would tower over its neighbors.
 	const voices = testimonials.filter((testimonial) => testimonial.quote.length <= 320).slice(0, 3);
 
 	return (
