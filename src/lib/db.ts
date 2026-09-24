@@ -153,6 +153,10 @@ async function ensureEvents() {
 	await seedMissingEvent(db, "seed-tba-white-river-2027", "white-river-fly-fishing-2027");
 	await seedMissingEvent(db, "seed-tba-snagging-2027", "missouri-snagging-trip-2027");
 	await seedMissingEvent(db, "seed-tba-benefit-banquet-2027", "benefit-banquet-dinner-2027");
+	// 2026 trips that had a field note before they had an event record.
+	await seedMissingEvent(db, "seed-past-snagging-2026", "missouri-paddlefish-snagging-2026");
+	await seedMissingEvent(db, "seed-past-benefit-dinner-2026", "wilderness-to-wellness-benefit-dinner-2026");
+	await seedMissingEvent(db, "seed-past-white-river-2026", "white-river-fly-fishing-2026");
 	return db;
 }
 

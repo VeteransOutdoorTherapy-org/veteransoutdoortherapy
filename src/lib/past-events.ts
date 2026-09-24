@@ -38,17 +38,6 @@ export function toPastEvent(event: Event, story?: { slug: string }): PastEvent {
 
 export const documentedPastEvents: PastEvent[] = [
 	{
-		title: "Wilderness to Wellness Dinner Banquet",
-		date: "March 13, 2026",
-		sortDate: "2026-03-13",
-		type: "Benefit dinner",
-		summary: "A sold-out evening centered on service, community, stories, and support for outdoor programs.",
-		image: `${uploads}/2025/09/photo-049.jpg`,
-		href: "/wilderness-to-wellness",
-		storyHref: "/field-stories/wilderness-to-wellness-benefit-dinner-2026",
-		recapUrl: "https://www.facebook.com/share/p/18jSBLgpCR/",
-	},
-	{
 		title: "2026 Annual Gun Raffle",
 		date: "March 13, 2026",
 		sortDate: "2026-03-13",
@@ -56,17 +45,6 @@ export const documentedPastEvents: PastEvent[] = [
 		summary: "The annual benefit raffle concluded with its drawing during the Wilderness to Wellness event.",
 		image: `${uploads}/2025/09/photo-134.png`,
 		href: "/2026-gun-raffle",
-	},
-	{
-		title: "Missouri Snagging Spoonbill",
-		date: "March 20-22, 2026",
-		sortDate: "2026-03-20",
-		type: "Fishing",
-		location: "Missouri",
-		summary: "A multi-day Missouri spoonbill fishing experience for Veterans in the field together.",
-		image: `${uploads}/2026/09/snagging/catch-01.jpg`,
-		storyHref: "/field-stories/missouri-paddlefish-snagging-2026",
-		recapUrl: "https://www.facebook.com/share/p/17xSyoKzX4/",
 	},
 	{
 		title: "Larry's Arizona Elk Hunt",
@@ -158,7 +136,7 @@ export function eventForStory<E extends { slug: string; title: string; startDate
 	// A trip that repeats keeps its name and changes only the year, in the title
 	// where there is an event record for the year written up, and otherwise in the
 	// slug — which is the only handle left when that year was never entered as an
-	// event, as with the 2026 White River trip.
+	// event.
 	const family = (value: string) => value.replace(/-(19|20)\d{2}$/, "");
 	const scheduled = live.filter((event) => !event.over && event.endDate >= today);
 	const upcoming = (covers ? scheduled.filter((event) => event.title === covers.title) : [])
