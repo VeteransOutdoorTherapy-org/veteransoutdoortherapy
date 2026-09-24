@@ -14,7 +14,7 @@ export const sponsorLogos = [
 	},
 	{
 		name: "Coulter Lake Guest Ranch & Outfitters",
-		image: `${sponsorUploads}/coulter-lake-guest-ranch.webp`,
+		image: `${sponsorUploads}/2026/coulter-lake-guest-ranch.webp`,
 		featured: true,
 	},
 	{
