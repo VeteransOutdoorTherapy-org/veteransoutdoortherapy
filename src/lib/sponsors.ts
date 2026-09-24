@@ -14,7 +14,7 @@ export const sponsorLogos = [
 	},
 	{
 		name: "Coulter Lake Guest Ranch & Outfitters",
-		image: `${sponsorUploads}/coulter-lake-guest-ranch.png`,
+		image: `${sponsorUploads}/coulter-lake-guest-ranch.webp`,
 		featured: true,
 	},
 	{
@@ -54,7 +54,7 @@ export const sponsors2026 = [
 	{ name: "Callaway Montgomery Cattlemen's Association", image: `${sponsorUploads}/2026/cattlemens-association.webp` },
 	{ name: "COIL", image: `${sponsorUploads}/2026/coil.webp` },
 	{ name: "Conservation Federation of Missouri", image: `${sponsorUploads}/2026/conservation-federation-of-missouri.webp` },
-	{ name: "Coulter Lake Guest Ranch", image: `${sponsorUploads}/2026/coulter-lake-guest-ranch.png` },
+	{ name: "Coulter Lake Guest Ranch", image: `${sponsorUploads}/2026/coulter-lake-guest-ranch.webp` },
 	{ name: "Corrigan Co.", image: `${sponsorUploads}/2026/corrigan-co.webp` },
 	{ name: "CParks", image: `${sponsorUploads}/2026/cparks.webp` },
 	{ name: "Danuser", image: `${sponsorUploads}/2026/danuser.webp` },
