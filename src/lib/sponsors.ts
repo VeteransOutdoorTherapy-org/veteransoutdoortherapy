@@ -14,7 +14,7 @@ export const sponsorLogos = [
 	},
 	{
 		name: "Coulter Lake Guest Ranch & Outfitters",
-		image: `${sponsorUploads}/2026/coulter-lake-guest-ranch.jpg`,
+		image: `${sponsorUploads}/coulter-lake-guest-ranch.webp`,
 		featured: true,
 	},
 	{
@@ -30,7 +30,7 @@ export const sponsorLogos = [
 	},
 	{
 		name: "Blacktop Harley-Davidson",
-		image: `${sponsorUploads}/blacktop-harley-davidson.png`,
+		image: `${sponsorUploads}/heads.png`,
 		/* Off the homepage bar, which shows featured only; still on /sponsor. */
 		featured: false,
 	},
