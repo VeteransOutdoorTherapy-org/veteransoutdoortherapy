@@ -14,7 +14,7 @@ export const sponsorLogos = [
 	},
 	{
 		name: "Coulter Lake Guest Ranch & Outfitters",
-		image: `${sponsorUploads}/coulter-lake-guest-ranch.jpg`,
+		image: `${sponsorUploads}/2026/coulter-lake-guest-ranch.jpg`,
 		featured: true,
 	},
 	{
@@ -77,6 +77,7 @@ export const sponsors2026 = [
 	{ name: "Swamp Buck", image: `${sponsorUploads}/2026/swamp-buck.webp` },
 	{ name: "Teel Mechanical Service", image: `${sponsorUploads}/2026/teel-mechanical-service.webp` },
 	{ name: "The Milestone Group", image: `${sponsorUploads}/2026/the-milestone-group.webp` },
+	{ name: "Three Arrows Outfitters", image: `${sponsorUploads}/three-arrows-outfitters.webp` },
 	{ name: "VFW Post 2657", image: `${sponsorUploads}/2026/vfw-post-2657.webp` },
 	{ name: "Westinghouse", image: `${sponsorUploads}/2026/westinghouse.webp` },
 ] as const;
