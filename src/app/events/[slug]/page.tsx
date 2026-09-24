@@ -66,6 +66,12 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
 	closing.setMonth(closing.getMonth() + 1);
 	const applicationsOpen = !eventIsOver && event.startDate > closing.toISOString().slice(0, 10);
 	const ownStory = eventIsOver ? storyForEvent(event, (await getFieldStories()).filter((story) => story.published)) : undefined;
+	// A strip from the write-up's galleries, skipping whatever is already the hero
+	// above it.
+	const storyPhotos = (ownStory?.photoGalleries ?? [])
+		.flatMap((gallery) => gallery.photos)
+		.filter((photo) => photo.src !== event.image && photo.src !== ownStory?.image)
+		.slice(0, 4);
 	const eventSchema = {
 		"@context": "https://schema.org",
 		"@type": "Event",
@@ -107,7 +113,11 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
 								<MapPin size={18} /> {event.location}
 							</span>
 						</div>
-						{eventIsOver && event.recapUrl ? (
+						{/* For a finished trip our own write-up comes first, Facebook only when
+						    there is no write-up to send the reader to. */}
+						{eventIsOver && ownStory ? (
+							<Link className="button orange" href={`/field-stories/${ownStory.slug}`}>Read the field note</Link>
+						) : eventIsOver && event.recapUrl ? (
 							<a className="button orange" href={event.recapUrl} target="_blank" rel="noreferrer">View event recap</a>
 						) : (
 							<Link className="button orange" href={eventIsOver ? "/donate" : event.ctaHref}>
@@ -134,6 +144,33 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
 					</article>
 				</div>
 			</section>
+			{/* A finished trip's own write-up, brought onto the event page: what the
+			    weekend actually was, and a handful of photographs, so the page is
+			    worth landing on rather than a signpost to somewhere else. */}
+			{ownStory && (
+				<section className="section event-story has-edge">
+					<div className="container">
+						<p className="eyebrow">From the field note</p>
+						<h2 className="display section-title">{ownStory.title}</h2>
+						<div className="event-story-body prose">
+							{ownStory.body.slice(0, 2).map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+						</div>
+						{storyPhotos.length > 0 && (
+							<div className="event-story-photos">
+								{storyPhotos.map((photo) => (
+									<figure key={photo.src}>
+										<Image src={photo.src} alt={photo.alt} fill sizes="(max-width: 700px) 50vw, 25vw" />
+									</figure>
+								))}
+							</div>
+						)}
+						<div className="card-actions">
+							<Link className="button orange" href={`/field-stories/${ownStory.slug}`}>Read the full field note</Link>
+						</div>
+					</div>
+					<SectionEdge color="#efece1" variant="b" />
+				</section>
+			)}
 			{previous.length > 0 && (
 				<section className="section past-events-section event-past has-edge">
 					<div className="container">

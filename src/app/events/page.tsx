@@ -1,8 +1,9 @@
+import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
 import Link from "next/link";
 import { MissionFilm } from "@/components/mission-film";
-import { getEvents } from "@/lib/db";
-import { documentedPastEvents, type PastEvent, toPastEvent } from "@/lib/past-events";
+import { getEvents, getFieldStories } from "@/lib/db";
+import { documentedPastEvents, type PastEvent, storyForEvent, toPastEvent } from "@/lib/past-events";
 import { breadcrumbSchema, pageMetadata } from "@/lib/site";
 import { HeroCollage } from "@/components/hero-collage";
 import { Breadcrumbs } from "@/components/breadcrumbs";
@@ -24,14 +25,14 @@ export const metadata = pageMetadata({
 });
 
 export default async function EventsPage() {
-	const events = (await getEvents())
-		.filter((event) => event.published)
-		.sort((a, b) => a.sortOrder - b.sortOrder);
+	const [allEvents, allStories] = await Promise.all([getEvents(), getFieldStories()]);
+	const events = allEvents.filter((event) => event.published).sort((a, b) => a.sortOrder - b.sortOrder);
+	const stories = allStories.filter((story) => story.published);
 	const today = new Date().toISOString().slice(0, 10);
 	const upcomingEvents = events.filter((event) => !event.over && event.endDate >= today);
 	const completedEvents: PastEvent[] = events
 		.filter((event) => event.over || event.endDate < today)
-		.map(toPastEvent);
+		.map((event) => toPastEvent(event, storyForEvent(event, stories)));
 	const pastEvents = [...completedEvents, ...documentedPastEvents].sort((a, b) => b.sortDate.localeCompare(a.sortDate));
 
 	return (
@@ -82,8 +83,26 @@ export default async function EventsPage() {
 								<h3 className="display">{event.title}</h3>
 								<strong>{event.date}{event.location ? ` | ${event.location}` : ""}</strong>
 								<p>{event.summary}</p>
-								{event.href && <Link className="text-link" href={event.href}>View event details</Link>}
-								{event.recapUrl && <a className="text-link" href={event.recapUrl} target="_blank" rel="noreferrer">View Facebook recap</a>}
+								{/* Our own write-up leads, then the event page, then Facebook last:
+								    a reader who wants the story should not have to leave the site
+								    to find it. */}
+								<div className="card-actions">
+									{event.storyHref && (
+										<Link className="text-link" href={event.storyHref}>
+											Read the field note <ArrowRight size={17} />
+										</Link>
+									)}
+									{event.href && (
+										<Link className="text-link" href={event.href}>
+											View event details <ArrowRight size={17} />
+										</Link>
+									)}
+									{event.recapUrl && (
+										<a className="text-link" href={event.recapUrl} target="_blank" rel="noreferrer">
+											View Facebook recap <ArrowRight size={17} />
+										</a>
+									)}
+								</div>
 							</article>
 						))}
 					</div>

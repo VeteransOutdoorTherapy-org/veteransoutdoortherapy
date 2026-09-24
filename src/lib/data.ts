@@ -275,7 +275,7 @@ export const events: Event[] = [
 			"Five Soldiers traveled in from Nebraska, Missouri, South Dakota, and Oklahoma, and the little town of Belle Fourche took them in with open arms and huge hearts. Days were spent glassing and stalking antelope on horseback and on foot.",
 		detailsTitle: "Who made it possible",
 		details:
-			"South Dakota Game, Fish and Parks and Bass Pro Shops in Rapid City supported the hunt, along with the volunteers whose hospitality carried the weekend.",
+			"Three Arrows Outfitters hosted the hunt as its main sponsor and guided the Soldiers on the prairie. South Dakota Game, Fish and Parks and Bass Pro Shops in Rapid City supported the weekend, along with the volunteers whose hospitality carried it.",
 		ctaLabel: "Read the field note",
 		ctaHref: "/field-stories",
 		recapUrl: "https://www.facebook.com/share/p/1M9FCCmjfr/",

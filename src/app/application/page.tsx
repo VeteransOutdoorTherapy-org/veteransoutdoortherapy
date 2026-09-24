@@ -4,9 +4,9 @@ import Link from "next/link";
 import { ApplicationHub } from "@/components/application-hub";
 import { JsonLd } from "@/components/json-ld";
 import { SectionEdge } from "@/components/section-edge";
-import { getEvents, getPublishedTestimonials } from "@/lib/db";
+import { getEvents, getFieldStories, getPublishedTestimonials } from "@/lib/db";
 import { publicName } from "@/lib/names";
-import { documentedPastEvents, toPastEvent } from "@/lib/past-events";
+import { documentedPastEvents, storyForEvent, toPastEvent } from "@/lib/past-events";
 import { breadcrumbSchema, pageMetadata } from "@/lib/site";
 
 /**
@@ -25,9 +25,12 @@ export const metadata = pageMetadata({
 
 export default async function ApplicationPage() {
 	const today = new Date().toISOString().slice(0, 10);
-	const [events, testimonials] = await Promise.all([getEvents(), getPublishedTestimonials()]);
+	const [events, stories, testimonials] = await Promise.all([getEvents(), getFieldStories(), getPublishedTestimonials()]);
+	const published = stories.filter((story) => story.published);
 	const pastEvents = [
-		...events.filter((event) => event.published && (event.over || event.endDate < today)).map(toPastEvent),
+		...events
+			.filter((event) => event.published && (event.over || event.endDate < today))
+			.map((event) => toPastEvent(event, storyForEvent(event, published))),
 		...documentedPastEvents,
 	]
 		.sort((a, b) => b.sortDate.localeCompare(a.sortDate))
@@ -55,7 +58,18 @@ export default async function ApplicationPage() {
 									<h3 className="display">{event.title}</h3>
 									<strong>{event.date}{event.location ? ` | ${event.location}` : ""}</strong>
 									<p>{event.summary}</p>
-									{event.href && <Link className="text-link" href={event.href}>View event details</Link>}
+									<div className="card-actions">
+									{event.storyHref && (
+										<Link className="text-link" href={event.storyHref}>
+											Read the field note <ArrowRight size={17} />
+										</Link>
+									)}
+									{event.href && (
+										<Link className="text-link" href={event.href}>
+											View event details <ArrowRight size={17} />
+										</Link>
+									)}
+								</div>
 								</article>
 							))}
 						</div>

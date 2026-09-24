@@ -11,6 +11,8 @@ export type PastEvent = {
 	imageAlt?: string;
 	href?: string;
 	recapUrl?: string;
+	/** The write-up on this site, where the trip has one. Ours comes before Facebook's. */
+	storyHref?: string;
 	/** Style carrying the admin's focus choice, for archive entries built from an event record. */
 	focus?: Record<string, string>;
 };
@@ -18,7 +20,7 @@ export type PastEvent = {
 import { imageFocusStyle, type Event } from "./data";
 
 /** A finished event, rendered the same way as the hand-written archive entries below. */
-export function toPastEvent(event: Event): PastEvent {
+export function toPastEvent(event: Event, story?: { slug: string }): PastEvent {
 	return {
 		title: event.title,
 		date: event.date,
@@ -30,6 +32,7 @@ export function toPastEvent(event: Event): PastEvent {
 		focus: imageFocusStyle(event),
 		href: `/events/${event.slug}`,
 		recapUrl: event.recapUrl,
+		storyHref: story ? `/field-stories/${story.slug}` : undefined,
 	};
 }
 
@@ -42,6 +45,7 @@ export const documentedPastEvents: PastEvent[] = [
 		summary: "A sold-out evening centered on service, community, stories, and support for outdoor programs.",
 		image: `${uploads}/2025/09/photo-049.jpg`,
 		href: "/wilderness-to-wellness",
+		storyHref: "/field-stories/wilderness-to-wellness-benefit-dinner-2026",
 		recapUrl: "https://www.facebook.com/share/p/18jSBLgpCR/",
 	},
 	{
@@ -61,6 +65,7 @@ export const documentedPastEvents: PastEvent[] = [
 		location: "Missouri",
 		summary: "A multi-day Missouri spoonbill fishing experience for Veterans in the field together.",
 		image: `${uploads}/2026/09/snagging/catch-01.jpg`,
+		storyHref: "/field-stories/missouri-paddlefish-snagging-2026",
 		recapUrl: "https://www.facebook.com/share/p/17xSyoKzX4/",
 	},
 	{
@@ -118,10 +123,10 @@ export const documentedPastEvents: PastEvent[] = [
  * second-annual-poker-run-2026). A story is published within a few days of the
  * trip it covers, so the date window is what reliably ties the two together.
  */
-export function storyForEvent(
+export function storyForEvent<Story extends { slug: string; datePublished: string }>(
 	event: { slug: string; startDate: string; endDate: string },
-	stories: { slug: string; datePublished: string }[],
-) {
+	stories: Story[],
+): Story | undefined {
 	const exact = stories.find((story) => story.slug === event.slug);
 	if (exact) return exact;
 	const opens = event.startDate;
@@ -129,4 +134,35 @@ export function storyForEvent(
 	closes.setUTCDate(closes.getUTCDate() + 14);
 	const shuts = closes.toISOString().slice(0, 10);
 	return stories.find((story) => story.datePublished >= opens && story.datePublished <= shuts);
+}
+
+/**
+ * The event a field note covers, and the next time that same trip runs.
+ *
+ * The pairing is the one storyForEvent already makes, read backwards, so the two
+ * directions can never disagree. The next running is matched on title, which is
+ * what a repeating trip keeps from year to year while its slug changes.
+ */
+export function eventForStory<E extends { slug: string; title: string; startDate: string; endDate: string; published: boolean; over?: boolean }>(
+	story: { slug: string; datePublished: string },
+	events: E[],
+	today: string,
+) {
+	const live = events.filter((event) => event.published);
+	// An exact slug match first. Read backwards, the date window alone is ambiguous:
+	// the Missouri turkey hunt closes within a fortnight of the Flint Hills write-up,
+	// so it would claim a story that names its own event in the slug.
+	const covers =
+		live.find((event) => event.slug === story.slug) ??
+		live.find((event) => storyForEvent(event, [story])?.slug === story.slug);
+	// A trip that repeats keeps its name and changes only the year, in the title
+	// where there is an event record for the year written up, and otherwise in the
+	// slug — which is the only handle left when that year was never entered as an
+	// event, as with the 2026 White River trip.
+	const family = (value: string) => value.replace(/-(19|20)\d{2}$/, "");
+	const scheduled = live.filter((event) => !event.over && event.endDate >= today);
+	const upcoming = (covers ? scheduled.filter((event) => event.title === covers.title) : [])
+		.concat(scheduled.filter((event) => family(event.slug) === family(story.slug)))
+		.sort((a, b) => a.startDate.localeCompare(b.startDate))[0];
+	return { covers, upcoming };
 }

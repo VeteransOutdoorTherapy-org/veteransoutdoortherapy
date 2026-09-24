@@ -3778,3 +3778,35 @@ img {
 	margin: 0 auto 10px;
 	text-align: center;
 }
+
+/* The field note carried onto a finished event's own page. White, because the
+   overview above it is on paper and the past-events band below it is #efece1 —
+   no two bands in that run should share a tone. */
+.event-story {
+	background: var(--white);
+}
+.event-story-body {
+	max-width: 760px;
+	margin-bottom: 34px;
+}
+.event-story-photos {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: 14px;
+	margin-bottom: 34px;
+}
+.event-story-photos figure {
+	position: relative;
+	overflow: hidden;
+	margin: 0;
+	aspect-ratio: 1;
+}
+.event-story-photos img {
+	object-fit: cover;
+}
+@media (max-width: 760px) {
+	.event-story-photos {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 10px;
+	}
+}

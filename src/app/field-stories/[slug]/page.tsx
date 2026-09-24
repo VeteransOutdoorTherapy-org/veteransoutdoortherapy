@@ -8,7 +8,8 @@ import { Breadcrumbs } from "@/components/breadcrumbs";
 import { JsonLd } from "@/components/json-ld";
 import { interleaveByLength, TestimonialQuote } from "@/components/testimonial-quote";
 import { cssImagePosition, type FieldStory } from "@/lib/data";
-import { getFieldStories, getFieldStory, getPublishedGalleryImages, getPublishedTestimonials } from "@/lib/db";
+import { getEvents, getFieldStories, getFieldStory, getPublishedGalleryImages, getPublishedTestimonials } from "@/lib/db";
+import { eventForStory } from "@/lib/past-events";
 import { publicName } from "@/lib/names";
 import { absoluteUrl, breadcrumbSchema, pageMetadata, SITE_NAME, SITE_URL } from "@/lib/site";
 import { SectionEdge } from "@/components/section-edge";
@@ -53,6 +54,8 @@ export default async function FieldStoryPage({ params }: PageProps<"/field-stori
 	const reviews = story.reviewCategory
 		? (await getPublishedTestimonials()).filter((testimonial) => testimonial.category === story.reviewCategory)
 		: [];
+	// The trip this note is about, and the next time it runs.
+	const { covers, upcoming } = eventForStory(story, await getEvents(), new Date().toISOString().slice(0, 10));
 	const seenSrcs = new Set<string>([story.image]);
 	const photoGalleries = (story.photoGalleries ?? [])
 		.map((gallery) => ({
@@ -210,8 +213,17 @@ export default async function FieldStoryPage({ params }: PageProps<"/field-stori
 						</section>
 					)}
 
+					{/* Back to the trip itself, and on to the next one when it is scheduled,
+					    so the write-up is a way into the programme rather than a dead end. */}
 					<div className="hero-actions field-story-cta">
-						<Link className="button orange" href={story.programHref}>{story.programLabel}</Link>
+						{upcoming ? (
+							<Link className="button orange" href={`/events/${upcoming.slug}`}>Join the next {upcoming.title}</Link>
+						) : (
+							<Link className="button orange" href={story.programHref}>{story.programLabel}</Link>
+						)}
+						{covers && (
+							<Link className="text-link" href={`/events/${covers.slug}`}>View event details <ArrowRight size={17} /></Link>
+						)}
 						<Link className="text-link" href="/field-stories">More field stories <ArrowRight size={17} /></Link>
 					</div>
 				</div>
