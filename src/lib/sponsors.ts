@@ -65,7 +65,6 @@ export const sponsors2026 = [
 	{ name: "Life Pointe", image: `${sponsorUploads}/2026/life-pointe.webp` },
 	{ name: "Millstone Weber", image: `${sponsorUploads}/2026/millstone-weber.webp` },
 	{ name: "MoSEAL Asphalt Services", image: `${sponsorUploads}/2026/moseal-asphalt-services.webp` },
-	{ name: "NCHS Student Council", image: `${sponsorUploads}/2026/nchs-student-council.webp` },
 	{ name: "Precision Hauling LLC", image: `${sponsorUploads}/2026/precision-hauling.webp` },
 	{ name: "Precision Precast", image: `${sponsorUploads}/2026/precision-precast.webp` },
 	{ name: "R&R Processing", image: `${sponsorUploads}/2026/rr-processing.webp` },
