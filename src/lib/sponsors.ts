@@ -64,6 +64,7 @@ export const sponsors2026 = [
 	{ name: "Head's Blacktop Harley-Davidson", image: `${sponsorUploads}/2026/heads-blacktop-harley-davidson.webp` },
 	{ name: "Kroll Excavating", image: `${sponsorUploads}/2026/kroll-excavating.webp` },
 	{ name: "Life Pointe", image: `${sponsorUploads}/2026/life-pointe.webp` },
+	{ name: "Military Order of the Purple Heart", image: `${sponsorUploads}/2026/military-order-of-the-purple-heart.webp` },
 	{ name: "Millstone Weber", image: `${sponsorUploads}/2026/millstone-weber.webp` },
 	{ name: "MoSEAL Asphalt Services", image: `${sponsorUploads}/2026/moseal-asphalt-services.webp` },
 	{ name: "Precision Hauling LLC", image: `${sponsorUploads}/2026/precision-hauling.webp` },
