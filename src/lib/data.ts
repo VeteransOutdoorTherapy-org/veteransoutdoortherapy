@@ -884,7 +884,7 @@ export const testimonials: Testimonial[] = [
 		},
 		{
 			slug: "heather-pippin-army",
-			quote: "Thank you Connie for allowing me to stay back on the second ride to relax! Thank you Amanda for doing the interviews, all the photos and helping with the horses! I have learned so much about the horses, history of the area, each other and myself. This will be always in my heart! You are Bad Asses!! Crystal, I loved the flex schedule, sleep in time and relaxed yet planned days. It was just enough without being too much in either direction. Thank you for the gift bags and the time you put into this to bring us all together. You made us feel so welcomed, at home and like part of the family. Thank you for your kindness, your patience, and for creating an experience that reminded us of the healing power of community, nature and horses. We leave with full hearts and deep gratitude!",
+			quote: "...You made us feel so welcomed, at home and like part of the family. Thank you for your kindness, your patience, and for creating an experience that reminded us of the healing power of community, nature and horses. We leave with full hearts and deep gratitude!",
 			author: "Heather Pippin",
 			service: "Army",
 			imagePosition: "center",
