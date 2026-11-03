@@ -1084,7 +1084,7 @@ export const fieldStories: FieldStory[] = [
 		summary:
 			"The first annual Coulter Lake Guest Ranch Horseback Riding Adventure welcomed female Veterans from four states for riding, shared meals, and time outdoors.",
 		image: `${uploads}/2026/09/horseback/horseback-01.jpg`,
-		imageAlt: "Horseback riding country at Coulter Lake Guest Ranch",
+		imageAlt: "Images from the 2026 Coulter Lake Guest Ranch Trip",
 		body: [
 			"Female Veterans traveled from Alabama, Wisconsin, South Dakota, and Missouri for the first annual Coulter Lake Guest Ranch Horseback Riding Adventure in Rifle, Colorado, in July 2026.",
 			"Kelly and Forest Keith, Dina, and Maru welcomed the group to the ranch for horseback riding, shared meals, open country, and time with other Veterans.",
@@ -1107,12 +1107,12 @@ export const fieldStories: FieldStory[] = [
 			{
 				title: "Photos from the trip",
 				photos: [
-					{ src: `${uploads}/2026/09/horseback/horseback-01.jpg`, alt: "Female Veterans gathered with a horse at Coulter Lake Guest Ranch" },
-					{ src: `${uploads}/2026/09/horseback/horseback-06.jpg`, alt: "Female Veteran with a horse at Coulter Lake Guest Ranch" },
-					{ src: `${uploads}/2026/09/horseback/horseback-07.jpg`, alt: "Female Veteran with a horse at Coulter Lake Guest Ranch" },
-					{ src: `${uploads}/2026/09/horseback/horseback-08.jpg`, alt: "Female Veterans gathered at the corral at Coulter Lake Guest Ranch" },
-					{ src: `${uploads}/2026/09/horseback/horseback-09.jpg`, alt: "Female Veterans gathered on the ranch porch at Coulter Lake Guest Ranch" },
-					{ src: `${uploads}/2026/09/horseback/horseback-10.jpg`, alt: "Female Veterans relaxing on the ranch porch at Coulter Lake Guest Ranch" },
+					{ src: `${uploads}/2026/09/horseback/horseback-01.jpg`, alt: "Images from the 2026 Coulter Lake Guest Ranch Trip" },
+					{ src: `${uploads}/2026/09/horseback/horseback-06.jpg`, alt: "Images from the 2026 Coulter Lake Guest Ranch Trip" },
+					{ src: `${uploads}/2026/09/horseback/horseback-07.jpg`, alt: "Images from the 2026 Coulter Lake Guest Ranch Trip" },
+					{ src: `${uploads}/2026/09/horseback/horseback-08.jpg`, alt: "Images from the 2026 Coulter Lake Guest Ranch Trip" },
+					{ src: `${uploads}/2026/09/horseback/horseback-09.jpg`, alt: "Images from the 2026 Coulter Lake Guest Ranch Trip" },
+					{ src: `${uploads}/2026/09/horseback/horseback-10.jpg`, alt: "Images from the 2026 Coulter Lake Guest Ranch Trip" },
 				],
 			},
 		],
@@ -1166,7 +1166,7 @@ export const fieldStories: FieldStory[] = [
 		summary:
 			"Veterans from Georgia and Missouri spent four days on Arkansas's White River learning to fly fish, guided by an Army Veteran instructor.",
 		image: `${uploads}/2026/09/fishing/fishing-02.jpg`,
-		imageAlt: "Veteran holding a rainbow trout caught while fly fishing on the White River",
+		imageAlt: "Images from the 2026 White River Fly Fishing Trip",
 		body: [
 			"Veterans from Georgia and Missouri spent four days on Arkansas's White River learning to fly fish in August 2026.",
 			"Army Veteran Stan, owner of Tat2flyfisher Guide Services, spent an afternoon teaching the group the basics of fly casting before they waded into the river.",
@@ -1188,19 +1188,19 @@ export const fieldStories: FieldStory[] = [
 			{
 				title: "The fly-casting lesson",
 				photos: [
-					{ src: `${uploads}/2026/09/fishing/fishing-06.jpg`, alt: "Veteran learning to fly fish on the White River" },
-					{ src: `${uploads}/2026/09/fishing/fishing-07.jpg`, alt: "Veterans fly fishing on the White River" },
-					{ src: `${uploads}/2026/09/fishing/fishing-08.jpg`, alt: "Veterans fly fishing on the White River" },
-					{ src: `${uploads}/2026/09/fishing/fishing-09.jpg`, alt: "Veteran fly fishing on the White River" },
+					{ src: `${uploads}/2026/09/fishing/fishing-06.jpg`, alt: "Images from the 2026 White River Fly Fishing Trip" },
+					{ src: `${uploads}/2026/09/fishing/fishing-07.jpg`, alt: "Images from the 2026 White River Fly Fishing Trip" },
+					{ src: `${uploads}/2026/09/fishing/fishing-08.jpg`, alt: "Images from the 2026 White River Fly Fishing Trip" },
+					{ src: `${uploads}/2026/09/fishing/fishing-09.jpg`, alt: "Images from the 2026 White River Fly Fishing Trip" },
 				],
 			},
 			{
 				title: "Stories were told, memories were made",
 				photos: [
-					{ src: `${uploads}/2026/09/fishing/fishing-01.jpg`, alt: "Veteran holding a trout caught on the White River" },
-					{ src: `${uploads}/2026/09/fishing/fishing-03.jpg`, alt: "Veteran holding a trout caught on the White River" },
-					{ src: `${uploads}/2026/09/fishing/fishing-04.jpg`, alt: "Veterans fly fishing on the White River at dusk" },
-					{ src: `${uploads}/2026/09/fishing/fishing-05.jpg`, alt: "Veterans gathered for dinner after fly fishing on the White River" },
+					{ src: `${uploads}/2026/09/fishing/fishing-01.jpg`, alt: "Images from the 2026 White River Fly Fishing Trip" },
+					{ src: `${uploads}/2026/09/fishing/fishing-03.jpg`, alt: "Images from the 2026 White River Fly Fishing Trip" },
+					{ src: `${uploads}/2026/09/fishing/fishing-04.jpg`, alt: "Images from the 2026 White River Fly Fishing Trip" },
+					{ src: `${uploads}/2026/09/fishing/fishing-05.jpg`, alt: "Images from the 2026 White River Fly Fishing Trip" },
 				],
 			},
 		],
@@ -1318,7 +1318,7 @@ export const fieldStories: FieldStory[] = [
 		summary:
 			"The 2026 Missouri snagging season wrapped with Veterans pulling paddlefish from the river, campfire evenings, and a season made possible by dedicated volunteers.",
 		image: `${uploads}/2026/09/snagging/catch-01.jpg`,
-		imageAlt: "Veterans holding a paddlefish caught snagging on the Missouri River",
+		imageAlt: "Images from the 2026 Missouri Paddlefish Snagging Trip",
 		body: [
 			"Well, our 2026 Missouri snagging season is in the books! Veterans spent their days out on the river snagging paddlefish, and their evenings back at camp around the fire.",
 			"Thank you to all the volunteers who helped make this event happen. We couldn't do it without you!",
@@ -1332,16 +1332,16 @@ export const fieldStories: FieldStory[] = [
 			{
 				title: "Out on the river",
 				photos: [
-					{ src: `${uploads}/2026/09/snagging/snagging-01.jpg`, alt: "Veterans snagging for paddlefish from a boat on the Missouri River" },
-					{ src: `${uploads}/2026/09/snagging/catch-01.jpg`, alt: "Veterans holding a paddlefish caught snagging on the Missouri River" },
-					{ src: `${uploads}/2026/09/snagging/catch-02.jpg`, alt: "Veteran holding up a paddlefish next to a Veteran's Outdoor Therapy trailer" },
+					{ src: `${uploads}/2026/09/snagging/snagging-01.jpg`, alt: "Images from the 2026 Missouri Paddlefish Snagging Trip" },
+					{ src: `${uploads}/2026/09/snagging/catch-01.jpg`, alt: "Images from the 2026 Missouri Paddlefish Snagging Trip" },
+					{ src: `${uploads}/2026/09/snagging/catch-02.jpg`, alt: "Images from the 2026 Missouri Paddlefish Snagging Trip" },
 				],
 			},
 			{
 				title: "Evenings at camp",
 				photos: [
-					{ src: `${uploads}/2026/09/snagging/campfire-01.jpg`, alt: "Veterans gathered around a campfire at night" },
-					{ src: `${uploads}/2026/09/snagging/camp-01.jpg`, alt: "Veterans relaxing at camp outside an RV at night" },
+					{ src: `${uploads}/2026/09/snagging/campfire-01.jpg`, alt: "Images from the 2026 Missouri Paddlefish Snagging Trip" },
+					{ src: `${uploads}/2026/09/snagging/camp-01.jpg`, alt: "Images from the 2026 Missouri Paddlefish Snagging Trip" },
 				],
 			},
 		],
@@ -1359,7 +1359,7 @@ export const fieldStories: FieldStory[] = [
 		summary:
 			"Veterans, sponsors, and supporting organizations packed the house at 54 Country for Veteran's Outdoor Therapy's inaugural Wilderness to Wellness benefit dinner.",
 		image: `${uploads}/2026/09/wilderness-to-wellness/official-02.jpg`,
-		imageAlt: "Guests at the buffet line at the Wilderness to Wellness benefit dinner at 54 Country",
+		imageAlt: "Images from the 2026 Wilderness to Wellness Benefit Dinner",
 		body: [
 			"Veteran's Outdoor Therapy hosted its inaugural Wilderness to Wellness benefit dinner at 54 Country, bringing together Veterans, volunteers, sponsors, and supporting organizations for an evening of food, fellowship, and fundraising.",
 			"\"What an incredible night at the Veteran's Outdoor Therapy Inaugural Benefit Dinner,\" the organization shared afterward. \"We want to say THANK YOU to everyone who made our first banquet a success. To our volunteers, your time, energy, and passion are the backbone of this organization. To our table sponsors, your support helps us continue providing life-changing experiences for our Veterans and Gold Star Families. And to every guest who showed up, placed bids, donated, and shared in the evening, you are the reason this mission continues.\"",
@@ -1375,15 +1375,15 @@ export const fieldStories: FieldStory[] = [
 			{
 				title: "A full house for a good cause",
 				photos: [
-					{ src: `${uploads}/2026/09/wilderness-to-wellness/official-01.jpg`, alt: "Silent auction floor at the Wilderness to Wellness benefit dinner" },
-					{ src: `${uploads}/2026/09/wilderness-to-wellness/official-02.jpg`, alt: "Guests at the buffet line at the Wilderness to Wellness benefit dinner" },
-					{ src: `${uploads}/2026/09/wilderness-to-wellness/official-03.jpg`, alt: "Guests posing together at the Wilderness to Wellness benefit dinner" },
-					{ src: `${uploads}/2026/09/wilderness-to-wellness/official-04.jpg`, alt: "A guest holding up a winning auction bid card" },
-					{ src: `${uploads}/2026/09/wilderness-to-wellness/official-05.jpg`, alt: "Guests posing together at the Wilderness to Wellness benefit dinner" },
-					{ src: `${uploads}/2026/09/wilderness-to-wellness/dinner-01.jpg`, alt: "Veterans and supporters gathered around a table at the Wilderness to Wellness benefit dinner" },
-					{ src: `${uploads}/2026/09/wilderness-to-wellness/dinner-02.jpg`, alt: "The 54 Country signed wooden sign at the benefit dinner venue" },
-					{ src: `${uploads}/2026/09/wilderness-to-wellness/dinner-04.jpg`, alt: "Cars and an American flag outside the Wilderness to Wellness benefit dinner venue" },
-					{ src: `${uploads}/2026/09/wilderness-to-wellness/dinner-05.jpg`, alt: "Veterans and supporters seated for dinner at the Wilderness to Wellness benefit dinner" },
+					{ src: `${uploads}/2026/09/wilderness-to-wellness/official-01.jpg`, alt: "Images from the 2026 Wilderness to Wellness Benefit Dinner" },
+					{ src: `${uploads}/2026/09/wilderness-to-wellness/official-02.jpg`, alt: "Images from the 2026 Wilderness to Wellness Benefit Dinner" },
+					{ src: `${uploads}/2026/09/wilderness-to-wellness/official-03.jpg`, alt: "Images from the 2026 Wilderness to Wellness Benefit Dinner" },
+					{ src: `${uploads}/2026/09/wilderness-to-wellness/official-04.jpg`, alt: "Images from the 2026 Wilderness to Wellness Benefit Dinner" },
+					{ src: `${uploads}/2026/09/wilderness-to-wellness/official-05.jpg`, alt: "Images from the 2026 Wilderness to Wellness Benefit Dinner" },
+					{ src: `${uploads}/2026/09/wilderness-to-wellness/dinner-01.jpg`, alt: "Images from the 2026 Wilderness to Wellness Benefit Dinner" },
+					{ src: `${uploads}/2026/09/wilderness-to-wellness/dinner-02.jpg`, alt: "Images from the 2026 Wilderness to Wellness Benefit Dinner" },
+					{ src: `${uploads}/2026/09/wilderness-to-wellness/dinner-04.jpg`, alt: "Images from the 2026 Wilderness to Wellness Benefit Dinner" },
+					{ src: `${uploads}/2026/09/wilderness-to-wellness/dinner-05.jpg`, alt: "Images from the 2026 Wilderness to Wellness Benefit Dinner" },
 				],
 			},
 		],

@@ -76,13 +76,13 @@ async function ensureTestimonials() {
 	if (horsebackTestimonialImageMigration.length) {
 		const uploads = "/wp-content/uploads";
 		const assignments: [string, string, string][] = [
-			["connie-stone-army", `${uploads}/2026/09/horseback/horseback-01.jpg`, "Female Veterans gathered with a horse at Coulter Lake Guest Ranch"],
-			["nancy-neal-air-force", `${uploads}/2026/09/horseback/horseback-08.jpg`, "Female Veterans gathered at the corral at Coulter Lake Guest Ranch"],
-			["female-veterans-healing", `${uploads}/2026/09/horseback/horseback-10.jpg`, "Female Veterans relaxing on the ranch porch at Coulter Lake Guest Ranch"],
-			["ranch-hospitality", `${uploads}/2026/09/horseback/horseback-06.jpg`, "Female Veteran with a horse at Coulter Lake Guest Ranch"],
-			["guided-rides-hospitality", `${uploads}/2026/09/horseback/horseback-01.jpg`, "Female Veterans gathered with a horse at Coulter Lake Guest Ranch"],
-			["tiffany-baker-army", `${uploads}/2026/09/horseback/horseback-07.jpg`, "Female Veteran with a horse at Coulter Lake Guest Ranch"],
-			["heather-pippin-army", `${uploads}/2026/09/horseback/horseback-09.jpg`, "Female Veterans gathered on the ranch porch at Coulter Lake Guest Ranch"],
+			["connie-stone-army", `${uploads}/2026/09/horseback/horseback-01.jpg`, "Images from the 2026 Coulter Lake Guest Ranch Trip"],
+			["nancy-neal-air-force", `${uploads}/2026/09/horseback/horseback-08.jpg`, "Images from the 2026 Coulter Lake Guest Ranch Trip"],
+			["female-veterans-healing", `${uploads}/2026/09/horseback/horseback-10.jpg`, "Images from the 2026 Coulter Lake Guest Ranch Trip"],
+			["ranch-hospitality", `${uploads}/2026/09/horseback/horseback-06.jpg`, "Images from the 2026 Coulter Lake Guest Ranch Trip"],
+			["guided-rides-hospitality", `${uploads}/2026/09/horseback/horseback-01.jpg`, "Images from the 2026 Coulter Lake Guest Ranch Trip"],
+			["tiffany-baker-army", `${uploads}/2026/09/horseback/horseback-07.jpg`, "Images from the 2026 Coulter Lake Guest Ranch Trip"],
+			["heather-pippin-army", `${uploads}/2026/09/horseback/horseback-09.jpg`, "Images from the 2026 Coulter Lake Guest Ranch Trip"],
 		];
 		for (const [slug, image, imageAlt] of assignments)
 			await db`UPDATE testimonials SET image = ${image}, image_alt = ${imageAlt}, updated_at = now() WHERE slug = ${slug}`;
@@ -276,12 +276,12 @@ const dischargeMigration =
 			{
 				title: "Photos from the trip",
 				photos: [
-					{ src: "/wp-content/uploads/2026/09/horseback/horseback-01.jpg", alt: "Female Veterans gathered with a horse at Coulter Lake Guest Ranch" },
-					{ src: "/wp-content/uploads/2026/09/horseback/horseback-06.jpg", alt: "Female Veteran with a horse at Coulter Lake Guest Ranch" },
-					{ src: "/wp-content/uploads/2026/09/horseback/horseback-07.jpg", alt: "Female Veteran with a horse at Coulter Lake Guest Ranch" },
-					{ src: "/wp-content/uploads/2026/09/horseback/horseback-08.jpg", alt: "Female Veterans gathered at the corral at Coulter Lake Guest Ranch" },
-					{ src: "/wp-content/uploads/2026/09/horseback/horseback-09.jpg", alt: "Female Veterans gathered on the ranch porch at Coulter Lake Guest Ranch" },
-					{ src: "/wp-content/uploads/2026/09/horseback/horseback-10.jpg", alt: "Female Veterans relaxing on the ranch porch at Coulter Lake Guest Ranch" },
+					{ src: "/wp-content/uploads/2026/09/horseback/horseback-01.jpg", alt: "Images from the 2026 Coulter Lake Guest Ranch Trip" },
+					{ src: "/wp-content/uploads/2026/09/horseback/horseback-06.jpg", alt: "Images from the 2026 Coulter Lake Guest Ranch Trip" },
+					{ src: "/wp-content/uploads/2026/09/horseback/horseback-07.jpg", alt: "Images from the 2026 Coulter Lake Guest Ranch Trip" },
+					{ src: "/wp-content/uploads/2026/09/horseback/horseback-08.jpg", alt: "Images from the 2026 Coulter Lake Guest Ranch Trip" },
+					{ src: "/wp-content/uploads/2026/09/horseback/horseback-09.jpg", alt: "Images from the 2026 Coulter Lake Guest Ranch Trip" },
+					{ src: "/wp-content/uploads/2026/09/horseback/horseback-10.jpg", alt: "Images from the 2026 Coulter Lake Guest Ranch Trip" },
 				],
 			},
 		]);
