@@ -2,6 +2,7 @@ import { FacebookLogo } from "@phosphor-icons/react/dist/ssr";
 import { GalleryLightbox } from "@/components/gallery-lightbox";
 import Link from "next/link";
 import { getPublishedGalleryImages } from "@/lib/db";
+import { arrangeGallery } from "@/lib/gallery-layout";
 import { FACEBOOK_URL, breadcrumbSchema, pageMetadata } from "@/lib/site";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { JsonLd } from "@/components/json-ld";
@@ -21,7 +22,7 @@ export const metadata = pageMetadata({
 	path: "/gallery",
 });
 export default async function GalleryPage() {
-	const galleryImages = await getPublishedGalleryImages();
+	const galleryImages = arrangeGallery(await getPublishedGalleryImages());
 	return (
 		<>
 			<JsonLd data={breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Gallery", path: "/gallery" }])} />
