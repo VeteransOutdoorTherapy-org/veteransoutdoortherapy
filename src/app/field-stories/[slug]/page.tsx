@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/breadcrumbs";
+import { FieldStoryGalleries } from "@/components/field-story-galleries";
 import { JsonLd } from "@/components/json-ld";
 import { interleaveByLength, TestimonialQuote } from "@/components/testimonial-quote";
 import { cssImagePosition, type FieldStory } from "@/lib/data";
@@ -176,26 +177,7 @@ export default async function FieldStoryPage({ params }: PageProps<"/field-stori
 						</section>
 					)}
 
-					{photoGalleries.map((gallery, galleryIndex) => (
-						<section className="field-story-section" key={gallery.title}>
-							<div className="field-story-section-head">
-								<p className="eyebrow">From the field</p>
-								<h2>{gallery.title}</h2>
-							</div>
-							<div className="field-story-gallery">
-								{gallery.photos.map((photo, index) => (
-									<figure key={photo.src} className={galleryIndex === 0 && index === 0 ? "field-story-gallery-featured" : undefined}>
-										<Image
-											src={photo.src}
-											alt={photo.alt}
-											fill
-											sizes={galleryIndex === 0 && index === 0 ? "(max-width: 700px) 100vw, 66vw" : "(max-width: 700px) 50vw, 33vw"}
-										/>
-									</figure>
-								))}
-							</div>
-						</section>
-					))}
+					{photoGalleries.length > 0 && <FieldStoryGalleries galleries={photoGalleries} />}
 
 					{story.facebookLinks && story.facebookLinks.length > 0 && (
 						<section className="field-story-section field-story-facebook">
