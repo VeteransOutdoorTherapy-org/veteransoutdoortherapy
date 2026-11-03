@@ -10,9 +10,7 @@ import { SectionEdge } from "@/components/section-edge";
 const compass = [
 	"Camaraderie",
 	"Open country",
-	"Hands busy",
 	"Evenings around the fire",
-	"People who open their land",
 	"It outlasts the trip",
 ];
 
