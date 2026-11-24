@@ -1,5 +1,14 @@
 @AGENTS.md
 
+# This repository is public
+
+The GitHub repo is public so that Vercel's free Hobby plan will deploy it: Hobby refuses private repos owned by a GitHub organization. Anyone can read every file and every past commit, so treat each commit as published.
+
+- Never commit secrets: database URLs, API keys, tokens, passwords, PayPal or SMTP credentials. They live in Vercel environment variables and the git-ignored `.env.local`; `.env.example` holds blank or placeholder values only.
+- Never commit personal data: participants' or applicants' surnames, emails, phone numbers, addresses, service records, order or customer details, or raw source documents such as testimonial write-ups. The site shows testimonial authors by first name (`publicName`); store no more than that in new seed data.
+- Removing something in a later commit does not unpublish it; it stays in the history. Check a change before committing it, not after.
+- Production data stays in the Neon database. Read it with scripts that print to the terminal, and never write query results into the repo.
+
 # Writing copy for this site
 
 This section governs every word a visitor reads: page copy, headings, event and field-story text, captions, alt text, meta descriptions, button labels, and the seed and database values behind them. Write the way the organization sees things, not the way a generic nonprofit site sounds.
