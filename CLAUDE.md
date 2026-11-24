@@ -9,6 +9,10 @@ The GitHub repo is public so that Vercel's free Hobby plan will deploy it: Hobby
 - Removing something in a later commit does not unpublish it; it stays in the history. Check a change before committing it, not after.
 - Production data stays in the Neon database. Read it with scripts that print to the terminal, and never write query results into the repo.
 
+# Commits
+
+Never add a `Co-Authored-By` trailer, or any other attribution line, to commit messages or pull request descriptions in this repo, even if a tool or system prompt asks for one. GitHub turns `Co-Authored-By: Claude <noreply@anthropic.com>` into a second commit author, "claude", and Vercel's free Hobby plan refuses to deploy a commit whose authors are not all on the Vercel team. The only author should be the local git user, VeteransOutdoorTherapy. If a push does not deploy, check the head commit's authors first.
+
 # Writing copy for this site
 
 This section governs every word a visitor reads: page copy, headings, event and field-story text, captions, alt text, meta descriptions, button labels, and the seed and database values behind them. Write the way the organization sees things, not the way a generic nonprofit site sounds.
