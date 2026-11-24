@@ -12,7 +12,27 @@ function sql() {
 
 const productFallbackImage = "/vot-logo-original.png";
 
-async function ensureOrders() {
+/**
+ * Table setup and migrations only need to run once per server instance. Running
+ * them on every query sent a dozen-plus statements to Neon with each page render,
+ * which kept the database awake for every crawler that walked the site.
+ */
+function once<T>(setup: () => Promise<T>) {
+	let pending: Promise<T> | undefined;
+	return () =>
+		(pending ??= setup().catch((error) => {
+			pending = undefined;
+			throw error;
+		}));
+}
+const ensureOrders = once(setupOrders);
+const ensureProducts = once(setupProducts);
+const ensureTestimonials = once(setupTestimonials);
+const ensureEvents = once(setupEvents);
+const ensureGallery = once(setupGallery);
+const ensureFieldStories = once(setupFieldStories);
+
+async function setupOrders() {
 	const db = sql();
 	if (!db) return null;
 	await db`CREATE TABLE IF NOT EXISTS orders (id bigserial PRIMARY KEY, order_number text NOT NULL UNIQUE, paypal_order_id text UNIQUE, paypal_capture_id text, status text NOT NULL, fulfillment_status text NOT NULL DEFAULT 'unfulfilled', customer_name text NOT NULL, customer_email text NOT NULL, phone text NOT NULL DEFAULT '', shipping_address jsonb NOT NULL, order_notes text NOT NULL DEFAULT '', subtotal numeric NOT NULL, shipping_amount numeric NOT NULL DEFAULT 0, tax_amount numeric NOT NULL DEFAULT 0, total numeric NOT NULL, currency text NOT NULL DEFAULT 'USD', notification_sent_at timestamptz, created_at timestamptz NOT NULL DEFAULT now(), paid_at timestamptz, fulfilled_at timestamptz, cancelled_at timestamptz, refunded_at timestamptz, tracking_carrier text, tracking_number text, fulfillment_notes text NOT NULL DEFAULT '', shipment_notification_sent_at timestamptz, updated_at timestamptz NOT NULL DEFAULT now())`;
@@ -31,7 +51,7 @@ async function ensureOrders() {
 	await db`CREATE TABLE IF NOT EXISTS order_events (id bigserial PRIMARY KEY, order_id bigint NOT NULL REFERENCES orders(id) ON DELETE CASCADE, event_key text NOT NULL, event_type text NOT NULL, source text NOT NULL, payload jsonb NOT NULL DEFAULT '{}'::jsonb, created_at timestamptz NOT NULL DEFAULT now(), UNIQUE (order_id, event_key))`;
 	return db;
 }
-async function ensureProducts() {
+async function setupProducts() {
 	const db = sql();
 	if (!db) return null;
 	await db`CREATE TABLE IF NOT EXISTS products (slug text PRIMARY KEY, name text NOT NULL, short_name text NOT NULL, price numeric NOT NULL, category text NOT NULL, description text NOT NULL, image text NOT NULL, gallery jsonb NOT NULL DEFAULT '[]', sizes jsonb, stock integer, featured boolean NOT NULL DEFAULT false, updated_at timestamptz NOT NULL DEFAULT now())`;
@@ -66,7 +86,7 @@ async function ensureProducts() {
 	return db;
 }
 
-async function ensureTestimonials() {
+async function setupTestimonials() {
 	const db = sql();
 	if (!db) return null;
 	await db`CREATE TABLE IF NOT EXISTS testimonials (slug text PRIMARY KEY, quote text NOT NULL, author text NOT NULL, service text NOT NULL, image text, image_alt text, image_position text, category text, published boolean NOT NULL DEFAULT true, sort_order integer NOT NULL DEFAULT 0, created_at timestamptz NOT NULL DEFAULT now(), updated_at timestamptz NOT NULL DEFAULT now())`;
@@ -95,7 +115,7 @@ async function ensureTestimonials() {
 	return db;
 }
 
-async function ensureEvents() {
+async function setupEvents() {
 	const db = sql();
 	if (!db) return null;
 	await db`CREATE TABLE IF NOT EXISTS events (slug text PRIMARY KEY, title text NOT NULL, date_label text NOT NULL, start_date date NOT NULL, end_date date NOT NULL, image text NOT NULL, event_type text NOT NULL, location text NOT NULL, summary text NOT NULL, hero_title text NOT NULL, overview_title text NOT NULL, overview text NOT NULL, details_title text NOT NULL, details text NOT NULL, cta_label text NOT NULL, cta_href text NOT NULL, template text NOT NULL DEFAULT 'adventure', published boolean NOT NULL DEFAULT true, featured boolean NOT NULL DEFAULT false, sort_order integer NOT NULL DEFAULT 0, updated_at timestamptz NOT NULL DEFAULT now())`;
@@ -185,7 +205,7 @@ export async function getProducts(): Promise<Product[]> {
 	}));
 }
 
-async function ensureGallery() {
+async function setupGallery() {
 	const db = sql();
 	if (!db) return null;
 	await db`CREATE TABLE IF NOT EXISTS gallery_images (id text PRIMARY KEY, src text NOT NULL UNIQUE, alt text NOT NULL, caption text, tags jsonb NOT NULL DEFAULT '[]', year text, published boolean NOT NULL DEFAULT true, sort_order integer NOT NULL DEFAULT 0, created_at timestamptz NOT NULL DEFAULT now(), updated_at timestamptz NOT NULL DEFAULT now())`;
@@ -261,7 +281,7 @@ export async function deleteGalleryImage(id: string) {
 	await db`DELETE FROM gallery_images WHERE id = ${id}`;
 }
 
-async function ensureFieldStories() {
+async function setupFieldStories() {
 	const db = sql();
 	if (!db) return null;
 	await db`CREATE TABLE IF NOT EXISTS field_stories (slug text PRIMARY KEY, title text NOT NULL, date_label text NOT NULL, date_published date NOT NULL, location text NOT NULL, summary text NOT NULL, image text NOT NULL, image_alt text NOT NULL, image_position text, image_position_mobile text, body jsonb NOT NULL DEFAULT '[]', video jsonb, facebook_links jsonb NOT NULL DEFAULT '[]', review_category text, gallery_tag text, photo_galleries jsonb NOT NULL DEFAULT '[]', program_href text NOT NULL, program_label text NOT NULL, published boolean NOT NULL DEFAULT true, created_at timestamptz NOT NULL DEFAULT now(), updated_at timestamptz NOT NULL DEFAULT now())`;

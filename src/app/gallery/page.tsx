@@ -15,7 +15,7 @@ import { SectionEdge } from "@/components/section-edge";
  * floor, so a change made any other way — a direct edit, a seed correction —
  * appears without waiting for a deploy.
  */
-export const revalidate = 600;
+export const revalidate = 3600;
 export const metadata = pageMetadata({
 	title: "Veteran Outdoor Adventure Photo Gallery",
 	description: "See Veteran's Outdoor Therapy in the field through photos from hunting, horseback riding, community events, and time outdoors with Veterans and Gold Star families.",

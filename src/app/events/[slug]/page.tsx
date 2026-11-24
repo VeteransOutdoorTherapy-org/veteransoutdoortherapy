@@ -18,7 +18,7 @@ import { storyForEvent } from "@/lib/past-events";
  * floor, so a change made any other way — a direct edit, a seed correction —
  * appears without waiting for a deploy.
  */
-export const revalidate = 600;
+export const revalidate = 3600;
 
 export function generateStaticParams() {
 	return seedEvents.map(({ slug }) => ({ slug }));

@@ -14,6 +14,10 @@ const renamedProductSlugs: Record<string, string> = {
 const nextConfig: NextConfig = {
 	reactCompiler: true,
 	images: {
+		// Photos are served from WebP copies made at build time (scripts/image-variants.mjs),
+		// never through Vercel's per-transformation image optimizer.
+		loader: "custom",
+		loaderFile: "./src/lib/image-loader.ts",
 		remotePatterns: [
 			{ protocol: "https", hostname: "veteransoutdoortherapy.org", pathname: "/wp-content/uploads/**" },
 			{ protocol: "https", hostname: "images.unsplash.com" },

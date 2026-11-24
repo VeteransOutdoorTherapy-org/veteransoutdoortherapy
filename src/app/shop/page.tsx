@@ -12,7 +12,7 @@ import { SectionEdge } from "@/components/section-edge";
  * floor, so a change made any other way — a direct edit, a seed correction —
  * appears without waiting for a deploy.
  */
-export const revalidate = 600;
+export const revalidate = 3600;
 export const metadata = pageMetadata({
 	title: "Veteran's Outdoor Therapy Apparel and Gear",
 	description: "Shop Veteran's Outdoor Therapy shirts, hoodies, mugs, and field gear. Merchandise proceeds help support outdoor programs for Veterans and Gold Star families.",

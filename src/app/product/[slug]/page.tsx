@@ -17,7 +17,7 @@ import { absoluteUrl, breadcrumbSchema, pageMetadata, SITE_NAME, SITE_URL } from
  * floor, so a change made any other way — a direct edit, a seed correction —
  * appears without waiting for a deploy.
  */
-export const revalidate = 600;
+export const revalidate = 3600;
 
 /** Deterministic PRNG: a static page gets a stable shuffle without calling Math.random() at render. */
 function seededRandom(seed: number) {

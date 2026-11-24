@@ -16,7 +16,7 @@ import { SponsorRibbon } from "@/components/sponsor-ribbon";
  * floor, so a change made any other way — a direct edit, a seed correction —
  * appears without waiting for a deploy.
  */
-export const revalidate = 600;
+export const revalidate = 3600;
 
 export const metadata = pageMetadata({
 	title: "Veteran's Outdoor Therapy | Outdoor Experiences for Veterans and Gold Star Families",

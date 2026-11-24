@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "node scripts/image-variants.mjs",
     "dev": "next dev",
-    "prebuild": "node scripts/gallery-landscape.mjs",
+    "prebuild": "node scripts/gallery-landscape.mjs && node scripts/image-variants.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
