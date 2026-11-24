@@ -1,4 +1,4 @@
-import { ArrowRight, Compass, Handshake, ShieldCheck } from "@phosphor-icons/react/dist/ssr";
+import { ArrowRight, Compass, Handshake, Quotes, ShieldCheck } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
 import Link from "next/link";
 import { MissionFilm } from "@/components/mission-film";
@@ -196,18 +196,28 @@ export default async function Home() {
 			<section className="quote has-edge">
 				<SectionEdge color="#d4d9ce" variant="b" flip />
 				<div className="container">
-					<span>“</span>
-					<blockquote>
-						<p>
-							This event meant the world to me! It gave me hope again in America and our country. It made me realize
-							that I am not alone and there are other members who have been through what I have.
-						</p>
-						<p>
-							The community involved in this event was the best. They lifted my spirits so much! It was emotional for me
-							and very much needed.
-						</p>
-					</blockquote>
-					<p>Derek · Army Purple Heart Recipient</p>
+					<figure className="m-0 mx-auto max-w-4xl text-center">
+						<Quotes size={48} weight="fill" className="mx-auto rotate-180 text-(--orange)" aria-hidden="true" />
+						<blockquote className="m-0 mt-8 flex flex-col gap-5 text-xl leading-8 font-semibold text-white sm:text-2xl sm:leading-10">
+							<p className="m-0">
+								This event meant the world to me! It gave me hope again in America and our country. It made me realize
+								that I am not alone and there are other members who have been through what I have.
+							</p>
+							<p className="m-0">
+								The community involved in this event was the best. They lifted my spirits so much! It was emotional for me
+								and very much needed.
+							</p>
+						</blockquote>
+						<figcaption className="mt-10 flex items-center justify-center gap-x-4">
+							<span aria-hidden="true" className="grid size-12 place-items-center rounded-full bg-(--orange) text-lg font-semibold text-white ring-4 ring-white/15">
+								D
+							</span>
+							<span className="text-left">
+								<span className="block font-semibold text-white">Derek</span>
+								<span className="block text-sm text-white/75">Army · Purple Heart Recipient</span>
+							</span>
+						</figcaption>
+					</figure>
 				</div>
 			</section>
 		</>

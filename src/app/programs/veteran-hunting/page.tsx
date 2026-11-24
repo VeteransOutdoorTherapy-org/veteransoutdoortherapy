@@ -1,4 +1,4 @@
-import { ArrowRight, Check, Compass, Quotes, ShieldCheck } from "@phosphor-icons/react/dist/ssr";
+import { ArrowRight, Check, Compass, ShieldCheck } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
 import Link from "next/link";
 import { Breadcrumbs } from "@/components/breadcrumbs";
@@ -7,7 +7,7 @@ import { breadcrumbSchema, faqSchema, pageMetadata } from "@/lib/site";
 import { HeroCollage } from "@/components/hero-collage";
 import { SectionEdge } from "@/components/section-edge";
 import { getEvents, getPublishedTestimonials } from "@/lib/db";
-import { publicName } from "@/lib/names";
+import { TestimonialCard, TestimonialGrid } from "@/components/testimonials";
 import { imageFocusStyle } from "@/lib/data";
 
 /**
@@ -112,18 +112,11 @@ export default async function VeteranHuntingPage() {
 							<p className="eyebrow">Veterans who have hunted</p>
 							<h2 className="display section-title">What they took from the field.</h2>
 						</div>
-						<div className="voices-grid">
+						<TestimonialGrid>
 							{voices.map((testimonial) => (
-								<figure key={testimonial.slug}>
-									<Quotes size={30} weight="fill" className="quote-icon" aria-hidden="true" />
-									<blockquote>{testimonial.quote}</blockquote>
-									<figcaption>
-										{publicName(testimonial.author)}
-										<span>{testimonial.service}</span>
-									</figcaption>
-								</figure>
+								<TestimonialCard key={testimonial.slug} testimonial={testimonial} />
 							))}
-						</div>
+						</TestimonialGrid>
 						<Link className="text-link" href="/testimonials">Read more testimonials <ArrowRight size={17} /></Link>
 					</div>
 					<SectionEdge color="#e4e6df" variant="a" />

@@ -7,11 +7,10 @@ import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { FieldStoryGalleries } from "@/components/field-story-galleries";
 import { JsonLd } from "@/components/json-ld";
-import { interleaveByLength, TestimonialQuote } from "@/components/testimonial-quote";
+import { interleaveByLength, TestimonialCard, TestimonialGrid } from "@/components/testimonials";
 import { cssImagePosition, type FieldStory } from "@/lib/data";
 import { getEvents, getFieldStories, getFieldStory, getPublishedGalleryImages, getPublishedTestimonials } from "@/lib/db";
 import { eventForStory } from "@/lib/past-events";
-import { publicName } from "@/lib/names";
 import { absoluteUrl, breadcrumbSchema, pageMetadata, SITE_NAME, SITE_URL } from "@/lib/site";
 import { SectionEdge } from "@/components/section-edge";
 
@@ -162,22 +161,11 @@ export default async function FieldStoryPage({ params }: PageProps<"/field-stori
 								<p className="eyebrow">In their words</p>
 								<h2>What participants are saying</h2>
 							</div>
-							<div className="testimonials-masonry">
+							<TestimonialGrid columns={2}>
 								{interleaveByLength(reviews).map((review) => (
-									<article
-										key={review.slug}
-										className="testimonial-card"
-									>
-										<TestimonialQuote quote={review.quote} id={review.slug} iconSize={40} />
-										<footer className="testimonial-author">
-											<div className="author-info">
-												<cite className="author-name">{publicName(review.author)}</cite>
-												<span className="author-service">{review.service}</span>
-											</div>
-										</footer>
-									</article>
+									<TestimonialCard key={review.slug} testimonial={review} />
 								))}
-							</div>
+							</TestimonialGrid>
 						</section>
 					)}
 

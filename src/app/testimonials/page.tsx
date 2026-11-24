@@ -1,9 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Star } from "@phosphor-icons/react/dist/ssr";
+import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { JsonLd } from "@/components/json-ld";
-import { interleaveByLength, TestimonialQuote } from "@/components/testimonial-quote";
+import { FeaturedTestimonial, interleaveByLength, TestimonialCard, TestimonialGrid } from "@/components/testimonials";
 import { publicName } from "@/lib/names";
 import { pageMetadata, breadcrumbSchema } from "@/lib/site";
 import { getPublishedTestimonials } from "@/lib/db";
@@ -31,6 +30,9 @@ export default async function TestimonialsPage({ searchParams }: { searchParams:
 	const categories = Array.from(new Set(allTestimonials.map((t) => t.category || "Uncategorized"))).sort();
 	const years = Array.from(new Set(allTestimonials.map((t) => t.createdAt.slice(0, 4)))).sort().reverse();
 	const testimonials = allTestimonials.filter((t) => (!query.category || (t.category || "Uncategorized") === query.category) && (!query.year || t.createdAt.startsWith(query.year)));
+	// The first quote of a readable length leads the page at a larger size; the rest fill the grid.
+	const featured = testimonials.length > 3 ? testimonials.find((t) => t.quote.length >= 200 && t.quote.length <= 520) : undefined;
+	const rest = testimonials.filter((t) => t !== featured);
 
 	return (
 		<>
@@ -86,50 +88,13 @@ export default async function TestimonialsPage({ searchParams }: { searchParams:
 							</p>
 						</div>
 					) : (
-						<div className="testimonials-masonry">
-							{interleaveByLength(testimonials).map((testimonial) => (
-								<article
-									key={testimonial.slug}
-									className="testimonial-card"
-								>
-									<TestimonialQuote quote={testimonial.quote} id={testimonial.slug} />
-									{testimonial.image && (
-										<div
-											className="testimonial-image"
-											style={{
-												objectPosition: testimonial.imagePosition
-													? testimonial.imagePosition.replace("-", " ")
-													: "center",
-											}}
-										>
-											<Image
-												src={testimonial.image}
-												alt={
-													testimonial.imageAlt ||
-													`${publicName(testimonial.author)} - ${testimonial.service}`
-												}
-												width={400}
-												height={300}
-												className="testimonial-img"
-											/>
-										</div>
-									)}
-									<footer className="testimonial-author">
-										<div className="author-info">
-											<cite className="author-name">{publicName(testimonial.author)}</cite>
-											<span className="author-service">{testimonial.service}</span>
-											{testimonial.category && (
-												<span className="author-category">{testimonial.category}</span>
-											)}
-										</div>
-										<div className="testimonial-rating" aria-label="5 out of 5 stars">
-											{[1, 2, 3, 4, 5].map((star) => (
-												<Star key={star} size={18} weight="fill" />
-											))}
-										</div>
-									</footer>
-								</article>
-							))}
+						<div className="mt-10 flex flex-col gap-12">
+							{featured && <FeaturedTestimonial testimonial={featured} />}
+							<TestimonialGrid>
+								{interleaveByLength(rest).map((testimonial) => (
+									<TestimonialCard key={testimonial.slug} testimonial={testimonial} showRating showCategory />
+								))}
+							</TestimonialGrid>
 						</div>
 					)}
 

@@ -1,11 +1,11 @@
-import { ArrowRight, Quotes } from "@phosphor-icons/react/dist/ssr";
+import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
 import Link from "next/link";
 import { ApplicationHub } from "@/components/application-hub";
 import { JsonLd } from "@/components/json-ld";
 import { SectionEdge } from "@/components/section-edge";
 import { getEvents, getFieldStories, getPublishedTestimonials } from "@/lib/db";
-import { publicName } from "@/lib/names";
+import { TestimonialCard, TestimonialGrid } from "@/components/testimonials";
 import { documentedPastEvents, storyForEvent, toPastEvent } from "@/lib/past-events";
 import { breadcrumbSchema, pageMetadata } from "@/lib/site";
 
@@ -91,18 +91,11 @@ export default async function ApplicationPage() {
 							<p className="eyebrow">From Veterans who went</p>
 							<h2 className="display section-title">Before you decide, hear from them.</h2>
 						</div>
-						<div className="voices-grid">
+						<TestimonialGrid>
 							{voices.map((testimonial) => (
-								<figure key={testimonial.slug}>
-									<Quotes size={30} weight="fill" className="quote-icon" aria-hidden="true" />
-									<blockquote>{testimonial.quote}</blockquote>
-									<figcaption>
-										{publicName(testimonial.author)}
-										<span>{testimonial.service}</span>
-									</figcaption>
-								</figure>
+								<TestimonialCard key={testimonial.slug} testimonial={testimonial} />
 							))}
-						</div>
+						</TestimonialGrid>
 						<Link className="text-link" href="/testimonials">Read more testimonials <ArrowRight size={17} /></Link>
 					</div>
 				</section>
