@@ -1,6 +1,6 @@
 // Points next/image at the WebP copies scripts/image-variants.mjs writes at build
 // time, so no photo goes through Vercel's per-transformation image optimizer.
-const WIDTHS = [640, 1080, 1920]; // keep in step with scripts/image-variants.mjs
+const WIDTHS = [480, 960, 1600]; // keep in step with scripts/image-variants.mjs
 
 export default function imageLoader({ src, width }: { src: string; width: number; quality?: number }) {
 	// Only local photos have copies; anything else (SVGs, build-hashed imports, remote URLs) is served as is.

@@ -7,7 +7,7 @@ import { mkdir, readdir, stat } from "node:fs/promises";
 import path from "node:path";
 import sharp from "sharp";
 
-const WIDTHS = [640, 1080, 1920]; // keep in step with src/lib/image-loader.ts
+const WIDTHS = [480, 960, 1600]; // keep in step with src/lib/image-loader.ts
 const root = path.join(process.cwd(), "public");
 const outRoot = path.join(root, "_img");
 
@@ -27,7 +27,7 @@ for (const file of files) {
 		await sharp(source)
 			.rotate()
 			.resize({ width, height: width, fit: "inside", withoutEnlargement: true })
-			.webp({ quality: 75 })
+			.webp({ quality: 70, effort: 6 })
 			.toFile(target);
 		written++;
 	}

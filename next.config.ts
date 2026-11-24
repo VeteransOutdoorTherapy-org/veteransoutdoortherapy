@@ -24,6 +24,14 @@ const nextConfig: NextConfig = {
 			{ protocol: "https", hostname: "*.public.blob.vercel-storage.com" },
 		],
 	},
+	// Photos never change at the same path, so browsers can keep them for 30 days
+	// instead of rechecking with Vercel on every page view.
+	async headers() {
+		return ["/_img/:path*", "/wp-content/uploads/:path*"].map((source) => ({
+			source,
+			headers: [{ key: "Cache-Control", value: "public, max-age=2592000, stale-while-revalidate=86400" }],
+		}));
+	},
 	async redirects() {
 		return [
 			{ source: "/author/mmillard", destination: "/about", permanent: true },
