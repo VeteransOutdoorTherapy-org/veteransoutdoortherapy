@@ -3029,6 +3029,12 @@ img {
 .field-story-reviews {
 	margin-top: 0;
 }
+/* After another section (the photo viewer's hidden dialog sits between them, hence ~ not +),
+   keep the usual gap so the photos do not sit on the rule. */
+.field-story-section ~ .field-story-facebook,
+.field-story-section ~ .field-story-reviews {
+	margin-top: 72px;
+}
 .field-story-facebook-links {
 	display: grid;
 	gap: 12px;

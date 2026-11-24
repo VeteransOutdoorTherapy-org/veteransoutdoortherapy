@@ -77,7 +77,11 @@ export default async function FieldStoryPage({ params }: PageProps<"/field-stori
 				seenSrcs.add(photo.src);
 				return true;
 			});
-		if (taggedPhotos.length > 0) photoGalleries.push({ title: "More from the gallery", photos: taggedPhotos });
+		// Tagged gallery photos join the story's own photo section rather than opening a second
+		// one, which read as a duplicate when only a photo or two were left over.
+		const last = photoGalleries.at(-1);
+		if (last) last.photos.push(...taggedPhotos);
+		else if (taggedPhotos.length > 0) photoGalleries.push({ title: "More from the gallery", photos: taggedPhotos });
 	}
 	// Opt-in per story: tile the story's own photos behind the hero instead of the single image.
 	const collageImages = story.heroCollage
