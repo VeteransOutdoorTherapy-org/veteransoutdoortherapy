@@ -485,7 +485,7 @@ export const events: Event[] = [
 		image: `${uploads}/2026/09/wilderness-to-wellness/dinner-03.jpg`,
 		type: "Benefit dinner",
 		location: "54 Country, Kingdom City, Missouri",
-		summary: "The second annual Wilderness to Wellness dinner: an evening of food, fellowship, and auctions honoring Veterans and Gold Star families.",
+		summary: "The second annual Wilderness to Wellness dinner: an evening of food, fellowship, and auctions honoring Veterans and Gold Star families. RSVP by February 28.",
 		heroTitle: "Good food, greater purpose, lasting impact.",
 		overviewTitle: "Another year of fellowship and healing.",
 		overview:
@@ -500,7 +500,7 @@ export const events: Event[] = [
 		published: true,
 		featured: false,
 		over: false,
-		sortOrder: 12,
+		sortOrder: 0,
 	},
 	// Trips that already had a field note but no event record, built from those
 	// notes. Each takes the title of the same trip's 2027 record, so the two years

@@ -189,6 +189,11 @@ async function setupEvents() {
 		await db`UPDATE events SET title = 'Wilderness to Wellness Benefit Dinner', updated_at = now() WHERE slug = 'wilderness-to-wellness-benefit-dinner-2026'`;
 	}
 	await seedMissingEvent(db, "seed-wilderness-to-wellness-2027", "wilderness-to-wellness-benefit-dinner-2027");
+	// The flyer's RSVP deadline, and the dinner leads the upcoming events.
+	const dinner2027RsvpMigration =
+		await db`INSERT INTO migrations (id) VALUES ('wilderness-to-wellness-2027-rsvp-first') ON CONFLICT (id) DO NOTHING RETURNING id`;
+	if (dinner2027RsvpMigration.length)
+		await db`UPDATE events SET summary = ${"The second annual Wilderness to Wellness dinner: an evening of food, fellowship, and auctions honoring Veterans and Gold Star families. RSVP by February 28."}, sort_order = 0, updated_at = now() WHERE slug = 'wilderness-to-wellness-benefit-dinner-2027'`;
 	await seedMissingEvent(db, "seed-tba-snagging-2027", "missouri-snagging-trip-2027");
 	await seedMissingEvent(db, "seed-tba-benefit-banquet-2027", "benefit-banquet-dinner-2027");
 	// 2026 trips that had a field note before they had an event record.
