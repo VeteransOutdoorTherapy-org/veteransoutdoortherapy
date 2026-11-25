@@ -17,7 +17,7 @@ const SCOPES = [
 	"https://www.googleapis.com/auth/webmasters.readonly",
 ].join(" ");
 
-export type Row = { label: string; value: number; secondary?: number };
+export type Row = { label: string; value: number; secondary?: number; position?: number };
 type Section<T> = { data?: T; error?: string };
 
 export type GoogleDashboard = {
@@ -45,7 +45,8 @@ export type GoogleDashboard = {
 export function googleSetup() {
 	return {
 		serviceAccount: Boolean(process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL?.trim() && process.env.GOOGLE_SERVICE_ACCOUNT_KEY?.trim()),
-		analyticsProperty: process.env.GA4_PROPERTY_ID?.trim() || "",
+		// The site's GA4 property; not a secret, so it needs no environment variable.
+		analyticsProperty: process.env.GA4_PROPERTY_ID?.trim() || "565658440",
 		searchConsoleSite: process.env.SEARCH_CONSOLE_SITE?.trim() || "",
 		serviceAccountEmail: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL?.trim() || "",
 	};
@@ -108,7 +109,7 @@ async function loadAnalytics(token: string, property: string, days: number) {
 			...(dimensionFilter && { dimensionFilter }),
 		}).then(toRows);
 
-	const totalMetrics = ["activeUsers", "sessions", "screenPageViews", "engagementRate", "averageSessionDuration"];
+	const totalMetrics = ["activeUsers", "sessions", "screenPageViews", "engagementRate", "averageSessionDuration", "keyEvents"];
 	const [totalRows, dailyRows, pages, channels, sources, devices, cities, events, adsCampaigns] = await Promise.all([
 		report({ dateRanges: [current, previous], metrics: totalMetrics.map((name) => ({ name })) }),
 		report({ dimensions: [{ name: "date" }], metrics: [{ name: "activeUsers" }], orderBys: [{ dimension: { dimensionName: "date" } }] }),
@@ -136,6 +137,7 @@ async function loadAnalytics(token: string, property: string, days: number) {
 		["Page views", "number"],
 		["Engagement rate", "percent"],
 		["Avg. session", "seconds"],
+		["Key events", "number"],
 	];
 	return {
 		totals: labels.map(([label, format], index) => ({
@@ -161,16 +163,17 @@ async function loadAnalytics(token: string, property: string, days: number) {
 async function loadSearchConsole(token: string, site: string, days: number) {
 	const isoDaysAgo = (count: number) => new Date(Date.now() - count * 86_400_000).toISOString().slice(0, 10);
 	type Result = { rows?: { keys?: string[]; clicks: number; impressions: number; ctr: number; position: number }[] };
-	const query = (dimensions: string[]) =>
+	const query = (dimensions: string[], rowLimit = 10) =>
 		postJson<Result>(`https://www.googleapis.com/webmasters/v3/sites/${encodeURIComponent(site)}/searchAnalytics/query`, token, {
 			startDate: isoDaysAgo(days - 1),
 			endDate: isoDaysAgo(0),
 			dimensions,
-			rowLimit: 10,
+			rowLimit,
 		}).then((result) => result.rows ?? []);
-	const [totals, queries, pages] = await Promise.all([query([]), query(["query"]), query(["page"])]);
+	// Fifty searches rather than ten, so the Ad Grants suggestions can look past the top few.
+	const [totals, queries, pages] = await Promise.all([query([]), query(["query"], 50), query(["page"])]);
 	const toRows = (rows: Awaited<ReturnType<typeof query>>): Row[] =>
-		rows.map((row) => ({ label: row.keys?.[0] || "", value: row.clicks, secondary: row.impressions }));
+		rows.map((row) => ({ label: row.keys?.[0] || "", value: row.clicks, secondary: row.impressions, position: row.position }));
 	return {
 		totals: {
 			clicks: totals[0]?.clicks ?? 0,

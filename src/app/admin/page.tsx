@@ -290,7 +290,7 @@ export default async function AdminPage({
 					<p className="form-error">Saving failed. Check required fields and make sure the slug is unique.</p>
 				)}
 				{view === "analytics" && googleDashboard ? (
-					<AnalyticsAdmin dashboard={googleDashboard} />
+					<AnalyticsAdmin dashboard={googleDashboard} events={events} />
 				) : view === "events" ? (
 					<EventAdmin events={events} selected={selectedEvent} />
 				) : view === "testimonials" ? (
