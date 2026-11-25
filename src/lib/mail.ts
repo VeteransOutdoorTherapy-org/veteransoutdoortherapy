@@ -1,7 +1,7 @@
 import "server-only";
 import nodemailer from "nodemailer";
 import { displayPhone } from "./phone";
-import { SITE_NAME } from "./site";
+import { absoluteUrl, SITE_NAME } from "./site";
 
 export type ContactNotification = {
 	firstName: string;
@@ -9,6 +9,16 @@ export type ContactNotification = {
 	email: string;
 	phone: string;
 	message: string;
+};
+
+export type TestimonialNotification = {
+	slug: string;
+	name: string;
+	email: string;
+	service: string;
+	event: string;
+	rating?: number;
+	story: string;
 };
 
 export type OrderNotification = {
@@ -88,6 +98,32 @@ export async function sendContactNotification(contact: ContactNotification) {
 			"",
 			"Message:",
 			contact.message,
+			"",
+			"Reply to this email to respond directly to the sender.",
+		].join("\n"),
+	});
+}
+
+export async function sendTestimonialNotification(story: TestimonialNotification) {
+	const { user, transporter } = createTransporter();
+	await transporter.sendMail({
+		from: `${SITE_NAME} Website <${user}>`,
+		to: requiredEnvironment("CONTACT_EMAIL_TO"),
+		replyTo: story.email,
+		subject: `New story shared by ${story.name}`,
+		text: [
+			"Someone shared their story through the website. It is saved as an unpublished testimonial and will not appear on the site until it is published in the admin.",
+			"",
+			`Name: ${story.name}`,
+			`Email: ${story.email}`,
+			`Service: ${story.service}`,
+			`Event: ${story.event}`,
+			`Rating: ${story.rating ? `${story.rating} of 5` : "Not given"}`,
+			"",
+			"Story:",
+			story.story,
+			"",
+			`Review and publish: ${absoluteUrl(`/admin?view=testimonials&edit=${story.slug}`)}`,
 			"",
 			"Reply to this email to respond directly to the sender.",
 		].join("\n"),

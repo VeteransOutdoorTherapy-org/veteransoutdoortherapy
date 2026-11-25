@@ -90,6 +90,11 @@ async function setupTestimonials() {
 	const db = sql();
 	if (!db) return null;
 	await db`CREATE TABLE IF NOT EXISTS testimonials (slug text PRIMARY KEY, quote text NOT NULL, author text NOT NULL, service text NOT NULL, image text, image_alt text, image_position text, category text, published boolean NOT NULL DEFAULT true, sort_order integer NOT NULL DEFAULT 0, created_at timestamptz NOT NULL DEFAULT now(), updated_at timestamptz NOT NULL DEFAULT now())`;
+	// Filled only by Share your story submissions; the admin form leaves them as they are.
+	await db`ALTER TABLE testimonials ADD COLUMN IF NOT EXISTS rating smallint`;
+	await db`ALTER TABLE testimonials ADD COLUMN IF NOT EXISTS event text`;
+	await db`ALTER TABLE testimonials ADD COLUMN IF NOT EXISTS source text`;
+	await db`ALTER TABLE testimonials ADD COLUMN IF NOT EXISTS email text`;
 	await db`CREATE TABLE IF NOT EXISTS migrations (id text PRIMARY KEY, applied_at timestamptz NOT NULL DEFAULT now())`;
 	const horsebackTestimonialImageMigration =
 		await db`INSERT INTO migrations (id) VALUES ('horseback-testimonial-images-2026') ON CONFLICT (id) DO NOTHING RETURNING id`;
@@ -863,6 +868,10 @@ function rowToTestimonial(row: Record<string, unknown>): Testimonial {
 		sortOrder: Number(row.sort_order),
 		createdAt: String(row.created_at),
 		updatedAt: String(row.updated_at),
+		rating: row.rating ? Number(row.rating) : undefined,
+		event: row.event ? String(row.event) : undefined,
+		source: row.source ? String(row.source) : undefined,
+		email: row.email ? String(row.email) : undefined,
 	};
 }
 
@@ -879,7 +888,24 @@ export async function getTestimonials(): Promise<Testimonial[]> {
 
 export async function getPublishedTestimonials(): Promise<Testimonial[]> {
 	const all = await getTestimonials();
-	return all.filter((t) => t.published);
+	// The submitter's email is for the admin only; it never travels with a public testimonial.
+	return all.filter((t) => t.published).map((t) => ({ ...t, email: undefined }));
+}
+
+/** A story sent through Share your story: saved unpublished, for the admin to review. */
+export async function saveTestimonialSubmission(submission: {
+	slug: string;
+	quote: string;
+	author: string;
+	service: string;
+	category: string;
+	rating?: number;
+	event?: string;
+	email: string;
+}) {
+	const db = await ensureTestimonials();
+	if (!db) throw new Error("DATABASE_URL is required to save testimonials.");
+	await db`INSERT INTO testimonials (slug, quote, author, service, category, published, sort_order, rating, event, source, email) VALUES (${submission.slug}, ${submission.quote}, ${submission.author}, ${submission.service}, ${submission.category}, false, 0, ${submission.rating ?? null}, ${submission.event ?? null}, 'website', ${submission.email})`;
 }
 
 export async function getTestimonial(slug: string): Promise<Testimonial | undefined> {

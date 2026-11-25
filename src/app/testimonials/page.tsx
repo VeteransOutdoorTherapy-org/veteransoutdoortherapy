@@ -1,11 +1,11 @@
-import Link from "next/link";
-import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { JsonLd } from "@/components/json-ld";
 import { FeaturedTestimonial, interleaveByLength, TestimonialCard, TestimonialGrid } from "@/components/testimonials";
 import { publicName } from "@/lib/names";
 import { pageMetadata, breadcrumbSchema } from "@/lib/site";
-import { getPublishedTestimonials } from "@/lib/db";
+import { getEvents, getPublishedTestimonials } from "@/lib/db";
+import { ShareStory } from "@/components/share-story";
+import { pastEventOptions } from "@/lib/testimonial-submission";
 import { HeroCollage } from "@/components/hero-collage";
 import { SectionEdge } from "@/components/section-edge";
 
@@ -26,7 +26,7 @@ export const metadata = pageMetadata({
 
 export default async function TestimonialsPage({ searchParams }: { searchParams: Promise<{ category?: string; year?: string }> }) {
 	const query = await searchParams;
-	const allTestimonials = await getPublishedTestimonials();
+	const [allTestimonials, events] = await Promise.all([getPublishedTestimonials(), getEvents()]);
 	const categories = Array.from(new Set(allTestimonials.map((t) => t.category || "Uncategorized"))).sort();
 	const years = Array.from(new Set(allTestimonials.map((t) => t.createdAt.slice(0, 4)))).sort().reverse();
 	const testimonials = allTestimonials.filter((t) => (!query.category || (t.category || "Uncategorized") === query.category) && (!query.year || t.createdAt.startsWith(query.year)));
@@ -103,10 +103,7 @@ export default async function TestimonialsPage({ searchParams }: { searchParams:
 							Have a story to share? We&apos;d love to hear about your experience with
 							Veteran&apos;s Outdoor Therapy.
 						</p>
-						<Link className="button orange" href="/contact">
-							Share Your Story
-							<ArrowRight size={17} />
-						</Link>
+						<ShareStory events={pastEventOptions(events)} />
 					</div>
 				</div>
 			</section>

@@ -5,7 +5,9 @@ import { ApplicationHub } from "@/components/application-hub";
 import { JsonLd } from "@/components/json-ld";
 import { SectionEdge } from "@/components/section-edge";
 import { getEvents, getFieldStories, getPublishedTestimonials } from "@/lib/db";
+import { ShareStory } from "@/components/share-story";
 import { TestimonialCard, TestimonialGrid } from "@/components/testimonials";
+import { pastEventOptions } from "@/lib/testimonial-submission";
 import { documentedPastEvents, storyForEvent, toPastEvent } from "@/lib/past-events";
 import { breadcrumbSchema, pageMetadata } from "@/lib/site";
 
@@ -96,7 +98,10 @@ export default async function ApplicationPage() {
 								<TestimonialCard key={testimonial.slug} testimonial={testimonial} />
 							))}
 						</TestimonialGrid>
-						<Link className="text-link" href="/testimonials">Read more testimonials <ArrowRight size={17} /></Link>
+						<div className="flex flex-wrap items-center gap-x-8 gap-y-4">
+							<Link className="text-link" href="/testimonials">Read more testimonials <ArrowRight size={17} /></Link>
+							<ShareStory events={pastEventOptions(events)} className="text-link cursor-pointer" />
+						</div>
 					</div>
 				</section>
 			)}

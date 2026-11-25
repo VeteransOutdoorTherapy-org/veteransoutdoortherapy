@@ -7,7 +7,9 @@ import { breadcrumbSchema, faqSchema, pageMetadata } from "@/lib/site";
 import { HeroCollage } from "@/components/hero-collage";
 import { SectionEdge } from "@/components/section-edge";
 import { getEvents, getPublishedTestimonials } from "@/lib/db";
+import { ShareStory } from "@/components/share-story";
 import { TestimonialCard, TestimonialGrid } from "@/components/testimonials";
+import { pastEventOptions } from "@/lib/testimonial-submission";
 import { imageFocusStyle } from "@/lib/data";
 
 /**
@@ -67,7 +69,7 @@ async function outdoorExperiences() {
 }
 
 export default async function VeteranHuntingPage() {
-	const [experiences, testimonials] = await Promise.all([outdoorExperiences(), getPublishedTestimonials()]);
+	const [experiences, testimonials, events] = await Promise.all([outdoorExperiences(), getPublishedTestimonials(), getEvents()]);
 	// Short quotes only: these sit three across, so a long one would tower over its neighbors.
 	const short = testimonials.filter((testimonial) => testimonial.quote.length <= 320);
 	const voices = [
@@ -117,7 +119,10 @@ export default async function VeteranHuntingPage() {
 								<TestimonialCard key={testimonial.slug} testimonial={testimonial} />
 							))}
 						</TestimonialGrid>
-						<Link className="text-link" href="/testimonials">Read more testimonials <ArrowRight size={17} /></Link>
+						<div className="flex flex-wrap items-center gap-x-8 gap-y-4">
+							<Link className="text-link" href="/testimonials">Read more testimonials <ArrowRight size={17} /></Link>
+							<ShareStory events={pastEventOptions(events)} className="text-link cursor-pointer" />
+						</div>
 					</div>
 					<SectionEdge color="#e4e6df" variant="a" />
 				</section>

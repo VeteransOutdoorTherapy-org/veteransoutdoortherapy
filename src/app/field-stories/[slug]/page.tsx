@@ -6,6 +6,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { FieldStoryGalleries } from "@/components/field-story-galleries";
+import { ShareStory } from "@/components/share-story";
+import { pastEventOptions } from "@/lib/testimonial-submission";
 import { JsonLd } from "@/components/json-ld";
 import { interleaveByLength, TestimonialCard, TestimonialGrid } from "@/components/testimonials";
 import { cssImagePosition, type FieldStory } from "@/lib/data";
@@ -55,7 +57,8 @@ export default async function FieldStoryPage({ params }: PageProps<"/field-stori
 		? (await getPublishedTestimonials()).filter((testimonial) => testimonial.category === story.reviewCategory)
 		: [];
 	// The trip this note is about, and the next time it runs.
-	const { covers, upcoming } = eventForStory(story, await getEvents(), new Date().toISOString().slice(0, 10));
+	const events = await getEvents();
+	const { covers, upcoming } = eventForStory(story, events, new Date().toISOString().slice(0, 10));
 	const seenSrcs = new Set<string>([story.image]);
 	const photoGalleries = (story.photoGalleries ?? [])
 		.map((gallery) => ({
@@ -198,6 +201,7 @@ export default async function FieldStoryPage({ params }: PageProps<"/field-stori
 						{covers && (
 							<Link className="text-link" href={`/events/${covers.slug}`}>View event details <ArrowRight size={17} /></Link>
 						)}
+						<ShareStory events={pastEventOptions(events)} defaultEvent={covers?.slug} label="Were you there? Share your story" className="text-link cursor-pointer" />
 						<Link className="text-link" href="/field-stories">More field stories <ArrowRight size={17} /></Link>
 					</div>
 				</div>

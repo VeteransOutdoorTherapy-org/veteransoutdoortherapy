@@ -87,9 +87,9 @@ export function TestimonialCard({
 		<figure className="m-0 flex flex-col gap-y-6 rounded-2xl bg-(--white) p-6 shadow-[0_1px_2px_rgba(23,32,25,0.05),0_12px_32px_-16px_rgba(23,32,25,0.25)] ring-1 ring-(--ink)/8 transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_1px_2px_rgba(23,32,25,0.05),0_18px_40px_-16px_rgba(23,32,25,0.3)] sm:p-7">
 			<div className="flex items-center justify-between gap-3">
 				{showRating ? (
-					<div className="flex gap-0.5 text-(--orange)" aria-label="5 out of 5 stars">
+					<div className="flex gap-0.5 text-(--orange)" aria-label={`${testimonial.rating ?? 5} out of 5 stars`}>
 						{[1, 2, 3, 4, 5].map((star) => (
-							<Star key={star} size={16} weight="fill" />
+							<Star key={star} size={16} weight={star <= (testimonial.rating ?? 5) ? "fill" : "regular"} />
 						))}
 					</div>
 				) : (

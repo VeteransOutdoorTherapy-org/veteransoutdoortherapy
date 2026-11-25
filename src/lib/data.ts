@@ -808,6 +808,14 @@ export type Testimonial = {
 	sortOrder: number;
 	createdAt: string;
 	updatedAt: string;
+	/** Star rating the person gave, when they submitted it through the site. */
+	rating?: number;
+	/** The event the story is about, by title, when submitted through the site. */
+	event?: string;
+	/** "website" for stories sent through Share your story; empty for ones entered in the admin. */
+	source?: string;
+	/** Private: shown in the admin only, never on a public page. */
+	email?: string;
 };
 export const testimonials: Testimonial[] = [
 	{

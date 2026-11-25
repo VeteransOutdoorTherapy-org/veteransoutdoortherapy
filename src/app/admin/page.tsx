@@ -13,7 +13,11 @@ export const metadata = pageMetadata({ title: "Content Admin", description: "Aut
 function TestimonialAdmin({ testimonials, selected, categoryFilter, yearFilter }: { testimonials: Testimonial[]; selected?: Testimonial; categoryFilter?: string; yearFilter?: string }) {
 	const categories = Array.from(new Set(testimonials.map((t) => t.category).filter(Boolean))).sort();
 	const years = Array.from(new Set(testimonials.map((t) => t.createdAt.slice(0, 4)))).sort().reverse();
-	const filtered = testimonials.filter((t) => (!categoryFilter || (t.category || "Uncategorized") === categoryFilter) && (!yearFilter || t.createdAt.startsWith(yearFilter)));
+	const isNew = (t: Testimonial) => t.source === "website" && !t.published;
+	// Stories sent through Share your story and not yet published lead the list.
+	const filtered = testimonials
+		.filter((t) => (!categoryFilter || (t.category || "Uncategorized") === categoryFilter) && (!yearFilter || t.createdAt.startsWith(yearFilter)))
+		.sort((a, b) => Number(isNew(b)) - Number(isNew(a)) || (isNew(a) ? b.createdAt.localeCompare(a.createdAt) : 0));
 	const imagePositions = ["top", "bottom", "left", "right", "top-left", "top-right", "bottom-left", "bottom-right", "center"] as const;
 	return (
 		<div className="admin-grid">
@@ -22,6 +26,15 @@ function TestimonialAdmin({ testimonials, selected, categoryFilter, yearFilter }
 					<Plus size={20} /> {selected ? "Edit testimonial" : "Add testimonial"}
 				</h2>
 				<input type="hidden" name="previousSlug" value={selected?.slug || ""} />
+				{selected?.source === "website" && (
+					<div className="rounded-xl bg-(--orange)/8 p-4 text-sm leading-6 ring-1 ring-(--orange)/20">
+						<strong className="block">Sent through Share your story · {new Date(selected.createdAt).toLocaleDateString("en-US")}</strong>
+						<span className="block">Email: <a href={`mailto:${selected.email}`}>{selected.email}</a></span>
+						<span className="block">Event: {selected.event || "Not a specific event"}</span>
+						<span className="block">Rating: {selected.rating ? `${selected.rating} of 5` : "Not given"}</span>
+						{!selected.published && <span className="mt-2 block">Tick Published and save to put it on the site.</span>}
+					</div>
+				)}
 				<label>
 					Author name
 					<input className="field" name="author" defaultValue={selected?.author} required />
@@ -98,8 +111,19 @@ function TestimonialAdmin({ testimonials, selected, categoryFilter, yearFilter }
 				{filtered.map((testimonial) => (
 					<article key={testimonial.slug}>
 						<div>
-							<strong>{testimonial.author}</strong>
+							<strong>
+								{isNew(testimonial) && (
+									<span className="mr-2 rounded-full bg-(--orange) px-2 py-0.5 align-middle text-[0.68rem] font-bold tracking-wide text-white uppercase">New</span>
+								)}
+								{testimonial.author}
+							</strong>
 							<span>{testimonial.service} · {testimonial.category || "Uncategorized"} · {testimonial.published ? "Published" : "Draft"}</span>
+							{testimonial.source === "website" && (
+								<span>
+									{testimonial.event || "Not a specific event"}
+									{testimonial.rating ? ` · ${testimonial.rating}/5` : ""} · {testimonial.email}
+								</span>
+							)}
 							<p style={{ marginTop: 8, color: "var(--moss)", fontSize: "0.9rem" }}>{testimonial.quote.slice(0, 100)}…</p>
 						</div>
 						<a className="icon-button" href={`/admin?view=testimonials&edit=${testimonial.slug}`} aria-label={`Edit ${testimonial.author}`}>
@@ -173,6 +197,7 @@ export default async function AdminPage({
 	const selectedProduct = products.find((product) => product.slug === query.edit);
 	const selectedEvent = events.find((event) => event.slug === query.edit);
 	const selectedTestimonial = testimonials.find((testimonial) => testimonial.slug === query.edit);
+	const newTestimonials = testimonials.filter((testimonial) => testimonial.source === "website" && !testimonial.published).length;
 	const selectedFieldStory = fieldStories.find((story) => story.slug === query.edit);
 	const testimonialCategories = Array.from(new Set(testimonials.map((t) => t.category).filter((c): c is string => Boolean(c)))).sort();
 	const galleryTags = Array.from(new Set(gallery.flatMap((image) => image.tags))).sort();
@@ -199,6 +224,9 @@ export default async function AdminPage({
 					</a>
 					<a className={view === "testimonials" ? "active" : ""} href="/admin?view=testimonials">
 						Testimonials
+						{newTestimonials > 0 && (
+							<span className="ml-1.5 rounded-full bg-(--orange) px-1.5 py-0.5 text-[0.7rem] font-bold text-white">{newTestimonials} new</span>
+						)}
 					</a>
 					<a className={view === "field-stories" ? "active" : ""} href="/admin?view=field-stories">
 						Field Notes

@@ -8,13 +8,13 @@ import { Lightbox, type LightboxImage } from "@/components/lightbox";
 export function FieldStoryGalleries({ galleries }: { galleries: { title: string; photos: LightboxImage[] }[] }) {
 	const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 	const allPhotos = galleries.flatMap((gallery) => gallery.photos);
-	let offset = 0;
+	// Where each section's photos begin in the viewer's single run through the page.
+	const starts = galleries.map((_, index) => galleries.slice(0, index).reduce((sum, gallery) => sum + gallery.photos.length, 0));
 
 	return (
 		<>
 			{galleries.map((gallery, galleryIndex) => {
-				const start = offset;
-				offset += gallery.photos.length;
+				const start = starts[galleryIndex];
 				return (
 					<section className="field-story-section" key={gallery.title}>
 						<div className="field-story-section-head">
