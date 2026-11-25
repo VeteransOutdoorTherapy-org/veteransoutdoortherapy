@@ -6,6 +6,8 @@ import { displayPhone } from "@/lib/phone";
 import { pageMetadata } from "@/lib/site";
 import { deleteProductAction, duplicateProductAction, loginAction, logoutAction, saveProductAction, saveTestimonialAction, duplicateTestimonialAction, deleteTestimonialAction, reviewTestimonialAction } from "./actions";
 import { EventAdmin } from "./event-admin";
+import { ANALYTICS_RANGES, AnalyticsAdmin } from "./analytics-admin";
+import { getGoogleDashboard } from "@/lib/google-analytics";
 import { FieldStoryAdmin } from "./field-story-admin";
 import { GalleryAdmin } from "@/components/admin/gallery-admin";
 
@@ -184,7 +186,7 @@ function TestimonialAdmin({ testimonials, selected, categoryFilter, yearFilter }
 export default async function AdminPage({
 	searchParams,
 }: {
- searchParams: Promise<{ view?: string; edit?: string; error?: string; saved?: string; deleted?: string; saveError?: string; category?: string; year?: string }>;
+ searchParams: Promise<{ view?: string; edit?: string; error?: string; saved?: string; deleted?: string; saveError?: string; category?: string; year?: string; range?: string }>;
 }) {
 	const query = await searchParams;
 	const authenticated = await isAdmin();
@@ -216,6 +218,7 @@ export default async function AdminPage({
 		: query.view === "gallery" ? "gallery"
 		: query.view === "field-stories" ? "field-stories"
 		: query.view === "wiki" ? "wiki"
+		: query.view === "analytics" ? "analytics"
 		: "products";
 	const [products, events, testimonials, gallery, fieldStories] = await Promise.all([
 		getProducts(),
@@ -234,6 +237,8 @@ export default async function AdminPage({
 	const selectedFieldStory = fieldStories.find((story) => story.slug === query.edit);
 	const testimonialCategories = Array.from(new Set(testimonials.map((t) => t.category).filter((c): c is string => Boolean(c)))).sort();
 	const galleryTags = Array.from(new Set(gallery.flatMap((image) => image.tags))).sort();
+	const range = ANALYTICS_RANGES.find((days) => String(days) === query.range) ?? 28;
+	const googleDashboard = view === "analytics" ? await getGoogleDashboard(range) : undefined;
 	return (
 		<section className="admin-page">
 			<div className="container">
@@ -269,6 +274,9 @@ export default async function AdminPage({
 					</Link>
 					<Link className={view === "gallery" ? "active" : ""} href="/admin?view=gallery">Gallery</Link>
 					<Link href="/admin/wiki">Wiki</Link>
+					<a className={view === "analytics" ? "active" : ""} href="/admin?view=analytics">
+						Analytics
+					</a>
 				</nav>
 				{query.saved && <p className="success-note">Saved.</p>}
 				{query.deleted && <p className="success-note">Deleted.</p>}
@@ -281,7 +289,9 @@ export default async function AdminPage({
 				{query.saveError === "save-failed" && (
 					<p className="form-error">Saving failed. Check required fields and make sure the slug is unique.</p>
 				)}
-				{view === "events" ? (
+				{view === "analytics" && googleDashboard ? (
+					<AnalyticsAdmin dashboard={googleDashboard} />
+				) : view === "events" ? (
 					<EventAdmin events={events} selected={selectedEvent} />
 				) : view === "testimonials" ? (
 					<TestimonialAdmin testimonials={testimonials} selected={selectedTestimonial} categoryFilter={query.category} yearFilter={query.year} />

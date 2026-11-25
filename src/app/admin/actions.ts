@@ -1,9 +1,10 @@
 "use server";
 import { del, put } from "@vercel/blob";
 import { randomUUID } from "crypto";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { isAdmin, login, logout } from "@/lib/auth";
+import { GOOGLE_DASHBOARD_TAG } from "@/lib/google-analytics";
 import { IMAGE_POSITIONS, type ImagePosition } from "@/lib/data";
 import { deleteEvent, deleteProduct, getEvents, getProducts, saveEvent, saveProduct, getTestimonials, saveTestimonial, deleteTestimonial, reviewTestimonial, deleteGalleryImage, getGalleryImages, saveGalleryImage, getFieldStories, saveFieldStory, deleteFieldStory } from "@/lib/db";
 
@@ -551,6 +552,13 @@ export async function reviewTestimonialAction(form: FormData) {
 	}
 	revalidateTestimonialPages(slug);
 	redirect(`/admin?view=testimonials&edit=${slug}&saved=1`);
+}
+
+/** Drops the hour-long cache of Google reports, so the dashboard fetches them again. */
+export async function refreshGoogleDashboardAction(form: FormData) {
+	if (!(await isAdmin())) redirect("/admin");
+	revalidateTag(GOOGLE_DASHBOARD_TAG, { expire: 0 });
+	redirect(`/admin?view=analytics&range=${Number(form.get("range")) || 28}`);
 }
 
 export async function deleteTestimonialAction(form: FormData) {
