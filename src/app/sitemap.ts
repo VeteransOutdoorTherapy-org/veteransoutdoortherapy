@@ -34,11 +34,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 		"/donate",
 		"/sponsorships",
 	]);
-	const updated = new Date();
+	// A last-modified date only where there is a true one: Google stops trusting lastmod
+	// when every page claims to have changed at the moment it was crawled.
+	const today = new Date().toISOString().slice(0, 10);
 	return [
 		...routes.map((route) => ({
 			url: `${SITE_URL}${route}`,
-			lastModified: updated,
 			changeFrequency: route === "/shop" ? ("weekly" as const) : ("monthly" as const),
 			priority: route === "" ? 1 : hubs.has(route) ? 0.9 : 0.6,
 		})),
@@ -51,7 +52,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 			.filter((event) => event.published)
 			.map((event) => ({
 				url: `${SITE_URL}/events/${event.slug}`,
-				lastModified: new Date(event.endDate),
+				// An upcoming event's end date is in the future, which is not a modification date.
+				...(event.endDate <= today && { lastModified: new Date(event.endDate) }),
 				changeFrequency: "weekly" as const,
 				priority: 0.7,
 			})),

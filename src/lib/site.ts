@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 
 export const SITE_NAME = "Veteran's Outdoor Therapy";
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://veteransoutdoortherapy.org";
+// The address the site is served from: the bare domain redirects to www, so canonical
+// links, the sitemap, and robots.txt all name www and never point Google at a redirect.
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.veteransoutdoortherapy.org";
 export const SITE_DESCRIPTION =
 	"Hunting, fishing, horseback riding, hiking, and camping for previously deployed Veterans and Gold Star families, built around healing, camaraderie, and time outdoors.";
 export const OG_IMAGE = "/og-image.png";
