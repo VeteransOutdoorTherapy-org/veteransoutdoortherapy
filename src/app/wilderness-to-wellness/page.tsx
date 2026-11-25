@@ -23,8 +23,8 @@ export default function WellnessPage() {
 						Join us for an evening that celebrates the power of nature, community, and resilience. Wilderness to
 						Wellness is more than a banquet — it&apos;s a journey through stories of service, healing, and hope.
 					</p>
-					<Link className="button orange" href="/contact">
-						Ask about the next event
+					<Link className="button orange" href="/events/wilderness-to-wellness-benefit-dinner-2027#tickets">
+						Get tickets for March 12, 2027
 					</Link>
 				</div>
 				<SectionEdge color="var(--paper)" variant="b" />
@@ -35,8 +35,8 @@ export default function WellnessPage() {
 					<h2 className="display section-title">From Wilderness to Wellness.</h2>
 					<p className="prose">
 						Together, we honor the service and sacrifice of our nation&apos;s heroes while sharing the transformative
-						peace that comes from the great outdoors. The 2026 event sold out, and our next Benefit Banquet Dinner
-						is being planned for 2027.
+						peace that comes from the great outdoors. The 2026 dinner sold out, and the second annual dinner is
+						March 12, 2027, at 54 Country in Kingdom City.
 					</p>
 					<Link className="text-link" href="/sponsorships">
 						Join us in making a difference

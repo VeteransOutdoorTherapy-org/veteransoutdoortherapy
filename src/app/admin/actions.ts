@@ -259,6 +259,7 @@ export async function saveEventAction(form: FormData) {
 				featured: form.get("featured") === "on",
 				over: form.get("over") === "on",
 				recapUrl: String(form.get("recapUrl") || "").trim() || undefined,
+				ticketsUrl: String(form.get("ticketsUrl") || "").trim() || undefined,
 				sortOrder: Number(form.get("sortOrder") || 0),
 			},
 			previousSlug,

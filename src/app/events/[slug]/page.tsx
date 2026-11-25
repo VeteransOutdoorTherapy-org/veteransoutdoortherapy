@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/breadcrumbs";
+import { EmbedFallback } from "@/components/embed-fallback";
 import { JsonLd } from "@/components/json-ld";
 import { events as seedEvents } from "@/lib/data";
 import { getEvent, getEvents, getFieldStories } from "@/lib/db";
@@ -64,7 +65,8 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
 	// there is nothing to ask for, so the closing band stays away entirely.
 	const closing = new Date();
 	closing.setMonth(closing.getMonth() + 1);
-	const applicationsOpen = !eventIsOver && event.startDate > closing.toISOString().slice(0, 10);
+	const applicationsOpen = !eventIsOver && event.template === "adventure" && event.startDate > closing.toISOString().slice(0, 10);
+	const ticketsUrl = eventIsOver ? undefined : event.ticketsUrl;
 	const ownStory = eventIsOver ? storyForEvent(event, (await getFieldStories()).filter((story) => story.published)) : undefined;
 	// A strip from the write-up's galleries, skipping whatever is already the hero
 	// above it.
@@ -144,6 +146,24 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
 					</article>
 				</div>
 			</section>
+			{/* Tickets in their own section, the way the donate page carries its Zeffy
+			    form; the hero's call to action points here. */}
+			{ticketsUrl && (
+				<section className="section donation-form-section" id="tickets">
+					<div className="container donation-form-layout">
+						<div>
+							<p className="eyebrow">Tickets and tables</p>
+							<h2 className="display section-title">Reserve your seat.</h2>
+							<p className="prose">Choose a single ticket or a table for eight, and check out securely through Zeffy.</p>
+						</div>
+						<div className="zeffy-shell">
+							<EmbedFallback href={ticketsUrl} label="Open Zeffy in a new tab." position="above" />
+							<iframe title="Ticket form powered by Zeffy" src={ticketsUrl} allow="payment" loading="lazy" referrerPolicy="strict-origin-when-cross-origin" />
+							<EmbedFallback href={ticketsUrl} label="Open Zeffy in a new tab." position="below" />
+						</div>
+					</div>
+				</section>
+			)}
 			{/* A finished trip's own write-up, brought onto the event page: what the
 			    weekend actually was, and a handful of photographs, so the page is
 			    worth landing on rather than a signpost to somewhere else. */}

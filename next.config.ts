@@ -35,6 +35,7 @@ const nextConfig: NextConfig = {
 	async redirects() {
 		return [
 			{ source: "/author/mmillard", destination: "/about", permanent: true },
+			{ source: "/events/benefit-banquet-dinner-2027", destination: "/events/wilderness-to-wellness-benefit-dinner-2027", permanent: true },
 			{ source: "/category/uncategorized", destination: "/events", permanent: true },
 			{ source: "/adventures", destination: "/events", permanent: true },
 			{ source: "/events-2", destination: "/events", permanent: true },

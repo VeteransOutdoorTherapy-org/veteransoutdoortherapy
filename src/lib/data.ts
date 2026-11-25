@@ -203,6 +203,8 @@ export type Event = {
 	featured: boolean;
 	over: boolean;
 	recapUrl?: string;
+	/** A ticketing form (Zeffy) embedded in its own section on the event page until the event is over. */
+	ticketsUrl?: string;
 	sortOrder: number;
 };
 
@@ -475,22 +477,25 @@ export const events: Event[] = [
 		sortOrder: 11,
 	},
 	{
-		slug: "benefit-banquet-dinner-2027",
-		title: "Benefit Banquet Dinner",
-		date: "2027 (date and venue TBA)",
-		startDate: "2027-03-01",
-		endDate: "2027-03-31",
+		slug: "wilderness-to-wellness-benefit-dinner-2027",
+		title: "Wilderness to Wellness Benefit Dinner",
+		date: "March 12, 2027",
+		startDate: "2027-03-12",
+		endDate: "2027-03-12",
 		image: `${uploads}/2026/09/wilderness-to-wellness/dinner-03.jpg`,
-		type: "Fundraiser",
-		location: "Venue to be announced",
-		summary: "Our annual benefit banquet dinner returns in 2027. Date, venue, and theme will be announced closer to the event.",
-		heroTitle: "Join us for the next benefit banquet.",
-		overviewTitle: "An evening that fuels the mission.",
-		overview: "The annual benefit banquet dinner returns in 2027. Date and venue will be announced closer to the event.",
-		detailsTitle: "Every seat supports a Veteran",
-		details: "Proceeds fund the hunts, fishing trips, horseback rides, and other outdoor experiences we host for previously deployed Veterans and Gold Star families.",
-		ctaLabel: "Support the mission",
-		ctaHref: "/donate",
+		type: "Benefit dinner",
+		location: "54 Country, Kingdom City, Missouri",
+		summary: "The second annual Wilderness to Wellness dinner: an evening of food, fellowship, and auctions honoring Veterans and Gold Star families.",
+		heroTitle: "Good food, greater purpose, lasting impact.",
+		overviewTitle: "Another year of fellowship and healing.",
+		overview:
+			"The dinner returns as an evening dedicated to honoring Veterans and Gold Star families: celebrating service, strengthening community, and finding renewal through the healing bonds of nature.",
+		detailsTitle: "The evening",
+		details:
+			"Social hour starts at 5:30 PM, dinner at 6:30, and the live auction at 7:45, with music to follow. The night also has a silent auction, a gun raffle, a 50/50 raffle, and a cash bar.",
+		ctaLabel: "Get tickets",
+		ctaHref: "#tickets",
+		ticketsUrl: "https://www.zeffy.com/en-US/ticketing/wilderness-to-wellness-2nd-annual-benefit-dinner",
 		template: "fundraiser",
 		published: true,
 		featured: false,
@@ -527,7 +532,7 @@ export const events: Event[] = [
 	},
 	{
 		slug: "wilderness-to-wellness-benefit-dinner-2026",
-		title: "Benefit Banquet Dinner",
+		title: "Wilderness to Wellness Benefit Dinner",
 		date: "March 13, 2026",
 		startDate: "2026-03-13",
 		endDate: "2026-03-13",

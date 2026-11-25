@@ -106,6 +106,10 @@ export function EventAdmin({ events, selected }: { events: Event[]; selected?: E
 					Facebook recap URL
 					<input className="field" name="recapUrl" type="url" defaultValue={selected?.recapUrl} placeholder="https://www.facebook.com/share/p/..." />
 				</label>
+				<label>
+					Ticket form URL (embedded on the event page until it is over)
+					<input className="field" name="ticketsUrl" type="url" defaultValue={selected?.ticketsUrl} placeholder="https://www.zeffy.com/en-US/ticketing/..." />
+				</label>
 				<input type="hidden" name="existingImage" value={selected?.image || ""} />
 				<label>
 					Or upload a new image

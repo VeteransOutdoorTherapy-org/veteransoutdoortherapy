@@ -8,7 +8,9 @@ import { SITE_NAME } from "@/lib/site";
 import { useCart } from "./cart-provider";
 import { SectionEdge } from "./section-edge";
 
-const groups = [
+type NavGroup = { label: string; href?: string; links: string[][] };
+
+const groups: NavGroup[] = [
 	{
 		label: "Programs",
 		links: [
@@ -28,6 +30,13 @@ const groups = [
 		],
 	},
 ];
+
+// Events is a page of its own as well as a menu, so its label stays a link.
+const eventsGroup: NavGroup = {
+	label: "Events",
+	href: "/events",
+	links: [["Wilderness to Wellness Dinner", "/events/wilderness-to-wellness-benefit-dinner-2027"]],
+};
 
 export function Header() {
 	const pathname = usePathname();
@@ -58,6 +67,46 @@ export function Header() {
 	};
 	const supportsDesktopHover = () => window.matchMedia("(min-width: 921px) and (hover: hover)").matches;
 	const { count } = useCart();
+	const renderGroup = (group: NavGroup) => (
+		<details
+			className="nav-group"
+			key={group.label}
+			open={openGroup === group.label}
+			onMouseEnter={() => {
+				if (supportsDesktopHover()) setOpenGroup(group.label);
+			}}
+			onMouseLeave={() => {
+				if (supportsDesktopHover()) setOpenGroup(null);
+			}}
+		>
+			<summary
+				onClick={(event) => {
+					// A click on the label's own link follows it; anywhere else toggles the menu.
+					if ((event.target as HTMLElement).closest("a")) return;
+					event.preventDefault();
+					setOpenGroup((current) => (current === group.label ? null : group.label));
+				}}
+			>
+				{group.href ? (
+					<Link href={group.href} onClick={closeNavigation}>
+						{group.label}
+					</Link>
+				) : (
+					group.label
+				)}
+				<CaretDown size={15} />
+			</summary>
+			<div className="nav-dropdown">
+				<div className="nav-dropdown-panel">
+					{group.links.map(([label, href]) => (
+						<Link key={href} href={href} onClick={closeNavigation}>
+							{label}
+						</Link>
+					))}
+				</div>
+			</div>
+		</details>
+	);
 	return (
 		<>
 			<div className="notice">
@@ -77,44 +126,11 @@ export function Header() {
 					/>
 				</Link>
 				<nav key={pathname} className={open ? "nav open" : "nav"} aria-label="Main navigation">
-					{groups.map((group) => (
-						<details
-							className="nav-group"
-							key={group.label}
-							open={openGroup === group.label}
-							onMouseEnter={() => {
-								if (supportsDesktopHover()) setOpenGroup(group.label);
-							}}
-							onMouseLeave={() => {
-								if (supportsDesktopHover()) setOpenGroup(null);
-							}}
-						>
-							<summary
-								onClick={(event) => {
-									event.preventDefault();
-									setOpenGroup((current) => (current === group.label ? null : group.label));
-								}}
-							>
-								{group.label}
-								<CaretDown size={15} />
-							</summary>
-							<div className="nav-dropdown">
-								<div className="nav-dropdown-panel">
-									{group.links.map(([label, href]) => (
-										<Link key={href} href={href} onClick={closeNavigation}>
-											{label}
-										</Link>
-									))}
-								</div>
-							</div>
-						</details>
-					))}
+					{groups.map(renderGroup)}
 					<Link href="/sponsorships" onClick={closeNavigation}>
 						Sponsorships
 					</Link>
-					<Link href="/events" onClick={closeNavigation}>
-						Events
-					</Link>
+					{renderGroup(eventsGroup)}
 					<Link href="/shop" onClick={closeNavigation}>
 						Shop
 					</Link>
