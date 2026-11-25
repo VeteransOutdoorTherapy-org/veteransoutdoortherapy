@@ -15,6 +15,7 @@ export type TestimonialNotification = {
 	slug: string;
 	name: string;
 	email: string;
+	phone?: string;
 	service: string;
 	event: string;
 	rating?: number;
@@ -112,10 +113,11 @@ export async function sendTestimonialNotification(story: TestimonialNotification
 		replyTo: story.email,
 		subject: `New story shared by ${story.name}`,
 		text: [
-			"Someone shared their story through the website. It is saved as an unpublished testimonial and will not appear on the site until it is published in the admin.",
+			"Someone shared their story through the website. It is saved as a pending testimonial and will not appear on the site until it is approved in the admin.",
 			"",
 			`Name: ${story.name}`,
 			`Email: ${story.email}`,
+			`Phone: ${story.phone ? displayPhone(story.phone) : "Not provided"}`,
 			`Service: ${story.service}`,
 			`Event: ${story.event}`,
 			`Rating: ${story.rating ? `${story.rating} of 5` : "Not given"}`,
@@ -123,7 +125,7 @@ export async function sendTestimonialNotification(story: TestimonialNotification
 			"Story:",
 			story.story,
 			"",
-			`Review and publish: ${absoluteUrl(`/admin?view=testimonials&edit=${story.slug}`)}`,
+			`Approve or deny: ${absoluteUrl(`/admin?view=testimonials&edit=${story.slug}`)}`,
 			"",
 			"Reply to this email to respond directly to the sender.",
 		].join("\n"),

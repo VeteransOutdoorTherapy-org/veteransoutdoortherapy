@@ -816,6 +816,10 @@ export type Testimonial = {
 	source?: string;
 	/** Private: shown in the admin only, never on a public page. */
 	email?: string;
+	/** Private: the submitter's phone digits, for the team only. */
+	phone?: string;
+	/** A website submission's review: pending until the admin approves or denies it. */
+	review?: "pending" | "approved" | "denied";
 };
 export const testimonials: Testimonial[] = [
 	{

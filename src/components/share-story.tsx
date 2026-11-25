@@ -96,10 +96,18 @@ export function ShareStory({
 									<input className="field" name="lastName" autoComplete="family-name" required />
 								</label>
 							</div>
-							<label>
-								Email
-								<input className="field" name="email" type="email" autoComplete="email" required />
-							</label>
+							<div className="form-row">
+								<label>
+									Email
+									<input className="field" name="email" type="email" autoComplete="email" required />
+								</label>
+								<label>
+									<span>
+										Phone <span className="font-normal text-(--moss)">(optional)</span>
+									</span>
+									<input className="field" name="phone" type="tel" autoComplete="tel" />
+								</label>
+							</div>
 							<div className="form-row">
 								<label>
 									Branch of service
@@ -177,7 +185,7 @@ export function ShareStory({
 								<input type="checkbox" name="consent" required /> Veteran&apos;s Outdoor Therapy may share my first name,
 								service, and story on its website.
 							</label>
-							<div className="text-sm text-(--moss)">Your last name and email stay private.</div>
+							<div className="text-sm text-(--moss)">Your last name, email, and phone stay private.</div>
 							<button className="button orange" type="submit" disabled={status?.tone === "pending"}>
 								{status?.tone === "pending" ? "Sending…" : "Send my story"}
 							</button>

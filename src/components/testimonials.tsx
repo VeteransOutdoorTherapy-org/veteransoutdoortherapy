@@ -122,15 +122,15 @@ export function TestimonialCard({
 	);
 }
 
-/** A larger, centered quote to lead a page of testimonials. */
+/** A larger quote across the full width, to lead a page of testimonials. */
 export function FeaturedTestimonial({ testimonial }: { testimonial: Testimonial }) {
 	return (
-		<figure className="m-0 mx-auto max-w-3xl rounded-3xl bg-(--white) px-6 py-10 text-center shadow-[0_1px_2px_rgba(23,32,25,0.05),0_24px_48px_-24px_rgba(23,32,25,0.3)] ring-1 ring-(--ink)/8 sm:px-12 sm:py-14">
+		<figure className="m-0 rounded-3xl bg-(--white) px-6 py-10 text-center shadow-[0_1px_2px_rgba(23,32,25,0.05),0_24px_48px_-24px_rgba(23,32,25,0.3)] ring-1 ring-(--ink)/8 sm:px-12 sm:py-14">
 			<Quotes size={40} weight="fill" className="mx-auto rotate-180 text-(--orange)" aria-hidden="true" />
 			<QuoteText
 				quote={testimonial.quote}
 				id={`featured-${testimonial.slug}`}
-				className="mt-6 text-lg leading-8 font-medium text-(--ink) sm:text-xl sm:leading-9"
+				className="mx-auto mt-6 max-w-4xl text-lg leading-8 font-medium text-(--ink) sm:text-xl sm:leading-9"
 			/>
 			<div className="mt-8">
 				<Byline testimonial={testimonial} centered />

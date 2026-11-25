@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { isAdmin, login, logout } from "@/lib/auth";
 import { IMAGE_POSITIONS, type ImagePosition } from "@/lib/data";
-import { deleteEvent, deleteProduct, getEvents, getProducts, saveEvent, saveProduct, getTestimonials, saveTestimonial, deleteTestimonial, deleteGalleryImage, getGalleryImages, saveGalleryImage, getFieldStories, saveFieldStory, deleteFieldStory } from "@/lib/db";
+import { deleteEvent, deleteProduct, getEvents, getProducts, saveEvent, saveProduct, getTestimonials, saveTestimonial, deleteTestimonial, reviewTestimonial, deleteGalleryImage, getGalleryImages, saveGalleryImage, getFieldStories, saveFieldStory, deleteFieldStory } from "@/lib/db";
 
 async function addToGalleryIfMissing(src: string, tag: string, alt: string) {
 	if (!src || !src.startsWith("http")) return;
@@ -533,6 +533,22 @@ export async function duplicateTestimonialAction(form: FormData) {
 
 	revalidateTestimonialPages(duplicateSlug);
 	redirect(`/admin?view=testimonials&edit=${duplicateSlug}&saved=1`);
+}
+
+/** Approves (publishes) or denies a story sent through Share your story. */
+export async function reviewTestimonialAction(form: FormData) {
+	if (!(await isAdmin())) redirect("/admin");
+	// The row's saved slug, even when the edit form's slug field has been changed but not saved.
+	const slug = String(form.get("previousSlug") || "").trim();
+	const decision = form.get("decision") === "approve" ? "approved" : "denied";
+	try {
+		await reviewTestimonial(slug, decision);
+	} catch (error) {
+		console.error("Testimonial review failed", { slug, error });
+		redirect("/admin?view=testimonials&saveError=save-failed");
+	}
+	revalidateTestimonialPages(slug);
+	redirect(`/admin?view=testimonials&edit=${slug}&saved=1`);
 }
 
 export async function deleteTestimonialAction(form: FormData) {

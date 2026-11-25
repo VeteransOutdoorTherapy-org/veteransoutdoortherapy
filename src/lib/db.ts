@@ -95,6 +95,8 @@ async function setupTestimonials() {
 	await db`ALTER TABLE testimonials ADD COLUMN IF NOT EXISTS event text`;
 	await db`ALTER TABLE testimonials ADD COLUMN IF NOT EXISTS source text`;
 	await db`ALTER TABLE testimonials ADD COLUMN IF NOT EXISTS email text`;
+	await db`ALTER TABLE testimonials ADD COLUMN IF NOT EXISTS phone text`;
+	await db`ALTER TABLE testimonials ADD COLUMN IF NOT EXISTS review text`;
 	await db`CREATE TABLE IF NOT EXISTS migrations (id text PRIMARY KEY, applied_at timestamptz NOT NULL DEFAULT now())`;
 	const horsebackTestimonialImageMigration =
 		await db`INSERT INTO migrations (id) VALUES ('horseback-testimonial-images-2026') ON CONFLICT (id) DO NOTHING RETURNING id`;
@@ -872,6 +874,8 @@ function rowToTestimonial(row: Record<string, unknown>): Testimonial {
 		event: row.event ? String(row.event) : undefined,
 		source: row.source ? String(row.source) : undefined,
 		email: row.email ? String(row.email) : undefined,
+		phone: row.phone ? String(row.phone) : undefined,
+		review: row.review ? (String(row.review) as Testimonial["review"]) : undefined,
 	};
 }
 
@@ -888,11 +892,11 @@ export async function getTestimonials(): Promise<Testimonial[]> {
 
 export async function getPublishedTestimonials(): Promise<Testimonial[]> {
 	const all = await getTestimonials();
-	// The submitter's email is for the admin only; it never travels with a public testimonial.
-	return all.filter((t) => t.published).map((t) => ({ ...t, email: undefined }));
+	// The submitter's email and phone are for the admin only; they never travel with a public testimonial.
+	return all.filter((t) => t.published).map((t) => ({ ...t, email: undefined, phone: undefined }));
 }
 
-/** A story sent through Share your story: saved unpublished, for the admin to review. */
+/** A story sent through Share your story: saved unpublished and pending, for the admin to approve or deny. */
 export async function saveTestimonialSubmission(submission: {
 	slug: string;
 	quote: string;
@@ -902,10 +906,18 @@ export async function saveTestimonialSubmission(submission: {
 	rating?: number;
 	event?: string;
 	email: string;
+	phone?: string;
 }) {
 	const db = await ensureTestimonials();
 	if (!db) throw new Error("DATABASE_URL is required to save testimonials.");
-	await db`INSERT INTO testimonials (slug, quote, author, service, category, published, sort_order, rating, event, source, email) VALUES (${submission.slug}, ${submission.quote}, ${submission.author}, ${submission.service}, ${submission.category}, false, 0, ${submission.rating ?? null}, ${submission.event ?? null}, 'website', ${submission.email})`;
+	await db`INSERT INTO testimonials (slug, quote, author, service, category, published, sort_order, rating, event, source, email, phone, review) VALUES (${submission.slug}, ${submission.quote}, ${submission.author}, ${submission.service}, ${submission.category}, false, 0, ${submission.rating ?? null}, ${submission.event ?? null}, 'website', ${submission.email}, ${submission.phone ?? null}, 'pending')`;
+}
+
+/** Approving publishes a submission; denying keeps it off the site and out of the New count. */
+export async function reviewTestimonial(slug: string, decision: "approved" | "denied") {
+	const db = await ensureTestimonials();
+	if (!db) throw new Error("DATABASE_URL is required to review testimonials.");
+	await db`UPDATE testimonials SET review = ${decision}, published = ${decision === "approved"}, updated_at = now() WHERE slug = ${slug}`;
 }
 
 export async function getTestimonial(slug: string): Promise<Testimonial | undefined> {
@@ -915,7 +927,8 @@ export async function getTestimonial(slug: string): Promise<Testimonial | undefi
 export async function saveTestimonial(testimonial: Testimonial, previousSlug = testimonial.slug) {
 	const db = await ensureTestimonials();
 	if (!db) throw new Error("DATABASE_URL is required to save testimonials.");
-	if (previousSlug && previousSlug !== testimonial.slug) await db`DELETE FROM testimonials WHERE slug = ${previousSlug}`;
+	// Renaming moves the row, so a submission's rating, event, contact details, and review survive the edit.
+	if (previousSlug && previousSlug !== testimonial.slug) await db`UPDATE testimonials SET slug = ${testimonial.slug} WHERE slug = ${previousSlug}`;
 	await db`INSERT INTO testimonials (slug, quote, author, service, image, image_alt, image_position, category, published, sort_order) VALUES (${testimonial.slug}, ${testimonial.quote}, ${testimonial.author}, ${testimonial.service}, ${testimonial.image ?? null}, ${testimonial.imageAlt ?? null}, ${testimonial.imagePosition ?? null}, ${testimonial.category ?? null}, ${testimonial.published}, ${testimonial.sortOrder}) ON CONFLICT (slug) DO UPDATE SET quote = EXCLUDED.quote, author = EXCLUDED.author, service = EXCLUDED.service, image = EXCLUDED.image, image_alt = EXCLUDED.image_alt, image_position = EXCLUDED.image_position, category = EXCLUDED.category, published = EXCLUDED.published, sort_order = EXCLUDED.sort_order, updated_at = now()`;
 }
 

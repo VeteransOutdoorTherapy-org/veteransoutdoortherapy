@@ -2,18 +2,47 @@ import { Copy, LockKey, Package, PencilSimple, Plus, SignOut, Trash } from "@pho
 import Link from "next/link";
 import { isAdmin } from "@/lib/auth";
 import { getEvents, getProducts, getTestimonials, getGalleryImages, getFieldStories, type Testimonial } from "@/lib/db";
+import { displayPhone } from "@/lib/phone";
 import { pageMetadata } from "@/lib/site";
-import { deleteProductAction, duplicateProductAction, loginAction, logoutAction, saveProductAction, saveTestimonialAction, duplicateTestimonialAction, deleteTestimonialAction } from "./actions";
+import { deleteProductAction, duplicateProductAction, loginAction, logoutAction, saveProductAction, saveTestimonialAction, duplicateTestimonialAction, deleteTestimonialAction, reviewTestimonialAction } from "./actions";
 import { EventAdmin } from "./event-admin";
 import { FieldStoryAdmin } from "./field-story-admin";
 import { GalleryAdmin } from "@/components/admin/gallery-admin";
 
 export const metadata = pageMetadata({ title: "Content Admin", description: "Authorized content administration.", path: "/admin", noIndex: true });
 
+/**
+ * Approve publishes a pending story; Deny keeps it off the site, and a denied
+ * story can still be approved later. Inside the edit form the buttons submit
+ * that form to the review action, since forms cannot nest; elsewhere they bring
+ * their own.
+ */
+function ReviewButtons({ testimonial, inForm = false }: { testimonial: Testimonial; inForm?: boolean }) {
+	const buttons = (
+		<div className="flex gap-2">
+			<button className="button orange" type="submit" name="decision" value="approve" formAction={inForm ? reviewTestimonialAction : undefined}>
+				Approve
+			</button>
+			{testimonial.review === "pending" && (
+				<button className="button secondary" type="submit" name="decision" value="deny" formAction={inForm ? reviewTestimonialAction : undefined}>
+					Deny
+				</button>
+			)}
+		</div>
+	);
+	if (inForm) return buttons;
+	return (
+		<form action={reviewTestimonialAction}>
+			<input type="hidden" name="previousSlug" value={testimonial.slug} />
+			{buttons}
+		</form>
+	);
+}
+
 function TestimonialAdmin({ testimonials, selected, categoryFilter, yearFilter }: { testimonials: Testimonial[]; selected?: Testimonial; categoryFilter?: string; yearFilter?: string }) {
 	const categories = Array.from(new Set(testimonials.map((t) => t.category).filter(Boolean))).sort();
 	const years = Array.from(new Set(testimonials.map((t) => t.createdAt.slice(0, 4)))).sort().reverse();
-	const isNew = (t: Testimonial) => t.source === "website" && !t.published;
+	const isNew = (t: Testimonial) => t.review === "pending" && !t.published;
 	// Stories sent through Share your story and not yet published lead the list.
 	const filtered = testimonials
 		.filter((t) => (!categoryFilter || (t.category || "Uncategorized") === categoryFilter) && (!yearFilter || t.createdAt.startsWith(yearFilter)))
@@ -30,11 +59,13 @@ function TestimonialAdmin({ testimonials, selected, categoryFilter, yearFilter }
 					<div className="rounded-xl bg-(--orange)/8 p-4 text-sm leading-6 ring-1 ring-(--orange)/20">
 						<strong className="block">Sent through Share your story · {new Date(selected.createdAt).toLocaleDateString("en-US")}</strong>
 						<span className="block">Email: <a href={`mailto:${selected.email}`}>{selected.email}</a></span>
+						<span className="block">Phone: {selected.phone ? <a href={`tel:${selected.phone}`}>{displayPhone(selected.phone)}</a> : "Not given"}</span>
 						<span className="block">Event: {selected.event || "Not a specific event"}</span>
 						<span className="block">Rating: {selected.rating ? `${selected.rating} of 5` : "Not given"}</span>
-						{!selected.published && <span className="mt-2 block">Tick Published and save to put it on the site.</span>}
+						<span className="mt-2 block">Status: {selected.published ? "Approved and live" : selected.review === "denied" ? "Denied" : "Waiting for review"}</span>
 					</div>
 				)}
+				{selected && (selected.review === "pending" || selected.review === "denied") && <ReviewButtons testimonial={selected} inForm />}
 				<label>
 					Author name
 					<input className="field" name="author" defaultValue={selected?.author} required />
@@ -117,14 +148,16 @@ function TestimonialAdmin({ testimonials, selected, categoryFilter, yearFilter }
 								)}
 								{testimonial.author}
 							</strong>
-							<span>{testimonial.service} · {testimonial.category || "Uncategorized"} · {testimonial.published ? "Published" : "Draft"}</span>
+							<span>{testimonial.service} · {testimonial.category || "Uncategorized"} · {testimonial.published ? "Published" : testimonial.review === "denied" ? "Denied" : testimonial.review === "pending" ? "Waiting for review" : "Draft"}</span>
 							{testimonial.source === "website" && (
 								<span>
 									{testimonial.event || "Not a specific event"}
 									{testimonial.rating ? ` · ${testimonial.rating}/5` : ""} · {testimonial.email}
+									{testimonial.phone ? ` · ${displayPhone(testimonial.phone)}` : ""}
 								</span>
 							)}
 							<p style={{ marginTop: 8, color: "var(--moss)", fontSize: "0.9rem" }}>{testimonial.quote.slice(0, 100)}…</p>
+							{isNew(testimonial) && <ReviewButtons testimonial={testimonial} />}
 						</div>
 						<a className="icon-button" href={`/admin?view=testimonials&edit=${testimonial.slug}`} aria-label={`Edit ${testimonial.author}`}>
 							<PencilSimple size={17} />
@@ -197,7 +230,7 @@ export default async function AdminPage({
 	const selectedProduct = products.find((product) => product.slug === query.edit);
 	const selectedEvent = events.find((event) => event.slug === query.edit);
 	const selectedTestimonial = testimonials.find((testimonial) => testimonial.slug === query.edit);
-	const newTestimonials = testimonials.filter((testimonial) => testimonial.source === "website" && !testimonial.published).length;
+	const newTestimonials = testimonials.filter((testimonial) => testimonial.review === "pending" && !testimonial.published).length;
 	const selectedFieldStory = fieldStories.find((story) => story.slug === query.edit);
 	const testimonialCategories = Array.from(new Set(testimonials.map((t) => t.category).filter((c): c is string => Boolean(c)))).sort();
 	const galleryTags = Array.from(new Set(gallery.flatMap((image) => image.tags))).sort();
