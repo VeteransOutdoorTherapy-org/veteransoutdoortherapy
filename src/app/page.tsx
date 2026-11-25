@@ -28,10 +28,11 @@ export default async function Home() {
 	const [products, events] = await Promise.all([getProducts(), getEvents()]);
 	const merchandise = products.filter((item) => item.category === "Merchandise" && item.featured);
 	const today = new Date().toISOString().slice(0, 10);
-	// Whatever is next on the calendar, including TBA placeholders, so this fills itself as events are added.
+	// Events ticked "Feature on home page" lead; then whatever is next on the calendar,
+	// including TBA placeholders, so this fills itself as events are added.
 	const upcomingEvents = events
 		.filter((event) => event.published && !event.over && event.endDate >= today)
-		.sort((a, b) => a.startDate.localeCompare(b.startDate) || a.sortOrder - b.sortOrder)
+		.sort((a, b) => Number(b.featured) - Number(a.featured) || a.startDate.localeCompare(b.startDate) || a.sortOrder - b.sortOrder)
 		.slice(0, 3);
 	return (
 		<>

@@ -501,7 +501,7 @@ export const events: Event[] = [
 		facebookUrl: "https://www.facebook.com/share/1EwQ9fgh4J/",
 		template: "fundraiser",
 		published: true,
-		featured: false,
+		featured: true,
 		over: false,
 		sortOrder: 0,
 	},

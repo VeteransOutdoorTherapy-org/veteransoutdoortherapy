@@ -199,6 +199,10 @@ async function setupEvents() {
 		await db`INSERT INTO migrations (id) VALUES ('wilderness-to-wellness-2027-facebook') ON CONFLICT (id) DO NOTHING RETURNING id`;
 	if (dinner2027FacebookMigration.length)
 		await db`UPDATE events SET facebook_url = 'https://www.facebook.com/share/1EwQ9fgh4J/', updated_at = now() WHERE slug = 'wilderness-to-wellness-benefit-dinner-2027'`;
+	const dinner2027FeaturedMigration =
+		await db`INSERT INTO migrations (id) VALUES ('wilderness-to-wellness-2027-featured') ON CONFLICT (id) DO NOTHING RETURNING id`;
+	if (dinner2027FeaturedMigration.length)
+		await db`UPDATE events SET featured = true, updated_at = now() WHERE slug = 'wilderness-to-wellness-benefit-dinner-2027'`;
 	await seedMissingEvent(db, "seed-tba-snagging-2027", "missouri-snagging-trip-2027");
 	await seedMissingEvent(db, "seed-tba-benefit-banquet-2027", "benefit-banquet-dinner-2027");
 	// 2026 trips that had a field note before they had an event record.
