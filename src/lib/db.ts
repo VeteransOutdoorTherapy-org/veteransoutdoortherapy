@@ -129,6 +129,7 @@ async function setupEvents() {
 	await db`ALTER TABLE events ADD COLUMN IF NOT EXISTS is_over boolean NOT NULL DEFAULT false`;
 	await db`ALTER TABLE events ADD COLUMN IF NOT EXISTS recap_url text`;
 	await db`ALTER TABLE events ADD COLUMN IF NOT EXISTS tickets_url text`;
+	await db`ALTER TABLE events ADD COLUMN IF NOT EXISTS facebook_url text`;
 	await db`ALTER TABLE events ADD COLUMN IF NOT EXISTS image_position text`;
 	await db`ALTER TABLE events ADD COLUMN IF NOT EXISTS image_position_mobile text`;
 	await db`CREATE TABLE IF NOT EXISTS migrations (id text PRIMARY KEY, applied_at timestamptz NOT NULL DEFAULT now())`;
@@ -172,7 +173,7 @@ async function setupEvents() {
 		if (!migration.length) return;
 		const event = seedEvents.find((e) => e.slug === slug);
 		if (!event) return;
-		await db`INSERT INTO events (slug, title, date_label, start_date, end_date, image, image_position, image_position_mobile, event_type, location, summary, hero_title, overview_title, overview, details_title, details, cta_label, cta_href, template, published, featured, is_over, recap_url, tickets_url, sort_order) VALUES (${event.slug}, ${event.title}, ${event.date}, ${event.startDate}, ${event.endDate}, ${event.image}, ${event.imagePosition ?? null}, ${event.imagePositionMobile ?? null}, ${event.type}, ${event.location}, ${event.summary}, ${event.heroTitle}, ${event.overviewTitle}, ${event.overview}, ${event.detailsTitle}, ${event.details}, ${event.ctaLabel}, ${event.ctaHref}, ${event.template}, ${event.published}, ${event.featured}, ${event.over}, ${event.recapUrl ?? null}, ${event.ticketsUrl ?? null}, ${event.sortOrder}) ON CONFLICT (slug) DO NOTHING`;
+		await db`INSERT INTO events (slug, title, date_label, start_date, end_date, image, image_position, image_position_mobile, event_type, location, summary, hero_title, overview_title, overview, details_title, details, cta_label, cta_href, template, published, featured, is_over, recap_url, tickets_url, facebook_url, sort_order) VALUES (${event.slug}, ${event.title}, ${event.date}, ${event.startDate}, ${event.endDate}, ${event.image}, ${event.imagePosition ?? null}, ${event.imagePositionMobile ?? null}, ${event.type}, ${event.location}, ${event.summary}, ${event.heroTitle}, ${event.overviewTitle}, ${event.overview}, ${event.detailsTitle}, ${event.details}, ${event.ctaLabel}, ${event.ctaHref}, ${event.template}, ${event.published}, ${event.featured}, ${event.over}, ${event.recapUrl ?? null}, ${event.ticketsUrl ?? null}, ${event.facebookUrl ?? null}, ${event.sortOrder}) ON CONFLICT (slug) DO NOTHING`;
 	}
 	await seedMissingEvent(db, "seed-tba-missouri-turkey-2027", "missouri-turkey-hunt-2027");
 	await seedMissingEvent(db, "seed-tba-flint-hills-2027", "flint-hills-kansas-turkey-hunt-2027");
@@ -194,6 +195,10 @@ async function setupEvents() {
 		await db`INSERT INTO migrations (id) VALUES ('wilderness-to-wellness-2027-rsvp-first') ON CONFLICT (id) DO NOTHING RETURNING id`;
 	if (dinner2027RsvpMigration.length)
 		await db`UPDATE events SET summary = ${"The second annual Wilderness to Wellness dinner: an evening of food, fellowship, and auctions honoring Veterans and Gold Star families. RSVP by February 28."}, sort_order = 0, updated_at = now() WHERE slug = 'wilderness-to-wellness-benefit-dinner-2027'`;
+	const dinner2027FacebookMigration =
+		await db`INSERT INTO migrations (id) VALUES ('wilderness-to-wellness-2027-facebook') ON CONFLICT (id) DO NOTHING RETURNING id`;
+	if (dinner2027FacebookMigration.length)
+		await db`UPDATE events SET facebook_url = 'https://www.facebook.com/share/1EwQ9fgh4J/', updated_at = now() WHERE slug = 'wilderness-to-wellness-benefit-dinner-2027'`;
 	await seedMissingEvent(db, "seed-tba-snagging-2027", "missouri-snagging-trip-2027");
 	await seedMissingEvent(db, "seed-tba-benefit-banquet-2027", "benefit-banquet-dinner-2027");
 	// 2026 trips that had a field note before they had an event record.
@@ -830,6 +835,7 @@ function rowToEvent(row: Record<string, unknown>): Event {
 		over: Boolean(row.is_over),
 		recapUrl: row.recap_url ? String(row.recap_url) : undefined,
 		ticketsUrl: row.tickets_url ? String(row.tickets_url) : undefined,
+		facebookUrl: row.facebook_url ? String(row.facebook_url) : undefined,
 		sortOrder: Number(row.sort_order),
 	};
 }
@@ -853,7 +859,7 @@ export async function saveEvent(event: Event, previousSlug = event.slug) {
 	const db = await ensureEvents();
 	if (!db) throw new Error("DATABASE_URL is required to save events.");
 	if (previousSlug && previousSlug !== event.slug) await db`DELETE FROM events WHERE slug = ${previousSlug}`;
-	await db`INSERT INTO events (slug, title, date_label, start_date, end_date, image, image_position, image_position_mobile, event_type, location, summary, hero_title, overview_title, overview, details_title, details, cta_label, cta_href, template, published, featured, is_over, recap_url, tickets_url, sort_order) VALUES (${event.slug}, ${event.title}, ${event.date}, ${event.startDate}, ${event.endDate}, ${event.image}, ${event.imagePosition ?? null}, ${event.imagePositionMobile ?? null}, ${event.type}, ${event.location}, ${event.summary}, ${event.heroTitle}, ${event.overviewTitle}, ${event.overview}, ${event.detailsTitle}, ${event.details}, ${event.ctaLabel}, ${event.ctaHref}, ${event.template}, ${event.published}, ${event.featured}, ${event.over}, ${event.recapUrl ?? null}, ${event.ticketsUrl ?? null}, ${event.sortOrder}) ON CONFLICT (slug) DO UPDATE SET title = EXCLUDED.title, date_label = EXCLUDED.date_label, start_date = EXCLUDED.start_date, end_date = EXCLUDED.end_date, image = EXCLUDED.image, image_position = EXCLUDED.image_position, image_position_mobile = EXCLUDED.image_position_mobile, event_type = EXCLUDED.event_type, location = EXCLUDED.location, summary = EXCLUDED.summary, hero_title = EXCLUDED.hero_title, overview_title = EXCLUDED.overview_title, overview = EXCLUDED.overview, details_title = EXCLUDED.details_title, details = EXCLUDED.details, cta_label = EXCLUDED.cta_label, cta_href = EXCLUDED.cta_href, template = EXCLUDED.template, published = EXCLUDED.published, featured = EXCLUDED.featured, is_over = EXCLUDED.is_over, recap_url = EXCLUDED.recap_url, tickets_url = EXCLUDED.tickets_url, sort_order = EXCLUDED.sort_order, updated_at = now()`;
+	await db`INSERT INTO events (slug, title, date_label, start_date, end_date, image, image_position, image_position_mobile, event_type, location, summary, hero_title, overview_title, overview, details_title, details, cta_label, cta_href, template, published, featured, is_over, recap_url, tickets_url, facebook_url, sort_order) VALUES (${event.slug}, ${event.title}, ${event.date}, ${event.startDate}, ${event.endDate}, ${event.image}, ${event.imagePosition ?? null}, ${event.imagePositionMobile ?? null}, ${event.type}, ${event.location}, ${event.summary}, ${event.heroTitle}, ${event.overviewTitle}, ${event.overview}, ${event.detailsTitle}, ${event.details}, ${event.ctaLabel}, ${event.ctaHref}, ${event.template}, ${event.published}, ${event.featured}, ${event.over}, ${event.recapUrl ?? null}, ${event.ticketsUrl ?? null}, ${event.facebookUrl ?? null}, ${event.sortOrder}) ON CONFLICT (slug) DO UPDATE SET title = EXCLUDED.title, date_label = EXCLUDED.date_label, start_date = EXCLUDED.start_date, end_date = EXCLUDED.end_date, image = EXCLUDED.image, image_position = EXCLUDED.image_position, image_position_mobile = EXCLUDED.image_position_mobile, event_type = EXCLUDED.event_type, location = EXCLUDED.location, summary = EXCLUDED.summary, hero_title = EXCLUDED.hero_title, overview_title = EXCLUDED.overview_title, overview = EXCLUDED.overview, details_title = EXCLUDED.details_title, details = EXCLUDED.details, cta_label = EXCLUDED.cta_label, cta_href = EXCLUDED.cta_href, template = EXCLUDED.template, published = EXCLUDED.published, featured = EXCLUDED.featured, is_over = EXCLUDED.is_over, recap_url = EXCLUDED.recap_url, tickets_url = EXCLUDED.tickets_url, facebook_url = EXCLUDED.facebook_url, sort_order = EXCLUDED.sort_order, updated_at = now()`;
 }
 
 export async function deleteEvent(slug: string) {

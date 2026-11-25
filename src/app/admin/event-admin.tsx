@@ -110,6 +110,10 @@ export function EventAdmin({ events, selected }: { events: Event[]; selected?: E
 					Ticket form URL (embedded on the event page until it is over)
 					<input className="field" name="ticketsUrl" type="url" defaultValue={selected?.ticketsUrl} placeholder="https://www.zeffy.com/en-US/ticketing/..." />
 				</label>
+				<label>
+					Facebook post URL (linked on the event page until it is over)
+					<input className="field" name="facebookUrl" type="url" defaultValue={selected?.facebookUrl} placeholder="https://www.facebook.com/share/..." />
+				</label>
 				<input type="hidden" name="existingImage" value={selected?.image || ""} />
 				<label>
 					Or upload a new image

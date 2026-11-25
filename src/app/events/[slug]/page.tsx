@@ -1,4 +1,4 @@
-import { ArrowRight, CalendarDots, MapPin } from "@phosphor-icons/react/dist/ssr";
+import { ArrowRight, CalendarDots, FacebookLogo, MapPin } from "@phosphor-icons/react/dist/ssr";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -122,9 +122,16 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
 						) : eventIsOver && event.recapUrl ? (
 							<a className="button orange" href={event.recapUrl} target="_blank" rel="noreferrer">View event recap</a>
 						) : (
-							<Link className="button orange" href={eventIsOver ? "/donate" : event.ctaHref}>
-								{eventIsOver ? "Support future events" : event.ctaLabel}
-							</Link>
+							<div className="flex flex-wrap gap-3">
+								<Link className="button orange" href={eventIsOver ? "/donate" : event.ctaHref}>
+									{eventIsOver ? "Support future events" : event.ctaLabel}
+								</Link>
+								{!eventIsOver && event.facebookUrl && (
+									<a className="button hero-secondary" href={event.facebookUrl} target="_blank" rel="noreferrer">
+										<FacebookLogo size={19} weight="fill" /> See it on Facebook
+									</a>
+								)}
+							</div>
 						)}
 					</div>
 					<div className="event-page-image" style={imageFocusStyle(event)}>

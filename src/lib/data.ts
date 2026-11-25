@@ -205,6 +205,8 @@ export type Event = {
 	recapUrl?: string;
 	/** A ticketing form (Zeffy) embedded in its own section on the event page until the event is over. */
 	ticketsUrl?: string;
+	/** The event's Facebook post, linked from the event page until the event is over. */
+	facebookUrl?: string;
 	sortOrder: number;
 };
 
@@ -496,6 +498,7 @@ export const events: Event[] = [
 		ctaLabel: "Get tickets",
 		ctaHref: "#tickets",
 		ticketsUrl: "https://www.zeffy.com/en-US/ticketing/wilderness-to-wellness-2nd-annual-benefit-dinner",
+		facebookUrl: "https://www.facebook.com/share/1EwQ9fgh4J/",
 		template: "fundraiser",
 		published: true,
 		featured: false,
